@@ -1,8 +1,6 @@
 # JUNTAR
 
-Si van a usar el gii para generar codigo se van a dar cuanta que los botones de accion no aparece, esto es por un error de compatibilidad 
-con boostrap 4.
-Para hacerlas funcionar tiene que agregar estas lineas de codigo
+Si van a usar el gii para generar código se van a dar cuanta que los botones de acción no aparece, esto es por un error de compatibilidad con boostrap 4. Para hacerlas funcionar tiene que agregar estas líneas de código.
 
             ['class' => 'yii\grid\ActionColumn',
                 'buttons' => [
