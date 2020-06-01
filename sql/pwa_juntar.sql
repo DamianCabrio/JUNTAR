@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2020 a las 16:56:49
+-- Tiempo de generación: 01-06-2020 a las 17:51:53
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -244,11 +244,15 @@ INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `fecha_nacimien
 
 CREATE TABLE `usuario_rol` (
   `item_name` varchar(64) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `usuario_rol` (`item_name`, `idUsuario`, `created_at`) VALUES
+--
+-- Volcado de datos para la tabla `usuario_rol`
+--
+
+INSERT INTO `usuario_rol` (`item_name`, `user_id`, `created_at`) VALUES
 ('Administrador', 1, NULL),
 ('Administrador', 2, NULL),
 ('Organizador', 3, NULL),
@@ -345,7 +349,7 @@ ALTER TABLE `usuario`
 -- Indices de la tabla `usuario_rol`
 --
 ALTER TABLE `usuario_rol`
-  ADD KEY `usuario_rol_usuario_id_idx` (`idUsuario`),
+  ADD KEY `usuario_rol_usuario_id_idx` (`user_id`),
   ADD KEY `item_name` (`item_name`);
 
 --
@@ -386,7 +390,7 @@ ALTER TABLE `presentacion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Restricciones para tablas volcadas
@@ -447,8 +451,8 @@ ALTER TABLE `presentacion_expositor`
 -- Filtros para la tabla `usuario_rol`
 --
 ALTER TABLE `usuario_rol`
-  ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `permiso` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+  ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `permiso` (`name`),
+  ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
