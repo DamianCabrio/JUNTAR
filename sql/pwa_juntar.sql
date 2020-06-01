@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2020 a las 09:27:25
+-- Tiempo de generación: 01-06-2020 a las 16:56:49
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -18,9 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-create database pwa_juntar2;
+create database pwa_juntar;
 
-use pwa_juntar2;
+use pwa_juntar;
 
 --
 -- Base de datos: `pwa_juntar`
@@ -39,13 +39,13 @@ CREATE TABLE `evento` (
   `descripcionEvento` varchar(200) NOT NULL,
   `lugar` varchar(200) NOT NULL,
   `modalidad` varchar(200) NOT NULL,
-  `linkPresentaciones` varchar(200) NOT NULL,
-  `linkFlyer` varchar(200) NOT NULL,
-  `linkLogo` varchar(200) NOT NULL,
+  `linkPresentaciones` varchar(200) DEFAULT NULL,
+  `linkFlyer` varchar(200) DEFAULT NULL,
+  `linkLogo` varchar(200) DEFAULT NULL,
   `capacidad` int(6) NOT NULL,
   `preInscripcion` tinyint(1) NOT NULL,
   `fechaLimiteInscripcion` date NOT NULL,
-  `codigoAcreditacion` varchar(100) NOT NULL
+  `codigoAcreditacion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -234,7 +234,7 @@ INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `fecha_nacimien
 (12, 'Fabiola', 'Maroto', NULL, NULL, NULL, NULL, 'registrado07@test.com', 'ipIF8YUsd4YWUho4xQk26K1LNyfh4Znz', '$2y$13$baEfEtJVIbb7NTQZLerLyeZdpWW/S525t0Ky.zTSx3c9pPwjBlp3a', NULL, 10, 1590995230, 1590995230, '_6rZyiqUDrYVG9Qsq2RUFnloz09aKVqN_1590995230'),
 (13, 'Elias', 'Contreras', NULL, NULL, NULL, NULL, 'registrado08@test.com', 'Nn3xdz9B86R-sQwWdDtrOOk79e0CdMtN', '$2y$13$ysREVfh1HwvP/p0cC.jtGe.UiPYHS/.kvqPq5Ga9Y8.BeDZSgyL9K', NULL, 10, 1590995252, 1590995252, 'r01h04ffYeO0X--HeoR_Sl5s571YJRj4_1590995252'),
 (14, 'Fernanda', 'Rosa', NULL, NULL, NULL, NULL, 'registrado09@test.com', 'eEymH70Ta4pi5uM1JdM4EQVMDCe8c94e', '$2y$13$YbKN8Zjs9YNBNSPSE/Npy.aowEX9nROQ44acOnuShe4lxpdKUpQgW', NULL, 10, 1590995290, 1590995290, 'lulupIU6dETfykAga9Pw4WzgcY3T6CBL_1590995290'),
-(15, 'Elba', 'Thiroda', NULL, NULL, NULL, NULL, 'registrado10@test.com', 'NzK7e7ANsT2rLyqzqavoG8vm8wWo8eEC', '$2y$13$9l4aj9xXl7KZAjewr9tDIeAdog7ShW/jRBmQqlRjTHwtxro9tfJF6', NULL, 10, 1590995334, 1590995334, 'VzTx3f30jl_RjQXgahQ5jfPM9xzrBCPV_1590995334');
+(15, 'Elba', 'Thidora', NULL, NULL, NULL, NULL, 'registrado10@test.com', 'NzK7e7ANsT2rLyqzqavoG8vm8wWo8eEC', '$2y$13$9l4aj9xXl7KZAjewr9tDIeAdog7ShW/jRBmQqlRjTHwtxro9tfJF6', NULL, 10, 1590995334, 1590995334, 'VzTx3f30jl_RjQXgahQ5jfPM9xzrBCPV_1590995334');
 
 -- --------------------------------------------------------
 
@@ -248,6 +248,23 @@ CREATE TABLE `usuario_rol` (
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `usuario_rol` (`item_name`, `idUsuario`, `created_at`) VALUES
+('Administrador', 1, NULL),
+('Administrador', 2, NULL),
+('Organizador', 3, NULL),
+('Organizador', 4, NULL),
+('Organizador', 5, NULL),
+('Registrado', 6, NULL),
+('Registrado', 7, NULL),
+('Registrado', 8, NULL),
+('Registrado', 9, NULL),
+('Registrado', 10, NULL),
+('Registrado', 11, NULL),
+('Registrado', 12, NULL),
+('Registrado', 13, NULL),
+('Registrado', 14, NULL),
+('Registrado', 15, NULL);
+
 --
 -- Índices para tablas volcadas
 --
@@ -257,14 +274,14 @@ CREATE TABLE `usuario_rol` (
 --
 ALTER TABLE `evento`
   ADD PRIMARY KEY (`idEvento`),
-  ADD KEY `organizador` (`idUsuario`);
+  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `expositor`
 --
 ALTER TABLE `expositor`
-  ADD KEY `idUsuario` (`idUsuario`),
-  ADD KEY `idExpositor` (`idExpositor`);
+  ADD PRIMARY KEY (`idExpositor`) USING BTREE,
+  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `fecha`
@@ -301,7 +318,7 @@ ALTER TABLE `permiso_rol`
 --
 ALTER TABLE `presentacion`
   ADD PRIMARY KEY (`idPresentacion`),
-  ADD KEY `idEvento` (`idEvento`);
+  ADD UNIQUE KEY `idEvento` (`idEvento`);
 
 --
 -- Indices de la tabla `presentacion_expositor`
@@ -328,8 +345,8 @@ ALTER TABLE `usuario`
 -- Indices de la tabla `usuario_rol`
 --
 ALTER TABLE `usuario_rol`
-  ADD PRIMARY KEY (`item_name`) USING BTREE,
-  ADD KEY `usuario_rol_usuario_id_idx` (`idUsuario`);
+  ADD KEY `usuario_rol_usuario_id_idx` (`idUsuario`),
+  ADD KEY `item_name` (`item_name`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -339,7 +356,7 @@ ALTER TABLE `usuario_rol`
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `expositor`
@@ -357,13 +374,13 @@ ALTER TABLE `fecha`
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `idInscripcion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idInscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `presentacion`
 --
 ALTER TABLE `presentacion`
-  MODIFY `idPresentacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPresentacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -379,8 +396,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `evento`
 --
 ALTER TABLE `evento`
-  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idEvento`) REFERENCES `presentacion` (`idEvento`);
+  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
 
 --
 -- Filtros para la tabla `expositor`
@@ -398,7 +414,8 @@ ALTER TABLE `fecha`
 -- Filtros para la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  ADD CONSTRAINT `inscripcion_ibfk_1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`);
+  ADD CONSTRAINT `inscripcion_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
+  ADD CONSTRAINT `inscripcion_ibfk_2` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`);
 
 --
 -- Filtros para la tabla `permiso`
@@ -417,13 +434,14 @@ ALTER TABLE `permiso_rol`
 -- Filtros para la tabla `presentacion`
 --
 ALTER TABLE `presentacion`
-  ADD CONSTRAINT `presentacion_ibfk_1` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion_expositor` (`idPresentacion`);
+  ADD CONSTRAINT `presentacion_ibfk_1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`);
 
 --
 -- Filtros para la tabla `presentacion_expositor`
 --
 ALTER TABLE `presentacion_expositor`
-  ADD CONSTRAINT `presentacion_expositor_ibfk_1` FOREIGN KEY (`idExpositor`) REFERENCES `expositor` (`idExpositor`);
+  ADD CONSTRAINT `presentacion_expositor_ibfk_1` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion` (`idPresentacion`),
+  ADD CONSTRAINT `presentacion_expositor_ibfk_2` FOREIGN KEY (`idExpositor`) REFERENCES `expositor` (`idExpositor`);
 
 --
 -- Filtros para la tabla `usuario_rol`
