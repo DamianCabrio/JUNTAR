@@ -38,14 +38,14 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Contacto', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
-            "label" => "Salir (".Yii::$app->user->identity->username.")",
+            "label" => "Cerrar Sesión (".Yii::$app->user->identity->nombre.")",
             "url" => ["/site/logout"],
             "linkOptions" => [
                 "data-method" => "post"
@@ -53,7 +53,7 @@ AppAsset::register($this);
         ];
     }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
         'items' => $menuItems,
     ]);
     NavBar::end();
@@ -73,8 +73,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 
