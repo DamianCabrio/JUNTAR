@@ -48,6 +48,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
       </div>
+      <div class="col-6">
+        <h3>Roles</h3>
+        <ul class="list-group">
+        <?php foreach ($roles as $rol): ?>
+          <?php $assigned = yii::$app->authManager->getAssignment($rol->name, $model->idUsuario);?>
+            <li class="list-group-item list-group-flush">
+              <h4><?= $rol->name ?>
+                <?= Html::a($assigned?"Quitar":"Agregar",
+                ['usuario/assign', 'id' => $model->idUsuario, 'rol' => $rol->name],
+                ['class' => $assigned?"btn btn-sm btn-danger ":"btn btn-sm btn-primary"]) ?>
+                <small>
+                  <p><?=$rol->description?></p>
+                </small>
+              </h4>
+          </li>
+        <?php endforeach;?>
+        </ul>
+      </div>
     </div>
 
 

@@ -52,9 +52,28 @@ class UsuarioController extends Controller
      */
     public function actionView($id)
     {
+      // Se obtiene todos los roles que estan creados y es enviado a la vista de usuario.
+      $roles = yii::$app->authManager->getRoles();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'roles' => $roles,
         ]);
+    }
+
+    /**
+     * Assign rol to user.
+     * Metodo para asignar un rol a un usuario a partir del ID
+     */
+    public function actionAssign($id, $rol)
+    {
+      $auth = Yii::$app->authManager;
+      $authRol = yii::$app->authManager->getRole($rol);
+      if ($auth->getAssignment($rol, $id)) {
+        $auth->revoke($authRol, $id);
+      } else {
+        $auth->assign($authRol, $id);
+      }
+      return $this->redirect(['usuario/view', 'id' => $id]);
     }
 
     /**
