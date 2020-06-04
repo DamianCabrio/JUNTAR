@@ -7,7 +7,7 @@ $this->title = 'Proyecto Juntar';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Junatar - Backend</h1>
+        <h1>Juntar - Backend</h1>
         <p class="lead">Aplicación Backend de la plataforma JUNTAR.</p>
     </div>
 
