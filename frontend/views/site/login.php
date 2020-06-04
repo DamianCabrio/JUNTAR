@@ -10,7 +10,6 @@ $this->title = 'Iniciar sesion';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <div class="m-auto">
         <h1 class="text-center mb-2"><?= Html::encode($this->title) ?></h1>
 
         <div class="row">
@@ -37,5 +36,4 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
-    </div>
 </div>
