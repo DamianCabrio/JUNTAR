@@ -33,7 +33,7 @@ $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'to
 </style>
 
 <div class="verify-email">
-    <p> Buenas <?= Html::encode($user->nombre." ". $user->apellido) ?>. ¡Gracias por registrarte en la plataforma <?= Html::encode(Yii::$app->name) ?>!</p>
+    <p> Hola <?= Html::encode($user->nombre." ". $user->apellido) ?>. ¡Gracias por registrarte en la plataforma <?= Html::encode(Yii::$app->name) ?>!</p>
     <p> Para finalizar el proceso de registro, clickea sobre "Confirmar Email" </p>
 
     <p> <a href="<?= Html::encode($verifyLink) ?>" class="link-button"> Confirmar Email </a> </p>

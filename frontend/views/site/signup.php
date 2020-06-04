@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
-$this->title = 'Registro';
+$this->title = 'Crear cuenta';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">

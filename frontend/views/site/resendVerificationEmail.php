@@ -6,22 +6,26 @@
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
-$this->title = 'Resend verification email';
+$this->title = 'Reenviar confirmación de correo';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-resend-verification-email">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A verification email will be sent there.</p>
+    <p class="text-center">Por favor, ingrese su cuenta de correo.</p>
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-5 m-auto">
             <?php $form = ActiveForm::begin(['id' => 'resend-verification-email-form']); ?>
 
             <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
+            <div  class="form-advice">
+                <p class=""> El correo de confirmación será enviado a dicha cuenta.</p>
+            </div>
+
             <div class="form-group">
-                <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
