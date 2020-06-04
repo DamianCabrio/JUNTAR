@@ -25,38 +25,46 @@ AppAsset::register($this);
     <body>
         <?php $this->beginBody() ?>
 
-        <div class="wrap">
-            <?php
-            NavBar::begin([
-                'brandLabel' => Yii::$app->name,
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                    'class' => 'navbar navbar-expand-md navbar-dark bg-dark',
-                ],
-            ]);
-//            $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-            } else {
-                $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-                //MenuItems for ABM
-                $menuItems[] = ['label' => 'ABMUsuarios', 'url' => ['/usuario/index']];
-                $menuItems[] = ['label' => 'ABMRoles', 'url' => ['/rol/index']];
-                //Logout
-                $menuItems[] = [
-                    "label" => "Salir (" . Yii::$app->user->identity->nombre . ")",
-                    "url" => ["/site/logout"],
-                    "linkOptions" => [
-                        "data-method" => "post",
-                    ]
-                ];
-            }
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
-                'items' => $menuItems,
-            ]);
-            NavBar::end();
-            ?>
+<div class="wrap">
+    <?php
+    NavBar::begin([
+        'brandLabel' => Yii::$app->name,
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => [
+            'class' => 'navbar navbar-expand-md navbar-dark bg-dark',
+        ],
+    ]);
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+    } else {
+        $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+        //MenuItems for ABM
+        $menuItems[] = ['label' => 'ABMUsuarios', 'url' => ['/usuario/index']];
+        //MenuItems ABM Permisos
+        $menuItems[] = [
+                       'label' => 'Gestor de Permisos',
+                       'items' => [
+                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
+                            ['label' => 'Crear Rol', 'url' => ['/permission-manager/create-rol']],
+                            ['label' => 'Crear Permiso', 'url' => ['/permission-manager/create-permission']],
+                            ],
+                        ];
+        //Logout
+        $menuItems[] = [
+            "label" => "Salir (" . Yii::$app->user->identity->nombre . ")",
+            "url" => ["/site/logout"],
+            "linkOptions" => [
+                "data-method" => "post",
+            ]
+        ];
+    }
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
+        'items' => $menuItems,
+    ]);
+    NavBar::end();
+    ?>
+
 
             <div class="container">
                 <?=
