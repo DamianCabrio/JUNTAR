@@ -35,17 +35,27 @@ AppAsset::register($this);
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
+//            $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+        //MenuItems for ABM
+        $menuItems[] = ['label' => 'ABMUsuarios', 'url' => ['/usuario/index']];
         $menuItems[] = [
-            "label" => "Salir (".Yii::$app->user->identity->nombre.")",
+                       'label' => 'Gestor de Permisos',
+                       'items' => [
+                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
+                            ['label' => 'Crear Rol', 'url' => ['/permission-manager/create-rol']],
+                            ['label' => 'Crear Permiso', 'url' => ['/permission-manager/create-permission']],
+                            ],
+                        ];
+        //Logout
+        $menuItems[] = [
+            "label" => "Salir (" . Yii::$app->user->identity->nombre . ")",
             "url" => ["/site/logout"],
             "linkOptions" => [
-                "data-method" => "post"
+                "data-method" => "post",
             ]
         ];
     }
