@@ -42,7 +42,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
-            "label" => "Salir (".Yii::$app->user->identity->username.")",
+            "label" => "Salir (".Yii::$app->user->identity->nombre.")",
             "url" => ["/site/logout"],
             "linkOptions" => [
                 "data-method" => "post"
