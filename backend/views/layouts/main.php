@@ -46,7 +46,10 @@ AppAsset::register($this);
                        'items' => [
                             ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
                             ['label' => 'Crear Rol', 'url' => ['/permission-manager/create-rol']],
+                            ['label' => 'Actualizar Rol', 'url' => ['/permission-manager/update-rol']],
                             ['label' => 'Crear Permiso', 'url' => ['/permission-manager/create-permission']],
+                            ['label' => 'Actualizar Permiso', 'url' => ['/permission-manager/update-permission']],
+                            ['label' => 'Eliminar', 'url' => ['/permission-manager/remove']],
                             ],
                         ];
         //Logout
