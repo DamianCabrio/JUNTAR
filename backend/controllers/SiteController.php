@@ -15,6 +15,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
     public function behaviors()
     {
         $behaviors['access'] = [
@@ -54,6 +55,7 @@ class SiteController extends Controller
 
         return $behaviors;
     }
+
 
     /**
      * {@inheritdoc}

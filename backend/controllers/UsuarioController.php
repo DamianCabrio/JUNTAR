@@ -18,16 +18,9 @@ class UsuarioController extends Controller
     /**
      * {@inheritdoc}
      */
+
     public function behaviors()
     {
-//        return [
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'delete' => ['POST'],
-//                ],
-//            ],
-//        ];
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -65,6 +58,7 @@ class UsuarioController extends Controller
 
         return $behaviors;
     }
+
 
     /**
      * Lists all Usuario models.
