@@ -123,6 +123,24 @@ class CuentaController extends Controller {
         print_r(Yii::$app->request->post());
         echo "<br><br><br>";
         $model = User::findOne(Yii::$app->user->identity->id);
+
+        if ($model->load(Yii::$app->request->post())) {
+          if ($model->save()) {
+              Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
+                      . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+  //            print_r(Yii::$app->request->post());
+              $hola = $model->save();
+              echo "Pudo guardar los cambios?: ";
+              echo ($hola) ? 'si' : 'no';
+  //            print_r($model->getAttributes());
+  //            $model->__toString();
+  //            return $this->redirect(['profile']);
+            } else {
+              Yii::$app->session->setFlash('error', '<p>Error</p>');
+            }
+        }
+
+
         if (!Yii::$app->request->post()) {
             $model = $this->findModel(Yii::$app->user->identity->id);
         } else {
