@@ -4,7 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
+<<<<<<< HEAD
 /* @var $model common\models\Evento */
+=======
+/* @var $model common\models\evento */
+>>>>>>> c0503ad64a517a0a11aecb6b2fd47fe90b2ea636
 
 $this->title = $model->idEvento;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
