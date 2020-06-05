@@ -408,6 +408,8 @@ ALTER TABLE `usuario_rol`
 
 INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('Administrador', 1, 'Superusuario Administrador', NULL, NULL, 1590382997, 1590382997),
+('cuenta/editprofile', 2, 'Modificar datos del perfil', NULL, NULL, 1591368838, 1591368838),
+('cuenta/profile', 2, 'Perfil de usuario', NULL, NULL, 1591354697, 1591354697),
 ('Organizador', 1, 'Usuario gestor de eventos', NULL, NULL, 1590382997, 1590382997),
 ('permission-manager/create-permission', 2, 'Permite crear un nuevo permiso para la plataforma', NULL, NULL, 1591336656, 1591336656),
 ('permission-manager/create-rol', 2, 'Permite crear un nuevo rol en la plataforma', NULL, NULL, 1591336774, 1591336774),
@@ -420,7 +422,7 @@ INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `crea
 ('site/index', 2, 'Ver el home de la plataforma', NULL, NULL, 1590380545, 1590380545),
 ('site/login', 2, 'Formulario de ingreso', NULL, NULL, 1590380545, 1590380545),
 ('site/logout', 2, 'Desloguearse de la plataforma', NULL, NULL, 1590380545, 1590380545),
-('site/miPerfil', 2, 'Visualizar el perfil', NULL, NULL, 1590380545, 1590380545),
+('site/profile', 2, 'Perfil de usuario', NULL, NULL, 1591353071, 1591353071),
 ('usuario/create', 2, 'Permite un usuario nuevo usuario', NULL, NULL, 1591336605, 1591336605),
 ('usuario/index', 2, 'Permite visualizar todos los usuarios registrados en la plataforma', NULL, NULL, 1591336269, 1591336269),
 ('usuario/update', 2, 'Permite editar los datos de un usuario especifico', NULL, NULL, 1591336346, 1591336346),
@@ -441,6 +443,8 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 ('Administrador', 'usuario/index'),
 ('Administrador', 'usuario/update'),
 ('Administrador', 'usuario/view'),
+('Registrado', 'cuenta/editprofile'),
+('Registrado', 'cuenta/profile'),
 ('Registrado', 'site/about'),
 ('Registrado', 'site/captcha'),
 ('Registrado', 'site/contact'),
@@ -448,7 +452,7 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 ('Registrado', 'site/index'),
 ('Registrado', 'site/login'),
 ('Registrado', 'site/logout'),
-('Registrado', 'site/miPerfil');
+('Registrado', 'site/profile');
 
 
 --
