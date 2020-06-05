@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'telefono')->label('Telefono *'); ?>
                     <?= $form->field($model, 'localidad')->label('Localidad *'); ?>
                     <?= $form->field($model, 'fecha_nacimiento')->input('date')->label('Fecha de Nacimiento *'); ?>
-                    <?php // echo $form->field($model,'fecha_nacimiento')->widget(\yii\jui\DatePicker::className(),['clientOptions' => ['dateFormat' => 'yy-mm-dd']]) ?>
 
                     <?= $form->field($model, 'email')->input('email')->label('Email *'); ?>
                     <?= $form->field($model, 'password')->passwordInput()->label('Contraseña *'); ?>
