@@ -124,8 +124,6 @@ class CuentaController extends Controller {
         echo "<br><br><br>";
         $model = User::findOne(Yii::$app->user->identity->id);
 
-        
-
         if (!Yii::$app->request->post()) {
             $model = $this->findModel(Yii::$app->user->identity->id);
         } else {
