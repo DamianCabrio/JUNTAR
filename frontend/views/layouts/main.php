@@ -37,13 +37,14 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contacto', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
+        $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];
+        //Logout
         $menuItems[] = [
             "label" => "Cerrar Sesión (".Yii::$app->user->identity->nombre.")",
             "url" => ["/site/logout"],

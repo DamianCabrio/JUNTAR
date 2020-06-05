@@ -2,20 +2,22 @@
 
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
-use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
+
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\ResendVerificationEmailForm;
+use frontend\models\VerifyEmailForm;
 
+use Yii;
+use yii\base\InvalidArgumentException;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\captcha\CaptchaAction;
+//use yii\filters\VerbFilter;
 /**
  * Site controller
  */
@@ -25,30 +27,38 @@ class SiteController extends Controller {
      * {@inheritdoc}
      */
     public function behaviors() {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
+        $behaviors['access'] = [
+            //utilizamos el filtro AccessControl
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['login', 'signup', 'error'],
+                    'roles' => ['?'], // <----- guest 
                 ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                    'matchCallback' => function ($rule, $action) {
+//                        $module = Yii::$app->controller->module->id;
+                        $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
+                        $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
+//                        $route = "$module/$controller/$action";
+                        $route = "$controller/$action";                     //generamos la ruta que se busca acceder
+
+//                        $post = Yii::$app->request->post();
+                        //preguntamos si el usuario tiene los permisos para visitar el sitio
+//                        if (Yii::$app->user->can($route, ['post' => $post])) {
+                        if (Yii::$app->user->can($route)) {
+//                            return $this->goHome();
+                            return true;
+                        }
+                    }
                 ],
             ],
         ];
+
+        return $behaviors;
     }
 
     /**
@@ -129,6 +139,32 @@ class SiteController extends Controller {
             return $this->refresh();
         } else {
             return $this->render('contact', [
+                        'model' => $model,
+            ]);
+        }
+    }
+    
+    /**
+     * Displays contact page.
+     *
+     * @return mixed
+     */
+    public function actionContacto() {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('success', '<h2> Consulta Recibida. </h2>'
+                        . '<p> Muchas gracias por ponerte en contacto con Juntar. </p>'
+                        . '<p> Un administrador se pondrá en contacto para responder tus consultas lo más rápido posible! </p>');
+            } else {
+                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2> '
+                        . '<p> Ocurrió un error mientras se enviaba su consulta. Por favor, intentelo nuevamente. </p>'
+                        . '<p> Si cree que es un error del servidor, por favor, contacte con un administrador </p>');
+            }
+
+            return $this->refresh();
+        } else {
+            return $this->render('contacto', [
                         'model' => $model,
             ]);
         }
