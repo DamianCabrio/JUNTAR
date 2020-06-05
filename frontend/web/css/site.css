@@ -118,3 +118,22 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+
+.form-advice{
+    color: #999;
+    /*border: 1px solid black;*/
+}
+
+.showPw{
+    margin-left: -22px;
+}
+
+.bg-profile-sidebar{
+    background-color: rgb(233, 236, 239);
+    /*border: 1px solid black;*/
+}
+
+.profile-sidebar a:hover{
+    background-color: powderblue;
+}

@@ -17,11 +17,8 @@ $this->title = $name;
         <?= nl2br(Html::encode($message)) ?>
     </div>
 
-    <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
+    <p> El error tuvo lugar mientras el servidor web intentaba procesar su petición </p>
+    <p> Si sospecha que el error es un problema del servidor, por favor, pongase en contacto con los administradores. </p>
+    <p> Sepa disculpar las molestias. ¡Muchas gracias! </p>
 
 </div>
