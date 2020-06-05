@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use common\models\User;
 //use frontend\models\PasswordResetRequestForm;
 //use frontend\models\ResetPasswordForm;
-//use frontend\models\SignupForm;
+use frontend\models\SignupForm;
 //use frontend\models\ContactForm;
 //use frontend\models\ResendVerificationEmailForm;
 //use frontend\models\VerifyEmailForm;
@@ -119,30 +119,14 @@ class CuentaController extends Controller {
      * @return mixed
      */
     public function actionEditprofile() {
-        echo "<br><br><br>";
-        print_r(Yii::$app->request->post());
-        echo "<br><br><br>";
-        $model = User::findOne(Yii::$app->user->identity->id);
-        if (!Yii::$app->request->post()) {
-            $model = $this->findModel(Yii::$app->user->identity->id);
-        } else {
-            $model->load(Yii::$app->request->post()); //Falla acá
-        }
-        echo "<br><br><br>";
-        print_r($model->getAttributes());
-        echo "<br><br><br>";
-//        echo $id;
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        if ($model->save()) {
+
+        //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
+        $model = $this->findModel(Yii::$app->user->identity->id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
                     . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
-//            print_r(Yii::$app->request->post());
-            $hola = $model->save();
-            echo "Pudo guardar los cambios?: ";
-            echo ($hola) ? 'si' : 'no';
-//            print_r($model->getAttributes());
-//            $model->__toString();
-//            return $this->redirect(['profile']);
+            return $this->redirect(['profile']);
         }
 
         return $this->render('editprofile', [
