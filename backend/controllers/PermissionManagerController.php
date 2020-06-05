@@ -208,4 +208,39 @@ class PermissionManagerController extends Controller
         ]);
     }
 
+    /**
+     * Elimina un Rol|Permiso|Regla
+     *
+     * @return string
+     */
+    public function actionRemove()
+    {
+      $model = new \yii\base\DynamicModel(['name']);
+      $model->addRule(['name'], 'required');
+      $model->setAttributeLabels(['name' => 'Nombre del Permiso']);
+
+      if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        $delete = null;
+         if (yii::$app->authManager->getRole($model->name) != null ) {
+          $delete = yii::$app->authManager->getRole($model->name);
+         }
+         if (yii::$app->authManager->getPermission($model->name) != null ) {
+          $delete = yii::$app->authManager->getPermission($model->name);
+         }
+         if (yii::$app->authManager->remove($delete)) {
+           Yii::$app->session->setFlash('success', '<p>Se Eliminó <b>'.$model->name.'</b></p>');
+           return $this->redirect(['remove']);
+         } else {
+           Yii::$app->session->setFlash('error', '<p>No es posible eliminar  <b>'.$model->name.'</b></p>');
+         }
+      }
+      $permisions = yii::$app->AuthManager->getRoles();
+      $rol = yii::$app->AuthManager->getPermissions();
+      $remove = ArrayHelper::map(array_merge($permisions, $rol), 'name', 'name');
+      return $this->render('remove', [
+        'model' => $model,
+        'item' => $remove,
+      ]);
+    }
+
 }
