@@ -3,20 +3,19 @@
 namespace frontend\controllers;
 
 use common\models\LoginForm;
-
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
-
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\captcha\CaptchaAction;
+
 //use yii\filters\VerbFilter;
 /**
  * Site controller
@@ -33,7 +32,7 @@ class SiteController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error'],
+                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email'],
                     'roles' => ['?'], // <----- guest 
                 ],
                 [
@@ -45,7 +44,6 @@ class SiteController extends Controller {
                         $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
 //                        $route = "$module/$controller/$action";
                         $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-
 //                        $post = Yii::$app->request->post();
                         //preguntamos si el usuario tiene los permisos para visitar el sitio
 //                        if (Yii::$app->user->can($route, ['post' => $post])) {
@@ -83,6 +81,18 @@ class SiteController extends Controller {
      */
     public function actionIndex() {
         return $this->render('index');
+    }
+
+    /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionProfile() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        return $this->render('profile');
     }
 
     /**
@@ -143,7 +153,7 @@ class SiteController extends Controller {
             ]);
         }
     }
-    
+
     /**
      * Displays contact page.
      *
@@ -294,10 +304,13 @@ class SiteController extends Controller {
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', '<h2> Email de verificación reenviado </h2>'
+                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones para poder activar tu cuenta. </p>');
                 return $this->goHome();
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+            Yii::$app->session->setFlash('error', '<h2> Algo salió mal... </h2>'
+                    . '<p> Lo sentimos, no fuimos capaces de reenviar el email de confirmación a la cuenta ingresada </p>'
+                    . '<p> Si cree que esto se debe a un error en el servidor, por favor, contacte con un administrador </p>');
         }
 
         return $this->render('resendVerificationEmail', [
