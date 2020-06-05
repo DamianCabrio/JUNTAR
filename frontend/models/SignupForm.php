@@ -12,9 +12,13 @@ class SignupForm extends Model
 {
     public $nombre;
     public $apellido;
-    public $showpw;
+    public $dni;
+    public $telefono;
+    public $localidad;
+    public $fecha_nacimiento;
     public $email;
     public $password;
+    public $showpw;
 
 
     /**
@@ -55,11 +59,38 @@ class SignupForm extends Model
         $user = new User();
         $user->nombre = $this->nombre;
         $user->apellido = $this->apellido;
+        $user->dni = $this->dni;
+        $user->telefono = $this->telefono;
+        $user->localidad = $this->localidad;
+        $user->fecha_nacimiento = $this->fecha_nacimiento;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         return $user->save() && $this->sendEmail($user);
+
+    }
+    
+    /**
+     * Signs user up.
+     *
+     * @return bool whether the creating new account was successful and email was sent
+     */
+    public function editProfile()
+    {
+        if (!$this->validate()) {
+            return null;
+        }
+        
+        $user = new User();
+        $user->nombre = $this->nombre;
+        $user->apellido = $this->apellido;
+        $user->dni = $this->dni;
+        $user->telefono = $this->telefono;
+        $user->localidad = $this->localidad;
+        $user->fecha_nacimiento = $this->fecha_nacimiento;
+        $user->email = $this->email;
+        return $user->save();
 
     }
 
