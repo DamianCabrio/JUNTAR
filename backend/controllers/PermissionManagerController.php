@@ -140,5 +140,72 @@ class PermissionManagerController extends Controller
           'model'=>$model,
         ]);
     }
+    /**
+     * Actualiza un Rol definido
+     *
+     * @return string
+     */
+    public function actionUpdateRol()
+    {
+      $model = new \yii\base\DynamicModel([
+        'name', 'description', 'new_name'
+      ]);
+      $model->addRule(['name', 'description', 'new_name'], 'required')
+            ->addRule(['name', 'description', 'new_name'], 'string');
+      $model->setAttributeLabels([
+        'name' => 'Nombre del Rol',
+        'description' => 'Descripción del Rol',
+        'new_name' => 'Nuevo Nombre',
+      ]);
+      $roles = ArrayHelper::map(yii::$app->AuthManager->getRoles(), 'name', 'name');
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+          $update_rol = yii::$app->authManager->createRole($model->new_name);
+          $update_rol->description = $model->description;
+          if (yii::$app->authManager->update($model->name, $update_rol)) {
+            Yii::$app->session->setFlash('success', '<p>Se actulizó el rol: '.$model->name.'</p>');
+            return $this->redirect(['update-rol']);
+          } else {
+            Yii::$app->session->setFlash('error', '<p>Ha ocurrido un error</p>');
+          }
+        }
+
+        return $this->render('update-rol', [
+          'model' => $model,
+          'roles' => $roles,
+        ]);
+    }
+    /**
+     * Actualiza un Permiso definido
+     *
+     * @return string
+     */
+    public function actionUpdatePermission()
+    {
+      $model = new \yii\base\DynamicModel([
+        'name', 'description', 'new_name'
+      ]);
+      $model->addRule(['name', 'description', 'new_name'], 'required')
+            ->addRule(['name', 'description', 'new_name'], 'string');
+      $model->setAttributeLabels([
+        'name' => 'Nombre del Permiso',
+        'description' => 'Descripción del Rol',
+        'new_name' => 'Nuevo Nombre',
+      ]);
+      $permissions = ArrayHelper::map(yii::$app->AuthManager->getPermissions(), 'name', 'name');
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+          $update_permission = yii::$app->authManager->createPermission($model->new_name);
+          $update_permission->description = $model->description;
+          if (yii::$app->authManager->update($model->name, $update_permission)) {
+            Yii::$app->session->setFlash('success', '<p>Se actulizó el Permiso: '.$model->name.'</p>');
+            return $this->redirect(['update-permission']);
+          } else {
+            Yii::$app->session->setFlash('error', '<p>Ha ocurrido un error</p>');
+          }
+        }
+        return $this->render('update-permission', [
+          'model' => $model,
+          'permission' => $permissions,
+        ]);
+    }
 
 }
