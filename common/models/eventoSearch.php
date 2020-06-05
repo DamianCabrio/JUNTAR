@@ -4,12 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\evento;
+use common\models\Evento;
 
 /**
- * eventoSearch represents the model behind the search form of `common\models\evento`.
+ * EventoSearch represents the model behind the search form of `common\models\Evento`.
  */
-class eventoSearch extends evento
+class EventoSearch extends Evento
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class eventoSearch extends evento
      */
     public function search($params)
     {
-        $query = evento::find();
+        $query = Evento::find();
 
         // add conditions that should always apply here
 
