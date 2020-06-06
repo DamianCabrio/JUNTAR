@@ -3,11 +3,8 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-<<<<<<< HEAD
-/* @var $model common\models\Evento */
-=======
-/* @var $model common\models\evento */
->>>>>>> c0503ad64a517a0a11aecb6b2fd47fe90b2ea636
+
+$model = common\models\Evento;
 
 $this->title = 'Create Evento';
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
