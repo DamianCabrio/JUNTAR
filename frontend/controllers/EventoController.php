@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Evento;
 use common\models\EventoSearch;
+use common\models\Inscripcion;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,8 +53,10 @@ class EventoController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+
         ]);
     }
 

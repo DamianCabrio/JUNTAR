@@ -14,10 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if($seGuardo){
+    <?php if ($seGuardo && !$esPreInscripcion) {
+        echo "Se inscribio con exito";
+    } elseif ($esPreInscripcion && $seGuardo) {
         echo "Se preinscribio con exito";
-    }else{
+    } elseif (!$seGuardo) {
         echo "No se preinscribio con exito";
-    }?>
+    }
+    ?>
 
 </div>

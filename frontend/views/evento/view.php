@@ -17,17 +17,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php
-if (!Yii::$app->user->can('Administrador')) {
-    Html::a('Update', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
-    Html::a('Delete', ['delete', 'id' => $model->idEvento], [
-        'class' => 'btn btn-danger',
-        'data' => [
-            'confirm' => 'Are you sure you want to delete this item?',
-            'method' => 'post',
-        ],
-    ]);
-}?>
-        <?= Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']) ?>
+        if (!Yii::$app->user->can('Administrador')) {
+            Html::a('Update', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+            Html::a('Delete', ['delete', 'id' => $model->idEvento], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]);
+        } ?>
+        <?PHP
+        if ($model->preInscripcion == 1) {
+            echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+        } else {
+            echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+        }
+
+        ?>
+
     </p>
 
     <?= DetailView::widget([
@@ -45,7 +53,7 @@ if (!Yii::$app->user->can('Administrador')) {
             'capacidad',
             'preInscripcion',
             'fechaLimiteInscripcion',
-            'fechaDeCreacion',
+            //'fechaDeCreacion',
             'codigoAcreditacion',
         ],
     ]) ?>

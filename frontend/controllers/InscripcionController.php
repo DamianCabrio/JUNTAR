@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Inscripcion;
 use common\models\InscripcionSearch;
+use common\models\Evento;
+use common\models\EventoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,17 +77,27 @@ class InscripcionController extends Controller
         ]);
     }
 
-    public function actionPreinscripcion(){
+    public function actionPreinscripcion()
+    {
         $request = Yii::$app->request;
-         $idEvento = $request->get('id');
-         $inscripcion = new Inscripcion();
-         $inscripcion->idUsuario = Yii::$app->user->identity->idUsuario;
-         $inscripcion->idEvento = $idEvento;
-         $inscripcion->estado = 0;
-         $inscripcion->fecha_preinscripcion = date("Y-m-d");
-         $seGuardo = $inscripcion->save();
-
+        $idEvento = $request->get('id');
+        $inscripcion = new Inscripcion();
+        $inscripcion->idUsuario = Yii::$app->user->identity->idUsuario;
+        $inscripcion->idEvento = $idEvento;
+        $model = Evento::find($idEvento)->select('preInscripcion')->one();
+        $esPreInscripcion = $model->preInscripcion == 1 ? true : false;
+        if ($esPreInscripcion) {
+            $inscripcion->estado = 0;
+            $inscripcion->fecha_preinscripcion = date("Y-m-d");
+        }
+        else{
+            $inscripcion->estado = 1;
+            $inscripcion->fecha_preinscripcion = date("Y-m-d");
+            $inscripcion->fecha_inscripcion = date("Y-m-d");
+        }
+        $seGuardo = $inscripcion->save();
         return $this->render('resultadoInscripcion', [
+            'esPreInscripcion' => $esPreInscripcion,
             'seGuardo' => $seGuardo,
         ]);
     }

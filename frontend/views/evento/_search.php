@@ -39,8 +39,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'fechaLimiteInscripcion') ?>
 
-    <?php // echo $form->field($model, 'fechaDeCreacion') ?>
-
     <?php // echo $form->field($model, 'codigoAcreditacion') ?>
 
     <div class="form-group">

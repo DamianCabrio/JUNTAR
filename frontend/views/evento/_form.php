@@ -34,8 +34,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'fechaLimiteInscripcion')->textInput() ?>
 
-    <?= $form->field($model, 'fechaDeCreacion')->textInput() ?>
-
     <?= $form->field($model, 'codigoAcreditacion')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

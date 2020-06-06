@@ -19,7 +19,6 @@ use Yii;
  * @property int $capacidad
  * @property int $preInscripcion
  * @property string $fechaLimiteInscripcion
- * @property string $fechaDeCreacion
  * @property string|null $codigoAcreditacion
  *
  * @property Fecha[] $fechas
@@ -45,7 +44,7 @@ class Evento extends \yii\db\ActiveRecord
         return [
             [['idUsuario', 'nombreEvento', 'descripcionEvento', 'lugar', 'modalidad', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion'], 'required'],
             [['idUsuario', 'capacidad', 'preInscripcion'], 'integer'],
-            [['fechaLimiteInscripcion', 'fechaDeCreacion'], 'safe'],
+            [['fechaLimiteInscripcion'], 'safe'],
             [['nombreEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
             [['descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo'], 'string', 'max' => 200],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
@@ -70,7 +69,6 @@ class Evento extends \yii\db\ActiveRecord
             'capacidad' => 'Capacidad',
             'preInscripcion' => 'Pre Inscripcion',
             'fechaLimiteInscripcion' => 'Fecha Limite Inscripcion',
-            'fechaDeCreacion' => 'Fecha De Creacion',
             'codigoAcreditacion' => 'Codigo Acreditacion',
         ];
     }
