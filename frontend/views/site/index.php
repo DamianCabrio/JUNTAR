@@ -17,8 +17,8 @@ $this->title = 'Proyecto Juntar';
     </div>
 
     <div class="body-content">
-
-        <?= Html::a('Ir a evento', ['/controller/action'], ['class'=>'btn btn-primary'])?>
+        <? $url = Url::to([""]) ?>
+        <?= Html::a($eventos[0]["nombreEvento"], ['/evento/view', "id" => $eventos[0]["idEvento"]], ['class'=>'btn btn-primary'])?>
         
     </div>
 </div>

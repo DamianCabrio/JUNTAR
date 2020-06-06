@@ -1,6 +1,6 @@
 <?php
 
-namespace common\controllers;
+namespace frontend\controllers;
 
 use Yii;
 use common\models\Evento;
