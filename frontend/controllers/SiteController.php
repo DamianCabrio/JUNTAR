@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\LoginForm;
+use common\models\Evento;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -80,7 +81,8 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        return $this->render('index');
+        $eventos = Evento::find()->orderBy("fechaDeCreacion")->limit(6)->all();
+        return $this->render('index', ["eventos" => $eventos]);
     }
 
     /**

@@ -4,9 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-
-$model = common\models\EventoSearch;
-$form = yii\widgets\ActiveForm;
+/* @var $model common\models\EventoSearch */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="evento-search">
@@ -39,6 +38,8 @@ $form = yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'preInscripcion') ?>
 
     <?php // echo $form->field($model, 'fechaLimiteInscripcion') ?>
+
+    <?php // echo $form->field($model, 'fechaDeCreacion') ?>
 
     <?php // echo $form->field($model, 'codigoAcreditacion') ?>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\controllers;
+namespace frontend\controllers;
 
 use Yii;
 use common\models\Inscripcion;
@@ -72,6 +72,21 @@ class InscripcionController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionPreinscripcion(){
+        $request = Yii::$app->request;
+         $idEvento = $request->get('id');
+         $inscripcion = new Inscripcion();
+         $inscripcion->idUsuario = Yii::$app->user->identity->idUsuario;
+         $inscripcion->idEvento = $idEvento;
+         $inscripcion->estado = 0;
+         $inscripcion->fecha_preinscripcion = date("Y-m-d");
+         $seGuardo = $inscripcion->save();
+
+        return $this->render('resultadoInscripcion', [
+            'seGuardo' => $seGuardo,
         ]);
     }
 

@@ -4,8 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-
-$model = common\models\Evento;
+/* @var $model common\models\Evento */
 
 $this->title = $model->idEvento;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
@@ -17,14 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idEvento], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php
+if (!Yii::$app->user->can('Administrador')) {
+    Html::a('Update', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+    Html::a('Delete', ['delete', 'id' => $model->idEvento], [
+        'class' => 'btn btn-danger',
+        'data' => [
+            'confirm' => 'Are you sure you want to delete this item?',
+            'method' => 'post',
+        ],
+    ]);
+}?>
+        <?= Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -42,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'capacidad',
             'preInscripcion',
             'fechaLimiteInscripcion',
+            'fechaDeCreacion',
             'codigoAcreditacion',
         ],
     ]) ?>
