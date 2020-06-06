@@ -124,4 +124,19 @@ class FechaController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    public function actionFormFecha()
+    {
+        $model = new \frontend\models\Fecha();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+
+        return $this->render('formFecha', [
+            'model' => $model,
+        ]);
+    }
 }

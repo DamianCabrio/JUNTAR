@@ -124,4 +124,22 @@ class EventoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionFormEvento()
+{
+    $model = new Evento();
+
+    if ($model->load(Yii::$app->request->post())&& $model->save()) {
+        if ($model->validate()) {
+            // form inputs are valid, do something here
+            return $this->redirect(['view', 'id' => $model->idEvento]);
+        }
+    }
+
+    return $this->render('formEvento', [
+        'model' => $model,
+    ]);
+}
+
+
 }

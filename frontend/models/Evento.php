@@ -13,6 +13,8 @@ use backend\models\Usuario;
  * @property string $nombreEvento
  * @property string $descripcionEvento
  * @property string $lugar
+ * @property string $fechaInicio
+ * @property string $fechaFin
  * @property string $modalidad
  * @property string|null $linkPresentaciones
  * @property string|null $linkFlyer
@@ -25,7 +27,7 @@ use backend\models\Usuario;
  * @property Fecha[] $fechas
  * @property Usuario $idUsuario0
  * @property Inscripcion[] $inscripcions
- * @property Presentacion $presentacion
+ * @property Presentacion[] $presentacions
  */
 class Evento extends \yii\db\ActiveRecord
 {
@@ -43,9 +45,9 @@ class Evento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idUsuario', 'nombreEvento', 'descripcionEvento', 'lugar', 'modalidad', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion'], 'required'],
+            [['idUsuario', 'nombreEvento', 'descripcionEvento', 'lugar', 'fechaInicio', 'fechaFin', 'modalidad', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion'], 'required'],
             [['idUsuario', 'capacidad', 'preInscripcion'], 'integer'],
-            [['fechaLimiteInscripcion'], 'safe'],
+            [['fechaInicio', 'fechaFin', 'fechaLimiteInscripcion'], 'safe'],
             [['nombreEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
             [['descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo'], 'string', 'max' => 200],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
@@ -63,6 +65,8 @@ class Evento extends \yii\db\ActiveRecord
             'nombreEvento' => 'Nombre Evento',
             'descripcionEvento' => 'Descripcion Evento',
             'lugar' => 'Lugar',
+            'fechaInicio' => 'Fecha Inicio',
+            'fechaFin' => 'Fecha Fin',
             'modalidad' => 'Modalidad',
             'linkPresentaciones' => 'Link Presentaciones',
             'linkFlyer' => 'Link Flyer',
@@ -105,12 +109,12 @@ class Evento extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Presentacion]].
+     * Gets query for [[Presentacions]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPresentacion()
+    public function getPresentacions()
     {
-        return $this->hasOne(Presentacion::className(), ['idEvento' => 'idEvento']);
+        return $this->hasMany(Presentacion::className(), ['idEvento' => 'idEvento']);
     }
 }

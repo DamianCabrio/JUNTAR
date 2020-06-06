@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombreEvento',
             'descripcionEvento',
             'lugar',
+            'fechaInicio',
+            'fechaFin',
             'modalidad',
             'linkPresentaciones',
             'linkFlyer',

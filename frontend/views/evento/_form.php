@@ -20,6 +20,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'lugar')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'fechaInicio')->textInput() ?>
+
+    <?= $form->field($model, 'fechaFin')->textInput() ?>
+
     <?= $form->field($model, 'modalidad')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'linkPresentaciones')->textInput(['maxlength' => true]) ?>
