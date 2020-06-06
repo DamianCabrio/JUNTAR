@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\bootstrap4\Html;
+
 $this->title = 'Proyecto Juntar';
 ?>
 <div class="site-index">
@@ -16,6 +18,7 @@ $this->title = 'Proyecto Juntar';
 
     <div class="body-content">
 
+        <?= Html::a('Ir a evento', ['/controller/action'], ['class'=>'btn btn-primary'])?>
         
     </div>
 </div>

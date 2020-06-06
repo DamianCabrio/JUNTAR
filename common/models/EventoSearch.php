@@ -18,7 +18,7 @@ class EventoSearch extends Evento
     {
         return [
             [['idEvento', 'idUsuario', 'capacidad', 'preInscripcion'], 'integer'],
-            [['nombreEvento', 'descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo', 'fechaLimiteInscripcion', 'codigoAcreditacion'], 'safe'],
+            [['nombreEvento', 'descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo', 'fechaLimiteInscripcion', 'fechaDeCreacion', 'codigoAcreditacion'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class EventoSearch extends Evento
             'capacidad' => $this->capacidad,
             'preInscripcion' => $this->preInscripcion,
             'fechaLimiteInscripcion' => $this->fechaLimiteInscripcion,
+            'fechaDeCreacion' => $this->fechaDeCreacion,
         ]);
 
         $query->andFilterWhere(['like', 'nombreEvento', $this->nombreEvento])

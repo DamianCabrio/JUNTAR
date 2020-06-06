@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'capacidad',
             //'preInscripcion',
             //'fechaLimiteInscripcion',
+            //'fechaDeCreacion',
             //'codigoAcreditacion',
 
             ['class' => 'yii\grid\ActionColumn'],

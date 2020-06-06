@@ -4,9 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-
-$model = common\models\Evento;
-$form = yii\widgets\ActiveForm;
+/* @var $model common\models\Evento */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="evento-form">
@@ -34,6 +33,8 @@ $form = yii\widgets\ActiveForm;
     <?= $form->field($model, 'preInscripcion')->textInput() ?>
 
     <?= $form->field($model, 'fechaLimiteInscripcion')->textInput() ?>
+
+    <?= $form->field($model, 'fechaDeCreacion')->textInput() ?>
 
     <?= $form->field($model, 'codigoAcreditacion')->textInput(['maxlength' => true]) ?>
 
