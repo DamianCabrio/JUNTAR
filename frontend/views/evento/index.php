@@ -4,11 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-<<<<<<< HEAD
 /* @var $searchModel common\models\EventoSearch */
-=======
-/* @var $searchModel common\models\eventoSearch */
->>>>>>> c0503ad64a517a0a11aecb6b2fd47fe90b2ea636
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Eventos';
