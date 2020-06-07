@@ -165,7 +165,7 @@ class EventoController extends Controller
         $evento= Evento::findOne($idEvento);
         $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
         
-        return $this->render('presentacionesEvento', [
+        return $this->render('informacionEvento', [
             'evento'=>$evento,
             'presentacion' => $presentaciones
         ]);

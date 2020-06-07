@@ -10,12 +10,12 @@ if ($evento->linkPresentaciones != null) {
 }
 
 if ($evento->linkFlyer != null) {
-    $flyer = $evento->linkFlyer;
+    $flyer = "<a href=".$evento->linkFlyer.">".$evento->linkFlyer."</a>";
 } else {
     $flyer = "No disponible";
 }
 if ($evento->linkLogo != null) {
-    $logo = $evento->linkLogo;
+    $logo = "<a href=".$evento->linkLogo.">".$evento->linkLogo."</a>";
 } else {
     $logo = "No disponible";
 }
@@ -34,8 +34,6 @@ if ($evento->codigoAcreditacion != null) {
 /* @var $model frontend\models\Presentacion */
 
 $this->title = $evento->nombreEvento;
-$this->params['breadcrumbs'][] = ['label' => 'Presentacions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="presentacion-view">
@@ -77,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $flyer ?></td>
             </tr>
             <tr>
-                <th scope="col">Logo</th>
+                <th scope="col">Link Logo</th>
                 <td><?= $logo ?></td>
             </tr>
             <tr>

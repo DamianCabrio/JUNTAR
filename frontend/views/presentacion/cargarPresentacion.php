@@ -23,9 +23,10 @@ use frontend\models\Evento;
             <!-- Select de los eventos creados por el usuario -->
             <?php
             $idUsuario = Yii::$app->user->identity->idUsuario;
-            $item = Evento::find($idUsuario)     //buscar los eventos del usuario              
+            $item = Evento::find()     //buscar los eventos del usuario              
                 ->select(['nombreEvento'])
                 ->indexBy('idEvento')
+                ->where(['idUsuario' => $idUsuario])
                 ->column();
             ?>
             <?= $form->field($model, 'idEvento')->dropdownList($item,  ['prompt' => 'Sus eventos'])->label('Seleccione un evento *');

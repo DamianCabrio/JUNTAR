@@ -134,7 +134,7 @@ class PresentacionController extends Controller
     {
         return $this->render('cargarPresentacion');
     }
-    public function actionHola($id, $idExpo, $idEvento)
+    public function actionMostrarPresentacion($id, $idExpo, $idEvento)
     {
         $objExpo = Expositor::findOne($idExpo);
         $objEvento = Evento::findOne($idEvento);
@@ -156,7 +156,7 @@ class PresentacionController extends Controller
                 $preExpo->idExpositor = $expo->idExpositor;
                 $preExpo->idPresentacion = $model->idPresentacion;
                 $preExpo->save();
-                return $this->redirect(['hola', 'id' => $model->idPresentacion, 'idExpo' => $expo->idExpositor, 'idEvento' => $model->idEvento]);
+                return $this->redirect(['mostrar-presentacion', 'id' => $model->idPresentacion, 'idExpo' => $expo->idExpositor, 'idEvento' => $model->idEvento]);
             }
         }
 
