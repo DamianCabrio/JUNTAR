@@ -119,3 +119,15 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.filter-red{
+    filter: invert(9%) sepia(95%) saturate(6904%) hue-rotate(2deg) brightness(124%) contrast(112%);
+}
+
+.filter-green{
+    filter: invert(20%) sepia(94%) saturate(5910%) hue-rotate(122deg) brightness(97%) contrast(104%);
+}
+
+.filter-blue{
+    filter: invert(49%) sepia(98%) saturate(324%) hue-rotate(159deg) brightness(88%) contrast(97%);
+}

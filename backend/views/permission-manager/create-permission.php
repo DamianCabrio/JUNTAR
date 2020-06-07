@@ -15,12 +15,12 @@ use yii\helpers\Html;
         <div class="rol-create">
 
             
-            <h1><?= Html::encode($this->title) ?></h1>
+            <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
             <?=
             $this->render('_rolForm', [
                 'model' => $model,
-                'permissions' => $permissions,
+                'permisos' => $permisos,
             ])
             ?>
         </div>
