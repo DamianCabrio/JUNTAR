@@ -141,5 +141,19 @@ class CuentaController extends Controller {
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+     public function actionChangeRol($id)
+     {
+       $organizateRol = yii::$app->authManager->getRole('Organizador');
+       if (yii::$app->authManager->getAssignment('Organizador', $id ) == null) {
+         yii::$app->authManager->assign($organizateRol, $id);
+         Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
+       }
+       return $this->redirect(['profile']);
+     }
 
 }
