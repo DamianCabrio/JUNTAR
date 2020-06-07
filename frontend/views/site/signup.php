@@ -24,11 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="form-group">
                     <?= $form->field($model, 'nombre')->label('Nombre *') ?>
                     <?= $form->field($model, 'apellido')->label('Apellido *') ?>
-                    <?= $form->field($model, 'dni')->input('number')->label('DNI *'); ?>
-                    <?= $form->field($model, 'telefono')->label('Telefono *'); ?>
+                    <?= $form->field($model, 'dni')->label('DNI *'); ?>
                     <?= $form->field($model, 'localidad')->label('Localidad *'); ?>
-                    <?= $form->field($model, 'fecha_nacimiento')->input('date')->label('Fecha de Nacimiento *'); ?>
-
                     <?= $form->field($model, 'email')->input('email')->label('Email *'); ?>
                     <?= $form->field($model, 'password')->passwordInput()->label('Contraseña *'); ?>
                     <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label('Mostrar Contraseña') ?>

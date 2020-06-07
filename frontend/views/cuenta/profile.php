@@ -26,7 +26,7 @@ $dataUser = array_shift($data);
             <li class="nav-item profile-sidebar col-12">
                 <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Desactivar mi Cuenta </a>
             </li>
-            <li class="nav-item profile-sidebar col-12">
+            <li class="nav-item mt-2 profile-sidebar col-12">
               <?php $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
               <?php if (!$assigned): ?>
                 <?= Html::a("Ser un Gestor de Eventos",
@@ -44,7 +44,7 @@ $dataUser = array_shift($data);
 
             <!-- Profile Card Header -->
             <div class="card-header">
-                <div class="row"> 
+                <div class="row">
                     <h4 class="col-md-9 col-sm-12">Perfil de <?= Html::encode($dataUser['nombre'] . ' ' . $dataUser['apellido']); ?> </h4>
                     <?=
                     Html::a(' Editar Perfil '
