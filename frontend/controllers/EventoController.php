@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use frontend\models\Presentacion;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -145,6 +146,28 @@ class EventoController extends Controller
 
         return $this->render('eventoCargado', [
             'model' => $this->findModel($idEvento),
+        ]);
+    }
+
+    /**
+     * Accion para obtener una lista de todos los eventos perteneciente al usuario.
+     * 
+     */
+    public function actionListarEventos()
+    {
+
+        $idUsuario = Yii::$app->user->identity->idUsuario;
+        $listaEventos = Evento::find()->where(['idUsuario' => $idUsuario])->orderBy('idEvento')->all();
+        return $this->render('listarEventos', ['model' => $listaEventos]);
+    }
+    public function actionInformacionEvento($idEvento)
+    {
+        $evento= Evento::findOne($idEvento);
+        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
+        
+        return $this->render('presentacionesEvento', [
+            'evento'=>$evento,
+            'presentacion' => $presentaciones
         ]);
     }
 }
