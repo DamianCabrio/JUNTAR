@@ -109,9 +109,8 @@ class InscripcionController extends Controller
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
 
-        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->id(), "idEvento" => $idEvento]);
-        $inscripcion->estado = 2;
-        $seElimino = $inscripcion->save();
+        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])->one();
+        $seElimino = $inscripcion->delete();
 
         return $this->render('resultadoDesinscripcion', [
             'seElimino' => $seElimino,
@@ -165,6 +164,6 @@ class InscripcionController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La pagina no existe.');
     }
 }
