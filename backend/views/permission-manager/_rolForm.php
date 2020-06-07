@@ -10,10 +10,10 @@ use yii\bootstrap4\ActiveForm;
     <div class="rol-form">
 
         <?php $form = ActiveForm::begin(); ?>
-        <?php echo $form->field($model, 'name')->dropDownList($permissions, ['class' => 'form-control permissionName' ] ) ?>
+        <?php echo $form->field($model, 'name')->dropDownList($permisos, ['class' => 'form-control permissionName' ] ) ?>
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
         <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'assignValueFirst btn btn-success']) ?>
+            <?= Html::submitButton('Registrar Permiso', ['class' => 'assignValueFirst btn btn-primary']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

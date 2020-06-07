@@ -71,10 +71,10 @@ class PermissionManagerController extends Controller {
     public function actionIndex() {
         // Se obtiene todos los roles que estan creados.
         $roles = yii::$app->authManager->getRoles();
-        $permissions = yii::$app->authManager->getPermissions();
+        $permisos = yii::$app->authManager->getPermissions();
         return $this->render('index', [
                     'roles' => $roles,
-                    'permissions' => $permissions,
+                    'permisos' => $permisos,
         ]);
     }
 
@@ -147,25 +147,14 @@ class PermissionManagerController extends Controller {
         ]);
 
         //obtenemos las vistas de todo el sitio
-        $permissions = [];
-        $permissions = $this->actionListMissingPermissions('backend', $permissions);
-        $permissions = $this->actionListMissingPermissions('frontend', $permissions);
+        $permisosSitio = [];
+        $permisosSitio = $this->actionListMissingPermissions('backend', $permisosSitio);
+        $permisosSitio = $this->actionListMissingPermissions('frontend', $permisosSitio);
 
-        //obtenemos los permisos asignados en la DB
-        $queryPermisos = (new \yii\db\Query())
-                //campos seleccionados
-                ->select(['name'])
-                //tabla
-                ->from('permiso')
-                //condicion
-                ->where(['type' => 2]);
-        $permisos = $queryPermisos->all();
+        $permisosDB = $this->actionListSignedPermissions();
 
-        foreach ($permisos as $key => $unPermiso) {
-            $permisos[$key] = array_shift($unPermiso);
-        }
         //filtramos que los arreglos no existan en la DB
-        $permisosFiltered = array_diff($permissions, $permisos);
+        $permisosNotSigned = array_diff($permisosSitio, $permisosDB);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if (yii::$app->authManager->getRole($model->name) == null) {
@@ -183,7 +172,7 @@ class PermissionManagerController extends Controller {
 //        return $this->render('createPermission', [
         return $this->render('create-permission', [
                     'model' => $model,
-                    'permissions' => $permisosFiltered,
+                    'permisos' => $permisosNotSigned,
         ]);
     }
 
@@ -267,6 +256,23 @@ class PermissionManagerController extends Controller {
             }
         }
         return $actions;
+    }
+
+    private function actionListSignedPermissions() {
+        //obtenemos los permisos asignados en la DB
+        $queryPermisos = (new \yii\db\Query())
+                //campos seleccionados
+                ->select(['name'])
+                //tabla
+                ->from('permiso')
+                //condicion
+                ->where(['type' => 2]);
+        $permisos = $queryPermisos->all();
+
+        foreach ($permisos as $key => $unPermiso) {
+            $permisos[$key] = array_shift($unPermiso);
+        }
+        return $permisos;
     }
 
     /**
