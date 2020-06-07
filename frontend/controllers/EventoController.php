@@ -125,21 +125,26 @@ class EventoController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionFormEvento()
-{
-    $model = new Evento();
+    /**
+     * Accion para la carga de un nuevo envento a traves de un formulario.
+     * Una ves cargado el evento, se visualiza los datos que se han cargado desde una vista.
+     */
+    public function actionCargarEvento()
+    {
 
-    if ($model->load(Yii::$app->request->post())&& $model->save()) {
-        if ($model->validate()) {
-            // form inputs are valid, do something here
-            return $this->redirect(['view', 'id' => $model->idEvento]);
+        $model = new Evento();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['mostrar-evento', 'idEvento' => $model->idEvento]);
         }
+        return $this->render('cargarEvento', ['model' => $model]);
     }
 
-    return $this->render('formEvento', [
-        'model' => $model,
-    ]);
-}
+    public function actionMostrarEvento($idEvento)
+    {
 
-
+        return $this->render('eventoCargado', [
+            'model' => $this->findModel($idEvento),
+        ]);
+    }
 }

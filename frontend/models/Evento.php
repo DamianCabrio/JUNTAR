@@ -45,7 +45,7 @@ class Evento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idUsuario', 'nombreEvento', 'descripcionEvento', 'lugar', 'fechaInicio', 'fechaFin', 'modalidad', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion'], 'required'],
+            [['idUsuario', 'nombreEvento', 'descripcionEvento', 'lugar', 'fechaInicio', 'fechaFin', 'modalidad', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion','fechaInicio','fechaFin'], 'required'],
             [['idUsuario', 'capacidad', 'preInscripcion'], 'integer'],
             [['fechaInicio', 'fechaFin', 'fechaLimiteInscripcion'], 'safe'],
             [['nombreEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
