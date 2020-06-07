@@ -34,7 +34,7 @@ if ($model->codigoAcreditacion != null) {
 
 ?>
 <div class="container">
-    <h4 class="text-center">Evento cargado</h4>
+    <h2 class="text-center">Evento cargado</h2>
     <div class="p-3 mb-2 bg-success text-white text-center">
         Su evento ha sido cargado exitosamente con los siguientes datos
     </div>
