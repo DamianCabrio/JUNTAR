@@ -22,5 +22,15 @@ $(document).ready(function () {
         } else {
             $('#loginform-password').attr("type", "password");
         }
+        
+        //verificamos si viene por resetPassword y cambiamos el tipo de campo
+        type = $('#resetpasswordform-password').attr("type");
+        if (type !== null && type === 'password') {
+            $('#resetpasswordform-password').attr("type", "text");
+        } else {
+            $('#resetpasswordform-password').attr("type", "password");
+        }
+        
+        
     });
 });

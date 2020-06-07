@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use Yii;
@@ -8,8 +9,8 @@ use common\models\User;
 /**
  * Signup form
  */
-class SignupForm extends Model
-{
+class SignupForm extends Model {
+
     public $nombre;
     public $apellido;
     public $dni;
@@ -20,28 +21,53 @@ class SignupForm extends Model
     public $password;
     public $showpw;
 
-
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-//            ['username', 'trim'],
-//            ['username', 'required'],
-//            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-//            ['username', 'string', 'min' => 2, 'max' => 255],
-            [['nombre', 'apellido', 'email', 'localidad', 'dni'] , 'required'],
-
-            ['dni', 'integer', 'min' => 6],
-
+            //Obligatorio
+            [['nombre', 'apellido', 'email', 'localidad', 'dni', 'password'], 'required'],
+            
+            //Reglas nombre
+            ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['nombre', 'string', 'min' => 2, 'max' => 14,
+                //comentario para minlenght
+                'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
+                //comentario para maxLenght
+                'tooLong' => 'El nombre puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
+            
+            //Reglas apellido
+            ['apellido', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['apellido', 'string', 'min' => 2, 'max' => 14,
+                //comentario para minlenght
+                'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
+                //comentario para maxLenght
+                'tooLong' => 'El apellido puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
+            
+            //Reglas localidad
+            ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['localidad', 'string', 'min' => 2, 'max' => 25,
+                //comentario para minlenght
+                'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
+                //comentario para maxLenght
+                'tooLong' => 'El apellido puede tener como máximo 25 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
+            
+            //Reglas DNI
+            ['dni', 'integer', 'min' => 10000000, 'max' => 100000000],
+            
+            //Reglas Email
             ['email', 'trim'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            
+            //Reglas password
+            ['password', 'match', 'pattern' => '/\d/', 'message' => 'La contraseña debe tener al menos un número.'],
+            ['password', 'match', 'pattern' => '/\w*[A-Z]/', 'message' => 'La contraseña debe tener al menos una mayúscula.'],
+            ['password', 'string', 'min' => 8, 'max' => 50, 'message' => 'La contraseña ingresada no es válida.',
+                'tooShort' => 'La contraseña debe tener como mínimo 8 caracteres.', //comentario para minlenght
+                'tooLong' => 'La contraseña debe tener como máximo 20 caracteres.'], //comentario para maxlenght
         ];
     }
 
@@ -50,8 +76,7 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup()
-    {
+    public function signup() {
         if (!$this->validate()) {
             return null;
         }
@@ -68,7 +93,6 @@ class SignupForm extends Model
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         return $user->save() && $this->sendEmail($user);
-
     }
 
     /**
@@ -76,17 +100,17 @@ class SignupForm extends Model
      * @param User $user user model to with email should be send
      * @return bool whether the email was sent
      */
-    protected function sendEmail($user)
-    {
+    protected function sendEmail($user) {
         return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Registro de cuenta en ' . Yii::$app->name)
-            ->send();
+                        ->mailer
+                        ->compose(
+                                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                                ['user' => $user]
+                        )
+                        ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                        ->setTo($this->email)
+                        ->setSubject('Registro de cuenta en ' . Yii::$app->name)
+                        ->send();
     }
+
 }

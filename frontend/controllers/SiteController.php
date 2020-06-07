@@ -32,7 +32,7 @@ class SiteController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email', 'verify-email'],
+                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email', 'verify-email', 'reset-password'],
                     'roles' => ['?'], // <----- guest
                 ],
                 [

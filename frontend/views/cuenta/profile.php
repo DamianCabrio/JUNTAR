@@ -82,14 +82,14 @@ $dataUser = array_shift($data);
                                     <th> DNI: </td>
                                     <td> <?php echo Html::encode($dataUser['dni']); ?> </td>
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <th> Fecha Nacimiento: </td>
                                     <td> <?php echo Html::encode($dataUser['fecha_nacimiento']); ?> </td>
                                 </tr>
                                 <tr>
                                     <th> Teléfono: </td>
                                     <td> <?php echo Html::encode($dataUser['telefono']); ?> </td>
-                                </tr>
+                                </tr>-->
                                 <tr>
                                     <th> Localidad: </td>
                                     <td> <?php echo Html::encode($dataUser['localidad']); ?> </td>
