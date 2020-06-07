@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="presentacion-view">
 
-    
+
 
     <p>
         <?= Html::a('Cargar nueva Presentacion', ['cargar-presentacion'], ['class' => 'btn btn-primary']) ?>
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2 class="text-center"> Presentacion <?= $model->tituloPresentacion ?> </h2>
     <p class="text-center">Muestra de presentacion recien cargada</p>
     <table class="table table-striped">
-        
+
         <tbody>
             <tr>
                 <th scope="col">Evento</th>
@@ -49,10 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2 class="text-center"> Expositor</h2>
     <p class="text-center">Expositores asignados para la presentacion</p>
     <table class="table table-striped">
-        
+
         <tbody>
             <tr>
-                
+
                 <th scope="col">Nombre Expositor</th>
                 <td><?= $expo->nombre ?></td>
             </tr>

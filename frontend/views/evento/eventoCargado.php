@@ -102,11 +102,13 @@ if ($model->codigoAcreditacion != null) {
         <hr>
 
         <div class="">
-            
+
             <br>
             <div class="d-flex justify-content-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-outline-success p-3"><h4 class="text-center"> ¿Agregar presentaciones al evento?</h4></button>
+                    <button type="button" class="btn btn-outline-success p-3">
+                        <h4 class="text-center"> ¿Agregar presentaciones al evento?</h4>
+                    </button>
                 </div>
             </div>
         </div>
