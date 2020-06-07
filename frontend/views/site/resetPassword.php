@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
 /* @var $model \frontend\models\ResetPasswordForm */
@@ -19,11 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5 m-auto">
             <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
 
-                <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label("Mostrar Contraseña") ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
-                </div>
+            <div class="form-group">
+                <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
+            </div>
 
             <?php ActiveForm::end(); ?>
         </div>
