@@ -17,8 +17,9 @@ $this->title = 'Proyecto Juntar';
     </div>
 
     <div class="body-content">
-        <? $url = Url::to([""]) ?>
-        <?= Html::a($eventos[0]["nombreEvento"], ['/evento/view', "id" => $eventos[0]["idEvento"]], ['class'=>'btn btn-primary'])?>
+        <?php foreach ($eventos as $evento){
+        echo Html::a($evento["nombreEvento"], ['/evento/view', "id" => $evento["idEvento"]], ['class' => 'btn btn-primary m-2']);
+        } ?>
         
     </div>
 </div>

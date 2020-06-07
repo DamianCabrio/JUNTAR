@@ -54,9 +54,16 @@ class EventoController extends Controller
     public function actionView($id)
     {
 
+        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
+
+        $yaInscripto = false;
+        if(count($inscripcion) == 1){
+            $yaInscripto = true;
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
-
+            "yaInscripto" => $yaInscripto,
         ]);
     }
 

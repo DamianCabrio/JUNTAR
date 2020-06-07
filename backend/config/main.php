@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'timeZone' => 'America/Argentina/Buenos_Aires',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

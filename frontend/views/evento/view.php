@@ -28,12 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
         } ?>
         <?PHP
-        if ($model->preInscripcion == 1) {
-            echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
-        } else {
-            echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+        if(!$yaInscripto){
+            if ($model->preInscripcion == 1 && $model->fechaLimiteInscripcion >= date("Y-m-d")) {
+                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+            } else if ($model->preInscripcion == 0) {
+                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+            }
+        }else{
+            echo Html::a('Desinscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
         }
-
         ?>
 
     </p>
