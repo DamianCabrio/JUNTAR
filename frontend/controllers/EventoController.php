@@ -59,15 +59,17 @@ class EventoController extends Controller
         $fechaEvento = Fecha::find()->where(["idEvento" => $id])->orderBy(["fecha" => "ASC"])->one();
 
         $yaInscripto = false;
+        $yaAcreditado = 0;
         if(count($inscripcion) == 1){
             $yaInscripto = true;
+            $yaAcreditado = $inscripcion[0]["acreditacion"];
         }
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             "fechaEvento" => $fechaEvento,
             "yaInscripto" => $yaInscripto,
-            "acreditacion" => $inscripcion[0]["acreditacion"],
+            "acreditacion" => $yaAcreditado,
         ]);
     }
 
