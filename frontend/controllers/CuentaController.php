@@ -2,21 +2,12 @@
 
 namespace frontend\controllers;
 
-use common\models\User;
-//use frontend\models\PasswordResetRequestForm;
-//use frontend\models\ResetPasswordForm;
+
+use frontend\models\Usuario;
 use frontend\models\SignupForm;
-//use frontend\models\ContactForm;
-//use frontend\models\ResendVerificationEmailForm;
-//use frontend\models\VerifyEmailForm;
 use Yii;
-//use yii\base\InvalidArgumentException;
-//use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-
-//use yii\captcha\CaptchaAction;
-//use yii\filters\VerbFilter;
 /**
  * Site controller
  */
@@ -78,14 +69,21 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $model = new User();
+        $model = new Usuario();
         $queryUser = (new \yii\db\Query())
-                ->select(['nombre, apellido, dni, fecha_nacimiento, telefono, localidad, email, (usuario_rol.item_name) as rol'])          //parametros seleccionados
-                //                    ->distinct('jugador.posicion')
-                ->from('usuario')                                                                   //tabla
-                ->innerJoin('usuario_rol', 'usuario_rol.user_id = usuario.idUsuario')               //relacion entre tablas
-                ->where(['idUsuario' => Yii::$app->user->identity->id]);                                //condicion: 
-        //                    ->groupBy(['jugador.posicion']);                    //agrupamiento
+                //campos buscados
+                ->select(['nombre, apellido, dni, fecha_nacimiento, telefono, localidad, email, (usuario_rol.item_name) as rol'])
+                //distintos en
+                //->distinct('jugador.posicion')
+                //tabla
+                ->from('usuario')
+                //relacion entre tablas
+                ->innerJoin('usuario_rol', 'usuario_rol.user_id = usuario.idUsuario')
+                //condicion
+                ->where(['idUsuario' => Yii::$app->user->identity->id]);
+                //Agrupamiento
+                //->groupBy(['jugador.posicion']);
+                
         //obtenemos el array asociativo a partir de la query
         $userData = $queryUser->all();
 
@@ -135,12 +133,14 @@ class CuentaController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Usuario::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    
+    
     /**
      * Habilitar ser gestor de eventos.
      * @param int $id identificador del usuario.
