@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'language' => "es_AR",
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

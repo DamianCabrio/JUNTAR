@@ -6,6 +6,7 @@ return [
         '@npm' => '@vendor/npm-asset',
     ],
     'name' => 'Juntar',
+    'language' => "es_AR",
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'cache' => [

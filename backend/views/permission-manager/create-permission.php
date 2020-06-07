@@ -6,19 +6,23 @@ use yii\helpers\Html;
 /* @var $model app\models\Usuario */
 ?>
 <div class="row">
-  <div class="col-6 col  offset-3">
-<?php
-$this->title = 'Crear nuevo Permiso';
-$this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="rol-create">
+    <div class="col-6 col  offset-3">
+        <?php
+        $this->title = 'Crear nuevo Permiso';
+        $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
+        $this->params['breadcrumbs'][] = $this->title;
+        ?>
+        <div class="rol-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+            
+            <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_rolForm', [
-        'model' => $model,
-    ]) ?>
-</div>
-</div>
+            <?=
+            $this->render('_rolForm', [
+                'model' => $model,
+                'permissions' => $permissions,
+            ])
+            ?>
+        </div>
+    </div>
 </div>

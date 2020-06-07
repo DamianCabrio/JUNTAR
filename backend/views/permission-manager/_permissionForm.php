@@ -11,7 +11,9 @@ use yii\bootstrap4\ActiveForm;
 
         <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true])?>
+        <?php // echo $form->field($model, 'name')->textInput(['maxlength' => true])?>
+        <?php echo $form->field($model, 'name')->textInput(['maxlength' => true])?>
+        <?php // echo $form->field($model, 'name')->dropDownList() ?>
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
