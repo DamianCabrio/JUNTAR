@@ -23,4 +23,14 @@ $(document).ready(function () {
             $('#loginform-password').attr("type", "password");
         }
     });
+    
+    //reseteamos el atributo value para que sea registrado con éxito
+    $(document).on('mouseleave', '.permissionName', function (){
+        //capturamos la opcion seleccionada
+        var option = $(this).find("option:selected");
+        //obtenemos el texto de la opcion
+        var text = option.text();
+        //asignamos el texto como valor de option
+        option.val(text).change();
+    });
 });
