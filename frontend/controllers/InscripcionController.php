@@ -81,11 +81,14 @@ class InscripcionController extends Controller
     {
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
+
         $inscripcion = new Inscripcion();
         $inscripcion->idUsuario = Yii::$app->user->identity->idUsuario;
         $inscripcion->idEvento = $idEvento;
-        $model = Evento::find($idEvento)->select('preInscripcion')->one();
-        $esPreInscripcion = $model->preInscripcion == 1 ? true : false;
+
+        $evento = Evento::find($idEvento)->select('preInscripcion')->one();
+        $esPreInscripcion = $evento->preInscripcion == 1 ? true : false;
+
         if ($esPreInscripcion) {
             $inscripcion->estado = 0;
             $inscripcion->fecha_preinscripcion = date("Y-m-d");
@@ -99,6 +102,19 @@ class InscripcionController extends Controller
         return $this->render('resultadoInscripcion', [
             'esPreInscripcion' => $esPreInscripcion,
             'seGuardo' => $seGuardo,
+        ]);
+    }
+
+    public function actionEliminarInscripcion(){
+        $request = Yii::$app->request;
+        $idEvento = $request->get('id');
+
+        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->id(), "idEvento" => $idEvento]);
+        $inscripcion->estado = 2;
+        $seElimino = $inscripcion->save();
+
+        return $this->render('resultadoDesinscripcion', [
+            'seElimino' => $seElimino,
         ]);
     }
 

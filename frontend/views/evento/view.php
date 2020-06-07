@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             }
         }else{
-            echo Html::a('Desinscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+            echo Html::a('Desinscribirse', ['inscripcion/eliminarInscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
         }
         ?>
 
