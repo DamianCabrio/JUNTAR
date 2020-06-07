@@ -31,11 +31,11 @@ class SignupForm extends Model
 //            ['username', 'required'],
 //            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
 //            ['username', 'string', 'min' => 2, 'max' => 255],
-            ['nombre', 'required'],
-            ['apellido', 'required'],
+            [['nombre', 'apellido', 'email', 'localidad', 'dni'] , 'required'],
+
+            ['dni', 'integer', 'min' => 6],
 
             ['email', 'trim'],
-            ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
@@ -55,7 +55,7 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->nombre = $this->nombre;
         $user->apellido = $this->apellido;
