@@ -6,6 +6,7 @@ use Yii;
 use common\models\Evento;
 use common\models\EventoSearch;
 use common\models\Inscripcion;
+use common\models\Fecha;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -55,6 +56,7 @@ class EventoController extends Controller
     {
 
         $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
+        $fechaEvento = Fecha::find()->where(["idEvento" => $id])->orderBy(["fecha" => "ASC"])->one();
 
         $yaInscripto = false;
         if(count($inscripcion) == 1){
@@ -63,7 +65,9 @@ class EventoController extends Controller
 
         return $this->render('view', [
             'model' => $this->findModel($id),
+            "fechaEvento" => $fechaEvento,
             "yaInscripto" => $yaInscripto,
+            "acreditacion" => $inscripcion[0]["acreditacion"],
         ]);
     }
 

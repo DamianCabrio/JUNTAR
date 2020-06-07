@@ -35,7 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             }
         }else{
-            echo Html::a('Desinscribirse', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+            if($acreditacion !=1){
+                echo Html::a('Desinscribirse', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+            }
+        }
+        if($fechaEvento->fecha <= date("Y-m-d") && $yaInscripto && $acreditacion !=1){
+            echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+        }else{
+            echo Html::label("Usted ya se acredito en este evento");
         }
         ?>
 

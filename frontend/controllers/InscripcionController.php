@@ -85,6 +85,7 @@ class InscripcionController extends Controller
         $inscripcion = new Inscripcion();
         $inscripcion->idUsuario = Yii::$app->user->identity->idUsuario;
         $inscripcion->idEvento = $idEvento;
+        $inscripcion->acreditacion = 0;
 
         $evento = Evento::find($idEvento)->select('preInscripcion')->one();
         $esPreInscripcion = $evento->preInscripcion == 1 ? true : false;
