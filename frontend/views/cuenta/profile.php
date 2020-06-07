@@ -26,6 +26,14 @@ $dataUser = array_shift($data);
             <li class="nav-item profile-sidebar col-12">
                 <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Desactivar mi Cuenta </a>
             </li>
+            <li class="nav-item profile-sidebar col-12">
+              <?php $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
+              <?php if (!$assigned): ?>
+                <?= Html::a("Ser un Gestor de Eventos",
+                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
+                ['class' => $assigned?"btn btn-sm btn-outline-info":"btn btn-sm btn-outline-info"])?>
+              <?php endif; ?>
+            </li>
         </ul>
     </div>
     <!-- Profile Sidebar Menu-->
