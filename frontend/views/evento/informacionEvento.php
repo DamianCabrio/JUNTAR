@@ -103,25 +103,23 @@ $this->title = $evento->nombreEvento;
         </tbody>
     </table>
     <h2 class="text-center"><?= Html::encode('Presentaciones') ?></h2>
-    <?php
-    $cont = 0;
-    foreach ($presentacion as $objPresentacion) :
-        $cont++;
-        $arrExpoPre = PresentacionExpositor::find()->where(['idPresentacion' => $objPresentacion->idPresentacion])->all();
+    <table class="table table-striped">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Titulo Presentacion</th>
+            <th scope="col">Descripcion Presentacion</th>
+            <th scope="col">Hora Inicio Presentacion</th>
+            <th scope="col">Hora Fin Presentacion</th>
+            <th scope="col">Expositores</th>
+        </thead>
+        <?php
+        $cont = 0;
+        foreach ($presentacion as $objPresentacion) :
+            $cont++;
+            $arrExpoPre = PresentacionExpositor::find()->where(['idPresentacion' => $objPresentacion->idPresentacion])->all();
 
-    ?>
+        ?>
 
-
-
-        <table class="table table-striped">
-            <thead>
-                <th scope="col">#</th>
-                <th scope="col">Titulo Presentacion</th>
-                <th scope="col">Descripcion Presentacion</th>
-                <th scope="col">Hora Inicio Presentacion</th>
-                <th scope="col">Hora Fin Presentacion</th>
-                <th scope="col">Expositores</th>
-            </thead>
             <tbody>
                 <tr>
                     <th scope="row"><?= $cont ?></th>
@@ -144,6 +142,7 @@ $this->title = $evento->nombreEvento;
                     </td>
                 </tr>
             </tbody>
-        </table>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </table>
+
 </div>
