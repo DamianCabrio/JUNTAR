@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\Inflector;
 use yii\helpers\FileHelper;
+use yii\helpers\ArrayHelper;
 use yii\web\response;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -291,6 +292,7 @@ class PermissionManagerController extends Controller {
             'description' => 'Descripción del Rol',
             'new_name' => 'Nuevo Nombre',
         ]);
+        
         $roles = ArrayHelper::map(yii::$app->AuthManager->getRoles(), 'name', 'name');
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $update_rol = yii::$app->authManager->createRole($model->new_name);
