@@ -18,11 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dni')->textInput() ?>
 
-    <?= $form->field($model, 'fecha_nacimiento')->textInput() ?>
-
     <?= $form->field($model, 'localidad')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'telefono')->textInput() ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
