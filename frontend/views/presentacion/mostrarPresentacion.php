@@ -14,7 +14,7 @@ $this->title = $model->tituloPresentacion;
 
 
     <p>
-        <?= Html::a('Cargar nueva Presentacion', ['cargar-presentacion'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Cargar nueva Presentacion', ['cargar-presentacion', 'idEvento' => $evento->idEvento], ['class' => 'btn btn-primary']) ?>
     </p>
     <h2 class="text-center"> Presentacion <?= $model->tituloPresentacion ?> </h2>
     <p class="text-center">Muestra de presentacion recien cargada</p>
