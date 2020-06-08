@@ -31,9 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'placeholder' => 'Ejemplo: Mypass1234, myPass32',
                             'data-title'=>'Requisitos',
                             'data-toggle'=>'popover',
-                            'data-content'=>'La contraseña debe tener entre 8 y 20 caracteres y contener como mínimo un numero y una mayúscula.',
-                          ])->label('Contraseña (*)')
-//                          ->textInput(); ?>
+                            'data-content'=>'La contraseña debe tener entre 8 y 20 caracteres y contener como mínimo un número y una mayúscula.',
+                          ]); ?>
                     <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label('Mostrar Contraseña') ?>
                 </div>
 

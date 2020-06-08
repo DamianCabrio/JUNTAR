@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dni') ?>
 
-    <?= $form->field($model, 'fecha_nacimiento') ?>
+    <?= // $form->field($model, 'fecha_nacimiento') ?>
 
     <?php // echo $form->field($model, 'localidad') ?>
 
