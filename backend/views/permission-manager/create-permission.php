@@ -18,7 +18,7 @@ use yii\helpers\Html;
             <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
             <?=
-            $this->render('_rolForm', [
+            $this->render('_permissionForm', [
                 'model' => $model,
                 'permisos' => $permisos,
             ])
