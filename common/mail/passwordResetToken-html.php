@@ -32,6 +32,7 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 't
 </style>
 
 <div class="password-reset">
+    <small>Correo Generado Automáticamente</small>
     <p> Hola <?= Html::encode($user->nombre." ". $user->apellido) ?>.</p>
     <p> Hemos recibido una solicitud para reestablecer tu contraseña en la plataforma <?= Html::encode(Yii::$app->name) ?>. </p>
     <p> Si tu no pediste el cambio de contraseña y crees que fue un error, por favor, ignora este correo y contactanos lo antes posible. </p>

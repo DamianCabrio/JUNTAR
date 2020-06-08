@@ -72,7 +72,7 @@ class CuentaController extends Controller {
         $model = new Usuario();
         $queryUser = (new \yii\db\Query())
                 //campos buscados
-                ->select(['nombre, apellido, dni, fecha_nacimiento, telefono, localidad, email, (usuario_rol.item_name) as rol'])
+                ->select(['nombre, apellido, dni, localidad, email, (usuario_rol.item_name) as rol'])
                 //distintos en
                 //->distinct('jugador.posicion')
                 //tabla
@@ -98,7 +98,7 @@ class CuentaController extends Controller {
      *
      * @return mixed
      */
-    public function actionSignup() {
+    private function actionSignup() {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
