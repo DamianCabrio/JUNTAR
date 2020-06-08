@@ -9,7 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\Presentacion;
-
+use frontend\models\PresentacionExpositor;
+use frontend\models\Expositor;
 /**
  * EventoController implements the CRUD actions for Evento model.
  */
@@ -168,6 +169,24 @@ class EventoController extends Controller
         return $this->render('informacionEvento', [
             'evento'=>$evento,
             'presentacion' => $presentaciones
+        ]);
+    }
+    public function actionCargarExpositor($idPresentacion)
+    {
+        $preExpo = new PresentacionExpositor();
+        $model = new Expositor();
+        $objPresentacion = Presentacion::findOne($idPresentacion);
+        $objEvento=Evento::findOne($objPresentacion->idEvento);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $preExpo->idExpositor = $model->idExpositor;
+            $preExpo->idPresentacion = $idPresentacion;
+            $preExpo->save();
+            return $this->redirect(['informacion-evento', 'idEvento' => $objEvento->idEvento]);
+        }
+
+        return $this->render('cargarExpositor', [
+            'model' => $model
         ]);
     }
 }

@@ -145,7 +145,7 @@ class PresentacionController extends Controller
             'evento' => $objEvento
         ]);
     }
-    public function actionCargarPresentacion()
+    public function actionCargarPresentacion($idEvento)
     {
         $model = new Presentacion();
         $preExpo = new PresentacionExpositor();
@@ -162,7 +162,9 @@ class PresentacionController extends Controller
 
         return $this->render('cargarPresentacion', [
             'model' => $model,
-            'expo' => $expo
+            'expo' => $expo,
+            'idEvento'=> $idEvento
+            
         ]);
     }
 }

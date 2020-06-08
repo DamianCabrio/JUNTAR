@@ -7,8 +7,6 @@ use yii\widgets\DetailView;
 /* @var $model frontend\models\Presentacion */
 
 $this->title = $model->tituloPresentacion;
-$this->params['breadcrumbs'][] = ['label' => 'Presentacions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="presentacion-view">

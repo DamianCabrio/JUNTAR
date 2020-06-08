@@ -106,9 +106,9 @@ if ($model->codigoAcreditacion != null) {
             <br>
             <div class="d-flex justify-content-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-outline-success p-3">
-                        <h4 class="text-center"> ¿Agregar presentaciones al evento?</h4>
-                    </button>
+                    
+                        <h4 class="text-center"> <?= Html::a('¿Agregar presentacion al evento?', ['presentacion/cargar-presentacion', 'id' => $model->idEvento], ['class' => 'btn btn-outline-success p-3']) ?></h4>
+                    
                 </div>
             </div>
         </div>

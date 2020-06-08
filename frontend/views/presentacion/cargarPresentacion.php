@@ -26,10 +26,11 @@ use frontend\models\Evento;
             $item = Evento::find()     //buscar los eventos del usuario              
                 ->select(['nombreEvento'])
                 ->indexBy('idEvento')
-                ->where(['idUsuario' => $idUsuario])
+                ->where(['idUsuario'=>$idUsuario,'idEvento'=> $idEvento])
                 ->column();
+            $evento= Evento::findOne($idEvento);
             ?>
-            <?= $form->field($model, 'idEvento')->dropdownList($item,  ['prompt' => 'Sus eventos'])->label('Seleccione un evento *');
+            <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value'=>$idEvento,'readonly'=> true])->label('Seleccione un evento *');
             ?>
 
 
@@ -51,7 +52,7 @@ use frontend\models\Evento;
             <?= $form->field($expo, 'idUsuario')->dropdownList($usuario,  ['prompt' => 'Expositor'])->label('Seleccione un Expositor *'); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

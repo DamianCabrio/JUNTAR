@@ -1,5 +1,8 @@
 <?php
 
+use backend\models\Usuario;
+use frontend\models\Expositor;
+use frontend\models\PresentacionExpositor;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -10,12 +13,12 @@ if ($evento->linkPresentaciones != null) {
 }
 
 if ($evento->linkFlyer != null) {
-    $flyer = "<a href=".$evento->linkFlyer.">".$evento->linkFlyer."</a>";
+    $flyer = "<a href=" . $evento->linkFlyer . ">" . $evento->linkFlyer . "</a>";
 } else {
     $flyer = "No disponible";
 }
 if ($evento->linkLogo != null) {
-    $logo = "<a href=".$evento->linkLogo.">".$evento->linkLogo."</a>";
+    $logo = "<a href=" . $evento->linkLogo . ">" . $evento->linkLogo . "</a>";
 } else {
     $logo = "No disponible";
 }
@@ -39,6 +42,9 @@ $this->title = $evento->nombreEvento;
 <div class="presentacion-view">
 
     <h2 class="text-center"><?= Html::encode($this->title) ?></h2>
+    <p>
+        <?= Html::a('Cargar nueva Presentacion al Evento', ['presentacion/cargar-presentacion', 'idEvento' => $evento->idEvento], ['class' => 'btn btn-primary']) ?>
+    </p>
 
     <table class="table table-striped">
         <tbody>
@@ -97,13 +103,16 @@ $this->title = $evento->nombreEvento;
         </tbody>
     </table>
     <h2 class="text-center"><?= Html::encode('Presentaciones') ?></h2>
-    
-    <?php 
-    $cont=0;
-    foreach ($presentacion as $objPresentacion) : 
-    $cont++;
+    <?php
+    $cont = 0;
+    foreach ($presentacion as $objPresentacion) :
+        $cont++;
+        $arrExpoPre = PresentacionExpositor::find()->where(['idPresentacion' => $objPresentacion->idPresentacion])->all();
+
     ?>
-        
+
+
+
         <table class="table table-striped">
             <thead>
                 <th scope="col">#</th>
@@ -111,6 +120,7 @@ $this->title = $evento->nombreEvento;
                 <th scope="col">Descripcion Presentacion</th>
                 <th scope="col">Hora Inicio Presentacion</th>
                 <th scope="col">Hora Fin Presentacion</th>
+                <th scope="col">Expositores</th>
             </thead>
             <tbody>
                 <tr>
@@ -119,6 +129,19 @@ $this->title = $evento->nombreEvento;
                     <td><?= $objPresentacion->descripcionPresentacion ?></td>
                     <td><?= $objPresentacion->horaInicioPresentacion ?></td>
                     <td><?= $objPresentacion->horaFinPresentacion ?></td>
+                    <td>
+                        <?php
+                        foreach ($arrExpoPre as $objExpoPre) {
+                            $objExpositor = Expositor::findOne($objExpoPre->idExpositor);
+                            $objUsuario = Usuario::findOne($objExpositor->idUsuario); ?>
+                            <ul>
+                                <li><b>Nombre:</b><?= Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido) ?></li>
+                                <li><b>Contacto:</b><?= Html::encode($objUsuario->email) ?></li>
+                            </ul>
+                        <?php } ?>
+                        <?= Html::a('Añadir Expositor', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-primary']) ?>
+
+                    </td>
                 </tr>
             </tbody>
         </table>

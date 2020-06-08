@@ -8,6 +8,8 @@ use yii\bootstrap4\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\rbac\Permission;
+
 
 AppAsset::register($this);
 ?>
@@ -36,11 +38,15 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
+                
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
             } else {
+                //Despues Borrar
+                $menuItems[] = ['label' => 'Cargar Evento', 'url' => ['/evento/cargar-evento']];
+                $menuItems[] = ['label' => 'Listar Eventos', 'url' => ['/evento/listar-eventos']];
                 $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
                 $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];
                 //Logout
@@ -49,6 +55,7 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
                         ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
+                        
                         [
                             "label" => "Cerrar Sesión",
                             "url" => ["/site/logout"],
