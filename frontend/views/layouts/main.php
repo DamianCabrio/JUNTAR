@@ -30,7 +30,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('images/juntar-icon-b.svg',  ['style' => 'width:30px']),
+            'brandLabel' => Html::img('@web/images/juntar-icon-b.svg',  ['style' => 'width:30px']),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
@@ -81,6 +81,7 @@ AppAsset::register($this);
             <?= Alert::widget() ?>
 
         </div>
+        <? echo Yii::getAlias('@web');?>
         <?= $content ?>
     </div>
     <section class="darkish_bg text-light">
