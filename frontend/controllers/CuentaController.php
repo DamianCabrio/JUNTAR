@@ -98,7 +98,7 @@ class CuentaController extends Controller {
      *
      * @return mixed
      */
-    public function actionSignup() {
+    private function actionSignup() {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
