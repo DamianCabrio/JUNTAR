@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         } else {
             if ($acreditacion != 1) {
-                echo Html::a('Desinscribirse', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             }
         }
         if ($fechaEvento->fecha <= date("Y-m-d") && $yaInscripto && $acreditacion != 1 && $model->codigoAcreditacion != null) {
