@@ -28,7 +28,7 @@ class SignupForm extends Model {
         return [
             //Obligatorio
             [['nombre', 'apellido', 'email', 'localidad', 'dni', 'password'], 'required'],
-            
+
             //Reglas nombre
             ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['nombre', 'string', 'min' => 2, 'max' => 14,
@@ -36,7 +36,7 @@ class SignupForm extends Model {
                 'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
                 //comentario para maxLenght
                 'tooLong' => 'El nombre puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
-            
+
             //Reglas apellido
             ['apellido', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['apellido', 'string', 'min' => 2, 'max' => 14,
@@ -44,24 +44,20 @@ class SignupForm extends Model {
                 'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
                 //comentario para maxLenght
                 'tooLong' => 'El apellido puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
-            
+
             //Reglas localidad
             ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
-            ['localidad', 'string', 'min' => 2, 'max' => 25,
-                //comentario para minlenght
-                'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
-                //comentario para maxLenght
-                'tooLong' => 'El apellido puede tener como máximo 25 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
-            
+            ['localidad', 'common\components\LocationValidator'],
+
             //Reglas DNI
             ['dni', 'integer', 'min' => 10000000, 'max' => 100000000],
-            
+
             //Reglas Email
             ['email', 'trim'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-            
+
             //Reglas password
             ['password', 'match', 'pattern' => '/\d/', 'message' => 'La contraseña debe tener al menos un número.'],
             ['password', 'match', 'pattern' => '/\w*[A-Z]/', 'message' => 'La contraseña debe tener al menos una mayúscula.'],
