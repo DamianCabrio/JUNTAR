@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="acreditacion-view">
+<div class="acreditacion-view container">
 
     <?php $form = ActiveForm::begin(['id' => 'acreditacion-form']); ?>
 

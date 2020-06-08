@@ -11,7 +11,7 @@ use yii\captcha\Captcha;
 $this->title = 'Contacto';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
+<div class="site-contact container">
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <p class="text-center"> Por cualquier consulta, complete el siguiente formulario para contactarnos. Muchas gracias. </p>

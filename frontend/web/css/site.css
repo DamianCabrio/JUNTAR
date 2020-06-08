@@ -1,23 +1,34 @@
-html,
-body {
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+html, body {
     height: 100%;
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    background-color: rgb(247, 247, 247);
+    scroll-behavior: smooth;
 }
 
 .wrap {
     min-height: 100%;
     height: auto;
     margin: 0 auto -60px;
+    margin-top: 100px;
     padding: 0 0 60px;
 }
 
-.wrap > .container {
-    padding: 70px 15px 20px;
+.body-content {
+    padding-top: 50px;
+}
+
+.wrap>.container {
+    padding: 0px 0px 0px;
+}
+
+.navbar-dark {
+    background-color: #050714
 }
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
     padding-top: 20px;
 }
 
@@ -37,6 +48,7 @@ body {
 }
 
 /* add sorting icons to gridview sort links */
+
 a.asc:after, a.desc:after {
     position: relative;
     top: 1px;
@@ -76,8 +88,7 @@ a.desc:after {
     white-space: nowrap;
 }
 
-.grid-view .filters input,
-.grid-view .filters select {
+.grid-view .filters input, .grid-view .filters select {
     min-width: 50px;
 }
 
@@ -96,44 +107,162 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
+
+.nav li>form>button.logout {
     padding: 15px;
     border: none;
 }
 
+/*  custom style  */
+
+.dark_bg {
+    background-color: #050714;
+}
+
+.darkish_bg {
+    background-color: #0B0D19;
+}
+
+.full_width {
+    width: 100%;
+}
+
+.card {
+    border: none;
+    color: black;
+    background-color: #EFEFEF;
+}
+
+.nopadding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.padding_section {
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
+
+.padding_select {
+    padding-top: 1vh;
+    padding-bottom: 4vh;
+}
+header{
+    margin-top: -100px;
+}
+.hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1456428746267-a1756408f782?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: -webkit-box;
+    display: flex;
+    min-height: 50vh;
+}
+
+.gradient-hero {
+    min-height: 50vh;
+    background-position: center center;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.gradient-hero:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    content: " ";
+    background: radial-gradient(ellipse at center, #0B0D19 10%, #FE1355 100%);
+    opacity: 0.8;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.center-content {
+    width: 600px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: auto;
+    z-index: 2;
+}
+
+
+.padding_hero {
+    padding-bottom: 5vh;
+}
+
+.btn {
+    background-color: #FE1355;
+    color: aliceblue!important;
+    border: none;
+    text-transform: capitalize;
+}
+
+.btn:hover {
+    background-color: #050714;
+    color: aliceblue!important;
+}
+
+.btn_event {
+    width: 100%;
+    background-color: #FE1355;
+    color: aliceblue!important;
+    border: none;
+    text-transform: capitalize;
+}
+
+.btn_event:hover {
+    background-color: #050714;
+}
+
+.link:hover {
+    color: #FE1355!important;
+}
+
+section {
+    padding: 70px 15px 20px;
+}
+
 @media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
+    .nav li>form>button.logout {
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
     }
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav>li>form>button.logout:focus, .nav>li>form>button.logout:hover {
     text-decoration: none;
 }
 
-.nav > li > form > button.logout:focus {
+.nav>li>form>button.logout:focus {
     outline: none;
 }
 
-
-.form-advice{
+.form-advice {
     color: #999;
     /*border: 1px solid black;*/
 }
 
-.showPw{
+.showPw {
     margin-left: -22px;
 }
 
-.bg-profile-sidebar{
+.bg-profile-sidebar {
     background-color: rgb(233, 236, 239);
     /*border: 1px solid black;*/
 }
 
-.profile-sidebar a:hover{
+.profile-sidebar a:hover {
     background-color: powderblue;
 }

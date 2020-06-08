@@ -9,7 +9,7 @@ use yii\bootstrap4\ActiveForm;
 $this->title = 'Iniciar sesion';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
+<div class="site-login container">
         <h1 class="text-center mb-2"><?= Html::encode($this->title) ?></h1>
 
         <div class="row">

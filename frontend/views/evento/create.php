@@ -9,7 +9,7 @@ $this->title = 'Create Evento';
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="evento-create">
+<div class="evento-create container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

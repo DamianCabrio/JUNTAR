@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="inscripcion-search">
+<div class="inscripcion-search container">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],

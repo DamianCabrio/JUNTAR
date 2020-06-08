@@ -9,7 +9,7 @@ $this->title = 'Create Inscripcion';
 $this->params['breadcrumbs'][] = ['label' => 'Inscripcions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="inscripcion-create">
+<div class="inscripcion-create container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

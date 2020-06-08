@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="inscripcion-form">
+<div class="inscripcion-form container">
 
     <?php $form = ActiveForm::begin(); ?>
 

@@ -6,12 +6,12 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Evento */
 
-$this->title = $model->idEvento;
+$this->title = $model->nombreEvento;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="evento-view">
+<div class="evento-view container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -28,20 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
         } ?>
         <?PHP
-        if(!$yaInscripto){
+        if (!$yaInscripto) {
             if ($model->preInscripcion == 1 && $model->fechaLimiteInscripcion >= date("Y-m-d")) {
                 echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             } else if ($model->preInscripcion == 0) {
                 echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             }
-        }else{
-            if($acreditacion !=1){
+        } else {
+            if ($acreditacion != 1) {
                 echo Html::a('Desinscribirse', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             }
         }
-        if($fechaEvento->fecha <= date("Y-m-d") && $yaInscripto && $acreditacion !=1 && $model->codigoAcreditacion != null){
+        if ($fechaEvento->fecha <= date("Y-m-d") && $yaInscripto && $acreditacion != 1 && $model->codigoAcreditacion != null) {
             echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
-        }else if ($acreditacion == 1 ){
+        } else if ($acreditacion == 1) {
             echo Html::label("Usted ya se acredito en este evento");
         }
         ?>
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'preInscripcion',
             'fechaLimiteInscripcion',
             //'fechaDeCreacion',
-            'codigoAcreditacion',
+            //'codigoAcreditacion',
         ],
     ]) ?>
 

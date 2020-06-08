@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="evento-search">
+<div class="evento-search container">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
