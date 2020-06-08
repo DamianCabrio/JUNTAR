@@ -20,9 +20,9 @@ if ($model->linkLogo != null) {
     $logo = "No disponible";
 }
 if ($model->preInscripcion == 0) {
-    $preIncripcion = "Requiere preinscipcion";
+    $preIncripcion = "No requiere preinscipcion";
 } else {
-    $preIncripcion = "No Requiere preinscipcion";
+    $preIncripcion = "Requiere preinscipcion";
 }
 if ($model->codigoAcreditacion != null) {
     $codAcreditacion = $model->codigoAcreditacion;
@@ -107,7 +107,7 @@ if ($model->codigoAcreditacion != null) {
             <div class="d-flex justify-content-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     
-                        <h4 class="text-center"> <?= Html::a('¿Agregar presentacion al evento?', ['presentacion/cargar-presentacion', 'id' => $model->idEvento], ['class' => 'btn btn-outline-success p-3']) ?></h4>
+                        <h4 class="text-center"> <?= Html::a('¿Agregar presentacion al evento?', ['presentacion/cargar-presentacion', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success p-3']) ?></h4>
                     
                 </div>
             </div>

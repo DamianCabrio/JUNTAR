@@ -49,7 +49,7 @@ class Evento extends \yii\db\ActiveRecord
             [['idUsuario', 'capacidad', 'preInscripcion'], 'integer'],
             [['fechaInicio', 'fechaFin', 'fechaLimiteInscripcion'], 'safe'],
             [['nombreEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
-            [['descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo'], 'string', 'max' => 200],
+            [['descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo'], 'string', 'max' => 2000],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
         ];
     }

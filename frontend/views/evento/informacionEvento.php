@@ -23,9 +23,9 @@ if ($evento->linkLogo != null) {
     $logo = "No disponible";
 }
 if ($evento->preInscripcion == 0) {
-    $preIncripcion = "Requiere preinscipcion";
+    $preIncripcion = "No requiere preinscipcion";
 } else {
-    $preIncripcion = "No Requiere preinscipcion";
+    $preIncripcion = "Requiere preinscipcion";
 }
 if ($evento->codigoAcreditacion != null) {
     $codAcreditacion = $evento->codigoAcreditacion;

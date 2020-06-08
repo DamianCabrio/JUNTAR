@@ -37,7 +37,7 @@ class Presentacion extends \yii\db\ActiveRecord
             [['idEvento'], 'integer'],
             [['horaInicioPresentacion', 'horaFinPresentacion'], 'safe'],
             [['tituloPresentacion'], 'string', 'max' => 100],
-            [['descripcionPresentacion'], 'string', 'max' => 400],
+            [['descripcionPresentacion'], 'string', 'max' => 2000],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
         ];
     }
