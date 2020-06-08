@@ -27,7 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'dni')->label('DNI (*)')->textInput(['placeholder' => 'Ejemplo: 26734824']); ?>
                     <?= $form->field($model, 'localidad')->label('Localidad (*)')->textInput(['placeholder' => 'Ejemplo: Neuquen']); ?>
                     <?= $form->field($model, 'email')->input('email')->label('Email (*)')->textInput(['placeholder' => 'Ejemplo: myEmail@gmail.com']); ?>
-                    <?= $form->field($model, 'password')->passwordInput()->label('Contraseña (*)')->textInput(['placeholder' => 'Ejemplo: Mypass1234, myPass32']); ?>
+                    <?= $form->field($model, 'password')->passwordInput()->label('Contraseña (*)')
+                          ->textInput([
+                            'placeholder' => 'Ejemplo: Mypass1234, myPass32',
+                            'data-title'=>'Requisitos',
+                            'data-toggle'=>'popover',
+                            'data-content'=>'La contraseña debe tener entre 8 y 20 caracteres y contener como mínimo un numero y una mayúscula.',
+                          ]); ?>
                     <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label('Mostrar Contraseña') ?>
                 </div>
 
