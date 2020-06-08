@@ -161,7 +161,7 @@ class PermissionManagerController extends Controller {
                 $permission = yii::$app->authManager->createPermission($model->name);
                 $permission->description = $model->description;
                 if (yii::$app->authManager->add($permission)) {
-                    Yii::$app->session->setFlash('success', '<p>Se creó el rol: ' . $model->name . '</p>');
+                    Yii::$app->session->setFlash('success', '<p>Se creó el Permiso: ' . $model->name . '</p>');
                 } else {
                     Yii::$app->session->setFlash('error', '<p>Ha ocurrido un error</p>');
                 }
@@ -179,7 +179,7 @@ class PermissionManagerController extends Controller {
     /**
      * Metodo getControllerList --> Permite retornar el nombre de todos los controladores del sitio.
      * Utiliza el alias del camino a consultar (frontend-backend).
-     * 
+     *
      * @param String $path
      * @return array/null
      */
@@ -200,7 +200,7 @@ class PermissionManagerController extends Controller {
 //    /**
 //     * Metodo getControllerList --> Permite retornar el nombre de todas las vistas del controlador consultado.
 //     * Utiliza el alias del camino a consultar (frontend-backend) y el nombre del controlador deseado.
-//     * 
+//     *
 //     * @param String $path
 //     * @param String $controllerName
 //     * @return array/null
@@ -230,9 +230,9 @@ class PermissionManagerController extends Controller {
 
     /**
      * Metodo actionListMissingPermissions --> Permite retornar un array conteniendo todos los permisos del
-     * server side especificado por parámetro. Utiliza el alias del camino a consultar (frontend-backend) 
+     * server side especificado por parámetro. Utiliza el alias del camino a consultar (frontend-backend)
      * y lo asigna al arreglo $actions recibido por parámetro.
-     * 
+     *
      * @param String $path
      * @param Array $actions
      * @return array/null
