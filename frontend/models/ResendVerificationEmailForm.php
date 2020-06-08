@@ -54,9 +54,9 @@ class ResendVerificationEmailForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ '.Yii::$app->name])
             ->setTo($this->email)
-            ->setSubject('Registro de cuenta en ' . Yii::$app->name)
+            ->setSubject('Verifica tu cuenta en ' . Yii::$app->name)
             ->send();
     }
 }
