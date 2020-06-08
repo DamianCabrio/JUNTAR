@@ -14,9 +14,9 @@ class SignupForm extends Model {
     public $nombre;
     public $apellido;
     public $dni;
-    public $telefono;
+//    public $telefono;
     public $localidad;
-    public $fecha_nacimiento;
+//    public $fecha_nacimiento;
     public $email;
     public $password;
     public $showpw;
@@ -85,9 +85,9 @@ class SignupForm extends Model {
         $user->nombre = $this->nombre;
         $user->apellido = $this->apellido;
         $user->dni = $this->dni;
-        $user->telefono = $this->telefono;
+//        $user->telefono = $this->telefono;
         $user->localidad = $this->localidad;
-        $user->fecha_nacimiento = $this->fecha_nacimiento;
+//        $user->fecha_nacimiento = $this->fecha_nacimiento;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
@@ -107,7 +107,7 @@ class SignupForm extends Model {
                                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                                 ['user' => $user]
                         )
-                        ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                        ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ '.Yii::$app->name])
                         ->setTo($this->email)
                         ->setSubject('Registro de cuenta en ' . Yii::$app->name)
                         ->send();
