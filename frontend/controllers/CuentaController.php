@@ -72,7 +72,7 @@ class CuentaController extends Controller {
         $model = new Usuario();
         $queryUser = (new \yii\db\Query())
                 //campos buscados
-                ->select(['nombre, apellido, dni, fecha_nacimiento, telefono, localidad, email, (usuario_rol.item_name) as rol'])
+                ->select(['nombre, apellido, dni, localidad, email, (usuario_rol.item_name) as rol'])
                 //distintos en
                 //->distinct('jugador.posicion')
                 //tabla
