@@ -14,9 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="evento-view container">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Cupos:'.$cupos) ?></h1>
 
     <p>
-        <?php
+     <?php
+  
+         
+      
+    
+        
         if (!Yii::$app->user->can('Administrador')) {
             Html::a('Update', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             Html::a('Delete', ['delete', 'id' => $model->idEvento], [
@@ -30,12 +36,25 @@ $this->params['breadcrumbs'][] = $this->title;
         <?PHP
         if (!$yaInscripto) {
             if ($model->preInscripcion == 1 && $model->fechaLimiteInscripcion >= date("Y-m-d")) {
-                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
-            } else if ($model->preInscripcion == 0) {
-                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+                if($cupos>0)
+                {
+                    echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+
+                }else{
+                    echo Html::a('Sin cupos', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary disabled']);
+                }
+          
+            } else if ($model->preInscripcion == 0) { 
+                if($cupos>0)
+                {
+                    echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+                }else{
+                    echo Html::a('Sin cupos', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary disabled']);
+                }             
+                
             }
         } else {
-            if ($acreditacion != 1) {
+            if ($acreditacion != 1 ) {// * condicionar con la fecha hoy  menor estricto fecha inicio  hoy()<FechaIncio
                 echo Html::a('Desinscribirse', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             }
         }
@@ -44,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
         } else if ($acreditacion == 1) {
             echo Html::label("Usted ya se acredito en este evento");
         }
+        
         ?>
 
     </p>

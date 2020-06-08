@@ -64,12 +64,32 @@ class EventoController extends Controller
             $yaInscripto = true;
             $yaAcreditado = $inscripcion[0]["acreditacion"];
         }
+          /*
+             En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
+             en Where filtrar por 'estado' activo.
+          */
+        $evento = Evento::find()->select('capacidad')->where(["idEvento" =>$id])->one();
+        $cantInscriptos = Inscripcion::find()->select('capacidad')->where(["idEvento" =>$id])->count();
+        
+        $sePuedeInscribir=  $evento->capacidad;
 
+        if($sePuedeInscribir== 0){
+            $cupos= 1;
+
+        }else{
+            $sePuedeInscribir= $evento->capacidad - $cantInscriptos;
+            $cupos= 0;
+            if(  $sePuedeInscribir>0 ){
+                $cupos= 1;
+            }
+        }
+     
         return $this->render('view', [
             'model' => $this->findModel($id),
             "fechaEvento" => $fechaEvento,
             "yaInscripto" => $yaInscripto,
             "acreditacion" => $yaAcreditado,
+            'cupos'=>$cupos
         ]);
     }
 
