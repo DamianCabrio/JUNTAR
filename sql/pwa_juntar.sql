@@ -165,9 +165,9 @@ CREATE TABLE `usuario` (
   `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `apellido` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `dni` int(11) DEFAULT NULL,
-  `fecha_nacimiento` date DEFAULT NULL,
+--   `fecha_nacimiento` date DEFAULT NULL,
   `localidad` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telefono` varchar(15) DEFAULT NULL,
+--   `telefono` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -271,7 +271,6 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `usuario_rol`
   ADD PRIMARY KEY (`item_name`,`user_id`),
---   ADD UNIQUE KEY (`item_name`,`user_id`),
   ADD KEY `usuario_rol_usuario_id_idx` (`user_id`),
   ADD KEY `item_name` (`item_name`);
 
@@ -313,7 +312,7 @@ ALTER TABLE `presentacion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Restricciones para tablas volcadas
@@ -388,12 +387,19 @@ ALTER TABLE `usuario_rol`
 
 INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('Administrador', 1, 'Superusuario Administrador', NULL, NULL, 1590382997, 1590382997),
+('cuenta/change-rol', 2, 'Permite a un usuario cambiar su rol', NULL, NULL, 1591577677, 1591577677),
 ('cuenta/editprofile', 2, 'Modificar datos del perfil', NULL, NULL, 1591368838, 1591368838),
 ('cuenta/profile', 2, 'Perfil de usuario', NULL, NULL, 1591354697, 1591354697),
 ('Organizador', 1, 'Usuario gestor de eventos', NULL, NULL, 1590382997, 1590382997),
+('permission-manager/assing-permission', 2, NULL, NULL, NULL, NULL, NULL),
 ('permission-manager/create-permission', 2, 'Permite crear un nuevo permiso para la plataforma', NULL, NULL, 1591336656, 1591336656),
 ('permission-manager/create-rol', 2, 'Permite crear un nuevo rol en la plataforma', NULL, NULL, 1591336774, 1591336774),
 ('permission-manager/index', 2, 'Permite visualizar los roles para asignarles permisos', NULL, NULL, 1591336739, 1591336739),
+('permission-manager/index2', 2, 'Index de prueba', NULL, NULL, 1591524752, 1591524752),
+('permission-manager/list-controllers', 2, NULL, NULL, NULL, NULL, NULL),
+('permission-manager/remove', 2, 'Permite borrar permisos', NULL, NULL, 1591577405, 1591577405),
+('permission-manager/update-permission', 2, 'Permite actualizar un permiso', NULL, NULL, 1591577497, 1591577497),
+('permission-manager/update-rol', 2, 'Permite actualizar roles', NULL, NULL, 1591577363, 1591577363),
 ('Registrado', 1, 'Usuario registrado en la plataforma', NULL, NULL, NULL, NULL),
 ('site/about', 2, 'Permite visualizar el acerca de la pagina', NULL, NULL, 1591337803, 1591337803),
 ('site/captcha', 2, 'Permite visualizar captchas', NULL, NULL, 1591346343, 1591346343),
@@ -403,7 +409,9 @@ INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `crea
 ('site/login', 2, 'Formulario de ingreso', NULL, NULL, 1590380545, 1590380545),
 ('site/logout', 2, 'Desloguearse de la plataforma', NULL, NULL, 1590380545, 1590380545),
 ('site/profile', 2, 'Perfil de usuario', NULL, NULL, 1591353071, 1591353071),
+('usuario/assign', 2, 'Permite asignar roles a usuarios', NULL, NULL, 1591577559, 1591577559),
 ('usuario/create', 2, 'Permite un usuario nuevo usuario', NULL, NULL, 1591336605, 1591336605),
+('usuario/delete', 2, 'Permite borrar usuarios', NULL, NULL, 1591577571, 1591577571),
 ('usuario/index', 2, 'Permite visualizar todos los usuarios registrados en la plataforma', NULL, NULL, 1591336269, 1591336269),
 ('usuario/update', 2, 'Permite editar los datos de un usuario especifico', NULL, NULL, 1591336346, 1591336346),
 ('usuario/view', 2, 'Permite visualizar un usuario especifico', NULL, NULL, 1591336327, 1591336327);
@@ -413,16 +421,26 @@ INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `crea
 --
 
 INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
+('Administrador', 'Organizador'),
+('Administrador', 'permission-manager/assing-permission'),
 ('Administrador', 'permission-manager/create-permission'),
 ('Administrador', 'permission-manager/create-rol'),
 ('Administrador', 'permission-manager/index'),
+('Administrador', 'permission-manager/list-controllers'),
+('Administrador', 'permission-manager/remove'),
+('Administrador', 'permission-manager/update-permission'),
+('Administrador', 'permission-manager/update-rol'),
 ('Administrador', 'site/error'),
+('Administrador', 'site/index'),
 ('Administrador', 'site/login'),
 ('Administrador', 'site/logout'),
+('Administrador', 'usuario/assign'),
 ('Administrador', 'usuario/create'),
+('Administrador', 'usuario/delete'),
 ('Administrador', 'usuario/index'),
 ('Administrador', 'usuario/update'),
 ('Administrador', 'usuario/view'),
+('Organizador', 'Registrado'),
 ('Registrado', 'cuenta/editprofile'),
 ('Registrado', 'cuenta/profile'),
 ('Registrado', 'site/about'),
@@ -439,22 +457,22 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `fecha_nacimiento`, `localidad`, `telefono`, `email`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
-(1, 'Marta', 'Caña', '20332183', '1968/08/21', 'Neuquén', '(0299)4428464', 'admin01@test.com', 'OmzVKGUJExEJuN4e_yJnso6tNabdoF09', '$2y$13$hkfdaAZgIQEaZTrHRNsnje0otnGEzHo.BIoaXbsWqEbb51si.PR3e', NULL, 10, 1590994328, 1590994328, 'FAcDt5Ki0rSn5JLg9aMtCaV4F-LeTGUY_1590994328'),
-(2, 'Carlos', 'Sepulveda', '20332183', '1968/08/24', 'Plottier', '(0299)4456364', 'admin02@test.com', '5tT59IUEQHIF7A8RpYCNaj15feVcY5hI', '$2y$13$VSLcQKUMVi4yGc8o1DRcIeH1u.KkzuohRRghOS6JZAKIBWcUX/GZ.', NULL, 10, 1590994652, 1590994652, 'jx4kYymAYb5I_bx29h5KC9m3fLAnqirN_1590994652'),
-(3, 'Rodrigo', 'Lazo', '20332183', '1968/07/20', 'Neuquén', '(0299)442234', 'organizador01@test.com', 'RfIaQzvchcC1zfRlAo2C7OpT04tNwcxF', '$2y$13$atb/agLp5ViXD20KG91yRefE0SN73JLrNOaJnD6UVcN64DQkTyrze', NULL, 10, 1590994729, 1590994729, '4i0PgyPBBD-1zt0DlQEVo8PP9MLtFAAN_1590994729'),
-(4, 'Sabrina', 'Casas', '18664055', '1964/04/02', 'Centenario', '(0299)4243464', 'organizador02@test.com', 'o546IVKZ0Vc1tnzfYruu3jTq1AEQl5XY', '$2y$13$OdLxghAQtDLB4WS7aIpWrOd7WR12ZuzfPfu/g23E.T8l06e8ALuWq', NULL, 10, 1590994776, 1590994776, 'zBU1IGmB733ix97W1n4GwVWVXQZhNemm_1590994776'),
-(5, 'Marina', 'Perez', '26301284', '1977/10/02', 'General Roca', '(0299)6458464', 'organizador03@test.com', 'PGvTg0o2LXqumMIZr4i472LZ_plvBBa-', '$2y$13$9IPBnPbxR6u3ucMMOR6rt.s/sIemcAtTiiaLAgqr7XguzZDRc0VsC', NULL, 10, 1590994822, 1590994822, 'amd5a1LNUJzwxXYcnozxpVd8gp0caScy_1590994822'),
-(6, 'Alejandro', 'Medario', '32976700', '1986/09/08', 'Neuquén', '(0299)5768464', 'registrado01@test.com', 'nE1auJs4ex8KmM7mo5UEtvrkFtSt94FI', '$2y$13$TkAsHr/QXEWKXR0OAxCm/.9ij2nod5iBibpk6ly0ZkTz9YeHmrEha', NULL, 10, 1590994878, 1590994878, 'vucICXx57O0zJv3LkAK7ueInqv9vrF1I_1590994878'),
-(7, 'Matias', 'Contreras', '31179842', '1984/08/15', 'Cipolletti', '(0299)4423476', 'registrado02@test.com', '5pjZV8xixJkfcspDznsGCq3QuIbU05da', '$2y$13$gc42YUd7Qsp2vrJACHZYLOn3b.Mh9JmS1N/ZOLIf7ayyFhKre7rgW', NULL, 10, 1590994958, 1590994958, 'GApav7SolKFCdriU-_NNYnTleAfenZyz_1590994958'),
-(8, 'Lidia', 'Calderon', '32684666', '1985/01/29', 'Plottier', '(0299)4562364', 'registrado03@test.com', 'dHMzF22B5zRjX4dSLn6J-fqlXPpvJYa2', '$2y$13$4Ym0uF4zAjqdCFboFsSurOekefP0bdSsR7faxqrlQaSK8Ma7NAqEq', NULL, 10, 1590995084, 1590995084, '_UvCdkNDMuJCQLjRlfQOjb6Hv_SaWb48_1590995084'),
-(9, 'Anastasia', 'Palomo', '34740201', '1989/09/24', 'Centenario', '(0299)4873454', 'registrado04@test.com', 'LHalzRHycE2DAdCGiyGCetHUDEPVaFoK', '$2y$13$FerwjQJV1hAAiE6d6tBiueIDQoB4brUfBQJFUzYwLjZPeywtp27b6', NULL, 10, 1590995156, 1590995156, 'inbyGzB29SLhZquC0z4tw-mZpX0VzcL6_1590995156'),
-(10, 'Joana', 'Otero', '24464510', '1971/01/23', 'Neuquén', '(0299)4424578', 'registrado05@test.com', 'qKdu_wt2JYETR6_E2u87OYY3iOy16cBx', '$2y$13$rnVUVvZutr/96w1cS4HhfetZw3dBQBlD9u.1ya4cdg7FPKDwUoov.', NULL, 10, 1590995182, 1590995182, 'TR9EWhAvtwWD8FR3-Sm1qc9HdBGRO6BP_1590995182'),
-(11, 'Araceli', 'Manzano', '31747790', '1985/11/15', 'Neuquén', '(0299)4238964', 'registrado06@test.com', 'sHy4nUiJC24Ahf7iAoM6LLdbqrozvcAA', '$2y$13$2bjcaQxu2/4UnjjwStwPSeQJgNNS/B09gbdw8uJPsbm6TLcCNcFi6', NULL, 10, 1590995202, 1590995202, '8wjkPYwqlYBeop4L8bL_VHabpkfLpUgL_1590995202'),
-(12, 'Fabiola', 'Maroto', '33102179', '1986/07/29', 'Plottier', '(0299)4424324', 'registrado07@test.com', 'ipIF8YUsd4YWUho4xQk26K1LNyfh4Znz', '$2y$13$baEfEtJVIbb7NTQZLerLyeZdpWW/S525t0Ky.zTSx3c9pPwjBlp3a', NULL, 10, 1590995230, 1590995230, '_6rZyiqUDrYVG9Qsq2RUFnloz09aKVqN_1590995230'),
-(13, 'Elias', 'Contreras', '30147983', '1983/06/19', 'Centenario', '(0299)4475864', 'registrado08@test.com', 'Nn3xdz9B86R-sQwWdDtrOOk79e0CdMtN', '$2y$13$ysREVfh1HwvP/p0cC.jtGe.UiPYHS/.kvqPq5Ga9Y8.BeDZSgyL9K', NULL, 10, 1590995252, 1590995252, 'r01h04ffYeO0X--HeoR_Sl5s571YJRj4_1590995252'),
-(14, 'Fernanda', 'Rosa', '28561145', '1980/10/09', 'Neuquén', '(0299)6358464', 'registrado09@test.com', 'eEymH70Ta4pi5uM1JdM4EQVMDCe8c94e', '$2y$13$YbKN8Zjs9YNBNSPSE/Npy.aowEX9nROQ44acOnuShe4lxpdKUpQgW', NULL, 10, 1590995290, 1590995290, 'lulupIU6dETfykAga9Pw4WzgcY3T6CBL_1590995290'),
-(15, 'Elba', 'Thidora', '23609276', '1973/12/01', 'Plottier', '(0299)2678464', 'registrado10@test.com', 'NzK7e7ANsT2rLyqzqavoG8vm8wWo8eEC', '$2y$13$9l4aj9xXl7KZAjewr9tDIeAdog7ShW/jRBmQqlRjTHwtxro9tfJF6', NULL, 10, 1590995334, 1590995334, 'VzTx3f30jl_RjQXgahQ5jfPM9xzrBCPV_1590995334');
+INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `localidad`, `email`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
+(1, 'Marta', 'Caña', 20332183, 'Neuquén', 'admin01@test.com', 'OmzVKGUJExEJuN4e_yJnso6tNabdoF09', '$2y$13$hkfdaAZgIQEaZTrHRNsnje0otnGEzHo.BIoaXbsWqEbb51si.PR3e', NULL, 10, 1590994328, 1590994328, 'FAcDt5Ki0rSn5JLg9aMtCaV4F-LeTGUY_1590994328'),
+(2, 'Carlos', 'Sepulveda', 20332183, 'Plottier', 'admin02@test.com', '5tT59IUEQHIF7A8RpYCNaj15feVcY5hI', '$2y$13$VSLcQKUMVi4yGc8o1DRcIeH1u.KkzuohRRghOS6JZAKIBWcUX/GZ.', NULL, 10, 1590994652, 1590994652, 'jx4kYymAYb5I_bx29h5KC9m3fLAnqirN_1590994652'),
+(3, 'Rodrigo', 'Lazo', 20332183, 'Neuquén', 'organizador01@test.com', 'RfIaQzvchcC1zfRlAo2C7OpT04tNwcxF', '$2y$13$atb/agLp5ViXD20KG91yRefE0SN73JLrNOaJnD6UVcN64DQkTyrze', NULL, 10, 1590994729, 1590994729, '4i0PgyPBBD-1zt0DlQEVo8PP9MLtFAAN_1590994729'),
+(4, 'Sabrina', 'Casas', 18664055, 'Centenario', 'organizador02@test.com', 'o546IVKZ0Vc1tnzfYruu3jTq1AEQl5XY', '$2y$13$OdLxghAQtDLB4WS7aIpWrOd7WR12ZuzfPfu/g23E.T8l06e8ALuWq', NULL, 10, 1590994776, 1590994776, 'zBU1IGmB733ix97W1n4GwVWVXQZhNemm_1590994776'),
+(5, 'Marina', 'Perez', 26301284, 'General Roca', 'organizador03@test.com', 'PGvTg0o2LXqumMIZr4i472LZ_plvBBa-', '$2y$13$9IPBnPbxR6u3ucMMOR6rt.s/sIemcAtTiiaLAgqr7XguzZDRc0VsC', NULL, 10, 1590994822, 1590994822, 'amd5a1LNUJzwxXYcnozxpVd8gp0caScy_1590994822'),
+(6, 'Alejandro', 'Medario', 32976700, 'Neuquén', 'registrado01@test.com', 'nE1auJs4ex8KmM7mo5UEtvrkFtSt94FI', '$2y$13$TkAsHr/QXEWKXR0OAxCm/.9ij2nod5iBibpk6ly0ZkTz9YeHmrEha', NULL, 10, 1590994878, 1590994878, 'vucICXx57O0zJv3LkAK7ueInqv9vrF1I_1590994878'),
+(7, 'Matias', 'Contreras', 31179842, 'Cipolletti', 'registrado02@test.com', '5pjZV8xixJkfcspDznsGCq3QuIbU05da', '$2y$13$gc42YUd7Qsp2vrJACHZYLOn3b.Mh9JmS1N/ZOLIf7ayyFhKre7rgW', NULL, 10, 1590994958, 1590994958, 'GApav7SolKFCdriU-_NNYnTleAfenZyz_1590994958'),
+(8, 'Lidia', 'Calderon', 32684666, 'Plottier', 'registrado03@test.com', 'dHMzF22B5zRjX4dSLn6J-fqlXPpvJYa2', '$2y$13$4Ym0uF4zAjqdCFboFsSurOekefP0bdSsR7faxqrlQaSK8Ma7NAqEq', NULL, 10, 1590995084, 1590995084, '_UvCdkNDMuJCQLjRlfQOjb6Hv_SaWb48_1590995084'),
+(9, 'Anastasia', 'Palomo', 34740201, 'Centenario', 'registrado04@test.com', 'LHalzRHycE2DAdCGiyGCetHUDEPVaFoK', '$2y$13$FerwjQJV1hAAiE6d6tBiueIDQoB4brUfBQJFUzYwLjZPeywtp27b6', NULL, 10, 1590995156, 1590995156, 'inbyGzB29SLhZquC0z4tw-mZpX0VzcL6_1590995156'),
+(10, 'Joana', 'Otero', 24464510, 'Neuquén', 'registrado05@test.com', 'qKdu_wt2JYETR6_E2u87OYY3iOy16cBx', '$2y$13$rnVUVvZutr/96w1cS4HhfetZw3dBQBlD9u.1ya4cdg7FPKDwUoov.', NULL, 10, 1590995182, 1590995182, 'TR9EWhAvtwWD8FR3-Sm1qc9HdBGRO6BP_1590995182'),
+(11, 'Araceli', 'Manzano', 31747790, 'Neuquén', 'registrado06@test.com', 'sHy4nUiJC24Ahf7iAoM6LLdbqrozvcAA', '$2y$13$2bjcaQxu2/4UnjjwStwPSeQJgNNS/B09gbdw8uJPsbm6TLcCNcFi6', NULL, 10, 1590995202, 1590995202, '8wjkPYwqlYBeop4L8bL_VHabpkfLpUgL_1590995202'),
+(12, 'Fabiola', 'Maroto', 33102179, 'Plottier', 'registrado07@test.com', 'ipIF8YUsd4YWUho4xQk26K1LNyfh4Znz', '$2y$13$baEfEtJVIbb7NTQZLerLyeZdpWW/S525t0Ky.zTSx3c9pPwjBlp3a', NULL, 10, 1590995230, 1590995230, '_6rZyiqUDrYVG9Qsq2RUFnloz09aKVqN_1590995230'),
+(13, 'Elias', 'Contreras', 30147983, 'Centenario', 'registrado08@test.com', 'Nn3xdz9B86R-sQwWdDtrOOk79e0CdMtN', '$2y$13$ysREVfh1HwvP/p0cC.jtGe.UiPYHS/.kvqPq5Ga9Y8.BeDZSgyL9K', NULL, 10, 1590995252, 1590995252, 'r01h04ffYeO0X--HeoR_Sl5s571YJRj4_1590995252'),
+(14, 'Fernanda', 'Rosa', 28561145, 'Neuquén', 'registrado09@test.com', 'eEymH70Ta4pi5uM1JdM4EQVMDCe8c94e', '$2y$13$YbKN8Zjs9YNBNSPSE/Npy.aowEX9nROQ44acOnuShe4lxpdKUpQgW', NULL, 10, 1590995290, 1590995290, 'lulupIU6dETfykAga9Pw4WzgcY3T6CBL_1590995290'),
+(15, 'Elba', 'Thidora', 23609276, 'Plottier', 'registrado10@test.com', 'NzK7e7ANsT2rLyqzqavoG8vm8wWo8eEC', '$2y$13$9l4aj9xXl7KZAjewr9tDIeAdog7ShW/jRBmQqlRjTHwtxro9tfJF6', NULL, 10, 1590995334, 1590995334, 'VzTx3f30jl_RjQXgahQ5jfPM9xzrBCPV_1590995334');
 
 --
 -- Volcado de datos para la tabla `usuario_rol`

@@ -159,7 +159,7 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionContacto() {
+    private function actionContacto() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
