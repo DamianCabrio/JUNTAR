@@ -4,9 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Evento;
-use common\models\EventoSearch;
-use common\models\Inscripcion;
-use common\models\Fecha;
+use app\controllers\EventoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -54,22 +52,8 @@ class EventoController extends Controller
      */
     public function actionView($id)
     {
-
-        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
-        $fechaEvento = Fecha::find()->where(["idEvento" => $id])->orderBy(["fecha" => "ASC"])->one();
-
-        $yaInscripto = false;
-        $yaAcreditado = 0;
-        if(count($inscripcion) == 1){
-            $yaInscripto = true;
-            $yaAcreditado = $inscripcion[0]["acreditacion"];
-        }
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            "fechaEvento" => $fechaEvento,
-            "yaInscripto" => $yaInscripto,
-            "acreditacion" => $yaAcreditado,
         ]);
     }
 

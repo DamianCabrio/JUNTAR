@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\EventoSearch */
+/* @var $searchModel app\controllers\EventoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Eventos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="evento-index container">
+<div class="evento-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -28,17 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'idEvento',
             'idUsuario',
-            'nombreEvento',
-            'descripcionEvento',
-            'lugar',
-            //'modalidad',
-            //'linkPresentaciones',
-            //'linkFlyer',
-            //'linkLogo',
+            'idCategoria',
+            'idEstadoEvento',
+            'idModalidadEvento',
+            //'nombreEvento',
+            //'nombreCortoEvento',
+            //'descripcionEvento',
+            //'lugar',
+            //'fechaInicioEvento',
+            //'fechaFinEvento',
+            //'imgFlyer',
+            //'imgLogo',
             //'capacidad',
             //'preInscripcion',
             //'fechaLimiteInscripcion',
             //'codigoAcreditacion',
+            //'fechaCreacionEvento',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
