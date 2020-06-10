@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2020 a las 05:07:57
+-- Tiempo de generación: 05-06-2020 a las 11:14:30
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -12,55 +12,20 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-create database pwa_juntar;
-
-use pwa_juntar;
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+CREATE DATABASE pwa_juntar;
 
--- #######################################################################################################################
--- #######################################################################################################################
---
--- Base de datos: `pwa_juntar2`
---
-
--- --------------------------------------------------------
+USE pwa_juntar;
 
 --
--- Estructura de tabla para la tabla `categoria_evento`
+-- Base de datos: `pwa_juntar`
 --
 
-CREATE TABLE `categoria_evento` (
-  `idCategoriaEvento` tinyint(4) NOT NULL,
-  `descripcionCategoria` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estado_evento`
---
-
-CREATE TABLE `estado_evento` (
-  `idEstadoEvento` tinyint(4) NOT NULL,
-  `descripcionEstado` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `modalidad_evento`
---
-
-CREATE TABLE `modalidad_evento` (
-  `idModalidadEvento` tinyint(4) NOT NULL,
-  `descripcionModalidad` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 -- --------------------------------------------------------
 
 --
@@ -68,24 +33,42 @@ CREATE TABLE `modalidad_evento` (
 --
 
 CREATE TABLE `evento` (
-  `idEvento` bigint(20) NOT NULL,
-  `idUsuario` bigint(20) NOT NULL,
-  `idCategoria` tinyint(4) NOT NULL,
-  `idEstadoEvento` tinyint(4) NOT NULL,
-  `idModalidadEvento` tinyint(4) NOT NULL,
-  `nombreEvento` varchar(200) NOT NULL,
-  `nombreCortoEvento` varchar(100) NOT NULL,
-  `descripcionEvento` varchar(800) NOT NULL,
+  `idEvento` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `nombreEvento` varchar(100) NOT NULL,
+  `descripcionEvento` varchar(200) NOT NULL,
   `lugar` varchar(200) NOT NULL,
-  `fechaInicioEvento` date NOT NULL,
-  `fechaFinEvento` date NOT NULL,
-  `imgFlyer` varchar(200) DEFAULT NULL,
-  `imgLogo` varchar(200) DEFAULT NULL,
-  `capacidad` smallint(6) NOT NULL,
+  `modalidad` varchar(200) NOT NULL,
+  `linkPresentaciones` varchar(200) DEFAULT NULL,
+  `linkFlyer` varchar(200) DEFAULT NULL,
+  `linkLogo` varchar(200) DEFAULT NULL,
+  `capacidad` int(6) NOT NULL,
   `preInscripcion` tinyint(1) NOT NULL,
   `fechaLimiteInscripcion` date NOT NULL,
-  `codigoAcreditacion` varchar(100) DEFAULT NULL,
-  `fechaCreacionEvento` date NOT NULL
+  `codigoAcreditacion` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expositor`
+--
+
+CREATE TABLE `expositor` (
+  `idExpositor` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fecha`
+--
+
+CREATE TABLE `fecha` (
+  `idFecha` int(11) NOT NULL,
+  `idEvento` int(11) NOT NULL,
+  `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -95,10 +78,10 @@ CREATE TABLE `evento` (
 --
 
 CREATE TABLE `inscripcion` (
-  `idInscripcion` bigint(20) NOT NULL,
-  `idUsuario` bigint(20) NOT NULL,
-  `idEvento` bigint(20) NOT NULL,
-  `estado` tinyint(1) NOT NULL,
+  `idInscripcion` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `idEvento` int(11) NOT NULL,
+  `estado` int(11) NOT NULL,
   `fecha_preinscripcion` date NOT NULL,
   `fecha_inscripcion` date DEFAULT NULL,
   `acreditacion` tinyint(1) DEFAULT NULL,
@@ -124,19 +107,6 @@ CREATE TABLE `permiso` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `regla`
---
-
-CREATE TABLE `regla` (
-  `name` varchar(64) NOT NULL,
-  `data` blob DEFAULT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `permiso_rol`
 --
 
@@ -152,14 +122,12 @@ CREATE TABLE `permiso_rol` (
 --
 
 CREATE TABLE `presentacion` (
-  `idPresentacion` bigint(20) NOT NULL,
-  `idEvento` bigint(20) NOT NULL,
-  `tituloPresentacion` varchar(200) NOT NULL,
-  `descripcionPresentacion` varchar(800) NOT NULL,
-  `diaPresentacion` date NOT NULL,
-  `horaInicioPresentacion` time NOT NULL,
-  `horaFinPresentacion` time NOT NULL,
-  `linkARecursos` varchar(300) DEFAULT NULL
+  `idPresentacion` int(11) NOT NULL,
+  `idEvento` int(11) NOT NULL,
+  `tituloPresentacion` varchar(100) NOT NULL,
+  `descripcionPresentacion` varchar(400) NOT NULL,
+  `horaInicioPresentacion` datetime NOT NULL,
+  `horaFinPresentacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -169,8 +137,21 @@ CREATE TABLE `presentacion` (
 --
 
 CREATE TABLE `presentacion_expositor` (
-  `idExpositor` bigint(20) NOT NULL,
-  `idPresentacion` bigint(20) NOT NULL
+  `idPresentacion` int(11) NOT NULL,
+  `idExpositor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `regla`
+--
+
+CREATE TABLE `regla` (
+  `name` varchar(64) NOT NULL,
+  `data` blob DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -180,13 +161,13 @@ CREATE TABLE `presentacion_expositor` (
 --
 
 CREATE TABLE `usuario` (
-  `idUsuario` bigint(20) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `apellido` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `dni` int(11) DEFAULT NULL,
-  `pais` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `provincia` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `localidad` varchar(70) COLLATE utf8_unicode_ci DEFAULT NULL,
+--   `fecha_nacimiento` date DEFAULT NULL,
+  `localidad` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+--   `telefono` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -205,38 +186,34 @@ CREATE TABLE `usuario` (
 
 CREATE TABLE `usuario_rol` (
   `item_name` varchar(64) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
--- #######################################################################################################################
--- #######################################################################################################################
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `categoria_evento`
---
-ALTER TABLE `categoria_evento`
-  ADD PRIMARY KEY (`idCategoriaEvento`);
-
---
--- Indices de la tabla `estado_evento`
---
-ALTER TABLE `estado_evento`
-  ADD PRIMARY KEY (`idEstadoEvento`);
 
 --
 -- Indices de la tabla `evento`
 --
 ALTER TABLE `evento`
   ADD PRIMARY KEY (`idEvento`),
-  ADD KEY `idUsuario` (`idUsuario`),
-  ADD KEY `idCategoria` (`idCategoria`),
-  ADD KEY `idEstadoEvento` (`idEstadoEvento`,`idModalidadEvento`),
-  ADD KEY `idModalidadEvento` (`idModalidadEvento`);
+  ADD KEY `idUsuario` (`idUsuario`);
+
+--
+-- Indices de la tabla `expositor`
+--
+ALTER TABLE `expositor`
+  ADD PRIMARY KEY (`idExpositor`) USING BTREE,
+  ADD KEY `idUsuario` (`idUsuario`);
+
+--
+-- Indices de la tabla `fecha`
+--
+ALTER TABLE `fecha`
+  ADD PRIMARY KEY (`idFecha`),
+  ADD KEY `idEvento` (`idEvento`);
 
 --
 -- Indices de la tabla `inscripcion`
@@ -245,12 +222,6 @@ ALTER TABLE `inscripcion`
   ADD PRIMARY KEY (`idInscripcion`),
   ADD KEY `idUsuario` (`idUsuario`),
   ADD KEY `idEvento` (`idEvento`);
-
---
--- Indices de la tabla `modalidad_evento`
---
-ALTER TABLE `modalidad_evento`
-  ADD PRIMARY KEY (`idModalidadEvento`);
 
 --
 -- Indices de la tabla `permiso`
@@ -278,9 +249,8 @@ ALTER TABLE `presentacion`
 -- Indices de la tabla `presentacion_expositor`
 --
 ALTER TABLE `presentacion_expositor`
-  ADD PRIMARY KEY (`idExpositor`,`idPresentacion`),
-  ADD KEY `idExpositor` (`idExpositor`,`idPresentacion`),
-  ADD KEY `idPresentacion` (`idPresentacion`);
+  ADD KEY `idPresentacion` (`idPresentacion`),
+  ADD KEY `idExpositor` (`idExpositor`);
 
 --
 -- Indices de la tabla `regla`
@@ -304,58 +274,46 @@ ALTER TABLE `usuario_rol`
   ADD KEY `usuario_rol_usuario_id_idx` (`user_id`),
   ADD KEY `item_name` (`item_name`);
 
-
--- #######################################################################################################################
--- #######################################################################################################################
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `categoria_evento`
---
-ALTER TABLE `categoria_evento`
-  MODIFY `idCategoriaEvento` tinyint(4) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `estado_evento`
---
-ALTER TABLE `estado_evento`
-  MODIFY `idEstadoEvento` tinyint(4) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `expositor`
+--
+ALTER TABLE `expositor`
+  MODIFY `idExpositor` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `fecha`
+--
+ALTER TABLE `fecha`
+  MODIFY `idFecha` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `idInscripcion` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `modalidad_evento`
---
-ALTER TABLE `modalidad_evento`
-  MODIFY `idModalidadEvento` tinyint(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `idInscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `presentacion`
 --
 ALTER TABLE `presentacion`
-  MODIFY `idPresentacion` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPresentacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
-
--- #######################################################################################################################
--- #######################################################################################################################
 --
 -- Restricciones para tablas volcadas
 --
@@ -364,10 +322,19 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `evento`
 --
 ALTER TABLE `evento`
-  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `categoria_evento` (`idCategoriaEvento`),
-  ADD CONSTRAINT `evento_ibfk_3` FOREIGN KEY (`idModalidadEvento`) REFERENCES `modalidad_evento` (`idModalidadEvento`),
-  ADD CONSTRAINT `evento_ibfk_4` FOREIGN KEY (`idEstadoEvento`) REFERENCES `estado_evento` (`idEstadoEvento`);
+  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+
+--
+-- Filtros para la tabla `expositor`
+--
+ALTER TABLE `expositor`
+  ADD CONSTRAINT `expositor_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+
+--
+-- Filtros para la tabla `fecha`
+--
+ALTER TABLE `fecha`
+  ADD CONSTRAINT `fecha_ibfk_1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`);
 
 --
 -- Filtros para la tabla `inscripcion`
@@ -399,8 +366,8 @@ ALTER TABLE `presentacion`
 -- Filtros para la tabla `presentacion_expositor`
 --
 ALTER TABLE `presentacion_expositor`
-  ADD CONSTRAINT `presentacion_expositor_ibfk_1` FOREIGN KEY (`idExpositor`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `presentacion_expositor_ibfk_2` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion` (`idPresentacion`);
+  ADD CONSTRAINT `presentacion_expositor_ibfk_1` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion` (`idPresentacion`),
+  ADD CONSTRAINT `presentacion_expositor_ibfk_2` FOREIGN KEY (`idExpositor`) REFERENCES `expositor` (`idExpositor`);
 
 --
 -- Filtros para la tabla `usuario_rol`
@@ -410,11 +377,9 @@ ALTER TABLE `usuario_rol`
   ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
--- #######################################################################################################################
--- #######################################################################################################################
---
--- Volcado de datos para las tablas
---
+-- ####################################################
+-- ###################### Insert ######################
+-- ####################################################
 
 --
 -- Volcado de datos para la tabla `permiso`
@@ -487,6 +452,7 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 ('Registrado', 'site/logout'),
 ('Registrado', 'site/profile');
 
+
 --
 -- Volcado de datos para la tabla `usuario`
 --
@@ -529,8 +495,6 @@ INSERT INTO `usuario_rol` (`item_name`, `user_id`, `created_at`) VALUES
 ('Registrado', 14, NULL),
 ('Registrado', 15, NULL);
 
--- #######################################################################################################################
--- #######################################################################################################################
 
 COMMIT;
 
