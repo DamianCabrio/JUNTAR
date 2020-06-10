@@ -4,7 +4,9 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Evento;
-use app\controllers\EventoSearch;
+use common\models\EventoSearch;
+use common\models\Inscripcion;
+use common\models\Fecha;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,8 +54,42 @@ class EventoController extends Controller
      */
     public function actionView($id)
     {
+
+        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
+        $fechaEvento = Fecha::find()->where(["idEvento" => $id])->orderBy(["fecha" => "ASC"])->one();
+
+        $yaInscripto = false;
+        $yaAcreditado = 0;
+        if(count($inscripcion) == 1){
+            $yaInscripto = true;
+            $yaAcreditado = $inscripcion[0]["acreditacion"];
+        }
+          /*
+             En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
+             en Where filtrar por 'estado' activo.
+          */
+        $evento = Evento::find()->select('capacidad')->where(["idEvento" =>$id])->one();
+        $cantInscriptos = Inscripcion::find()->select('capacidad')->where(["idEvento" =>$id])->count();
+        
+        $sePuedeInscribir=  $evento->capacidad;
+
+        if($sePuedeInscribir== 0){
+            $cupos= 1;
+
+        }else{
+            $sePuedeInscribir= $evento->capacidad - $cantInscriptos;
+            $cupos= 0;
+            if(  $sePuedeInscribir>0 ){
+                $cupos= 1;
+            }
+        }
+     
         return $this->render('view', [
             'model' => $this->findModel($id),
+            "fechaEvento" => $fechaEvento,
+            "yaInscripto" => $yaInscripto,
+            "acreditacion" => $yaAcreditado,
+            'cupos'=>$cupos
         ]);
     }
 
