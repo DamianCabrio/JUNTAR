@@ -2,52 +2,51 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+use yii\bootstrap4\Html;
+
+$this->title = 'Proyecto Juntar';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
     <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+        <header class="hero gradient-hero">
+            <div class="center-content">
+                <?= Html::img('images/juntar-logo-b.svg',  ['class' => 'img-fluid']); ?>
+                <br>
+                <h5 class="text-white text-uppercase">Sistema Gestión de Eventos</h5>
+                <br>
+                <a href="#events" class="btn btn-primary btn-lg text-uppercase">Empezar</a>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+        </header>
+        <section class="darkish_bg">
+            <div class="container padding_select">
+                <select class="custom-select custom-select-lg mb-3">
+                    <option selected>Funcional en la próxima entrega</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+        </section>
+        <section id="events" class="dark_bg">
+            <div class="container padding_section">
+            <h2 class="text-white text-uppercase">Últimos Lanzamientos</h2><br>
+                <div class="row">
+                    <?php foreach ($eventos as $evento) {
+                        echo "<div class='col-12 col-md-4'>";
+                        echo "<div class='card bg-light'>";
+                        echo "<img src='" . $evento["linkLogo"] . " 'class='card-img-top' alt=''...'>";
+                        echo "<div class='card-body'>";
+                        echo "<h5 class='card-title'>" . $evento["nombreEvento"] . "</h5>";
+                        echo "<h5 class='card-title'>" . $evento["fechaLimiteInscripcion"] . "</h5>";
+                        echo  "<hr>";
+                        echo "<p class='card-text'>" . $evento["lugar"] . "</p>";
+                        echo "<p class='card-text'>" . strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n") . "</p>";
+                        echo Html::a('Más Información', ['/evento/view', "id" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
+                        echo "</div></div></div>";
+                    } ?>
+                </div>
             </div>
-        </div>
-
+        </section>
     </div>
 </div>
