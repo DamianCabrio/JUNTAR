@@ -70,7 +70,7 @@ CREATE TABLE `modalidad_evento` (
 CREATE TABLE `evento` (
   `idEvento` bigint(20) NOT NULL,
   `idUsuario` bigint(20) NOT NULL,
-  `idCategoria` tinyint(4) NOT NULL,
+  `idCategoriaEvento` tinyint(4) NOT NULL,
   `idEstadoEvento` tinyint(4) NOT NULL,
   `idModalidadEvento` tinyint(4) NOT NULL,
   `nombreEvento` varchar(200) NOT NULL,
@@ -99,8 +99,8 @@ CREATE TABLE `inscripcion` (
   `idUsuario` bigint(20) NOT NULL,
   `idEvento` bigint(20) NOT NULL,
   `estado` tinyint(1) NOT NULL,
-  `fecha_preinscripcion` date NOT NULL,
-  `fecha_inscripcion` date DEFAULT NULL,
+  `fechaPreInscripcion` date NOT NULL,
+  `fechaInscripcion` date DEFAULT NULL,
   `acreditacion` tinyint(1) DEFAULT NULL,
   `certificado` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -234,8 +234,8 @@ ALTER TABLE `estado_evento`
 ALTER TABLE `evento`
   ADD PRIMARY KEY (`idEvento`),
   ADD KEY `idUsuario` (`idUsuario`),
-  ADD KEY `idCategoria` (`idCategoria`),
-  ADD KEY `idEstadoEvento` (`idEstadoEvento`,`idModalidadEvento`),
+  ADD KEY `idCategoria` (`idCategoriaEvento`),
+  ADD KEY `idEstadoEvento` (`idEstadoEvento`),
   ADD KEY `idModalidadEvento` (`idModalidadEvento`);
 
 --
@@ -279,7 +279,7 @@ ALTER TABLE `presentacion`
 --
 ALTER TABLE `presentacion_expositor`
   ADD PRIMARY KEY (`idExpositor`,`idPresentacion`),
-  ADD KEY `idExpositor` (`idExpositor`,`idPresentacion`),
+  ADD KEY `idExpositor` (`idExpositor`),
   ADD KEY `idPresentacion` (`idPresentacion`);
 
 --
@@ -365,7 +365,7 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `evento`
   ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `categoria_evento` (`idCategoriaEvento`),
+  ADD CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idCategoriaEvento`) REFERENCES `categoria_evento` (`idCategoriaEvento`),
   ADD CONSTRAINT `evento_ibfk_3` FOREIGN KEY (`idModalidadEvento`) REFERENCES `modalidad_evento` (`idModalidadEvento`),
   ADD CONSTRAINT `evento_ibfk_4` FOREIGN KEY (`idEstadoEvento`) REFERENCES `estado_evento` (`idEstadoEvento`);
 
