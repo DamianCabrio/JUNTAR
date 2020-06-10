@@ -22,20 +22,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
                 <div class="form-group">
-                    <?= $form->field($model, 'nombre')->label('Nombre *') ?>
-                    <?= $form->field($model, 'apellido')->label('Apellido *') ?>
-                    <?= $form->field($model, 'dni')->input('number')->label('DNI *'); ?>
-                    <?= $form->field($model, 'telefono')->label('Telefono *'); ?>
-                    <?= $form->field($model, 'localidad')->label('Localidad *'); ?>
-                    <?= $form->field($model, 'fecha_nacimiento')->input('date')->label('Fecha de Nacimiento *'); ?>
-
-                    <?= $form->field($model, 'email')->input('email')->label('Email *'); ?>
-                    <?= $form->field($model, 'password')->passwordInput()->label('Contraseña *'); ?>
+                    <?= $form->field($model, 'nombre')->label('Nombre (*)')->textInput(['placeholder' => 'Ejemplo: Juan']) ?>
+                    <?= $form->field($model, 'apellido')->label('Apellido (*)')->textInput(['placeholder' => 'Ejemplo: Perez']) ?>
+                    <?= $form->field($model, 'dni')->label('DNI (*)')->textInput(['placeholder' => 'Ejemplo: 26734824']); ?>
+                    <?= $form->field($model, 'localidad')->label('Localidad (*)')->textInput(['placeholder' => 'Ejemplo: Neuquen']); ?>
+                    <?= $form->field($model, 'email')->input('email')->label('Email (*)')->textInput(['placeholder' => 'Ejemplo: myEmail@gmail.com']); ?>
+                    <?= $form->field($model, 'password')->passwordInput([
+                            'placeholder' => 'Ejemplo: Mypass1234, myPass32',
+                            'data-title'=>'Requisitos',
+                            'data-toggle'=>'popover',
+                            'data-content'=>'La contraseña debe tener entre 8 y 20 caracteres y contener como mínimo un número y una mayúscula.',
+                          ]); ?>
                     <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label('Mostrar Contraseña') ?>
                 </div>
 
                 <div class="form-advice">
-                    Los campos marcados con * son obligatorios.
+                    Los campos marcados con (*) son obligatorios.
                 </div>
                 <div class="form-group mt-2">
                     <?= Html::submitButton('Registrarse', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -17,8 +17,8 @@ class UsuarioSearch extends Usuario
     public function rules()
     {
         return [
-            [['idUsuario', 'dni', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['nombre', 'apellido', 'localidad', 'email', 'auth_key', 'password_hash', 'password_reset_token', 'verification_token'], 'safe'],
+            [['idUsuario', 'dni', 'telefono', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['nombre', 'apellido', 'fecha_nacimiento', 'localidad', 'email', 'auth_key', 'password_hash', 'password_reset_token', 'verification_token'], 'safe'],
         ];
     }
 
@@ -60,8 +60,8 @@ class UsuarioSearch extends Usuario
         $query->andFilterWhere([
             'idUsuario' => $this->idUsuario,
             'dni' => $this->dni,
-            //'fecha_nacimiento' => $this->fecha_nacimiento,
-            //'telefono' => $this->telefono,
+            'fecha_nacimiento' => $this->fecha_nacimiento,
+            'telefono' => $this->telefono,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

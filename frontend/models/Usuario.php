@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -44,14 +44,14 @@ class Usuario extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            //Obligatorio
             [['nombre', 'apellido', 'dni', 'localidad', 'email'], 'required'],
-//            [['dni', 'telefono', 'status', 'created_at', 'updated_at'], 'integer'],
-//            [['fecha_nacimiento'], 'safe'],
-            [['nombre', 'apellido', 'localidad'], 'string', 'max' => 50],
-//            [['email', 'password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
-//            [['auth_key'], 'string', 'max' => 32],
-            [['email'], 'unique'],
-//            [['password_reset_token'], 'unique'],
+
+            //Reglas DNI
+            ['dni', 'integer', 'min' => 10000000, 'max' => 100000000],
+            
+            //Reglas String
+            [['nombre', 'apellido', 'localidad'], 'string', 'message' => 'El campo contiene caracteres no permitidos'],
         ];
     }
 
@@ -68,14 +68,7 @@ class Usuario extends \yii\db\ActiveRecord
 //            'fecha_nacimiento' => 'Fecha Nacimiento',
             'localidad' => 'Localidad',
 //            'telefono' => 'Telefono',
-            'email' => 'Email',
-//            'auth_key' => 'Auth Key',
-//            'password_hash' => 'Password Hash',
-//            'password_reset_token' => 'Password Reset Token',
-//            'status' => 'Status',
-//            'created_at' => 'Created At',
-//            'updated_at' => 'Updated At',
-//            'verification_token' => 'Verification Token',
+//            'email' => 'Email',
         ];
     }
 

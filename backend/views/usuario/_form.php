@@ -18,27 +18,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dni')->textInput() ?>
 
-    <?= $form->field($model, 'fecha_nacimiento')->textInput() ?>
-
     <?= $form->field($model, 'localidad')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'telefono')->textInput() ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?php echo $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?php echo $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?php echo $form->field($model, 'updated_at')->textInput() ?>
 
-    <?= $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

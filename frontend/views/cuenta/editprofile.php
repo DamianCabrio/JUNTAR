@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = 'Actualizar información';
             <?= $form->field($model, 'nombre')->label('Nombre *') ?>
             <?= $form->field($model, 'apellido')->label('Apellido *') ?>
             <?= $form->field($model, 'dni')->input('number')->label('DNI *'); ?>
-            <?= $form->field($model, 'telefono')->label('Telefono *'); ?>
+            <?php // echo $form->field($model, 'telefono')->label('Telefono *'); ?>
             <?= $form->field($model, 'localidad')->label('Localidad *'); ?>
-            <?= $form->field($model, 'fecha_nacimiento')->input('date')->label('Fecha de Nacimiento *'); ?>
+            <?php // echo $form->field($model, 'fecha_nacimiento')->input('date')->label('Fecha de Nacimiento *'); ?>
 
-            <?= $form->field($model, 'email')->input('email')->label('Email *'); ?>
+            <?php // echo $form->field($model, 'email')->input('email')->label('Email *'); ?>
             <div class="form-group">
                 <?= Html::submitButton('Guardar Cambios', ['class' => 'btn btn-primary']) ?>
             </div>

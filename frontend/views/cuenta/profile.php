@@ -26,6 +26,14 @@ $dataUser = array_shift($data);
             <li class="nav-item profile-sidebar col-12">
                 <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Desactivar mi Cuenta </a>
             </li>
+            <li class="nav-item mt-2 profile-sidebar col-12">
+              <?php $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
+              <?php if (!$assigned): ?>
+                <?= Html::a("Ser un Gestor de Eventos",
+                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
+                ['class' => $assigned?"btn btn-sm btn-outline-info":"btn btn-sm btn-outline-info"])?>
+              <?php endif; ?>
+            </li>
         </ul>
     </div>
     <!-- Profile Sidebar Menu-->
@@ -36,7 +44,7 @@ $dataUser = array_shift($data);
 
             <!-- Profile Card Header -->
             <div class="card-header">
-                <div class="row"> 
+                <div class="row">
                     <h4 class="col-md-9 col-sm-12">Perfil de <?= Html::encode($dataUser['nombre'] . ' ' . $dataUser['apellido']); ?> </h4>
                     <?=
                     Html::a(' Editar Perfil '
@@ -74,14 +82,14 @@ $dataUser = array_shift($data);
                                     <th> DNI: </td>
                                     <td> <?php echo Html::encode($dataUser['dni']); ?> </td>
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <th> Fecha Nacimiento: </td>
-                                    <td> <?php echo Html::encode($dataUser['fecha_nacimiento']); ?> </td>
+                                    <td> <?php // echo Html::encode($dataUser['fecha_nacimiento']); ?> </td>
                                 </tr>
                                 <tr>
                                     <th> Teléfono: </td>
-                                    <td> <?php echo Html::encode($dataUser['telefono']); ?> </td>
-                                </tr>
+                                    <td> <?php // echo Html::encode($dataUser['telefono']); ?> </td>
+                                </tr>-->
                                 <tr>
                                     <th> Localidad: </td>
                                     <td> <?php echo Html::encode($dataUser['localidad']); ?> </td>

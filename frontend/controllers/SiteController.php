@@ -33,8 +33,8 @@ class SiteController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email'],
-                    'roles' => ['?'], // <----- guest 
+                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email', 'verify-email', 'reset-password', 'index'],
+                    'roles' => ['?'], // <----- guest
                 ],
                 [
                     'allow' => true,
@@ -161,7 +161,7 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionContacto() {
+    private function actionContacto() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
