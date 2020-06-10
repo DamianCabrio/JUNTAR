@@ -8,7 +8,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $dataUser = array_shift($data);
 //print_r($dataUser);
 ?>
-
+<div class="container">
 <h1 class="text-center"> Información de la Cuenta </h1>
 <div class='row'>
     <!-- Profile Sidebar Menu-->
@@ -116,5 +116,7 @@ $dataUser = array_shift($data);
     <!-- Profile Card Content -->
 
 </div>
+</div>
+
 
 <!--<a href="<?= Url::toRoute(['club/listarposicionesclub']); ?>">Volver</a>-->

@@ -10,7 +10,7 @@ use yii\bootstrap4\ActiveForm;
 $this->title = 'Crear cuenta';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-signup">
+<div class="site-signup container">
 
     <div class="m-auto">
         <h1 class="text-center mb-2"><?= Html::encode($this->title) ?></h1>

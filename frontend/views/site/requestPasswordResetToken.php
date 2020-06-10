@@ -9,7 +9,7 @@ use yii\bootstrap4\ActiveForm;
 $this->title = 'Solicitar cambio de contraseña';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-request-password-reset">
+<div class="site-request-password-reset container">
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <p class="text-center">Por favor, ingrese su cuenta de correo.</p>
