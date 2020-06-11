@@ -48,7 +48,7 @@ use frontend\models\ModalidadEvento;
             <?= $form->field($model, 'idModalidadEvento')->dropdownList($modalidadEvento,  ['prompt' => 'Selecciona una modalidad'])->label('Modalidad *'); ?>
 
             <!-- input logo -->
-            <?= $form->field($modelImg, 'imageLogo')->fileInput()->label('Ingrese logo (solo .pgn y .jpg)') ?>
+            <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo (solo .pgn y .jpg)') ?>
             
             <!-- input flyer -->
             <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer (solo .pgn y .jpg)') ?>

@@ -144,12 +144,12 @@ class EventoController extends Controller
 
         $model = new Evento();
         $modelLogo = new UploadFormLogo();
-        $modelFlyer = new UploadFormFlyer();
-        
+        $modelFlyer = new UploadFormFlyer();        
 
         if ($model->load(Yii::$app->request->post()) ) {
-    
-            $modelLogo->$imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+            $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
+
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
             if($modelLogo->imageLogo != null){
@@ -162,8 +162,12 @@ class EventoController extends Controller
                     $model->imgFlyer =  'web/emanuel-mauro/frontend/web/eventos/images/flyers/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                  }
             }
-            $model->save();
-            return $this->redirect(['mostrar-evento', 'idEvento' => $model->idEvento]);
+            if($model->save()){
+            return $this->redirect(['evento-cargado', 'idEvento' => $model->idEvento]);
+            }
+            else{
+                return $this->render('errorEvento');
+            }    
         }
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer]);
     }
@@ -207,19 +211,19 @@ class EventoController extends Controller
 
         $model = $this->findModel($idEvento);
 
-        $modelImg = new UploadFormLogo();
+        $modelLogo = new UploadFormLogo();
         $modelFlyer = new UploadFormFlyer();
 
         $rutaLogos = ( Yii::getAlias("@frontend/web/eventos/images/logos/"));
         $rutaFlyer = ( Yii::getAlias("@frontend/web/eventos/images/flyers/"));
 
         if($model->load(Yii::$app->request->post())) {
-            $modelImg->imageLogo = UploadedFile::getInstance($modelImg, 'imageLogo'); // 'web/emanuel-mauro/frontend/web/eventos/images/logos/'
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); // 'web/emanuel-mauro/frontend/web/eventos/images/logos/'
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); // 'web/emanuel-mauro/frontend/web/eventos/images/flyers/'
 
-            if($modelImg->imageLogo != null){
-                if($modelImg->upload()){
-                    $model->imgLogo =  $rutaLogos . $modelImg->imageLogo->baseName . '.' . $modelImg->imageLogo->extension;
+            if($modelLogo->imageLogo != null){
+                if($modelLogo->upload()){
+                    $model->imgLogo =  $rutaLogos . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
             }    
             if($modelFlyer->imageFlyer != null){
@@ -233,7 +237,7 @@ class EventoController extends Controller
 
         return $this->render('editarEvento', [
             'model' => $model,
-            'modelImg' => $modelImg, 
+            'modelLogo' => $modelLogo, 
             'modelFlyer' => $modelFlyer
         ]);
      }
@@ -241,9 +245,10 @@ class EventoController extends Controller
    
      public function actionPublicarEvento($idEvento){
         $model = $this->findModel($idEvento);
-        
+       
         $model->fechaCreacionEvento = date('Y-m-d');    
-        
+        $model->idEstadoEvento = 1;
+
         $model->save();
         return $this->render('eventoPublicado');
 
