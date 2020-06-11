@@ -56,7 +56,6 @@ class EventoController extends Controller
     {
 
         $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
-        $fechaEvento = Fecha::find()->where(["idEvento" => $id])->orderBy(["fecha" => "ASC"])->one();
 
         $yaInscripto = false;
         $yaAcreditado = 0;
@@ -68,28 +67,26 @@ class EventoController extends Controller
              En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
              en Where filtrar por 'estado' activo.
           */
-        $evento = Evento::find()->select('capacidad')->where(["idEvento" =>$id])->one();
-        $cantInscriptos = Inscripcion::find()->select('capacidad')->where(["idEvento" =>$id])->count();
+        $evento = Evento::find()->where(["idEvento" =>$id])->one();
+        $cantInscriptos = Inscripcion::find()->where(["idEvento" =>$id])->count();
         
-        $sePuedeInscribir=  $evento->capacidad;
+        $cupoMaximo = $evento->capacidad;
 
-        if($sePuedeInscribir== 0){
-            $cupos= 1;
-
+        $noHayCupos = false;
+        if ($cantInscriptos >= $cupoMaximo){
+            $cupos = "No hay mas cupos";
+            $noHayCupos = true;
         }else{
-            $sePuedeInscribir= $evento->capacidad - $cantInscriptos;
-            $cupos= 0;
-            if(  $sePuedeInscribir>0 ){
-                $cupos= 1;
-            }
+            $cupos = $cupoMaximo - $cantInscriptos;
         }
      
         return $this->render('view', [
             'model' => $this->findModel($id),
-            "fechaEvento" => $fechaEvento,
+            "evento" => $evento,
             "yaInscripto" => $yaInscripto,
             "acreditacion" => $yaAcreditado,
-            'cupos'=>$cupos
+            'cupos'=>$cupos,
+            "noHayCupos" => $noHayCupos,
         ]);
     }
 

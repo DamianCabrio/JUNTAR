@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="evento-view container">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <h1><?= Html::encode('Cupos:'.$cupos) ?></h1>
+    <h1><?= Html::encode('Cupos restantes:'.$cupos) ?></h1>
 
     <p>
         <?php
@@ -34,14 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
         } ?>
         <?PHP
-        if (!$yaInscripto) {
+        if (!$yaInscripto && !$noHayCupos) {
             if ($model->preInscripcion == 1 && $model->fechaLimiteInscripcion >= date("Y-m-d")) {
                 if($cupos>0)
                 {
                     echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
 
-                }else{
-                    echo Html::a('Sin cupos', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary disabled']);
                 }
 
             } else if ($model->preInscripcion == 0) {
@@ -54,11 +52,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             }
         } else {
-            if ($acreditacion != 1 ) {// * condicionar con la fecha hoy  menor estricto fecha inicio  hoy()<FechaIncio
+            if($noHayCupos && !$yaInscripto){
+                    echo Html::a('Sin cupos', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary disabled']);
+            }
+            elseif ($acreditacion != 1 ) {// * condicionar con la fecha hoy  menor estricto fecha inicio  hoy()<FechaIncio
                 echo Html::a('Desinscribirse', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             }
         }
-        if ($fechaEvento->fecha <= date("Y-m-d") && $yaInscripto && $acreditacion != 1 && $model->codigoAcreditacion != null) {
+        if ($evento->fechaInicioEvento <= date("Y-m-d") && $yaInscripto && $acreditacion != 1 && $model->codigoAcreditacion != null) {
             echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
         } else if ($acreditacion == 1) {
             echo Html::label("Usted ya se acredito en este evento");
@@ -73,18 +74,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'idEvento',
             'idUsuario',
+            'idCategoria',
+            'idEstadoEvento',
+            'idModalidadEvento',
             'nombreEvento',
+            'nombreCortoEvento',
             'descripcionEvento',
             'lugar',
-            'modalidad',
-            'linkPresentaciones',
-            'linkFlyer',
-            'linkLogo',
+            'fechaInicioEvento',
+            'fechaFinEvento',
+            'imgFlyer',
+            'imgLogo',
             'capacidad',
             'preInscripcion',
             'fechaLimiteInscripcion',
-            //'fechaDeCreacion',
-            //'codigoAcreditacion',
+            'codigoAcreditacion',
+            'fechaCreacionEvento',
         ],
     ]) ?>
 
