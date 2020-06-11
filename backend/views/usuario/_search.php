@@ -23,11 +23,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dni') ?>
 
-    <?= // $form->field($model, 'fecha_nacimiento') ?>
+    <?= // $form->field($model, 'pais') ?>
+
+    <?php // echo $form->field($model, 'provincia') ?>
 
     <?php // echo $form->field($model, 'localidad') ?>
-
-    <?php // echo $form->field($model, 'telefono') ?>
 
     <?php // echo $form->field($model, 'email') ?>
 

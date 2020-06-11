@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\Runner;
 
-use PHPUnit\Framework\ClassNotFoundException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Util\FileLoader;
 
@@ -21,24 +20,24 @@ use PHPUnit\Util\FileLoader;
 final class StandardTestSuiteLoader implements TestSuiteLoader
 {
     /**
-     * @throws \PHPUnit\Framework\ClassNotFoundException
+     * @throws Exception
      */
     public function load(string $suiteClassFile): \ReflectionClass
     {
-        $suiteClassName = \str_replace('.php', '', \basename($suiteClassFile));
+        $suiteClassName = \basename($suiteClassFile, '.php');
+        $loadedClasses  = \get_declared_classes();
 
         if (!\class_exists($suiteClassName, false)) {
-            $loadedClasses = \get_declared_classes();
-
+            /* @noinspection UnusedFunctionResultInspection */
             FileLoader::checkAndLoad($suiteClassFile);
 
             $loadedClasses = \array_values(
                 \array_diff(\get_declared_classes(), $loadedClasses)
             );
-        }
 
-        if (empty($loadedClasses)) {
-            throw ClassNotFoundException::byFilename($suiteClassName, $suiteClassFile);
+            if (empty($loadedClasses)) {
+                throw $this->exceptionFor($suiteClassName, $suiteClassFile);
+            }
         }
 
         if (!\class_exists($suiteClassName, false)) {
@@ -55,14 +54,14 @@ final class StandardTestSuiteLoader implements TestSuiteLoader
         }
 
         if (!\class_exists($suiteClassName, false)) {
-            throw ClassNotFoundException::byFilename($suiteClassName, $suiteClassFile);
+            throw $this->exceptionFor($suiteClassName, $suiteClassFile);
         }
 
         try {
             $class = new \ReflectionClass($suiteClassName);
             // @codeCoverageIgnoreStart
         } catch (\ReflectionException $e) {
-            throw new \Exception(
+            throw new Exception(
                 $e->getMessage(),
                 (int) $e->getCode(),
                 $e
@@ -79,7 +78,7 @@ final class StandardTestSuiteLoader implements TestSuiteLoader
                 $method = $class->getMethod('suite');
                 // @codeCoverageIgnoreStart
             } catch (\ReflectionException $e) {
-                throw new \Exception(
+                throw new Exception(
                     $e->getMessage(),
                     (int) $e->getCode(),
                     $e
@@ -92,11 +91,22 @@ final class StandardTestSuiteLoader implements TestSuiteLoader
             }
         }
 
-        throw ClassNotFoundException::byFilename($suiteClassName, $suiteClassFile);
+        throw $this->exceptionFor($suiteClassName, $suiteClassFile);
     }
 
     public function reload(\ReflectionClass $aClass): \ReflectionClass
     {
         return $aClass;
+    }
+
+    private function exceptionFor(string $className, string $filename): Exception
+    {
+        return new Exception(
+            \sprintf(
+                "Class '%s' could not be found in '%s'.",
+                $className,
+                $filename
+            )
+        );
     }
 }

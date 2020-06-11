@@ -16,6 +16,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\captcha\CaptchaAction;
+use yii\helpers\ArrayHelper;
 
 //use yii\filters\VerbFilter;
 /**
@@ -33,7 +34,18 @@ class SiteController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email', 'verify-email', 'reset-password', 'index'],
+                    'actions' => [
+                      'login',
+                      'signup',
+                      'error',
+                      'request-password-reset',
+                      'PasswordReset',
+                      'resend-verification-email',
+                      'verify-email',
+                      'reset-password',
+                      'index',
+                      'search-locations'
+                    ],
                     'roles' => ['?'], // <----- guest
                 ],
                 [
@@ -81,7 +93,7 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $eventos = Evento::find()->orderBy("fechaDeCreacion DESC")->limit(6)->all();
+        $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->limit(6)->all();
         return $this->render('index', ["eventos" => $eventos]);
     }
 
@@ -190,6 +202,19 @@ class SiteController extends Controller {
     public function actionAbout() {
         return $this->render('about');
     }
+    /**
+     * Conversion del datos para autocompletar en campos
+     *
+     * @return mixed
+     */
+    public function conversionAutocomplete($array)
+    {
+      $autocomplete = array();
+      foreach ($array as $id => $nombre) {
+        array_push($autocomplete, ['value' => $nombre, 'label' => $nombre]);
+      }
+      return $autocomplete;
+    }
 
     /**
      * Signs user up.
@@ -197,6 +222,11 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionSignup() {
+        $dataProvince = file_get_contents("json/provincias.json");
+        $province = json_decode($dataProvince, true);
+        // Conversión de datos
+        $province = ArrayHelper::map($province['provincias'], 'id', 'nombre');
+        $province = $this->conversionAutocomplete($province);
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
@@ -206,9 +236,29 @@ class SiteController extends Controller {
 
         return $this->render('signup', [
                     'model' => $model,
+                    'province' => $province,
         ]);
     }
-
+    /**
+     * Busqueda de Localidades por Provincia
+     *
+     * @return mixed
+     */
+    public function actionSearchLocations($name)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $dataLocation = file_get_contents("json/localidades.json");
+        $location = json_decode($dataLocation, true);
+        $indexProvince = null;
+        foreach ($location as $index => $province) {
+          if (array_search($name, $province)) {
+            $indexProvince = $index;
+          }
+        }
+        $location = ArrayHelper::map($location[$indexProvince]['ciudades'], 'id', 'nombre');
+        $location = $this->conversionAutocomplete($location);
+        return $location;
+    }
     /**
      * Requests password reset.
      *

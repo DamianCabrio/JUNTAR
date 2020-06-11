@@ -9,21 +9,7 @@ public function init() {
     }
 
     public function validateAttribute( $model , $attribute ) {
-      // Abre la solicitud
-      $curl = curl_init();
-      // Establecemos la url de consulta de APIs Georef
-      curl_setopt_array($curl, [
-          CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'https://apis.datos.gob.ar/georef/api/localidades?nombre='.$model->$attribute,
-      ]);
-      // Enviamos la solicitud y guardamos el resultado en $resp
-      $resp = curl_exec($curl);
-      // Cierra la solicitud
-      curl_close($curl);
-      $resp = json_decode($resp, true);
-        if ( $resp['cantidad'] == 0) {
-            $this->addError($model, $attribute, 'La localidad ingresada es invalida.');
-        }
+
     }
 
     public function clientValidateAttribute( $model , $attribute , $view )

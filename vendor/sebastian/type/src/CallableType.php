@@ -61,9 +61,9 @@ final class CallableType extends Type
         return false;
     }
 
-    public function getReturnTypeDeclaration(): string
+    public function name(): string
     {
-        return ': ' . ($this->allowsNull ? '?' : '') . 'callable';
+        return 'callable';
     }
 
     public function allowsNull(): bool
@@ -73,7 +73,7 @@ final class CallableType extends Type
 
     private function isClosure(ObjectType $type): bool
     {
-        return !$type->className()->isNamespaced() && $type->className()->getSimpleName() === \Closure::class;
+        return !$type->className()->isNamespaced() && $type->className()->simpleName() === \Closure::class;
     }
 
     /**
@@ -81,7 +81,7 @@ final class CallableType extends Type
      */
     private function hasInvokeMethod(ObjectType $type): bool
     {
-        $className = $type->className()->getQualifiedName();
+        $className = $type->className()->qualifiedName();
         \assert(\class_exists($className));
 
         try {
@@ -128,9 +128,7 @@ final class CallableType extends Type
 
         [$object, $methodName] = $type->value();
 
-        $reflector = new \ReflectionObject($object);
-
-        return $reflector->hasMethod($methodName);
+        return (new \ReflectionObject($object))->hasMethod($methodName);
     }
 
     private function isClassCallback(SimpleType $type): bool

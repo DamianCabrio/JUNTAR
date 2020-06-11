@@ -18,6 +18,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dni')->textInput() ?>
 
+    <?= $form->field($model, 'pais')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'provincia')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'localidad')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
