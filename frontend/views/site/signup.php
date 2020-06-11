@@ -55,13 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                   }")],
                                   ]);?>
                     <?= $form->field($model, 'localidad')->label('Localidad (*)')->textInput(['placeholder' => 'Ejemplo: Neuquen']); ?>
-                    <?= $form->field($model, 'Dirección de Correo')->input('email')->label('Email (*)')->textInput(['placeholder' => 'Ejemplo: myEmail@gmail.com']); ?>
-                    <?= $form->field($model, 'Contraseña')->passwordInput([
+                    <?= $form->field($model, 'email')->input('email')->label('Dirección de Correo (*)')->textInput(['placeholder' => 'Ejemplo: myEmail@gmail.com']); ?>
+                    <?= $form->field($model, 'password')->passwordInput([
                             'placeholder' => 'Ejemplo: Mypass1234, myPass32',
                             'data-title'=>'Requisitos',
                             'data-toggle'=>'popover',
                             'data-content'=>'La contraseña debe tener entre 8 y 20 caracteres y contener como mínimo un número y una mayúscula.',
-                          ]); ?>
+                          ])->label('Contraseña (*)'); ?>
                     <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label('Mostrar Contraseña') ?>
                 </div>
 
