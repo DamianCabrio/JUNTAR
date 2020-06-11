@@ -3,14 +3,15 @@
 namespace frontend\models;
 
 use Yii;
+use backend\models\Usuario;
 
 /**
  * This is the model class for table "presentacion_expositor".
  *
- * @property int $idPresentacion
  * @property int $idExpositor
+ * @property int $idPresentacion
  *
- * @property Expositor $idExpositor0
+ * @property Usuario $idExpositor0
  * @property Presentacion $idPresentacion0
  */
 class PresentacionExpositor extends \yii\db\ActiveRecord
@@ -29,10 +30,11 @@ class PresentacionExpositor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idPresentacion', 'idExpositor'], 'required'],
-            [['idPresentacion', 'idExpositor'], 'integer'],
+            [['idExpositor', 'idPresentacion'], 'required'],
+            [['idExpositor', 'idPresentacion'], 'integer'],
+            [['idExpositor', 'idPresentacion'], 'unique', 'targetAttribute' => ['idExpositor', 'idPresentacion']],
+            [['idExpositor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idExpositor' => 'idUsuario']],
             [['idPresentacion'], 'exist', 'skipOnError' => true, 'targetClass' => Presentacion::className(), 'targetAttribute' => ['idPresentacion' => 'idPresentacion']],
-            [['idExpositor'], 'exist', 'skipOnError' => true, 'targetClass' => Expositor::className(), 'targetAttribute' => ['idExpositor' => 'idExpositor']],
         ];
     }
 
@@ -42,8 +44,8 @@ class PresentacionExpositor extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idPresentacion' => 'Id Presentacion',
             'idExpositor' => 'Id Expositor',
+            'idPresentacion' => 'Id Presentacion',
         ];
     }
 
@@ -54,7 +56,7 @@ class PresentacionExpositor extends \yii\db\ActiveRecord
      */
     public function getIdExpositor0()
     {
-        return $this->hasOne(Expositor::className(), ['idExpositor' => 'idExpositor']);
+        return $this->hasOne(Usuario::className(), ['idUsuario' => 'idExpositor']);
     }
 
     /**

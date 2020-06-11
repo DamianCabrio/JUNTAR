@@ -11,10 +11,13 @@ use Yii;
  * @property int $idEvento
  * @property string $tituloPresentacion
  * @property string $descripcionPresentacion
+ * @property string $diaPresentacion
  * @property string $horaInicioPresentacion
  * @property string $horaFinPresentacion
+ * @property string|null $linkARecursos
  *
  * @property Evento $idEvento0
+ * @property Usuario[] $idExpositors
  * @property PresentacionExpositor[] $presentacionExpositors
  */
 class Presentacion extends \yii\db\ActiveRecord
@@ -33,11 +36,12 @@ class Presentacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idEvento', 'tituloPresentacion', 'descripcionPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'required'],
+            [['idEvento', 'tituloPresentacion', 'descripcionPresentacion', 'diaPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'required'],
             [['idEvento'], 'integer'],
-            [['horaInicioPresentacion', 'horaFinPresentacion'], 'safe'],
-            [['tituloPresentacion'], 'string', 'max' => 100],
-            [['descripcionPresentacion'], 'string', 'max' => 2000],
+            [['diaPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'safe'],
+            [['tituloPresentacion'], 'string', 'max' => 200],
+            [['descripcionPresentacion'], 'string', 'max' => 800],
+            [['linkARecursos'], 'string', 'max' => 300],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
         ];
     }
@@ -52,8 +56,10 @@ class Presentacion extends \yii\db\ActiveRecord
             'idEvento' => 'Id Evento',
             'tituloPresentacion' => 'Titulo Presentacion',
             'descripcionPresentacion' => 'Descripcion Presentacion',
+            'diaPresentacion' => 'Dia Presentacion',
             'horaInicioPresentacion' => 'Hora Inicio Presentacion',
             'horaFinPresentacion' => 'Hora Fin Presentacion',
+            'linkARecursos' => 'Link A Recursos',
         ];
     }
 
@@ -65,6 +71,16 @@ class Presentacion extends \yii\db\ActiveRecord
     public function getIdEvento0()
     {
         return $this->hasOne(Evento::className(), ['idEvento' => 'idEvento']);
+    }
+
+    /**
+     * Gets query for [[IdExpositors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdExpositors()
+    {
+        return $this->hasMany(Usuario::className(), ['idUsuario' => 'idExpositor'])->viaTable('presentacion_expositor', ['idPresentacion' => 'idPresentacion']);
     }
 
     /**

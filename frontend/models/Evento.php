@@ -1,30 +1,35 @@
 <?php
 
 namespace frontend\models;
+use backend\models\Usuario;
 
 use Yii;
-use backend\models\Usuario;
 
 /**
  * This is the model class for table "evento".
  *
  * @property int $idEvento
  * @property int $idUsuario
+ * @property int $idCategoriaEvento
+ * @property int $idEstadoEvento
+ * @property int $idModalidadEvento
  * @property string $nombreEvento
+ * @property string $nombreCortoEvento
  * @property string $descripcionEvento
  * @property string $lugar
- * @property string $fechaInicio
- * @property string $fechaFin
- * @property string $modalidad
- * @property string|null $linkPresentaciones
- * @property string|null $linkFlyer
- * @property string|null $linkLogo
+ * @property string $fechaInicioEvento
+ * @property string $fechaFinEvento
+ * @property string|null $imgFlyer
+ * @property string|null $imgLogo
  * @property int $capacidad
  * @property int $preInscripcion
  * @property string $fechaLimiteInscripcion
  * @property string|null $codigoAcreditacion
+ * @property string $fechaCreacionEvento
  *
- * @property Fecha[] $fechas
+ * @property CategoriaEvento $idCategoriaEvento0
+ * @property EstadoEvento $idEstadoEvento0
+ * @property ModalidadEvento $idModalidadEvento0
  * @property Usuario $idUsuario0
  * @property Inscripcion[] $inscripcions
  * @property Presentacion[] $presentacions
@@ -45,12 +50,16 @@ class Evento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idUsuario', 'nombreEvento', 'descripcionEvento', 'lugar', 'fechaInicio', 'fechaFin', 'modalidad', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion','fechaInicio','fechaFin'], 'required'],
-            [['idUsuario', 'capacidad', 'preInscripcion'], 'integer'],
-            [['fechaInicio', 'fechaFin', 'fechaLimiteInscripcion'], 'safe'],
-            [['nombreEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
-            [['descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo'], 'string', 'max' => 2000],
+            [['idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'nombreEvento', 'nombreCortoEvento', 'descripcionEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion', 'fechaCreacionEvento'], 'required'],
+            [['idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
+            [['fechaInicioEvento', 'fechaFinEvento', 'fechaLimiteInscripcion', 'fechaCreacionEvento'], 'safe'],
+            [['nombreEvento', 'lugar', 'imgFlyer', 'imgLogo'], 'string', 'max' => 200],
+            [['nombreCortoEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
+            [['descripcionEvento'], 'string', 'max' => 800],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
+            [['idCategoriaEvento'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaEvento::className(), 'targetAttribute' => ['idCategoriaEvento' => 'idCategoriaEvento']],
+            [['idModalidadEvento'], 'exist', 'skipOnError' => true, 'targetClass' => ModalidadEvento::className(), 'targetAttribute' => ['idModalidadEvento' => 'idModalidadEvento']],
+            [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
         ];
     }
 
@@ -62,30 +71,53 @@ class Evento extends \yii\db\ActiveRecord
         return [
             'idEvento' => 'Id Evento',
             'idUsuario' => 'Id Usuario',
+            'idCategoriaEvento' => 'Id Categoria Evento',
+            'idEstadoEvento' => 'Id Estado Evento',
+            'idModalidadEvento' => 'Id Modalidad Evento',
             'nombreEvento' => 'Nombre Evento',
+            'nombreCortoEvento' => 'Nombre Corto Evento',
             'descripcionEvento' => 'Descripcion Evento',
             'lugar' => 'Lugar',
-            'fechaInicio' => 'Fecha Inicio',
-            'fechaFin' => 'Fecha Fin',
-            'modalidad' => 'Modalidad',
-            'linkPresentaciones' => 'Link Presentaciones',
-            'linkFlyer' => 'Link Flyer',
-            'linkLogo' => 'Link Logo',
+            'fechaInicioEvento' => 'Fecha Inicio Evento',
+            'fechaFinEvento' => 'Fecha Fin Evento',
+            'imgFlyer' => 'Img Flyer',
+            'imgLogo' => 'Img Logo',
             'capacidad' => 'Capacidad',
             'preInscripcion' => 'Pre Inscripcion',
             'fechaLimiteInscripcion' => 'Fecha Limite Inscripcion',
             'codigoAcreditacion' => 'Codigo Acreditacion',
+            'fechaCreacionEvento' => 'Fecha Creacion Evento',
         ];
     }
 
     /**
-     * Gets query for [[Fechas]].
+     * Gets query for [[IdCategoriaEvento0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFechas()
+    public function getIdCategoriaEvento0()
     {
-        return $this->hasMany(Fecha::className(), ['idEvento' => 'idEvento']);
+        return $this->hasOne(CategoriaEvento::className(), ['idCategoriaEvento' => 'idCategoriaEvento']);
+    }
+
+    /**
+     * Gets query for [[IdEstadoEvento0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdEstadoEvento0()
+    {
+        return $this->hasOne(EstadoEvento::className(), ['idEstadoEvento' => 'idEstadoEvento']);
+    }
+
+    /**
+     * Gets query for [[IdModalidadEvento0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdModalidadEvento0()
+    {
+        return $this->hasOne(ModalidadEvento::className(), ['idModalidadEvento' => 'idModalidadEvento']);
     }
 
     /**
