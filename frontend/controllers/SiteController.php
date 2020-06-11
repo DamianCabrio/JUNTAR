@@ -16,6 +16,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\captcha\CaptchaAction;
+use yii\helpers\ArrayHelper;
 
 //use yii\filters\VerbFilter;
 /**
