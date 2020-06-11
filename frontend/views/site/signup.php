@@ -27,7 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'nombre')->label('Nombre (*)')->textInput(['placeholder' => 'Ejemplo: Juan']) ?>
                     <?= $form->field($model, 'apellido')->label('Apellido (*)')->textInput(['placeholder' => 'Ejemplo: Perez']) ?>
                     <?= $form->field($model, 'dni')->label('DNI (*)')->textInput(['placeholder' => 'Ejemplo: 26734824']); ?>
-                    <?= $form->field($model, 'pais')->label('Pais (*)')->textInput(['value' => 'Argentina']); ?>
+                    <?= $form->field($model, 'pais')->label('Pais (*)')->widget(AutoComplete::classname(), [
+                      'model' => $model,
+                      'attribute' => 'pais',
+
+                      'options' => ['class' => 'form-control'],
+                                  'clientOptions' => [
+                                    'source' => $paises,
+                                    'autoFill'=>true,
+                                    'minLength'=>'3',
+                                    'options' => ['class' => 'form-control'],
+                                    'select' => new JsExpression("function( event, ui ) {
+                                    $('#signupform-pais').val(ui.item.id);
+                                  }")],
+                                  ])->textInput(['value' => 'Argentina']);?>
                     <?= $form->field($model, 'provincia')->label('Provincia (*)')->widget(AutoComplete::classname(), [
                       'model' => $model,
                       'attribute' => 'provincia',
