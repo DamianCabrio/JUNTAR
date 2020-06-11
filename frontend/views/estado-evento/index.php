@@ -6,15 +6,15 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Expositors';
+$this->title = 'Estado Eventos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="expositor-index">
+<div class="estado-evento-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Expositor', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Estado Evento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -23,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idExpositor',
-            'idUsuario',
+            'idEstadoEvento',
+            'descripcionEstado',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

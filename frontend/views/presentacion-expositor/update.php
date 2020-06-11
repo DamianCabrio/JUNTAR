@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\PresentacionExpositor */
 
-$this->title = 'Update Presentacion Expositor: ' . $model->idPresentacion;
+$this->title = 'Update Presentacion Expositor: ' . $model->idExpositor;
 $this->params['breadcrumbs'][] = ['label' => 'Presentacion Expositors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idPresentacion, 'url' => ['view', 'idPresentacion' => $model->idPresentacion, 'idExpositor' => $model->idExpositor]];
+$this->params['breadcrumbs'][] = ['label' => $model->idExpositor, 'url' => ['view', 'idExpositor' => $model->idExpositor, 'idPresentacion' => $model->idPresentacion]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="presentacion-expositor-update">

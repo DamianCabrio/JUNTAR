@@ -18,9 +18,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'descripcionPresentacion')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'diaPresentacion')->textInput() ?>
+
     <?= $form->field($model, 'horaInicioPresentacion')->textInput() ?>
 
     <?= $form->field($model, 'horaFinPresentacion')->textInput() ?>
+
+    <?= $form->field($model, 'linkARecursos')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

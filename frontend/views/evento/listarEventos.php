@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="row">
-    <div class="col-md-8 col-12 m-auto">
+    <div class="col-md-12 col-12 m-auto">
         <h2 class="text-center">Eventos que posee cargados</h2>
         <p class="text-center">A continuación posee una lista con todos sus eventos cargados</p>
 
@@ -22,10 +22,10 @@ use yii\widgets\ActiveForm;
                 <tr>
                     <td><?= $objEvento->nombreEvento ?></td>
                     <td>
-                        <?= Html::a('Informacion', ['informacion-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                        <!--<button type="button" class="btn btn-outline-success btn-sm">Informacion</button>-->
-                        <button type="button" class="btn btn-outline-success btn-sm">Editar</button>
-                        <button type="button" class="btn btn-outline-success btn-sm">Presentaciones</button>
+                         <?= Html::a('Ver evento', ['ver-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?= Html::a('Publicar evento ', ['publicar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                     </td>
                 <tr>
                 <?php endforeach; ?>

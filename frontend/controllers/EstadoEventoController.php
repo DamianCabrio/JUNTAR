@@ -3,16 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Expositor;
+use frontend\models\EstadoEvento;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ExpositorController implements the CRUD actions for Expositor model.
+ * EstadoEventoController implements the CRUD actions for EstadoEvento model.
  */
-class ExpositorController extends Controller
+class EstadoEventoController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,13 +30,13 @@ class ExpositorController extends Controller
     }
 
     /**
-     * Lists all Expositor models.
+     * Lists all EstadoEvento models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Expositor::find(),
+            'query' => EstadoEvento::find(),
         ]);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class ExpositorController extends Controller
     }
 
     /**
-     * Displays a single Expositor model.
+     * Displays a single EstadoEvento model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,16 +58,16 @@ class ExpositorController extends Controller
     }
 
     /**
-     * Creates a new Expositor model.
+     * Creates a new EstadoEvento model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Expositor();
+        $model = new EstadoEvento();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idExpositor]);
+            return $this->redirect(['view', 'id' => $model->idEstadoEvento]);
         }
 
         return $this->render('create', [
@@ -76,7 +76,7 @@ class ExpositorController extends Controller
     }
 
     /**
-     * Updates an existing Expositor model.
+     * Updates an existing EstadoEvento model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -87,7 +87,7 @@ class ExpositorController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idExpositor]);
+            return $this->redirect(['view', 'id' => $model->idEstadoEvento]);
         }
 
         return $this->render('update', [
@@ -96,7 +96,7 @@ class ExpositorController extends Controller
     }
 
     /**
-     * Deletes an existing Expositor model.
+     * Deletes an existing EstadoEvento model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class ExpositorController extends Controller
     }
 
     /**
-     * Finds the Expositor model based on its primary key value.
+     * Finds the EstadoEvento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Expositor the loaded model
+     * @return EstadoEvento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Expositor::findOne($id)) !== null) {
+        if (($model = EstadoEvento::findOne($id)) !== null) {
             return $model;
         }
 

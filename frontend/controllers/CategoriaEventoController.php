@@ -3,16 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Fecha;
+use frontend\models\CategoriaEvento;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FechaController implements the CRUD actions for Fecha model.
+ * CategoriaEventoController implements the CRUD actions for CategoriaEvento model.
  */
-class FechaController extends Controller
+class CategoriaEventoController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,13 +30,13 @@ class FechaController extends Controller
     }
 
     /**
-     * Lists all Fecha models.
+     * Lists all CategoriaEvento models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Fecha::find(),
+            'query' => CategoriaEvento::find(),
         ]);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class FechaController extends Controller
     }
 
     /**
-     * Displays a single Fecha model.
+     * Displays a single CategoriaEvento model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,16 +58,16 @@ class FechaController extends Controller
     }
 
     /**
-     * Creates a new Fecha model.
+     * Creates a new CategoriaEvento model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Fecha();
+        $model = new CategoriaEvento();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idFecha]);
+            return $this->redirect(['view', 'id' => $model->idCategoriaEvento]);
         }
 
         return $this->render('create', [
@@ -76,7 +76,7 @@ class FechaController extends Controller
     }
 
     /**
-     * Updates an existing Fecha model.
+     * Updates an existing CategoriaEvento model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -87,7 +87,7 @@ class FechaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idFecha]);
+            return $this->redirect(['view', 'id' => $model->idCategoriaEvento]);
         }
 
         return $this->render('update', [
@@ -96,7 +96,7 @@ class FechaController extends Controller
     }
 
     /**
-     * Deletes an existing Fecha model.
+     * Deletes an existing CategoriaEvento model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,33 +110,18 @@ class FechaController extends Controller
     }
 
     /**
-     * Finds the Fecha model based on its primary key value.
+     * Finds the CategoriaEvento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Fecha the loaded model
+     * @return CategoriaEvento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Fecha::findOne($id)) !== null) {
+        if (($model = CategoriaEvento::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-    public function actionFormFecha()
-    {
-        $model = new \frontend\models\Fecha();
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
-            }
-        }
-
-        return $this->render('formFecha', [
-            'model' => $model,
-        ]);
     }
 }

@@ -15,9 +15,6 @@ use frontend\models\Evento;
             <h2 class="text-center">Cargar Presentacion a evento</h2>
             <p class="text-center">Complete los siguientes campos</p>
 
-            <!-- Hacer un bucle que pregunte la cantidad de presentaciones que tiene el evento, permitir cortar el ciclo -->
-
-
             <?php $form = ActiveForm::begin(); ?>
 
             <!-- Select de los eventos creados por el usuario -->
@@ -33,23 +30,25 @@ use frontend\models\Evento;
             <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value'=>$idEvento,'readonly'=> true])->label('Seleccione un evento *');
             ?>
 
+            <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true,  'placeholder' => 'Máximo 200 caracteres'])->label('Titulo de la presentación *') ?>
 
-            <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true])->label('Titulo de la presentación *') ?>
+            <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8', 'placeholder' => 'Máximo 800 caracteres'])->label('Descripción *')  ?>
 
-            <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8'])->label('Descripción *')  ?>
+            <?= $form->field($model, 'diaPresentacion')->input('date', ['style'=>'width: auto'])->label('Ingrese fecha *') ?>
 
+            <?= $form->field($model, 'horaInicioPresentacion')->input('time',['style'=>'width: auto'] )->label('Hora de incio (HH:MM) *') ?>
 
-            <!-- cambiar los campos para la hora -->
-            <?= $form->field($model, 'horaInicioPresentacion')->input('time')->label('Hora de incio *') ?>
+            <?= $form->field($model, 'horaFinPresentacion')->input('time',['style'=>'width: auto'])->label('Hora de finalización (HH:MM) *') ?>
 
-            <?= $form->field($model, 'horaFinPresentacion')->input('time')->label('Hora de finalización *') ?>
+            <?= $form->field($model, 'linkARecursos')->textInput(['maxlength' => true]) ?>
 
             <?php $usuario = Usuario::find()     //buscar los eventos del usuario              
                 ->select(['nombre'])
                 ->indexBy('idUsuario')
                 ->column();
             ?>
-            <?= $form->field($expo, 'idUsuario')->dropdownList($usuario,  ['prompt' => 'Expositor'])->label('Seleccione un Expositor *'); ?>
+            <?= $form->field($preExpositor, 'idExpositor')->dropdownList($usuario,  ['prompt' => 'Expositor'])->label('Seleccione un Expositor *'); ?>
+
 
             <div class="form-group">
                 <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

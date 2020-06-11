@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Fecha */
+/* @var $model frontend\models\EstadoEvento */
 
-$this->title = 'Create Fecha';
-$this->params['breadcrumbs'][] = ['label' => 'Fechas', 'url' => ['index']];
+$this->title = 'Create Estado Evento';
+$this->params['breadcrumbs'][] = ['label' => 'Estado Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="fecha-create">
+<div class="estado-evento-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -27,8 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'idEvento',
             'tituloPresentacion',
             'descripcionPresentacion',
-            'horaInicioPresentacion',
+            'diaPresentacion',
+            //'horaInicioPresentacion',
             //'horaFinPresentacion',
+            //'linkARecursos',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

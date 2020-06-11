@@ -3,14 +3,20 @@
 namespace frontend\controllers;
 
 use Yii;
+use frontend\models\Presentacion;
+use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use frontend\models\Presentacion;
-use frontend\models\PresentacionExpositor;
-use frontend\models\Expositor;
+
+
+use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
+use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
+use yii\web\UploadedFile;
+
+
 /**
  * EventoController implements the CRUD actions for Evento model.
  */
@@ -127,66 +133,121 @@ class EventoController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+
+
     /**
      * Accion para la carga de un nuevo envento a traves de un formulario.
-     * Una ves cargado el evento, se visualiza los datos que se han cargado desde una vista.
+     * Una ves cargado el evento, se visualizaun mensaje de exito desde una vista.
      */
     public function actionCargarEvento()
     {
 
         $model = new Evento();
+        $modelLogo = new UploadFormLogo();
+        $modelFlyer = new UploadFormFlyer();
+        
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+    
+            $modelLogo->$imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
+
+            if($modelLogo->imageLogo != null){
+                if($modelLogo->upload()){
+                    $model->imgLogo =  'web/emanuel-mauro/frontend/web/eventos/images/logos/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                }
+            }    
+            if($modelFlyer->imageFlyer != null){
+                if($modelFlyer->upload()){
+                    $model->imgFlyer =  'web/emanuel-mauro/frontend/web/eventos/images/flyers/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                 }
+            }
+            $model->save();
             return $this->redirect(['mostrar-evento', 'idEvento' => $model->idEvento]);
         }
-        return $this->render('cargarEvento', ['model' => $model]);
+        return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer]);
     }
 
-    public function actionMostrarEvento($idEvento)
-    {
 
+    public function actionEventoCargado($idEvento)
+    {
         return $this->render('eventoCargado', [
             'model' => $this->findModel($idEvento),
         ]);
     }
 
     /**
-     * Accion para obtener una lista de todos los eventos perteneciente al usuario.
-     * 
+     * Muestra la informacion cargada de un evento.
+     */
+    public function actionVerEvento($idEvento)
+    {
+        $evento = Evento::findOne($idEvento);
+        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
+        return $this->render('verEvento', [
+            'model'=>$evento,
+            'presentacion' => $presentaciones
+        ]);
+    }
+
+
+    /**
+     * Lista todos los eventos creador por el usuario 
      */
     public function actionListarEventos()
     {
-
         $idUsuario = Yii::$app->user->identity->idUsuario;
         $listaEventos = Evento::find()->where(['idUsuario' => $idUsuario])->orderBy('idEvento')->all();
         return $this->render('listarEventos', ['model' => $listaEventos]);
     }
-    public function actionInformacionEvento($idEvento)
-    {
-        $evento= Evento::findOne($idEvento);
-        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
-        
-        return $this->render('informacionEvento', [
-            'evento'=>$evento,
-            'presentacion' => $presentaciones
-        ]);
-    }
-    public function actionCargarExpositor($idPresentacion)
-    {
-        $preExpo = new PresentacionExpositor();
-        $model = new Expositor();
-        $objPresentacion = Presentacion::findOne($idPresentacion);
-        $objEvento=Evento::findOne($objPresentacion->idEvento);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $preExpo->idExpositor = $model->idExpositor;
-            $preExpo->idPresentacion = $idPresentacion;
-            $preExpo->save();
-            return $this->redirect(['informacion-evento', 'idEvento' => $objEvento->idEvento]);
+
+ 
+
+     public function actionEditarEvento($idEvento){
+
+        $model = $this->findModel($idEvento);
+
+        $modelImg = new UploadFormLogo();
+        $modelFlyer = new UploadFormFlyer();
+
+        $rutaLogos = ( Yii::getAlias("@frontend/web/eventos/images/logos/"));
+        $rutaFlyer = ( Yii::getAlias("@frontend/web/eventos/images/flyers/"));
+
+        if($model->load(Yii::$app->request->post())) {
+            $modelImg->imageLogo = UploadedFile::getInstance($modelImg, 'imageLogo'); // 'web/emanuel-mauro/frontend/web/eventos/images/logos/'
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); // 'web/emanuel-mauro/frontend/web/eventos/images/flyers/'
+
+            if($modelImg->imageLogo != null){
+                if($modelImg->upload()){
+                    $model->imgLogo =  $rutaLogos . $modelImg->imageLogo->baseName . '.' . $modelImg->imageLogo->extension;
+                }
+            }    
+            if($modelFlyer->imageFlyer != null){
+                if($modelFlyer->upload()){
+                    $model->imgFlyer =  $rutaFlyer . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                 }
+            }
+            $model->save();
+            return $this->redirect(['ver-evento', 'idEvento' => $model->idEvento]);
         }
 
-        return $this->render('cargarExpositor', [
-            'model' => $model
+        return $this->render('editarEvento', [
+            'model' => $model,
+            'modelImg' => $modelImg, 
+            'modelFlyer' => $modelFlyer
         ]);
-    }
+     }
+
+   
+     public function actionPublicarEvento($idEvento){
+        $model = $this->findModel($idEvento);
+        
+        $model->fechaCreacionEvento = date('Y-m-d');    
+        
+        $model->save();
+        return $this->render('eventoPublicado');
+
+     }   
+
+
 }

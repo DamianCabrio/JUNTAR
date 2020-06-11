@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Expositor */
+/* @var $model frontend\models\CategoriaEvento */
 
-$this->title = 'Create Expositor';
-$this->params['breadcrumbs'][] = ['label' => 'Expositors', 'url' => ['index']];
+$this->title = 'Create Categoria Evento';
+$this->params['breadcrumbs'][] = ['label' => 'Categoria Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="expositor-create">
+<div class="categoria-evento-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

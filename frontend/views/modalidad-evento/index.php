@@ -6,15 +6,15 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Fechas';
+$this->title = 'Modalidad Eventos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="fecha-index">
+<div class="modalidad-evento-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Fecha', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Modalidad Evento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -23,9 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idFecha',
-            'idEvento',
-            'fecha',
+            'idModalidadEvento',
+            'descripcionModalidad',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

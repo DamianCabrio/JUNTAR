@@ -46,15 +46,15 @@ class PresentacionExpositorController extends Controller
 
     /**
      * Displays a single PresentacionExpositor model.
-     * @param integer $idPresentacion
      * @param integer $idExpositor
+     * @param integer $idPresentacion
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idPresentacion, $idExpositor)
+    public function actionView($idExpositor, $idPresentacion)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idPresentacion, $idExpositor),
+            'model' => $this->findModel($idExpositor, $idPresentacion),
         ]);
     }
 
@@ -68,7 +68,7 @@ class PresentacionExpositorController extends Controller
         $model = new PresentacionExpositor();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idPresentacion' => $model->idPresentacion, 'idExpositor' => $model->idExpositor]);
+            return $this->redirect(['view', 'idExpositor' => $model->idExpositor, 'idPresentacion' => $model->idPresentacion]);
         }
 
         return $this->render('create', [
@@ -79,17 +79,17 @@ class PresentacionExpositorController extends Controller
     /**
      * Updates an existing PresentacionExpositor model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $idPresentacion
      * @param integer $idExpositor
+     * @param integer $idPresentacion
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idPresentacion, $idExpositor)
+    public function actionUpdate($idExpositor, $idPresentacion)
     {
-        $model = $this->findModel($idPresentacion, $idExpositor);
+        $model = $this->findModel($idExpositor, $idPresentacion);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idPresentacion' => $model->idPresentacion, 'idExpositor' => $model->idExpositor]);
+            return $this->redirect(['view', 'idExpositor' => $model->idExpositor, 'idPresentacion' => $model->idPresentacion]);
         }
 
         return $this->render('update', [
@@ -100,14 +100,14 @@ class PresentacionExpositorController extends Controller
     /**
      * Deletes an existing PresentacionExpositor model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $idPresentacion
      * @param integer $idExpositor
+     * @param integer $idPresentacion
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idPresentacion, $idExpositor)
+    public function actionDelete($idExpositor, $idPresentacion)
     {
-        $this->findModel($idPresentacion, $idExpositor)->delete();
+        $this->findModel($idExpositor, $idPresentacion)->delete();
 
         return $this->redirect(['index']);
     }
@@ -115,14 +115,14 @@ class PresentacionExpositorController extends Controller
     /**
      * Finds the PresentacionExpositor model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $idPresentacion
      * @param integer $idExpositor
+     * @param integer $idPresentacion
      * @return PresentacionExpositor the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idPresentacion, $idExpositor)
+    protected function findModel($idExpositor, $idPresentacion)
     {
-        if (($model = PresentacionExpositor::findOne(['idPresentacion' => $idPresentacion, 'idExpositor' => $idExpositor])) !== null) {
+        if (($model = PresentacionExpositor::findOne(['idExpositor' => $idExpositor, 'idPresentacion' => $idPresentacion])) !== null) {
             return $model;
         }
 
