@@ -15,6 +15,8 @@ class SignupForm extends Model {
     public $apellido;
     public $dni;
 //    public $telefono;
+    public $pais;
+    public $provincia;
     public $localidad;
 //    public $fecha_nacimiento;
     public $email;
@@ -27,7 +29,7 @@ class SignupForm extends Model {
     public function rules() {
         return [
             //Obligatorio
-            [['nombre', 'apellido', 'email', 'localidad', 'dni', 'password'], 'required'],
+            [['nombre', 'apellido', 'email', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
 
             //Reglas nombre
             ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
@@ -48,6 +50,9 @@ class SignupForm extends Model {
             //Reglas localidad
             ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['localidad', 'common\components\LocationValidator'],
+            //Reglas Provincia
+            ['provincia', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['provincia', 'common\components\ProvinceValidator'],
 
             //Reglas DNI
             ['dni', 'integer', 'min' => 10000000, 'max' => 100000000],
@@ -82,6 +87,8 @@ class SignupForm extends Model {
         $user->apellido = $this->apellido;
         $user->dni = $this->dni;
 //        $user->telefono = $this->telefono;
+        $user->pais = $this->pais;
+        $user->provincia = $this->provincia;
         $user->localidad = $this->localidad;
 //        $user->fecha_nacimiento = $this->fecha_nacimiento;
         $user->email = $this->email;
