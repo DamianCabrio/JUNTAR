@@ -35,16 +35,17 @@ class SiteController extends Controller {
                 [
                     'allow' => true,
                     'actions' => [
-                      'login',
-                      'signup',
-                      'error',
-                      'request-password-reset',
-                      'PasswordReset',
-                      'resend-verification-email',
-                      'verify-email',
-                      'reset-password',
-                      'index',
-                      'search-locations'
+                        'login',
+                        'signup',
+                        'error',
+                        'request-password-reset',
+                        'PasswordReset',
+                        'resend-verification-email',
+                        'verify-email',
+                        'reset-password',
+                        'index',
+                        'search-localidades',
+                        'search-provincias',
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -202,18 +203,18 @@ class SiteController extends Controller {
     public function actionAbout() {
         return $this->render('about');
     }
+
     /**
      * Conversion del datos para autocompletar en campos
      *
      * @return mixed
      */
-    public function conversionAutocomplete($array)
-    {
-      $autocomplete = array();
-      foreach ($array as $id => $nombre) {
-        array_push($autocomplete, ['value' => $nombre, 'label' => $nombre]);
-      }
-      return $autocomplete;
+    public function conversionAutocomplete($array) {
+        $autocomplete = array();
+        foreach ($array as $id => $nombre) {
+            array_push($autocomplete, ['value' => $nombre, 'label' => $nombre]);
+        }
+        return $autocomplete;
     }
 
     /**
@@ -222,11 +223,13 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionSignup() {
-        $dataProvince = file_get_contents("json/provincias.json");
-        $province = json_decode($dataProvince, true);
-        // Conversión de datos
-        $province = ArrayHelper::map($province['provincias'], 'id', 'nombre');
-        $province = $this->conversionAutocomplete($province);
+        //obtiene datos paises
+        $dataCountry = file_get_contents("json/paises.json");
+        $paises = json_decode($dataCountry, true);
+        //Conversión de datos
+        $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
+        $paises = $this->conversionAutocomplete($paises);
+        
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
@@ -236,29 +239,53 @@ class SiteController extends Controller {
 
         return $this->render('signup', [
                     'model' => $model,
-                    'province' => $province,
+                    'paises' => $paises,
+//                    'province' => $province,
         ]);
     }
+
     /**
      * Busqueda de Localidades por Provincia
      *
      * @return mixed
      */
-    public function actionSearchLocations($name)
-    {
+    public function actionSearchProvincias($name) {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $dataLocation = file_get_contents("json/localidades.json");
-        $location = json_decode($dataLocation, true);
-        $indexProvince = null;
-        foreach ($location as $index => $province) {
-          if (array_search($name, $province)) {
-            $indexProvince = $index;
-          }
+        $dataProvincias = file_get_contents("json/provincias.json");
+        $provincias = json_decode($dataProvincias, true);
+        
+        $indiceProvincia = null;
+        foreach ($provincias as $index => $unaProvincia) {
+            if (array_search($name, $unaProvincia)) {
+                $indiceProvincia = $index;
+            }
         }
-        $location = ArrayHelper::map($location[$indexProvince]['ciudades'], 'id', 'nombre');
-        $location = $this->conversionAutocomplete($location);
-        return $location;
+        // Conversión de datos
+        $provincias = ArrayHelper::map($provincias[$indiceProvincia]['provincias'], 'id', 'nombre');
+        $provincias = $this->conversionAutocomplete($provincias);
+        return $provincias;
     }
+    
+    /**
+     * Busqueda de Localidades por Provincia
+     *
+     * @return mixed
+     */
+    public function actionSearchLocalidades($name) {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $dataLocalidades = file_get_contents("json/localidades.json");
+        $localidad = json_decode($dataLocalidades, true);
+        $indexLocalidad = null;
+        foreach ($localidad as $index => $unaLocalidad) {
+            if (array_search($name, $unaLocalidad)) {
+                $indexLocalidad = $index;
+            }
+        }
+        $localidad = ArrayHelper::map($localidad[$indexLocalidad]['ciudades'], 'id', 'nombre');
+        $localidad = $this->conversionAutocomplete($localidad);
+        return $localidad;
+    }
+
     /**
      * Requests password reset.
      *
