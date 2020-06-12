@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\EventoSearch;
 use common\models\LoginForm;
 use common\models\Evento;
 use frontend\models\PasswordResetRequestForm;
@@ -82,7 +83,17 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        $request = Yii::$app->request;
+        $busqueda = $request->get("s", "");
+
+        if($busqueda != ""){
+            $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->where(["idEstadoEvento" => 1])
+                ->andWhere(["like", "nombreEvento", $busqueda])->limit(6)->all();
+            return $this->render('index', ["eventos" => $eventos]);
+        }
+
         $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->where(["idEstadoEvento" => 1])->limit(6)->all();
+
         return $this->render('index', ["eventos" => $eventos]);
     }
 
