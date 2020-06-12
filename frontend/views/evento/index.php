@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\controllers\EventoSearch */
+/* @var $searchModel common\models\EventoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Eventos';
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'idEvento',
             'idUsuario',
-            'idCategoria',
+            'idCategoriaEvento',
             'idEstadoEvento',
             'idModalidadEvento',
             //'nombreEvento',

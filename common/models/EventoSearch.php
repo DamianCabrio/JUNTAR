@@ -17,8 +17,8 @@ class EventoSearch extends Evento
     public function rules()
     {
         return [
-            [['idEvento', 'idUsuario', 'capacidad', 'preInscripcion'], 'integer'],
-            [['nombreEvento', 'descripcionEvento', 'lugar', 'modalidad', 'linkPresentaciones', 'linkFlyer', 'linkLogo', 'fechaLimiteInscripcion', 'codigoAcreditacion'], 'safe'],
+            [['idEvento', 'idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
+            [['nombreEvento', 'nombreCortoEvento', 'descripcionEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'imgFlyer', 'imgLogo', 'fechaLimiteInscripcion', 'codigoAcreditacion', 'fechaCreacionEvento'], 'safe'],
         ];
     }
 
@@ -60,18 +60,23 @@ class EventoSearch extends Evento
         $query->andFilterWhere([
             'idEvento' => $this->idEvento,
             'idUsuario' => $this->idUsuario,
+            'idCategoriaEvento' => $this->idCategoriaEvento,
+            'idEstadoEvento' => $this->idEstadoEvento,
+            'idModalidadEvento' => $this->idModalidadEvento,
+            'fechaInicioEvento' => $this->fechaInicioEvento,
+            'fechaFinEvento' => $this->fechaFinEvento,
             'capacidad' => $this->capacidad,
             'preInscripcion' => $this->preInscripcion,
             'fechaLimiteInscripcion' => $this->fechaLimiteInscripcion,
+            'fechaCreacionEvento' => $this->fechaCreacionEvento,
         ]);
 
         $query->andFilterWhere(['like', 'nombreEvento', $this->nombreEvento])
+            ->andFilterWhere(['like', 'nombreCortoEvento', $this->nombreCortoEvento])
             ->andFilterWhere(['like', 'descripcionEvento', $this->descripcionEvento])
             ->andFilterWhere(['like', 'lugar', $this->lugar])
-            ->andFilterWhere(['like', 'modalidad', $this->modalidad])
-            ->andFilterWhere(['like', 'linkPresentaciones', $this->linkPresentaciones])
-            ->andFilterWhere(['like', 'linkFlyer', $this->linkFlyer])
-            ->andFilterWhere(['like', 'linkLogo', $this->linkLogo])
+            ->andFilterWhere(['like', 'imgFlyer', $this->imgFlyer])
+            ->andFilterWhere(['like', 'imgLogo', $this->imgLogo])
             ->andFilterWhere(['like', 'codigoAcreditacion', $this->codigoAcreditacion]);
 
         return $dataProvider;

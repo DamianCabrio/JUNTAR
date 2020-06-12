@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $idEvento
  * @property int $idUsuario
- * @property int $idCategoria
+ * @property int $idCategoriaEvento
  * @property int $idEstadoEvento
  * @property int $idModalidadEvento
  * @property string $nombreEvento
@@ -26,7 +26,7 @@ use Yii;
  * @property string|null $codigoAcreditacion
  * @property string $fechaCreacionEvento
  *
- * @property CategoriaEvento $idCategoria0
+ * @property CategoriaEvento $idCategoriaEvento0
  * @property EstadoEvento $idEstadoEvento0
  * @property ModalidadEvento $idModalidadEvento0
  * @property Usuario $idUsuario0
@@ -49,14 +49,14 @@ class Evento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idUsuario', 'idCategoria', 'idEstadoEvento', 'idModalidadEvento', 'nombreEvento', 'nombreCortoEvento', 'descripcionEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion', 'fechaCreacionEvento'], 'required'],
-            [['idUsuario', 'idCategoria', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
+            [['idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'nombreEvento', 'nombreCortoEvento', 'descripcionEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'capacidad', 'preInscripcion', 'fechaLimiteInscripcion', 'fechaCreacionEvento'], 'required'],
+            [['idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
             [['fechaInicioEvento', 'fechaFinEvento', 'fechaLimiteInscripcion', 'fechaCreacionEvento'], 'safe'],
             [['nombreEvento', 'lugar', 'imgFlyer', 'imgLogo'], 'string', 'max' => 200],
             [['nombreCortoEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
             [['descripcionEvento'], 'string', 'max' => 800],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
-            [['idCategoria'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaEvento::className(), 'targetAttribute' => ['idCategoria' => 'idCategoriaEvento']],
+            [['idCategoriaEvento'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaEvento::className(), 'targetAttribute' => ['idCategoriaEvento' => 'idCategoriaEvento']],
             [['idModalidadEvento'], 'exist', 'skipOnError' => true, 'targetClass' => ModalidadEvento::className(), 'targetAttribute' => ['idModalidadEvento' => 'idModalidadEvento']],
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
         ];
@@ -70,7 +70,7 @@ class Evento extends \yii\db\ActiveRecord
         return [
             'idEvento' => 'Id Evento',
             'idUsuario' => 'Id Usuario',
-            'idCategoria' => 'Id Categoria',
+            'idCategoriaEvento' => 'Id Categoria Evento',
             'idEstadoEvento' => 'Id Estado Evento',
             'idModalidadEvento' => 'Id Modalidad Evento',
             'nombreEvento' => 'Nombre Evento',
@@ -90,13 +90,13 @@ class Evento extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[IdCategoria0]].
+     * Gets query for [[IdCategoriaEvento0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCategoria0()
+    public function getIdCategoriaEvento0()
     {
-        return $this->hasOne(CategoriaEvento::className(), ['idCategoriaEvento' => 'idCategoria']);
+        return $this->hasOne(CategoriaEvento::className(), ['idCategoriaEvento' => 'idCategoriaEvento']);
     }
 
     /**

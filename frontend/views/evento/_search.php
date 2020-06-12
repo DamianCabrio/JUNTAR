@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\controllers\EventoSearch */
+/* @var $model common\models\EventoSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'idUsuario') ?>
 
-    <?= $form->field($model, 'idCategoria') ?>
+    <?= $form->field($model, 'idCategoriaEvento') ?>
 
     <?= $form->field($model, 'idEstadoEvento') ?>
 

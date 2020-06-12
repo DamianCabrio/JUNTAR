@@ -98,12 +98,12 @@ class InscripcionController extends Controller
 
         if ($esPreInscripcion) {
             $inscripcion->estado = 0;
-            $inscripcion->fecha_preinscripcion = date("Y-m-d");
+            $inscripcion->fechaPreInscripcion = date("Y-m-d");
         }
         else{
             $inscripcion->estado = 1;
-            $inscripcion->fecha_preinscripcion = date("Y-m-d");
-            $inscripcion->fecha_inscripcion = date("Y-m-d");
+            $inscripcion->fechaPreInscripcion = date("Y-m-d");
+            $inscripcion->fechaInscripcion = date("Y-m-d");
         }
         $seGuardo = $inscripcion->save();
         return $this->render('resultadoInscripcion', [

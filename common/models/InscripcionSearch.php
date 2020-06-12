@@ -18,7 +18,7 @@ class InscripcionSearch extends Inscripcion
     {
         return [
             [['idInscripcion', 'idUsuario', 'idEvento', 'estado', 'acreditacion'], 'integer'],
-            [['fecha_preinscripcion', 'fecha_inscripcion', 'certificado'], 'safe'],
+            [['fechaPreInscripcion', 'fechaInscripcion', 'certificado'], 'safe'],
         ];
     }
 
@@ -62,8 +62,8 @@ class InscripcionSearch extends Inscripcion
             'idUsuario' => $this->idUsuario,
             'idEvento' => $this->idEvento,
             'estado' => $this->estado,
-            'fecha_preinscripcion' => $this->fecha_preinscripcion,
-            'fecha_inscripcion' => $this->fecha_inscripcion,
+            'fechaPreInscripcion' => $this->fechaPreInscripcion,
+            'fechaInscripcion' => $this->fechaInscripcion,
             'acreditacion' => $this->acreditacion,
         ]);
 

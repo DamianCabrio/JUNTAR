@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         } else {
             if($noHayCupos && !$yaInscripto){
-                    echo Html::a('Sin cupos', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary disabled']);
+                echo Html::a('Sin cupos', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary disabled']);
             }
             elseif ($acreditacion != 1 ) {// * condicionar con la fecha hoy  menor estricto fecha inicio  hoy()<FechaIncio
                 echo Html::a('Desinscribirse', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'idEvento',
             'idUsuario',
-            'idCategoria',
+            'idCategoriaEvento',
             'idEstadoEvento',
             'idModalidadEvento',
             'nombreEvento',

@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="inscripcion-form container">
+<div class="inscripcion-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -18,9 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'estado')->textInput() ?>
 
-    <?= $form->field($model, 'fecha_preinscripcion')->textInput() ?>
+    <?= $form->field($model, 'fechaPreInscripcion')->textInput() ?>
 
-    <?= $form->field($model, 'fecha_inscripcion')->textInput() ?>
+    <?= $form->field($model, 'fechaInscripcion')->textInput() ?>
 
     <?= $form->field($model, 'acreditacion')->textInput() ?>
 

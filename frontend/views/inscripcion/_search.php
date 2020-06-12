@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="inscripcion-search container">
+<div class="inscripcion-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -23,9 +23,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'estado') ?>
 
-    <?= $form->field($model, 'fecha_preinscripcion') ?>
+    <?= $form->field($model, 'fechaPreInscripcion') ?>
 
-    <?php // echo $form->field($model, 'fecha_inscripcion') ?>
+    <?php // echo $form->field($model, 'fechaInscripcion') ?>
 
     <?php // echo $form->field($model, 'acreditacion') ?>
 
