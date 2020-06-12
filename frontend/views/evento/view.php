@@ -18,11 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php
-
-
-
-
-
         if (!Yii::$app->user->can('Administrador')) {
             Html::a('Update', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
             Html::a('Delete', ['delete', 'id' => $model->idEvento], [

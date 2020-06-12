@@ -16,6 +16,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\captcha\CaptchaAction;
+use \yii\helpers\Url;
 
 //use yii\filters\VerbFilter;
 /**
@@ -33,7 +34,7 @@ class SiteController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email'],
+                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email',"index"],
                     'roles' => ['?'], // <----- guest 
                 ],
                 [
@@ -81,7 +82,7 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->limit(6)->all();
+        $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->where(["idEstadoEvento" => 1])->limit(6)->all();
         return $this->render('index', ["eventos" => $eventos]);
     }
 
@@ -109,10 +110,9 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goBack(Url::previous());
         } else {
             $model->password = '';
-
             return $this->render('login', [
                         'model' => $model,
             ]);

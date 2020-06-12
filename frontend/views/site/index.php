@@ -37,6 +37,7 @@ $this->title = 'Proyecto Juntar';
             <h2 class="text-white text-uppercase">Últimos Lanzamientos</h2><br>
                 <div class="row">
                     <?php foreach ($eventos as $evento) {
+                        if($evento->idEstadoEvento == 1):
                         echo "<div class='col-12 col-md-4'>";
                         echo "<div class='card bg-light'>";
                         echo "<img src='" . $evento["imgLogo"] . " 'class='card-img-top' alt=''...'>";
@@ -48,6 +49,7 @@ $this->title = 'Proyecto Juntar';
                         echo "<p class='card-text'>" . strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n") . "</p>";
                         echo Html::a('Más Información', ['/evento/view', "id" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
                         echo "</div></div></div>";
+                        endif;
                     } ?>
                 </div>
 

@@ -5,13 +5,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use \yii\helpers\Url;
 
 $this->title = 'Iniciar sesion';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login container">
         <h1 class="text-center mb-2"><?= Html::encode($this->title) ?></h1>
-
         <div class="row">
             <div class="col-lg-5 m-auto">
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>

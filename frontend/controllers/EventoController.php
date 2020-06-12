@@ -54,40 +54,51 @@ class EventoController extends Controller
      */
     public function actionView($id)
     {
+        /*
+   En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
+   en Where filtrar por 'estado' activo.
+*/
+        $evento = Evento::find()->where(["idEvento" => $id])->one();
+        $cantInscriptos = Inscripcion::find()->where(["idEvento" => $id])->count();
 
-        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
-
-        $yaInscripto = false;
-        $yaAcreditado = 0;
-        if(count($inscripcion) == 1){
-            $yaInscripto = true;
-            $yaAcreditado = $inscripcion[0]["acreditacion"];
-        }
-          /*
-             En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
-             en Where filtrar por 'estado' activo.
-          */
-        $evento = Evento::find()->where(["idEvento" =>$id])->one();
-        $cantInscriptos = Inscripcion::find()->where(["idEvento" =>$id])->count();
-        
         $cupoMaximo = $evento->capacidad;
 
         $noHayCupos = false;
-        if ($cantInscriptos >= $cupoMaximo){
+        if ($cantInscriptos >= $cupoMaximo) {
             $cupos = "No hay mas cupos";
             $noHayCupos = true;
-        }else{
+        } else {
             $cupos = $cupoMaximo - $cantInscriptos;
         }
-     
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            "evento" => $evento,
-            "yaInscripto" => $yaInscripto,
-            "acreditacion" => $yaAcreditado,
-            'cupos'=>$cupos,
-            "noHayCupos" => $noHayCupos,
-        ]);
+
+        if (!Yii::$app->user->getIsGuest()) {
+            $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
+
+            $yaInscripto = false;
+            $yaAcreditado = 0;
+            if (count($inscripcion) == 1) {
+                $yaInscripto = true;
+                $yaAcreditado = $inscripcion[0]["acreditacion"];
+            }
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                "evento" => $evento,
+                "yaInscripto" => $yaInscripto,
+                "acreditacion" => $yaAcreditado,
+                'cupos' => $cupos,
+                "noHayCupos" => $noHayCupos,
+            ]);
+        }else{
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                "evento" => $evento,
+                "yaInscripto" => false,
+                "acreditacion" => false,
+                'cupos' => $cupos,
+                "noHayCupos" => $noHayCupos,
+            ]);
+        }
     }
 
     /**
