@@ -66,13 +66,7 @@ $(document).ready(function() {
     autocompleteLocalidades(eliminarDiacriticos($('#signupform-provincia').val()));
   });
 });
-/**
- * Metodo autocompleteProvincia --> Busca los datos de las provincias pertenecientes al pais seleccionado
- * para ofrecer una lista de opciones de autocompletado.
- *
- * @param {String} nombrePais
- * @returns none
- */
+
 function autocompleteProvincias(paisName) {
   $.ajax({
       url: "index.php?r=site%2Fsearch-provincias&name=" + paisName,
@@ -93,13 +87,7 @@ function autocompleteProvincias(paisName) {
       }
     });
 }
-/**
- * Metodo autocompleteLocalidad --> Busca los datos de las localidades pertenecientes a la provincia seleccionada
- * para ofrecer una lista de opciones de autocompletado.
- *
- * @param {String} nombreProvincia
- * @returns none
- */
+
 function autocompleteLocalidades(pronvinceName) {
   $.ajax({
       url: "index.php?r=site%2Fsearch-locations&name=" + pronvinceName,
