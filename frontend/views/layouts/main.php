@@ -71,17 +71,17 @@ AppAsset::register($this);
         NavBar::end();
         ?>
 
-        <!--<div class="container">-->
-            <?php // echo
-//                Breadcrumbs::widget([
-//                    'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
-//                    'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
-//                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-//                ])
+        <div class="container">
+            <?php echo
+                Breadcrumbs::widget([
+                    'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
+                    'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
             ?>
-            <?php // echo Alert::widget() ?>
+            <?php echo Alert::widget() ?>
 
-        <!--</div>-->
+        </div>
         <?php // echo Yii::getAlias('@web');?>
         <?php echo $content ?>
     </div>
