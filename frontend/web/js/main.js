@@ -80,7 +80,7 @@ function autocompleteProvincias(paisName) {
 
 function autocompleteLocalidades(pronvinceName) {
   $.ajax({
-      url: "index.php?r=site%2Fsearch-locations&name=" + pronvinceName,
+      url: "index.php?r=site%2Fsearch-localidades&name=" + pronvinceName,
       type: "POST",
       dataType: "json"
     })
