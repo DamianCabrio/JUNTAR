@@ -131,3 +131,15 @@ a.desc:after {
 .filter-blue{
     filter: invert(49%) sepia(98%) saturate(324%) hue-rotate(159deg) brightness(88%) contrast(97%);
 }
+
+.buttonRol:hover{
+    background-color: lightblue;
+    /*border: 1px solid red;*/
+}
+
+.roleDiv{
+    border: 1px solid blue;
+}
+.permissionDiv{
+    border: 1px solid red;
+}
