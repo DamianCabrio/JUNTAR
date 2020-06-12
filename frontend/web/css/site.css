@@ -21,7 +21,6 @@ html, body {
 
 .wrap>.container {
     padding: 0px 0px 0px;
-    /*margin-top: -100px;*/
 }
 
 .navbar-dark {
@@ -163,7 +162,6 @@ header{
 }
 
 .gradient-hero {
-    /*margin-top: 6px;*/
     min-height: 50vh;
     background-position: center center;
     -webkit-transform-style: preserve-3d;
@@ -267,8 +265,4 @@ section {
 
 .profile-sidebar a:hover {
     background-color: powderblue;
-}
-
-.signupShadow{
-    /*box-shadow: 0px 0px 10px 2px white;*/
 }

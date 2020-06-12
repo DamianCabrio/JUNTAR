@@ -15,23 +15,13 @@ $(document).ready(function() {
       $('#signupform-password').attr("type", "password");
     }
 
-        //verificamos si viene por resetPassword y cambiamos el tipo de campo
-        type = $('#resetpasswordform-password').attr("type");
-        if (type !== null && type === 'password') {
-            $('#resetpasswordform-password').attr("type", "text");
-        } else {
-            $('#resetpasswordform-password').attr("type", "password");
-        }
-    });
-    //fin mostrarContraseña
-
-    //funcionalidad popover contraseña
-    $(function () {
-        $("[data-toggle='popover']").popover({
-            trigger: 'hover'
-        });
-    });
-    //fin popover contraseña
+    //verificamos si viene por login y cambiamos el tipo de campo
+    type = $('#loginform-password').attr("type");
+    if (type !== null && type === 'password') {
+      $('#loginform-password').attr("type", "text");
+    } else {
+      $('#loginform-password').attr("type", "password");
+    }
 
     //verificamos si viene por resetPassword y cambiamos el tipo de campo
     type = $('#resetpasswordform-password').attr("type");
@@ -107,39 +97,4 @@ function autocompleteLocalidades(pronvinceName) {
         });
       }
     });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * OLD Methods
- */
-function autocompleteProvincias2(paisName) {
-    $.ajax({
-        url: "index.php?r=site%2Fsearch-provincias&name=" + paisName,
-//            type: "POST",
-        dataType: "json"
-    })
-            .done(function (data) {
-//                    console.log(data);
-                if ($("#signupform-provincia").autocomplete !== undefined) {
-                    $("#signupform-provincia").autocomplete({
-                        "autoFill": true,
-                        "minLength": "2",
-                        "source": data,
-                        "select": function (event, ui) {
-                            $("#signupform-provincia").val(ui.item.id);
-                        }
-                    });
-                }
-            });
 }
