@@ -162,12 +162,9 @@ class EventoController extends Controller
                     $model->imgFlyer =  'web/emanuel-mauro/frontend/web/eventos/images/flyers/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                  }
             }
-            if($model->save()){
+            $model->save();
             return $this->redirect(['evento-cargado', 'idEvento' => $model->idEvento]);
-            }
-            else{
-                return $this->render('errorEvento');
-            }    
+  
         }
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer]);
     }
@@ -247,7 +244,7 @@ class EventoController extends Controller
         $model = $this->findModel($idEvento);
        
         $model->fechaCreacionEvento = date('Y-m-d');    
-        $model->idEstadoEvento = 1;
+        $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
 
         $model->save();
         return $this->render('eventoPublicado');
@@ -258,7 +255,7 @@ class EventoController extends Controller
         $model = $this->findModel($idEvento);
        
         $model->fechaCreacionEvento = null;   
-        $model->idEstadoEvento = 4;
+        $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
 
         $model->save();
         return $this->render('eventoDespublicado');
