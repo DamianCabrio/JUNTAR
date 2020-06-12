@@ -44,8 +44,10 @@ class SiteController extends Controller {
                         'verify-email',
                         'reset-password',
                         'index',
+                        'search-paises',
                         'search-localidades',
                         'search-provincias',
+//                        'search-provincias2',
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -223,13 +225,12 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionSignup() {
-        //obtiene datos paises
         $dataCountry = file_get_contents("json/paises.json");
         $paises = json_decode($dataCountry, true);
         //Conversión de datos
         $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
         $paises = $this->conversionAutocomplete($paises);
-        
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
@@ -240,7 +241,6 @@ class SiteController extends Controller {
         return $this->render('signup', [
                     'model' => $model,
                     'paises' => $paises,
-//                    'province' => $province,
         ]);
     }
 
@@ -249,41 +249,65 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionSearchProvincias($name) {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $dataProvincias = file_get_contents("json/provincias.json");
-        $provincias = json_decode($dataProvincias, true);
-        
-        $indiceProvincia = null;
-        foreach ($provincias as $index => $unaProvincia) {
-            if (array_search($name, $unaProvincia)) {
-                $indiceProvincia = $index;
+    public function actionSearchProvincias() {
+        $provincias = null;
+        if (Yii::$app->request->post('pais') != null) {
+
+            //almacena el parámetro esperado
+            $pais = Yii::$app->request->post('pais');
+
+            //define el tipo de respuesta del metodo
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            //obtiene la data de las provincias del json
+            $dataProvincias = file_get_contents("json/provincias.json");
+            $provincias = json_decode($dataProvincias, true);
+
+            //busca el indice del pais
+            $indexPais = null;
+            foreach ($provincias as $index => $unPais) {
+                if (array_search($pais, $unPais)) {
+                    $indexPais = $index;
+                }
             }
+            // Conversión de datos para obtener las provincias
+            $provincias = ArrayHelper::map($provincias[$indexPais]['provincias'], 'id', 'nombre');
+            $provincias = $this->conversionAutocomplete($provincias);
         }
-        // Conversión de datos
-        $provincias = ArrayHelper::map($provincias[$indiceProvincia]['provincias'], 'id', 'nombre');
-        $provincias = $this->conversionAutocomplete($provincias);
         return $provincias;
     }
-    
+
     /**
      * Busqueda de Localidades por Provincia
      *
      * @return mixed
      */
-    public function actionSearchLocalidades($name) {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $dataLocalidades = file_get_contents("json/localidades.json");
-        $localidad = json_decode($dataLocalidades, true);
-        $indexLocalidad = null;
-        foreach ($localidad as $index => $unaLocalidad) {
-            if (array_search($name, $unaLocalidad)) {
-                $indexLocalidad = $index;
+    public function actionSearchLocalidades() {
+        $localidades = null;
+        if (Yii::$app->request->post('provincia') != null) {
+            
+            //almacena el parámetro esperado
+            $provincia = Yii::$app->request->post('provincia');
+            
+            //define el tipo de respuesta del metodo
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            
+             //obtiene la data de las localidades del json
+            $dataLocalidades = file_get_contents("json/localidades.json");
+            $localidades = json_decode($dataLocalidades, true);
+            
+            //busca el indice de la provincia
+            $indexProvincia = null;
+            foreach ($localidades as $index => $unaProvincia) {
+                if (array_search($provincia, $unaProvincia)) {
+                    $indexProvincia = $index;
+                }
             }
+            //Conversión de datos para obtener las localidades 
+            $localidades = ArrayHelper::map($localidades[$indexProvincia]['ciudades'], 'id', 'nombre');
+            $localidades = $this->conversionAutocomplete($localidades);
         }
-        $localidad = ArrayHelper::map($localidad[$indexLocalidad]['ciudades'], 'id', 'nombre');
-        $localidad = $this->conversionAutocomplete($localidad);
-        return $localidad;
+        return $localidades;
     }
 
     /**
