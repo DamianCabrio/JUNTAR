@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\LoginForm;
+use common\models\Evento;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -15,6 +16,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\captcha\CaptchaAction;
+use yii\helpers\ArrayHelper;
 
 //use yii\filters\VerbFilter;
 /**
@@ -32,7 +34,21 @@ class SiteController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email', 'verify-email'],
+                    'actions' => [
+                        'login',
+                        'signup',
+                        'error',
+                        'request-password-reset',
+                        'PasswordReset',
+                        'resend-verification-email',
+                        'verify-email',
+                        'reset-password',
+                        'index',
+                        'search-paises',
+                        'search-localidades',
+                        'search-provincias',
+//                        'search-provincias2',
+                    ],
                     'roles' => ['?'], // <----- guest
                 ],
                 [
@@ -80,7 +96,8 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        return $this->render('index');
+        $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->limit(6)->all();
+        return $this->render('index', ["eventos" => $eventos]);
     }
 
     /**
@@ -159,7 +176,7 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionContacto() {
+    private function actionContacto() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -190,11 +207,30 @@ class SiteController extends Controller {
     }
 
     /**
+     * Conversion del datos para autocompletar en campos
+     *
+     * @return mixed
+     */
+    public function conversionAutocomplete($array) {
+        $autocomplete = array();
+        foreach ($array as $id => $nombre) {
+            array_push($autocomplete, ['value' => $nombre, 'label' => $nombre]);
+        }
+        return $autocomplete;
+    }
+
+    /**
      * Signs user up.
      *
      * @return mixed
      */
     public function actionSignup() {
+        $dataCountry = file_get_contents("json/paises.json");
+        $paises = json_decode($dataCountry, true);
+        //Conversión de datos
+        $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
+        $paises = $this->conversionAutocomplete($paises);
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
@@ -204,7 +240,74 @@ class SiteController extends Controller {
 
         return $this->render('signup', [
                     'model' => $model,
+                    'paises' => $paises,
         ]);
+    }
+
+    /**
+     * Busqueda de Localidades por Provincia
+     *
+     * @return mixed
+     */
+    public function actionSearchProvincias() {
+        $provincias = null;
+        if (Yii::$app->request->post('pais') != null) {
+
+            //almacena el parámetro esperado
+            $pais = Yii::$app->request->post('pais');
+
+            //define el tipo de respuesta del metodo
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            //obtiene la data de las provincias del json
+            $dataProvincias = file_get_contents("json/provincias.json");
+            $provincias = json_decode($dataProvincias, true);
+
+            //busca el indice del pais
+            $indexPais = null;
+            foreach ($provincias as $index => $unPais) {
+                if (array_search($pais, $unPais)) {
+                    $indexPais = $index;
+                }
+            }
+            // Conversión de datos para obtener las provincias
+            $provincias = ArrayHelper::map($provincias[$indexPais]['provincias'], 'id', 'nombre');
+            $provincias = $this->conversionAutocomplete($provincias);
+        }
+        return $provincias;
+    }
+
+    /**
+     * Busqueda de Localidades por Provincia
+     *
+     * @return mixed
+     */
+    public function actionSearchLocalidades() {
+        $localidades = null;
+        if (Yii::$app->request->post('provincia') != null) {
+            
+            //almacena el parámetro esperado
+            $provincia = Yii::$app->request->post('provincia');
+            
+            //define el tipo de respuesta del metodo
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            
+             //obtiene la data de las localidades del json
+            $dataLocalidades = file_get_contents("json/localidades.json");
+            $localidades = json_decode($dataLocalidades, true);
+            
+            //busca el indice de la provincia
+            $indexProvincia = null;
+            foreach ($localidades as $index => $unaProvincia) {
+                if (array_search($provincia, $unaProvincia)) {
+                    $indexProvincia = $index;
+                }
+            }
+            //Conversión de datos para obtener las localidades 
+            $localidades = ArrayHelper::map($localidades[$indexProvincia]['ciudades'], 'id', 'nombre');
+            $localidades = $this->conversionAutocomplete($localidades);
+        }
+        return $localidades;
     }
 
     /**

@@ -11,9 +11,9 @@ use Yii;
  * @property string $nombre
  * @property string $apellido
  * @property int|null $dni
- * @property string|null $fecha_nacimiento
+ * @property string|null $pais
+ * @property string|null $provincia
  * @property string|null $localidad
- * @property int|null $telefono
  * @property string $email
  * @property string $auth_key
  * @property string $password_hash
@@ -44,14 +44,14 @@ class Usuario extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'apellido', 'email', 'auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
-            [['dni', 'telefono', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['fecha_nacimiento'], 'safe'],
-            [['nombre', 'apellido', 'localidad'], 'string', 'max' => 50],
-            [['email', 'password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
+            [['nombre', 'apellido', 'dni', 'pais', 'provincia', 'localidad', 'email'], 'required'],
+//            [['dni', 'telefono', 'status', 'created_at', 'updated_at'], 'integer'],
+//            [['fecha_nacimiento'], 'safe'],
+            [['nombre', 'apellido', 'pais', 'provincia', 'localidad'], 'string', 'max' => 50],
+//            [['email', 'password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
+//            [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
-            [['password_reset_token'], 'unique'],
+//            [['password_reset_token'], 'unique'],
         ];
     }
 
@@ -65,17 +65,19 @@ class Usuario extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'apellido' => 'Apellido',
             'dni' => 'Dni',
-            'fecha_nacimiento' => 'Fecha Nacimiento',
+//            'fecha_nacimiento' => 'Fecha Nacimiento',
+            'pais' => 'País',
+            'provincia' => 'Provincia',
             'localidad' => 'Localidad',
-            'telefono' => 'Telefono',
+//            'telefono' => 'Telefono',
             'email' => 'Email',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'verification_token' => 'Verification Token',
+//            'auth_key' => 'Auth Key',
+//            'password_hash' => 'Password Hash',
+//            'password_reset_token' => 'Password Reset Token',
+//            'status' => 'Status',
+//            'created_at' => 'Created At',
+//            'updated_at' => 'Updated At',
+//            'verification_token' => 'Verification Token',
         ];
     }
 

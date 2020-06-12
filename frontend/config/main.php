@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'bootstrap' => ['log'],
     'language' => "es_AR",
+    'timeZone' => 'America/Argentina/Buenos_Aires',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',

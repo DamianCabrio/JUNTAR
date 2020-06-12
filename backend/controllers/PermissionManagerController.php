@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\Inflector;
 use yii\helpers\FileHelper;
+use yii\helpers\ArrayHelper;
 use yii\web\response;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -292,7 +293,7 @@ class PermissionManagerController extends Controller {
                 $permission = yii::$app->authManager->createPermission($model->name);
                 $permission->description = $model->description;
                 if (yii::$app->authManager->add($permission)) {
-                    Yii::$app->session->setFlash('success', '<p>Se creó el rol: ' . $model->name . '</p>');
+                    Yii::$app->session->setFlash('success', '<p>Se creó el Permiso: ' . $model->name . '</p>');
                 } else {
                     Yii::$app->session->setFlash('error', '<p>Ha ocurrido un error</p>');
                 }
@@ -307,12 +308,12 @@ class PermissionManagerController extends Controller {
         ]);
     }
 
-    
+
     /**
      * Metodo actionListMissingPermissions --> Permite retornar un array conteniendo todos los permisos del
-     * server side especificado por parámetro. Utiliza el alias del camino a consultar (frontend-backend) 
+     * server side especificado por parámetro. Utiliza el alias del camino a consultar (frontend-backend)
      * y lo asigna al arreglo $actions recibido por parámetro.
-     * 
+     *
      * @param String $path
      * @param Array $actions
      * @return array/null
@@ -371,6 +372,7 @@ class PermissionManagerController extends Controller {
             'description' => 'Descripción del Rol',
             'new_name' => 'Nuevo Nombre',
         ]);
+        
         $roles = ArrayHelper::map(yii::$app->AuthManager->getRoles(), 'name', 'name');
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $update_rol = yii::$app->authManager->createRole($model->new_name);

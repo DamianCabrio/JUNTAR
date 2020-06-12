@@ -8,7 +8,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $dataUser = array_shift($data);
 //print_r($dataUser);
 ?>
-
+<div class="container">
 <h1 class="text-center"> Información de la Cuenta </h1>
 <div class='row'>
     <!-- Profile Sidebar Menu-->
@@ -82,14 +82,14 @@ $dataUser = array_shift($data);
                                     <th> DNI: </td>
                                     <td> <?php echo Html::encode($dataUser['dni']); ?> </td>
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <th> Fecha Nacimiento: </td>
-                                    <td> <?php echo Html::encode($dataUser['fecha_nacimiento']); ?> </td>
+                                    <td> <?php // echo Html::encode($dataUser['fecha_nacimiento']); ?> </td>
                                 </tr>
                                 <tr>
                                     <th> Teléfono: </td>
-                                    <td> <?php echo Html::encode($dataUser['telefono']); ?> </td>
-                                </tr>
+                                    <td> <?php // echo Html::encode($dataUser['telefono']); ?> </td>
+                                </tr>-->
                                 <tr>
                                     <th> Localidad: </td>
                                     <td> <?php echo Html::encode($dataUser['localidad']); ?> </td>
@@ -116,5 +116,7 @@ $dataUser = array_shift($data);
     <!-- Profile Card Content -->
 
 </div>
+</div>
+
 
 <!--<a href="<?= Url::toRoute(['club/listarposicionesclub']); ?>">Volver</a>-->
