@@ -59,7 +59,10 @@ class EventoController extends Controller
    en Where filtrar por 'estado' activo.
 */
         $evento = Evento::find()->where(["idEvento" => $id])->one();
-        $cantInscriptos = Inscripcion::find()->where(["idEvento" => $id])->count();
+        //Cantidad de inscriptos al evento 
+        $cantInscriptos = Inscripcion::find()
+                        ->where(["idEvento" => $id, 'estado'=>1])
+                        ->count();
 
         $cupoMaximo = $evento->capacidad;
 
@@ -72,7 +75,10 @@ class EventoController extends Controller
         }
 
         if (!Yii::$app->user->getIsGuest()) {
-            $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
+            $inscripcion = Inscripcion::find()
+                        ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id, 'estado'=>1])
+                        ->asArray()
+                        ->all();
 
             $yaInscripto = false;
             $yaAcreditado = 0;
