@@ -254,5 +254,15 @@ class EventoController extends Controller
 
      }   
 
+     public function actionDespublicarEvento($idEvento){
+        $model = $this->findModel($idEvento);
+       
+        $model->fechaCreacionEvento = null;   
+        $model->idEstadoEvento = 4;
+
+        $model->save();
+        return $this->render('eventoDespublicado');
+
+     }   
 
 }

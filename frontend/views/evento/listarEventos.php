@@ -25,7 +25,17 @@ use yii\widgets\ActiveForm;
                          <?= Html::a('Ver evento', ['ver-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                          <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                          <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                         <?= Html::a('Publicar evento ', ['publicar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?php 
+                             if(($objEvento->idEstadoEvento) == 4){
+                         ?>     
+                            <?= Html::a('Publicar evento ', ['publicar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?php }?>
+                         <?php 
+                             if(($objEvento->idEstadoEvento) == 1){
+                         ?>  
+                           <?= Html::a('Despublicar evento ', ['despublicar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+                         <?php }?>
+
                     </td>
                 <tr>
                 <?php endforeach; ?>
