@@ -28,8 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'dni')->label('DNI (*)')->textInput(['placeholder' => 'Ejemplo: 26734824']); ?>
             <?=
             $form->field($model, 'pais')->label('Pais (*)')->widget(AutoComplete::classname(), [
-                'model' => $model,
-                'attribute' => 'pais',
                 'options' => ['class' => 'form-control'],
                 'clientOptions' => [
                     'source' => $paises,
