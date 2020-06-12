@@ -59,6 +59,10 @@ class EventoController extends Controller
    en Where filtrar por 'estado' activo.
 */
         $evento = Evento::find()->where(["idEvento" => $id])->one();
+
+        if($evento == null){
+            return $this->goHome();
+        }
         //Cantidad de inscriptos al evento 
         $cantInscriptos = Inscripcion::find()
                         ->where(["idEvento" => $id, 'estado'=>1])
@@ -172,6 +176,6 @@ class EventoController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 }

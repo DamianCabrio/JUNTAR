@@ -51,8 +51,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo Html::a('Sin cupos', ['inscripcion/preinscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary disabled']);
             }
             //Anular Inscripcion antes de la fecha del evento
-            elseif ($acreditacion != 1 ) {// * condicionar con la fecha hoy  menor estricto fecha inicio  hoy()<FechaIncio
+            elseif ($acreditacion != 1 && $evento->fechaInicioEvento > date("Y-m-d") ) {// * condicionar con la fecha hoy  menor estricto fecha inicio  hoy()<FechaIncio
                 echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $model->idEvento], ['class' => 'btn btn-primary']);
+            }elseif ( $evento->fechaInicioEvento <= date("Y-m-d") ){
+                echo Html::label('El evento ya esta iniciado');
             }
         }
         if ($evento->fechaInicioEvento <= date("Y-m-d") && $yaInscripto && $acreditacion != 1 && $model->codigoAcreditacion != null) {

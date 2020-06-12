@@ -10,6 +10,8 @@ return [
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],'assetManager' => [
+            'appendTimestamp' => true,
         ],
         //configuramos el nombre modificado de las tablas que utilizará authManager
         'authManager' => [

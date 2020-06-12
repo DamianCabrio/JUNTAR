@@ -126,9 +126,11 @@ class InscripcionController extends Controller
 
     public function actionEliminarInscripcion(){
         if ( Yii::$app->user->isGuest ){
-            Url::remember();
-            return Yii::$app->getResponse()->redirect(Url::to(['site/login'],302));
+            $request = Yii::$app->request;
+            $idEvento = $request->get('id');
+            return Yii::$app->getResponse()->redirect(Url::to(['evento/view', "id" => $idEvento],302));
         }
+
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
 
