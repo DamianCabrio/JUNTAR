@@ -4,6 +4,8 @@ use backend\models\Usuario;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use frontend\models\Evento;
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Presentacion */
@@ -23,31 +25,59 @@ use frontend\models\Evento;
             $item = Evento::find()     //buscar los eventos del usuario              
                 ->select(['nombreEvento'])
                 ->indexBy('idEvento')
-                ->where(['idUsuario'=>$idUsuario,'idEvento'=> $idEvento])
+                ->where(['idUsuario' => $idUsuario, 'idEvento' => $idEvento])
                 ->column();
-            $evento= Evento::findOne($idEvento);
+            $evento = Evento::findOne($idEvento);
             ?>
-            <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value'=>$idEvento,'readonly'=> true])->label('Seleccione un evento *');
+            <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value' => $idEvento, 'readonly' => true])->label('Seleccione un evento *');
             ?>
 
             <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true,  'placeholder' => 'Máximo 200 caracteres'])->label('Titulo de la presentación *') ?>
 
             <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8', 'placeholder' => 'Máximo 800 caracteres'])->label('Descripción *')  ?>
 
-            <?= $form->field($model, 'diaPresentacion')->input('date', ['style'=>'width: auto'])->label('Ingrese fecha *') ?>
+            <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha *') ?>
 
-            <?= $form->field($model, 'horaInicioPresentacion')->input('time',['style'=>'width: auto'] )->label('Hora de incio (HH:MM) *') ?>
+            <?= $form->field($model, 'horaInicioPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora de incio (HH:MM) *') ?>
 
-            <?= $form->field($model, 'horaFinPresentacion')->input('time',['style'=>'width: auto'])->label('Hora de finalización (HH:MM) *') ?>
+            <?= $form->field($model, 'horaFinPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora de finalización (HH:MM) *') ?>
 
             <?= $form->field($model, 'linkARecursos')->textInput(['maxlength' => true]) ?>
 
-            <?php $usuario = Usuario::find()     //buscar los eventos del usuario              
+            <select id="cantExpositor">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">3</option>
+                <option value="5">5</option>
+            </select>
+            <div id="divCantExpo">
+
+            </div>
+
+            <?php $data = Usuario::find()
+                ->select(['nombre as value', 'nombre as  label', 'idUsuario as idUsuario'])
+                ->asArray()
+                ->all();
+            
+                echo AutoComplete::widget([
+                'model' => $data,
+                'clientOptions' => [
+                    'source' => $data,
+                    'minLength' => '3',
+                ],
+                'options' => [
+                    'class' => 'form-control'
+                ]
+            ]);
+            ?>
+            <?= Html::activeHiddenInput($preExpositor, 'idExpositor') ?>
+
+            <?php /*$usuario = Usuario::find()     //buscar los eventos del usuario              
                 ->select(['nombre'])
                 ->indexBy('idUsuario')
-                ->column();
+                ->column();*/
             ?>
-            <?= $form->field($preExpositor, 'idExpositor')->dropdownList($usuario,  ['prompt' => 'Expositor'])->label('Seleccione un Expositor *'); ?>
 
 
             <div class="form-group">

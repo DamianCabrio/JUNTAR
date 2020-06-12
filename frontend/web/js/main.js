@@ -7,14 +7,14 @@ $(document).ready(function () {
 
     $('.showpw .custom-control-input').click(function () {
         var type = $('#signupform-password').attr("type");
-        
+
         //verificamos si viene por signup y cambiamos el tipo de campo
         if (type !== null && type === 'password') {
             $('#signupform-password').attr("type", "text");
         } else {
             $('#signupform-password').attr("type", "password");
         }
-        
+
         //verificamos si viene por login y cambiamos el tipo de campo
         type = $('#loginform-password').attr("type");
         if (type !== null && type === 'password') {
@@ -23,4 +23,22 @@ $(document).ready(function () {
             $('#loginform-password').attr("type", "password");
         }
     });
+
+    $('#cantExpositor').on('click', (function () {
+        let valor = (this.value);
+        //alert(valor);
+        var html = "";
+        for (var i = 0; i < valor; i++) {
+            //console.log(i);
+            //html += "<a href='index.php?r=fecha/create'>Fecha"+(i+1)+"</a> " ;
+
+            html += "<input type='date' class='form-control' name=fechas[]>";
+
+
+        }
+
+        $('#divCantExpo').html(html);
+    }));
+
+
 });

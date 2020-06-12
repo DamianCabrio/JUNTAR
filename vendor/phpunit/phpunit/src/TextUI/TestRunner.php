@@ -10,8 +10,6 @@
 namespace PHPUnit\TextUI;
 
 use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\Test;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Runner\AfterLastTestHook;
@@ -104,6 +102,11 @@ final class TestRunner extends BaseTestRunner
      */
     private $extensions = [];
 
+    /**
+     * @var Timer
+     */
+    private $timer;
+
     public function __construct(TestSuiteLoader $loader = null, CodeCoverageFilter $filter = null)
     {
         if ($filter === null) {
@@ -113,13 +116,14 @@ final class TestRunner extends BaseTestRunner
         $this->codeCoverageFilter = $filter;
         $this->loader             = $loader;
         $this->runtime            = new Runtime;
+        $this->timer              = new Timer;
     }
 
     /**
      * @throws \PHPUnit\Runner\Exception
      * @throws Exception
      */
-    public function run(Test $suite, array $arguments = [], array $warnings = [], bool $exit = true): TestResult
+    public function run(TestSuite $suite, array $arguments = [], array $warnings = [], bool $exit = true): TestResult
     {
         if (isset($arguments['configuration'])) {
             $GLOBALS['__PHPUNIT_CONFIGURATION_FILE'] = $arguments['configuration'];
@@ -136,18 +140,16 @@ final class TestRunner extends BaseTestRunner
             $GLOBALS['__PHPUNIT_BOOTSTRAP'] = $arguments['bootstrap'];
         }
 
-        if ($suite instanceof TestCase || $suite instanceof TestSuite) {
-            if ($arguments['backupGlobals'] === true) {
-                $suite->setBackupGlobals(true);
-            }
+        if ($arguments['backupGlobals'] === true) {
+            $suite->setBackupGlobals(true);
+        }
 
-            if ($arguments['backupStaticAttributes'] === true) {
-                $suite->setBackupStaticAttributes(true);
-            }
+        if ($arguments['backupStaticAttributes'] === true) {
+            $suite->setBackupStaticAttributes(true);
+        }
 
-            if ($arguments['beStrictAboutChangesToGlobalState'] === true) {
-                $suite->setBeStrictAboutChangesToGlobalState(true);
-            }
+        if ($arguments['beStrictAboutChangesToGlobalState'] === true) {
+            $suite->setBeStrictAboutChangesToGlobalState(true);
         }
 
         if ($arguments['executionOrder'] === TestSuiteSorter::ORDER_RANDOMIZED) {
@@ -539,12 +541,6 @@ final class TestRunner extends BaseTestRunner
                 $arguments['strictCoverage']
             );
 
-            if (isset($arguments['forceCoversAnnotation'])) {
-                $codeCoverage->setForceCoversAnnotation(
-                    $arguments['forceCoversAnnotation']
-                );
-            }
-
             if (isset($arguments['ignoreDeprecatedCodeUnitsFromCodeCoverage'])) {
                 $codeCoverage->setIgnoreDeprecatedCode(
                     $arguments['ignoreDeprecatedCodeUnitsFromCodeCoverage']
@@ -627,10 +623,12 @@ final class TestRunner extends BaseTestRunner
         $result->setTimeoutForMediumTests($arguments['timeoutForMediumTests']);
         $result->setTimeoutForLargeTests($arguments['timeoutForLargeTests']);
 
-        if ($suite instanceof TestSuite) {
-            $this->processSuiteFilters($suite, $arguments);
-            $suite->setRunTestInSeparateProcess($arguments['processIsolation']);
+        if (isset($arguments['forceCoversAnnotation']) && $arguments['forceCoversAnnotation'] === true) {
+            $result->forceCoversAnnotation();
         }
+
+        $this->processSuiteFilters($suite, $arguments);
+        $suite->setRunTestInSeparateProcess($arguments['processIsolation']);
 
         foreach ($this->extensions as $extension) {
             if ($extension instanceof BeforeFirstTestHook) {
@@ -1173,7 +1171,7 @@ final class TestRunner extends BaseTestRunner
             )
         );
 
-        Timer::start();
+        $this->timer->start();
     }
 
     private function codeCoverageGenerationSucceeded(): void
@@ -1181,7 +1179,7 @@ final class TestRunner extends BaseTestRunner
         $this->printer->write(
             \sprintf(
                 "done [%s]\n",
-                Timer::secondsToShortTimeString(Timer::stop())
+                $this->timer->stop()->asString()
             )
         );
     }
@@ -1191,7 +1189,7 @@ final class TestRunner extends BaseTestRunner
         $this->printer->write(
             \sprintf(
                 "failed [%s]\n%s\n",
-                Timer::secondsToShortTimeString(Timer::stop()),
+                $this->timer->stop()->asString(),
                 $e->getMessage()
             )
         );
