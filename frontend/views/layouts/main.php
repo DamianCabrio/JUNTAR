@@ -44,27 +44,31 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
             } else {
-                //Despues Borrar
-                $menuItems[] = ['label' => 'Cargar Evento', 'url' => ['/evento/cargar-evento']];
-                $menuItems[] = ['label' => 'Listar Eventos', 'url' => ['/evento/listar-eventos']];
-                $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
-                $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];
-                //Logout
-                $menuItems[] = [
-                    'label' => '<img class="ml-1" src="icons/person-circle.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
-                    'items' => [
-                        ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
-                        ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
-                        
-                        [
-                            "label" => "Cerrar Sesión",
-                            "url" => ["/site/logout"],
-                            "linkOptions" => [
-                                "data-method" => "post",
-                            ]
+                // Opciones solo para usuario con rol organizador 
+                if (Yii::$app->user->can('Organizador')) {
+
+                    $menuItems[] = ['label' => 'Cargar Evento', 'url' => ['/evento/cargar-evento']];
+                    $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/listar-eventos']];
+                }  
+                    $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
+                    $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
+                    //Logout
+                    $menuItems[] = [
+                        'label' => '<img class="ml-1" src="icons/person-circle.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
+                        'items' => [
+                            ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
+                            ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
+                            
+                            [
+                                "label" => "Cerrar Sesión",
+                                "url" => ["/site/logout"],
+                                "linkOptions" => [
+                                    "data-method" => "post",
+                                ]
+                            ],
                         ],
-                    ],
-                ];
+                    ];
+               
             }
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
