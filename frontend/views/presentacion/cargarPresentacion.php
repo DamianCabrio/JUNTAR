@@ -31,9 +31,9 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value' => $idEvento, 'readonly' => true])->label('Seleccione un evento *');
             ?>
 
-            <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true,  'placeholder' => 'Máximo 200 caracteres'])->label('Titulo de la presentación *') ?>
+            <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true,  'placeholder' => 'Ingrese título de la presentación'])->label('Titulo de la presentación *') ?>
 
-            <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8', 'placeholder' => 'Máximo 800 caracteres'])->label('Descripción *')  ?>
+            <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8', 'placeholder' => 'Descripción de la presentación [ máximo 800 caracteres ]'])->label('Descripción *')  ?>
 
             <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha *') ?>
 
@@ -41,7 +41,7 @@ use yii\bootstrap4\ActiveForm;
 
             <?= $form->field($model, 'horaFinPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora de finalización (HH:MM) *') ?>
 
-            <?= $form->field($model, 'linkARecursos')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'Ingrese link a recursos'] , ['maxlength' => true]) ?>
 
             <?php $data = Usuario::find()
                 ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])

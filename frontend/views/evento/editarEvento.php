@@ -27,7 +27,7 @@ use frontend\models\ModalidadEvento;
 
             <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label('Nombre corto del evento *') ?>
 
-            <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => 'Máximo 800 caracteres'])->label('Descripción *') ?>
+            <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
 
             <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'] , ['maxlength' => true])->label('Lugar *') ?>
 
