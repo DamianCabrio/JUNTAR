@@ -46,11 +46,9 @@ $(document).ready(function() {
   //input provincia
   if ($('#signupform-pais').val() == 'Argentina') {
     autocompleteProvincias(eliminarDiacriticos('Argentina'));
-    console.log($('#signupform-pais').val() );
   }
   $('#signupform-pais').change(function() {
     autocompleteProvincias(eliminarDiacriticos($('#signupform-pais').val()));
-    console.log($('#signupform-pais').val() );
   });
 
   //input localidad
