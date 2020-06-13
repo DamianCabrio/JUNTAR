@@ -16,7 +16,7 @@ public function init() {
     {
       $message = json_encode($this->message, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
       return <<<JS
-        deferred.push($.getJSON('https://apis.datos.gob.ar/georef/api/localidades', {'nombre':$("#signupform-localidad").val()}, function(json){
+        deferred.push($.getJSON('index.php?r=site%2Fsearch-localidades', {'name':$("#signupform-localidad").val()}, function(json){
             console.log(json.cantidad);
             if (json.cantidad == '0') {
               console.log($message);
