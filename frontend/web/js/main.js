@@ -31,7 +31,7 @@ $(document).ready(function() {
       $('#resetpasswordform-password').attr("type", "password");
     }
   });
-
+  // Habilitacion de los popover
   $(function() {
     $("[data-toggle='popover']").popover({
       trigger: 'hover'
@@ -44,19 +44,27 @@ $(document).ready(function() {
   }
 
   //input provincia
-  if (($('#signupform-pais').val()) == 'Argentina') {
+  if ($('#signupform-pais').val() == 'Argentina') {
     autocompleteProvincias(eliminarDiacriticos('Argentina'));
-  } else {
-    $('#signupform-pais').change(function() {
-      autocompleteProvincias(eliminarDiacriticos($('#signupform-pais').val()));
-    });
+    console.log($('#signupform-pais').val() );
   }
+  $('#signupform-pais').change(function() {
+    autocompleteProvincias(eliminarDiacriticos($('#signupform-pais').val()));
+    console.log($('#signupform-pais').val() );
+  });
+
   //input localidad
   $('#signupform-provincia').change(function() {
     autocompleteLocalidades(eliminarDiacriticos($('#signupform-provincia').val()));
   });
 });
-
+/**
+ * Metodo autocompleteProvincia --> Busca los datos de las provincias pertenecientes al pais seleccionado
+ * para ofrecer una lista de opciones de autocompletado.
+ *
+ * @param {String} nombrePais
+ * @returns none
+ */
 function autocompleteProvincias(paisName) {
   $.ajax({
       url: "index.php?r=site%2Fsearch-provincias&name=" + paisName,
@@ -64,7 +72,6 @@ function autocompleteProvincias(paisName) {
       dataType: "json"
     })
     .done(function(data) {
-      console.log(data);
       if ($("#signupform-provincia").autocomplete !== undefined) {
         $("#signupform-provincia").autocomplete({
           "autoFill": true,
@@ -77,7 +84,13 @@ function autocompleteProvincias(paisName) {
       }
     });
 }
-
+/**
+ * Metodo autocompleteLocalidad --> Busca los datos de las localidades pertenecientes a la provincia seleccionada
+ * para ofrecer una lista de opciones de autocompletado.
+ *
+ * @param {String} nombreProvincia
+ * @returns none
+ */
 function autocompleteLocalidades(pronvinceName) {
   $.ajax({
       url: "index.php?r=site%2Fsearch-localidades&name=" + pronvinceName,
@@ -85,7 +98,6 @@ function autocompleteLocalidades(pronvinceName) {
       dataType: "json"
     })
     .done(function(data) {
-      //                    console.log(data);
       if ($("#signupform-localidad").autocomplete !== undefined) {
         $("#signupform-localidad").autocomplete({
           "autoFill": true,
