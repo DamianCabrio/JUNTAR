@@ -50,7 +50,7 @@ use yii\bootstrap4\ActiveForm;
             ?>
 
             <?=
-                'Expositor:' .'<br>'.
+                'Expositor ' .'<br>'.
                 AutoComplete::widget([
                     'clientOptions' => [
                         'source' => $data,
@@ -64,7 +64,9 @@ use yii\bootstrap4\ActiveForm;
                 ]);
             ?>
             <?= Html::activeHiddenInput($preExpositor, 'idExpositor',['id'=>'inputIdExpositor']).'<br>' ?>
-
+            <p class="font-italic">
+                * Campos obligatorios.
+            <p>            
             <div class="form-group">
                 <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
             </div>
