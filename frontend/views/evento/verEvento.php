@@ -6,12 +6,12 @@ use backend\models\Usuario;
 
 
 if ($model->imgFlyer != null) {
-    $flyer = '<img src=/'.$model->imgFlyer.'>';
+    $flyer = '<img  class="img-fluid" width="300px" src=/'.$model->imgFlyer.'>';
 } else {
     $flyer = "Dato no cargado";
 }
 if ($model->imgLogo != null) {
-    $logo = '<img src=/'.$model->imgLogo.'>';
+    $logo = '<img class="img-fluid" width="300px" src=/'.$model->imgLogo.'>';
 } else {
     $logo = "Dato no cargado";
 }
