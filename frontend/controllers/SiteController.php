@@ -212,7 +212,7 @@ class SiteController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
                     . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goHome();
+            return $this->goBack(Url::previous());
         }
 
         return $this->render('signup', [

@@ -80,12 +80,12 @@ class EventoController extends Controller
                 $yaAcreditado = $inscripcion->acreditacion == 1;
 
                 $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
+            }
             }else{
-                if ($cupos != 0){
-                    $estadoEvento = $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-                }else{
-                    $estadoEvento = "sinCupos";
-                }
+            if ($cupos != 0){
+                $estadoEvento = $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
+            }else{
+                $estadoEvento = "sinCupos";
             }
         }
             return $this->render('view', [

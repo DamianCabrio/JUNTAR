@@ -24,6 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'rememberMe')->checkbox()->label("Recordarme") ?>
 
                 <div  class="form-advice">
+                    ¿No tiene cuenta? <?= Html::a('Registrece', ['site/signup']) ?>.
+                    <br>
                     Si olvidaste tu contraseña puedes <?= Html::a('restablecerla', ['site/request-password-reset']) ?>.
                     <br>
                     ¿No pudiste realizar la verificación? <?= Html::a('Solicitar nuevo correo de verificacion', ['site/resend-verification-email']) ?>
