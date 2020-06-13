@@ -43,41 +43,27 @@ use yii\bootstrap4\ActiveForm;
 
             <?= $form->field($model, 'linkARecursos')->textInput(['maxlength' => true]) ?>
 
-            <select id="cantExpositor">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">3</option>
-                <option value="5">5</option>
-            </select>
-            <div id="divCantExpo">
-
-            </div>
-
             <?php $data = Usuario::find()
-                ->select(['nombre as value', 'nombre as  label', 'idUsuario as idUsuario'])
+                ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
                 ->asArray()
                 ->all();
-            
-                echo AutoComplete::widget([
-                'model' => $data,
-                'clientOptions' => [
-                    'source' => $data,
-                    'minLength' => '3',
-                ],
-                'options' => [
-                    'class' => 'form-control'
-                ]
-            ]);
-            ?>
-            <?= Html::activeHiddenInput($preExpositor, 'idExpositor') ?>
-
-            <?php /*$usuario = Usuario::find()     //buscar los eventos del usuario              
-                ->select(['nombre'])
-                ->indexBy('idUsuario')
-                ->column();*/
             ?>
 
+            <?=
+                'Expositor:' .'<br>'.
+                AutoComplete::widget([
+                    'clientOptions' => [
+                        'source' => $data,
+                        'autoFill' => true,
+                        'minLength' => '1',
+                        'select' => new JsExpression("function( event, ui ) { $('#inputIdExpositor').val(ui.item.idUsuario);}")
+                    ],
+                    'options' => [
+                        'class' => 'form-control'
+                    ]
+                ]);
+            ?>
+            <?= Html::activeHiddenInput($preExpositor, 'idExpositor',['id'=>'inputIdExpositor']).'<br>' ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

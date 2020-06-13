@@ -281,6 +281,23 @@ class EventoController extends Controller
         $model->save();
         return $this->render('eventoDespublicado');
 
-     }   
+     }
+     
+     public function actionCargarExpositor($idPresentacion)
+    {
+        $model = new PresentacionExpositor();
+        $objPresentacion = Presentacion::findOne($idPresentacion);
+        $objEvento = Evento::findOne($objPresentacion->idEvento);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->idPresentacion = $idPresentacion;
+            $model->save();
+            return $this->redirect(['ver-evento', 'idEvento' => $objEvento->idEvento]);
+        }
+
+        return $this->render('cargarExpositor', [
+            'model' => $model
+        ]);
+    }
 
 }
