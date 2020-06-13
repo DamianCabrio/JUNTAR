@@ -43,6 +43,7 @@ class Presentacion extends \yii\db\ActiveRecord
             [['descripcionPresentacion'], 'string', 'max' => 800],
             [['linkARecursos'], 'string', 'max' => 300],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
+            ['horaFinPresentacion','compare','compareAttribute'=>'horaInicioPresentacion','operator'=>'>']
         ];
     }
 
