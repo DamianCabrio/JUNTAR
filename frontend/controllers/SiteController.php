@@ -117,6 +117,7 @@ class SiteController extends Controller
                 ->orderBy($ordenSQL)
                 ->where(["idEstadoEvento" => 1])
                 ->andwhere(["like", "nombre", $busqueda])
+                ->orwhere(["like", "apellido", $busqueda])
                 ->orWhere(["like", "nombreEvento", $busqueda])->limit(6)->all();
         }else{
             $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1])->limit(6)->all();
