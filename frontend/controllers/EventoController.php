@@ -159,7 +159,6 @@ class EventoController extends Controller
             if($modelLogo->imageLogo != null){
                 if($modelLogo->upload()){
                     $model->imgLogo = Url::base('').'/'. $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
-                   // $model->imgLogo =  $rutaLogos . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
             }    
             if($modelFlyer->imageFlyer != null){
@@ -226,8 +225,8 @@ class EventoController extends Controller
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
         if($model->load(Yii::$app->request->post())) {
-            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); // 'web/emanuel-mauro/frontend/web/eventos/images/logos/'
-            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); // 'web/emanuel-mauro/frontend/web/eventos/images/flyers/'
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); 
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); 
 
             if($modelLogo->imageLogo != null){
                 if($modelLogo->upload()){
