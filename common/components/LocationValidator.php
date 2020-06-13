@@ -16,12 +16,23 @@ public function init() {
     {
       $message = json_encode($this->message, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
       return <<<JS
-        deferred.push($.getJSON('index.php?r=site%2Fsearch-localidades', {'name':$("#signupform-localidad").val()}, function(json){
-            console.log(json.cantidad);
-            if (json.cantidad == '0') {
-              console.log($message);
-              messages.push($message);
+        var selectedProvince = $("#signupform-provincia").val();
+        var selectedLocation = $("#signupform-localidad").val();
+        deferred.push($.getJSON('json/localidades.json', function(json){
+          var result = false;
+          $.each(json, function(id, province){
+            if (province.nombre == selectedProvince ) {
+              $.each(province.ciudades, function(id, location){
+                if (location.nombre == selectedLocation) {
+                  console.log(province.nombre );
+                  result = true;
+                }
+              });
             }
+          });
+          if (!result) {
+            messages.push($message);
+          }
         }));
         JS;
     }
