@@ -54,32 +54,34 @@ $(document).ready(function () {
     }
 
     //input provincia
-    $(document).on('input', '#signupform-provincia', function () {
-        if (nombrePais !== $("#signupform-pais").val()) {
-            dataProvincias = null;
-            nombrePais = $("#signupform-pais").val();
-        }
-        autocompleteProvincia(eliminarDiacriticos(nombrePais));
+//    $(document).on('input', '#signupform-provincia', function () {
+//        if (nombrePais !== $("#signupform-pais").val()) {
+//            dataProvincias = null;
+//            nombrePais = $("#signupform-pais").val();
+//        }
+    $('#signupform-pais').change(function () {
+        autocompleteProvincia(eliminarDiacriticos($(this).val()));
     });
     //fin input provincia
 
     //input localidad
-    $(document).on('input', '#signupform-localidad', function () {
-        if (nombreProvincia !== $("#signupform-provincia").val()) {
-            dataLocalidades = null;
-            nombreProvincia = $("#signupform-provincia").val();
-        }
-        autocompleteLocalidad(eliminarDiacriticos(nombreProvincia));
+//    $(document).on('input', '#signupform-localidad', function () {
+//        if (nombreProvincia !== $("#signupform-provincia").val()) {
+//            dataLocalidades = null;
+//            nombreProvincia = $("#signupform-provincia").val();
+//        }
+    $('#signupform-provincia').change(function () {
+        autocompleteLocalidad(eliminarDiacriticos($(this).val()));
     });
     //fin input localidad
 
     //reset data
-    $(document).on('submit', '.signup-button', function () {
-        dataProvincias = null;
-        dataLocalidades = null;
-        nombreProvincia = null;
-        nombrePais = null;
-    });
+//    $(document).on('submit', '.signup-button', function () {
+//        dataProvincias = null;
+//        dataLocalidades = null;
+//        nombreProvincia = null;
+//        nombrePais = null;
+//    });
     //fin reset data
 });
 
@@ -90,38 +92,61 @@ $(document).ready(function () {
  * @param {String} nombrePais
  * @returns none
  */
+//function autocompleteProvincia(nombrePais) {
+//    //si la data no fue buscada con anterioridad, procede a hacer la busqueda
+//    //utiliza el nombre de pais
+//    if (dataProvincias === null) {
+//        $.ajax({
+//            url: "index.php?r=site%2Fsearch-provincias",
+//            data: {pais: nombrePais},
+//            type: "POST",
+//            dataType: "json"
+//        })
+//                .done(function (data) {
+//                    console.log(data);
+//                    if (data !== null) {
+//                        dataProvincias = data;
+//                    }
+//                });
+//    }
+//
+//    //si la data fue seteada, procede a ayudar con el autocompletado
+//    if (dataProvincias !== null) {
+//        if ($("#signupform-provincia").autocomplete !== undefined) {
+//            $("#signupform-provincia").autocomplete({
+//                autoFill: true,
+//                minLength: "2",
+//                source: dataProvincias,
+//                select: function (event, ui) {
+//                    $("#signupform-provincia").val(ui.item.id);
+//                    nombreProvincia = $("#signupform-provincia").val();
+//                }
+//            });
+//        }
+//    }
+//}
 function autocompleteProvincia(nombrePais) {
-    //si la data no fue buscada con anterioridad, procede a hacer la busqueda
-    //utiliza el nombre de pais
-    if (dataProvincias === null) {
-        $.ajax({
-            url: "index.php?r=site%2Fsearch-provincias",
-            data: {pais: nombrePais},
-            type: "POST",
-            dataType: "json"
-        })
-                .done(function (data) {
-                    console.log(data);
-                    if (data !== null) {
-                        dataProvincias = data;
+    $.ajax({
+        url: "index.php?r=site%2Fsearch-provincias",
+        data: {pais: nombrePais},
+        type: "POST",
+        dataType: "json"
+    })
+            .done(function (data) {
+                console.log(data);
+                if (data !== null) {
+                    if ($("#signupform-provincia").autocomplete !== undefined) {
+                        $("#signupform-provincia").autocomplete({
+                            autoFill: true,
+                            minLength: "2",
+                            source: data,
+                            select: function (event, ui) {
+                                $("#signupform-provincia").val(ui.item.id);
+                            }
+                        });
                     }
-                });
-    }
-
-    //si la data fue seteada, procede a ayudar con el autocompletado
-    if (dataProvincias !== null) {
-        if ($("#signupform-provincia").autocomplete !== undefined) {
-            $("#signupform-provincia").autocomplete({
-                autoFill: true,
-                minLength: "2",
-                source: dataProvincias,
-                select: function (event, ui) {
-                    $("#signupform-provincia").val(ui.item.id);
-                    nombreProvincia = $("#signupform-provincia").val();
                 }
             });
-        }
-    }
 }
 
 /**
@@ -131,37 +156,61 @@ function autocompleteProvincia(nombrePais) {
  * @param {String} nombreProvincia
  * @returns none
  */
+//function autocompleteLocalidad(nombreProvincia) {
+//    //si la data no fue buscada con anterioridad, procede a hacer la busqueda
+//    //utiliza el nombre de la provincia
+//    if (dataLocalidades === null) {
+//        $.ajax({
+//            url: "index.php?r=site%2Fsearch-localidades",
+//            data: {provincia: nombreProvincia},
+//            type: "POST",
+//            dataType: "json"
+//        })
+//                .done(function (data) {
+//                    console.log(data);
+//                    if (data !== null) {
+//                        dataLocalidades = data;
+//                    }
+//                });
+//    }
+//
+//    //si la data fue seteada, procede a ayudar con el autocompletado
+//    if (dataLocalidades !== null) {
+//        if ($("#signupform-localidad").autocomplete !== undefined) {
+//            $("#signupform-localidad").autocomplete({
+//                autoFill: true,
+//                minLength: "2",
+//                source: dataLocalidades,
+//                select: function (event, ui) {
+//                    $("#signupform-localidad").val(ui.item.id);
+//                }
+//            });
+//        }
+//    }
+//}
 function autocompleteLocalidad(nombreProvincia) {
-    //si la data no fue buscada con anterioridad, procede a hacer la busqueda
-    //utiliza el nombre de la provincia
-    if (dataLocalidades === null) {
-        $.ajax({
-            url: "index.php?r=site%2Fsearch-localidades",
-            data: {provincia: nombreProvincia},
-            type: "POST",
-            dataType: "json"
-        })
-                .done(function (data) {
-                    console.log(data);
-                    if (data !== null) {
-                        dataLocalidades = data;
+    $.ajax({
+        url: "index.php?r=site%2Fsearch-localidades",
+        data: {provincia: nombreProvincia},
+        type: "POST",
+        dataType: "json"
+    })
+            .done(function (data) {
+                console.log(data);
+                if (data !== null) {
+//                        dataLocalidades = data;
+                    if ($("#signupform-localidad").autocomplete !== undefined) {
+                        $("#signupform-localidad").autocomplete({
+                            autoFill: true,
+                            minLength: "2",
+                            source: data,
+                            select: function (event, ui) {
+                                $("#signupform-localidad").val(ui.item.id);
+                            }
+                        });
                     }
-                });
-    }
-    
-    //si la data fue seteada, procede a ayudar con el autocompletado
-    if (dataLocalidades !== null) {
-        if ($("#signupform-localidad").autocomplete !== undefined) {
-            $("#signupform-localidad").autocomplete({
-                autoFill: true,
-                minLength: "2",
-                source: dataLocalidades,
-                select: function (event, ui) {
-                    $("#signupform-localidad").val(ui.item.id);
                 }
             });
-        }
-    }
 }
 
 
