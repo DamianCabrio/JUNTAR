@@ -33,7 +33,7 @@ $this->title = 'Cargar Nuevo Expositor';
                 'clientOptions' => [
                     'source' => $data,
                     'autoFill' => true,
-                    'minLength' => '1',
+                    'minLength' => '3',
                     'select' => new JsExpression("function( event, ui ) { $('#inputIdExpositor').val(ui.item.idUsuario);}")
                 ],
                 'options' => [

@@ -23,22 +23,4 @@ $(document).ready(function () {
             $('#loginform-password').attr("type", "password");
         }
     });
-
-    $('#cantExpositor').on('click', (function () {
-        let valor = (this.value);
-        //alert(valor);
-        var html = "";
-        for (var i = 0; i < valor; i++) {
-            //console.log(i);
-            //html += "<a href='index.php?r=fecha/create'>Fecha"+(i+1)+"</a> " ;
-
-            html += "<input type='date' class='form-control' name=fechas[]>";
-
-
-        }
-
-        $('#divCantExpo').html(html);
-    }));
-
-
 });
