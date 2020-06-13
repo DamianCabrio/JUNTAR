@@ -47,8 +47,10 @@ $estadoEvento = $model->idEstadoEvento0->descripcionEstado;
 
 ?>
 <div class="container">
+<div class = "row">
+    <div class = "col-12 m-auto">
     <h2 class="text-center">Su evento cargado</h2>
-    <p class="text-center">Posee los siguientes datos
+    <p class="text-center">Posee los siguientes datos</p>
 
         <table class="table">
             <tbody>
@@ -132,9 +134,9 @@ $estadoEvento = $model->idEstadoEvento0->descripcionEstado;
             <table class="table">
                 <thead>
                     <th scope="col"></th>
-                    <th scope="col">Titulo Presentacion</th>
-                    <th scope="col">Descripcion Presentacion</th>
-                    <th scope="col">Dia</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Día</th>
                     <th scope="col">Hora Inicio </th>
                     <th scope="col">Hora Fin </th>
                     <th scope="col">Links a recursos </th>
@@ -154,18 +156,19 @@ $estadoEvento = $model->idEstadoEvento0->descripcionEstado;
                             foreach ($arrExpoPre as $objExpoPre) {
                                 $objUsuario = Usuario::findOne($objExpoPre->idExpositor); ?>
                                 <ul>
-                                    <li><b>Nombre:</b><?= Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido) ?></li>
-                                    <li><b>Contacto:</b><?= Html::encode($objUsuario->email) ?></li>
+                                    <li>Nombre: <?= Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido) ?></li>
+                                    <li>Contacto: <?= Html::encode($objUsuario->email) ?></li>
                                 </ul>
                             <?php } ?>
-                            <?= Html::a('Añadir Expositor', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('Añadir Expositor', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         </td>
                                
                         <?php endforeach; ?>
                     </tr>
                     <br>
                 </tbody>
-            </table>
-        
-</div>
+            </table>    
+            </div>
+        </div>
+    </div>
 </div>
