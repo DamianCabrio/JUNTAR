@@ -29,7 +29,7 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 
             <!-- select categoria -->
-            <?php $categoriasEventos = CategoriaEvento::find()     //buscar todas las categorias         
+            <?php $categoriasEventos = CategoriaEvento::find()           
                 ->select(['descripcionCategoria'])
                 ->indexBy('idCategoriaEvento')
                 ->column();
@@ -37,7 +37,7 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'idCategoriaEvento')->dropdownList($categoriasEventos,  ['prompt' => 'Seleccione una categoria'])->label('Categoria *'); ?>
 
             <!-- select modalidad -->
-            <?php $modalidadEvento = modalidadEvento::find()     //buscar todas las categorias         
+            <?php $modalidadEvento = modalidadEvento::find()             
                 ->select(['descripcionModalidad'])
                 ->indexBy('idModalidadEvento')
                 ->column();
@@ -61,8 +61,9 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'preInscripcion')->dropDownList($requiere, ['prompt' => '¿Requiere preinscripción? *']) ?>
 
             <!-- calendar -->
-            <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style'=>'width:auto'])->label('Fecha limite de inscripción *')?>
-
+            <div id="fechaLimite">
+            <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style'=>'width:auto', 'required'])->label('Fecha limite de inscripción *')?>
+            </div>
             <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'] , ['maxlength' => true]) ?>
 
             <p class="font-italic">
