@@ -20,25 +20,23 @@ $this->title = 'Proyecto Juntar';
             </div>
         </header>
         <section class="darkish_bg" id="events">
-            <?php if (count($eventos) != 0): ?>
             <div class="container padding_select">
+                <form class="form-inline my-2 my-lg-0" action="index.php#events">
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <select class="custom-select custom-select-lg mb-3">
+                        <select name="orden" class="custom-select custom-select-lg mb-3" onchange="this.form.submit()">
                             <option selected value="0">Fecha de creacion</option>
                             <option value="1">Fecha de inicio del evento</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-6">
-                        <form class="form-inline my-2 my-lg-0" action="index.php#events">
                             <input class="form-control mr-sm-2" type="search" placeholder="Buscar" name="s">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                        </form>
+                            <?= Html::a('Restablecer', "index#events", ['class' => 'btn btn-secondary ml-2']); ?>
                     </div>
                 </div>
-
+                </form>
             </div>
-            <?php endif; ?>
         </section>
         <section class="dark_bg">
             <div class="container padding_section">
@@ -52,7 +50,7 @@ $this->title = 'Proyecto Juntar';
                         echo "<img src='" . $evento["imgLogo"] . " 'class='card-img-top' alt=''...'>";
                         echo "<div class='card-body'>";
                         echo "<h5 class='card-title'>" . $evento["nombreEvento"] . "</h5>";
-                        echo "<h5 class='card-title'>" . $evento["fechaLimiteInscripcion"] . "</h5>";
+                        echo "<h5 class='card-title'>" . $evento["fechaInicioEvento"] . "</h5>";
                         echo  "<hr>";
                         echo "<p class='card-text'>" . $evento["lugar"] . "</p>";
                         echo "<p class='card-text'>" . strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n") . "</p>";
@@ -64,7 +62,7 @@ $this->title = 'Proyecto Juntar';
 
                 <?php else: ?>
                 <div class="row">
-                    <h2 class="text-white text-uppercase">Actualmente no hay nuevos eventos. Por favor vuelva a intentar mas tarde</h2><br>
+                    <h2 class="text-white text-uppercase">No se encontraron eventos, vuelva a intentar.</h2><br>
                 </div>
                 <?php endif; ?>
             </div>

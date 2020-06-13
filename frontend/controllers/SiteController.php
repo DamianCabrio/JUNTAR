@@ -103,18 +103,24 @@ class SiteController extends Controller
     {
         $request = Yii::$app->request;
         $busqueda = $request->get("s", "");
+        $orden = $request->get("orden", "");
+
+        if($orden != ""){
+            $ordenSQL = $orden == "0" ? "fechaCreacionEvento DESC" : "fechaInicioEvento DESC";
+        }else{
+            $ordenSQL = "fechaCreacionEvento DESC";
+        }
 
         if ($busqueda != "") {
             $eventos = Evento::find()
                 ->innerJoin('usuario', 'usuario.idUsuario=evento.idUsuario')
-                ->orderBy("fechaCreacionEvento DESC")
+                ->orderBy($ordenSQL)
                 ->where(["idEstadoEvento" => 1])
                 ->andwhere(["like", "nombre", $busqueda])
                 ->orWhere(["like", "nombreEvento", $busqueda])->limit(6)->all();
-            return $this->render('index', ["eventos" => $eventos]);
+        }else{
+            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1])->limit(6)->all();
         }
-
-        $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->where(["idEstadoEvento" => 1])->limit(6)->all();
         return $this->render('index', ["eventos" => $eventos]);
     }
 
