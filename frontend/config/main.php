@@ -11,6 +11,10 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'frontend\controllers',
     'bootstrap' => ['log'],
+    'aliases' =>[
+        '@rutaLogo' => '/eventos/images/logos/',
+        '@rutaFlyer' => '/eventos/images/flyers/',
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
