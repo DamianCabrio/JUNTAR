@@ -60,6 +60,7 @@ class Evento extends \yii\db\ActiveRecord
             [['idCategoriaEvento'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaEvento::className(), 'targetAttribute' => ['idCategoriaEvento' => 'idCategoriaEvento']],
             [['idModalidadEvento'], 'exist', 'skipOnError' => true, 'targetClass' => ModalidadEvento::className(), 'targetAttribute' => ['idModalidadEvento' => 'idModalidadEvento']],
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
+            ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
         ];
     }
 
@@ -83,7 +84,7 @@ class Evento extends \yii\db\ActiveRecord
             'imgFlyer' => 'Img Flyer',
             'imgLogo' => 'Img Logo',
             'capacidad' => 'Capacidad',
-            'preInscripcion' => 'Pre Inscripción',
+            'preInscripcion' => 'Preinscripción',
             'fechaLimiteInscripcion' => 'Fecha Limite Inscripción',
             'codigoAcreditacion' => 'Código Acreditación',
             'fechaCreacionEvento' => 'Fecha Creación Evento',
