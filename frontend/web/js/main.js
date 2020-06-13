@@ -23,4 +23,17 @@ $(document).ready(function () {
             $('#loginform-password').attr("type", "password");
         }
     });
+
+
+    $("#evento-preinscripcion").change(function(){
+        respuesta = $("#evento-preinscripcion").val();
+        if(respuesta == 0){
+            $("#fechaLimite").hide();
+            $("#evento-fechalimiteinscripcion").attr("required", false);
+        }
+        if(respuesta == 1){
+            $("#fechaLimite").show();
+            $("#evento-fechalimiteinscripcion").attr("required", true);
+        }
+    });
 });
