@@ -13,11 +13,13 @@ use yii\helpers\Html;
                 </div>
                 <br>
                 <hr>
-                <div>
-                    <?= Html::a('Ver evento ', ['ver-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                    <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                    <?= Html::a('Publicar evento ', ['publicar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                    <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <?= Html::a('Ver evento ', ['ver-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                        <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                        <?= Html::a('Publicar evento ', ['publicar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                        <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                    </div>
                 </div>
         </div>
     </div>

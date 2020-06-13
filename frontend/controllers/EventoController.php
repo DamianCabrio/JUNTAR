@@ -263,8 +263,9 @@ class EventoController extends Controller
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
 
         $model->save();
-        return $this->render('eventoPublicado');
-
+        return $this->render('eventoPublicado', [
+            'model' => $model,
+            ]);
      }   
 
      /**
@@ -279,9 +280,10 @@ class EventoController extends Controller
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
 
         $model->save();
-        return $this->render('eventoDespublicado');
-
-     }
+        return $this->render('eventoDespublicado', [
+            'model' => $model,
+            ]);
+     }   
      
      public function actionCargarExpositor($idPresentacion)
     {
