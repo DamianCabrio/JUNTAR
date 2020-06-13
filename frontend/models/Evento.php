@@ -76,17 +76,17 @@ class Evento extends \yii\db\ActiveRecord
             'idModalidadEvento' => 'Id Modalidad Evento',
             'nombreEvento' => 'Nombre Evento',
             'nombreCortoEvento' => 'Nombre Corto Evento',
-            'descripcionEvento' => 'Descripcion Evento',
+            'descripcionEvento' => 'Descripción Evento',
             'lugar' => 'Lugar',
             'fechaInicioEvento' => 'Fecha Inicio Evento',
             'fechaFinEvento' => 'Fecha Fin Evento',
             'imgFlyer' => 'Img Flyer',
             'imgLogo' => 'Img Logo',
             'capacidad' => 'Capacidad',
-            'preInscripcion' => 'Pre Inscripcion',
-            'fechaLimiteInscripcion' => 'Fecha Limite Inscripcion',
-            'codigoAcreditacion' => 'Codigo Acreditacion',
-            'fechaCreacionEvento' => 'Fecha Creacion Evento',
+            'preInscripcion' => 'Pre Inscripción',
+            'fechaLimiteInscripcion' => 'Fecha Limite Inscripción',
+            'codigoAcreditacion' => 'Código Acreditación',
+            'fechaCreacionEvento' => 'Fecha Creación Evento',
         ];
     }
 
