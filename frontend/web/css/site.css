@@ -137,3 +137,7 @@ a.desc:after {
 .profile-sidebar a:hover{
     background-color: powderblue;
 }
+
+#fechaLimite{
+    display: none;
+}
