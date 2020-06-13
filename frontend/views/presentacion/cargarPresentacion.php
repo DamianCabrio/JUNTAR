@@ -2,11 +2,10 @@
 
 use backend\models\Usuario;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use frontend\models\Evento;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
-
+use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Presentacion */
 /* @var $form yii\widgets\ActiveForm */
