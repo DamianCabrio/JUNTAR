@@ -51,7 +51,7 @@ class SignupForm extends Model {
             //Reglas localidad
             ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de localidades argentinas solo si el pais es argentina
-            ['provincia', 'common\components\LocationValidator', 'when' => function ($model) { 
+            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
                 return ($model->pais == 'Argentina');
                 }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
