@@ -24,14 +24,20 @@ if ($model->preInscripcion == 0) {
 if ($model->codigoAcreditacion != null) {
     $codAcreditacion = $model->codigoAcreditacion;
 } else {
-    $codAcreditacion = "Dato no cargado";
+    $codAcreditacion = "Código no cargado";
 }
 
 
 if ($model->fechaCreacionEvento != null) {
     $fechaPublicacion = $model->fechaCreacionEvento;
 } else {
-    $fechaPublicacion = "Dato no cargado";
+    $fechaPublicacion = "Evento no publicado";
+}
+
+if ($model->fechaLimiteInscripcion != null) {
+    $fechaLimite = $model->fechaLimiteInscripcion;
+} else {
+    $fechaLimite = "No posee inscripción";
 }
 
 
@@ -95,12 +101,12 @@ $estadoEvento = $model->idEstadoEvento0->descripcionEstado;
                     <td><?= $model->capacidad ?></td>
                 </tr>
                 <tr>
-                    <th scope="col">Preinscripcion</th>
+                    <th scope="col">Preinscripción</th>
                     <td><?= $preIncripcion ?></td>
                 </tr>
                 <tr>
-                    <th scope="col">Fecha Límite </th>
-                    <td><?= $model->fechaLimiteInscripcion ?></td>
+                    <th scope="col">Fecha Límite Inscripción</th>
+                    <td><?= $fechaLimite ?></td>
                 </tr>
                 <tr>
                     <th scope="col">Código Acreditación</th>

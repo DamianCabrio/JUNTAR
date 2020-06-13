@@ -64,8 +64,9 @@ use frontend\models\ModalidadEvento;
             <?= $form->field($model, 'preInscripcion')->dropDownList($requiere, ['prompt' => '¿Requiere preinscripción? *']) ?>
 
             <!-- calendar -->
-            <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style'=>'width:auto'])->label('Fecha limite de inscripción *')?>
-
+            <div id="fechaLimite">
+                <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style'=>'width:auto'])->label('Fecha limite de inscripción *')?>
+            </div>
             <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'] , ['maxlength' => true]) ?>
 
             <?= $form->field($model, 'fechaCreacionEvento')->input('date', ['style'=>'width: auto'])->label('Fecha publicación del evento *') ?>
