@@ -27,19 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'apellido',
             'dni',
-            [
+            /*[
                 'attribute' => 'fecha_nacimiento',
                 'label' => 'Nacimiento',
                 'value' => 'fecha_nacimiento', //valor referenciado por ActiveQuery en el metodo idClub0
             ],
-//            [
-//                'attribute' => 'item',
-//                'label' => 'Rol',
-//                'value' => 'usuarioRols.item', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
+            [
+               'attribute' => 'item',
+               'label' => 'Rol',
+               'value' => 'usuarioRols.item', //valor referenciado por ActiveQuery en el metodo idClub0
+            ],*/
             'localidad',
-            'telefono',
-            'email:email',
+            //'telefono',
+            //'email:email',
             //'auth_key',
             //'password_hash',
             //'password_reset_token',

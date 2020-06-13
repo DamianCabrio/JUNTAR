@@ -81,7 +81,7 @@ abstract class BaseTestRunner
      *
      * @throws Exception
      */
-    public function getTest(string $suiteClassFile, $suffixes = ''): ?Test
+    public function getTest(string $suiteClassFile, $suffixes = ''): ?TestSuite
     {
         if (\is_dir($suiteClassFile)) {
             /** @var string[] $files */
@@ -107,7 +107,7 @@ abstract class BaseTestRunner
             $testClass = $this->loadSuiteClass(
                 $suiteClassFile
             );
-        } catch (Exception $e) {
+        } catch (\PHPUnit\Exception $e) {
             $this->runFailed($e->getMessage());
 
             return null;
