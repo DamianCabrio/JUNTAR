@@ -1,0 +1,34 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Categoria Eventos';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="categoria-evento-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Create Categoria Evento', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'idCategoriaEvento',
+            'descripcionCategoria',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+
+
+</div>
