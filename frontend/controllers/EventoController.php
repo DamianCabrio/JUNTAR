@@ -11,7 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-
+use yii\helpers\Url;
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
@@ -136,8 +136,9 @@ class EventoController extends Controller
 
 
     /**
-     * Accion para la carga de un nuevo envento a traves de un formulario.
-     * Una ves cargado el evento, se visualizaun mensaje de exito desde una vista.
+     * Se visualiza un formulario para la carga de un nuevo evento desde la vista cargarEvento. Una vez cargado el formulario, se determina si
+     * estan cargado los atributos de las instancias modelLogo y modelFlyer para setear ruta y nombre de las imagenes sobre el formulario.
+     * Una ves cargado, se visualiza un mensaje de exito desde una vista.
      */
     public function actionCargarEvento()
     {
@@ -145,6 +146,9 @@ class EventoController extends Controller
         $model = new Evento();
         $modelLogo = new UploadFormLogo();
         $modelFlyer = new UploadFormFlyer();        
+
+        $rutaLogo = (Yii::getAlias("@rutaLogo"));
+        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
         if ($model->load(Yii::$app->request->post()) ) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
@@ -154,12 +158,13 @@ class EventoController extends Controller
 
             if($modelLogo->imageLogo != null){
                 if($modelLogo->upload()){
-                    $model->imgLogo =  'web/emanuel-mauro/frontend/web/eventos/images/logos/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                    $model->imgLogo = Url::base('').'/'. $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                   // $model->imgLogo =  $rutaLogos . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
             }    
             if($modelFlyer->imageFlyer != null){
                 if($modelFlyer->upload()){
-                    $model->imgFlyer =  'web/emanuel-mauro/frontend/web/eventos/images/flyers/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                    $model->imgFlyer = Url::base('').'/'. $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                  }
             }
             $model->save();
@@ -178,7 +183,8 @@ class EventoController extends Controller
     }
 
     /**
-     * Muestra la informacion cargada de un evento.
+     * Recibe por parámetro un id, se busca esa instancia del event y se obtienen todos las presentaciones que pertenecen a ese evento.
+     * Se envia la instancia del evento junto con todas la presentaciones sobre un arreglo.
      */
     public function actionVerEvento($idEvento)
     {
@@ -192,7 +198,8 @@ class EventoController extends Controller
 
 
     /**
-     * Lista todos los eventos creador por el usuario 
+     * Identifica al usuario logueado, obtiene su instancia y busca todos los eventos que pertenezcan a ese usuario
+     * Se envia en la vista un arreglo con todos los eventos.   
      */
     public function actionListarEventos()
     {
@@ -202,8 +209,12 @@ class EventoController extends Controller
     }
 
 
- 
-
+    
+     /**
+     * Recibe por parámetro un id de evento, se buscar y se obtiene la instancia del evento, se visualiza un formulario 
+     * cargado con los datos del evento permitiendo cambiar esos datos.
+     * Una ves reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
+     */
      public function actionEditarEvento($idEvento){
 
         $model = $this->findModel($idEvento);
@@ -211,8 +222,8 @@ class EventoController extends Controller
         $modelLogo = new UploadFormLogo();
         $modelFlyer = new UploadFormFlyer();
 
-        $rutaLogos = ( Yii::getAlias("@frontend/web/eventos/images/logos/"));
-        $rutaFlyer = ( Yii::getAlias("@frontend/web/eventos/images/flyers/"));
+        $rutaLogo = (Yii::getAlias("@rutaLogo"));
+        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
         if($model->load(Yii::$app->request->post())) {
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); // 'web/emanuel-mauro/frontend/web/eventos/images/logos/'
@@ -220,12 +231,12 @@ class EventoController extends Controller
 
             if($modelLogo->imageLogo != null){
                 if($modelLogo->upload()){
-                    $model->imgLogo =  $rutaLogos . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                    $model->imgLogo =  Url::base('').'/'. $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
             }    
             if($modelFlyer->imageFlyer != null){
                 if($modelFlyer->upload()){
-                    $model->imgFlyer =  $rutaFlyer . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                    $model->imgFlyer = Url::base('').'/'. $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                  }
             }
             $model->save();
@@ -240,6 +251,11 @@ class EventoController extends Controller
      }
 
    
+     /**
+      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
+      * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
+      * atributo idEstadoEvento por el valor 1.
+      */
      public function actionPublicarEvento($idEvento){
         $model = $this->findModel($idEvento);
        
@@ -251,6 +267,11 @@ class EventoController extends Controller
 
      }   
 
+     /**
+      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
+      * Cambia en el atributo fechaCreacionEvento por null, y en el
+      * atributo idEstadoEvento por el valor 4.
+      */
      public function actionDespublicarEvento($idEvento){
         $model = $this->findModel($idEvento);
        
