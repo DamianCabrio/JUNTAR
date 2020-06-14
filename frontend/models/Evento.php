@@ -1,7 +1,7 @@
 <?php
 
 namespace frontend\models;
-use common\models\Usuario;
+use frontend\models\Usuario;
 
 use frontend\models\ModalidadEvento;
 use Yii;

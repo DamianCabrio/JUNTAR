@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use common\models\Usuario;
+use frontend\models\Usuario;
 use Yii;
 
 /**
