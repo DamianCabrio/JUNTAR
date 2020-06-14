@@ -3,10 +3,9 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\Evento;
-use common\models\EventoSearch;
-use common\models\Inscripcion;
-use common\models\Fecha;
+use frontend\models\Evento;
+use frontend\models\EventoSearch;
+use frontend\models\Inscripcion;
 use frontend\models\AcreditacionForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

@@ -4,10 +4,10 @@ namespace frontend\controllers;
 
 use \yii\helpers\Url;
 use Yii;
-use common\models\Inscripcion;
-use common\models\InscripcionSearch;
-use common\models\Evento;
-use common\models\EventoSearch;
+use frontend\models\Inscripcion;
+use frontend\models\InscripcionSearch;
+use frontend\models\Evento;
+use frontend\models\EventoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use common\models\EventoSearch;
+use frontend\models\EventoSearch;
 use common\models\LoginForm;
-use common\models\Evento;
+use frontend\models\Evento;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;

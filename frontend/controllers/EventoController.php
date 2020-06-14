@@ -3,10 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\Evento;
-use common\models\EventoSearch;
-use common\models\Inscripcion;
-use common\models\Fecha;
+use frontend\models\EventoSearch;
+use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
@@ -15,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
@@ -77,18 +76,17 @@ class EventoController extends Controller
         $yaInscripto = false;
         $yaAcreditado = false;
 
-        if (!Yii::$app->user->getIsGuest()){
-            $inscripcion = Inscripcion::find()
-                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])
-                ->andWhere(["!=", "estado", 2])->one();
+        $inscripcion = Inscripcion::find()
+            ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])
+            ->andWhere(["!=", "estado", 2])->one();
 
-            if ($inscripcion != null) {
+        if (!Yii::$app->user->getIsGuest() && $inscripcion != null){
+
                 $yaInscripto = true;
                 $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
                 $yaAcreditado = $inscripcion->acreditacion == 1;
 
                 $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
-            }
             }else{
             if ($cupos != 0){
                 $estadoEvento = $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
@@ -172,7 +170,7 @@ class EventoController extends Controller
         return $cupos;
     }
 
-    public function obtenerEstadoEvento($evento, $yaInscripto, $yaAcreditado, $cupos, $tipoInscripcion){
+    public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion){
 
         // ¿Ya esta inscripto o no? - Si
         if($yaInscripto){
@@ -238,25 +236,6 @@ class EventoController extends Controller
 
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
-}
-
-    /**
-     * Finds the Evento model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Evento the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Evento::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-
 
     /**
      * Se visualiza un formulario para la carga de un nuevo evento desde la vista cargarEvento. Una vez cargado el formulario, se determina si

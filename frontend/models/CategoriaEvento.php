@@ -4,7 +4,6 @@ namespace frontend\models;
 
 use Yii;
 
-use frontend\models\CategoriaEvento;
 
 /**
  * This is the model class for table "categoria_evento".
