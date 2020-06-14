@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use backend\models\Usuario;
+use frontend\models\Usuario;
 
 /**
  * This is the model class for table "presentacion_expositor".

@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Usuario;
+use frontend\models\Usuario;
 use yii\helpers\Html;
 use frontend\models\Evento;
 use yii\jui\AutoComplete;

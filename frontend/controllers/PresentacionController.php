@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 
 
 use frontend\models\PresentacionExpositor;
-use backend\models\Usuario;
+use frontend\models\Usuario;
 use frontend\models\Evento;
 
 /**
