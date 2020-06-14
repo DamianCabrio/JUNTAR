@@ -25,8 +25,8 @@ $this->title = 'Proyecto Juntar';
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <select name="orden" class="custom-select custom-select-lg mb-3" onchange="this.form.submit()">
-                            <option selected value="0">Fecha de creacion</option>
-                            <option value="1">Fecha de inicio del evento</option>
+                            <option <?= $_GET["orden"] == 0 ? "selected" : "" ?> value="0">Fecha de creacion</option>
+                            <option <?= $_GET["orden"] == 1 ? "selected" : "" ?> value="1">Fecha de inicio del evento</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-6">
