@@ -1,8 +1,10 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
+use frontend\models\Evento;
+use frontend\models\Expositor;
 
 /**
  * This is the model class for table "usuario".

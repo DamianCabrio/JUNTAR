@@ -25,7 +25,6 @@ return array(
     'PHPUnit\\Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit\\Framework\\Assert' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert.php',
     'PHPUnit\\Framework\\AssertionFailedError' => $vendorDir . '/phpunit/phpunit/src/Framework/Exception/AssertionFailedError.php',
-    'PHPUnit\\Framework\\ClassNotFoundException' => $vendorDir . '/phpunit/phpunit/src/Framework/Exception/ClassNotFoundException.php',
     'PHPUnit\\Framework\\CodeCoverageException' => $vendorDir . '/phpunit/phpunit/src/Framework/Exception/CodeCoverageException.php',
     'PHPUnit\\Framework\\Constraint\\ArrayHasKey' => $vendorDir . '/phpunit/phpunit/src/Framework/Constraint/ArrayHasKey.php',
     'PHPUnit\\Framework\\Constraint\\Callback' => $vendorDir . '/phpunit/phpunit/src/Framework/Constraint/Callback.php',

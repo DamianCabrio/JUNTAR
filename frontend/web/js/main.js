@@ -38,7 +38,6 @@ $(document).ready(function () {
             trigger: 'hover'
         });
     });
-
     //Utilizado para eliminar los caracteres especiales en nombres de provincias (acentos)
     function eliminarDiacriticos(texto) {
         return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
@@ -124,3 +123,15 @@ function autocompleteLocalidad(nombreProvincia) {
                 }
             });
 }
+    $("#evento-preinscripcion").change(function(){
+        respuesta = $("#evento-preinscripcion").val();
+        if(respuesta == 0){
+            $("#fechaLimite").hide();
+            $("#evento-fechalimiteinscripcion").attr("required", false);
+        }
+        if(respuesta == 1){
+            $("#fechaLimite").show();
+            $("#evento-fechalimiteinscripcion").attr("required", true);
+        }
+    });
+});

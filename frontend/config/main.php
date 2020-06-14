@@ -13,6 +13,10 @@ return [
     'bootstrap' => ['log'],
     'language' => "es_AR",
     'timeZone' => 'America/Argentina/Buenos_Aires',
+    'aliases' =>[
+        '@rutaLogo' => '/eventos/images/logos/',
+        '@rutaFlyer' => '/eventos/images/flyers/',
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',

@@ -4,9 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Evento */
-
 $this->title = $evento->nombreEvento;
+/* @var $model frontend\models\Evento */
+
+$this->title = $model->idEvento;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
