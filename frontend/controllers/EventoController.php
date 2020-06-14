@@ -268,12 +268,12 @@ class EventoController extends Controller
 
             if($modelLogo->imageLogo != null){
                 if($modelLogo->upload()){
-                    $model->imgLogo = Url::base('').'/'. $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
             }    
             if($modelFlyer->imageFlyer != null){
                 if($modelFlyer->upload()){
-                    $model->imgFlyer = Url::base('').'/'. $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                  }
             }
             $model->save();
