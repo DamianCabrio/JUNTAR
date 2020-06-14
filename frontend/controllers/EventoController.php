@@ -300,8 +300,15 @@ class EventoController extends Controller
         $evento = Evento::findOne($idEvento);
         $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
         return $this->render('verEvento', [
+<<<<<<< Updated upstream
             'model'=>$evento,
             'presentacion' => $presentaciones
+=======
+            "evento" => $evento,
+            'presentacion' => $presentaciones,
+            "estadoEventoInscripcion" => $estadoEvento,
+            'cupos' => $cupos,
+>>>>>>> Stashed changes
         ]);
     }
 

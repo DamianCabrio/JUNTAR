@@ -54,7 +54,11 @@ $this->title = 'Proyecto Juntar';
                         echo  "<hr>";
                         echo "<p class='card-text'>" . $evento["lugar"] . "</p>";
                         echo "<p class='card-text'>" . strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n") . "</p>";
+<<<<<<< Updated upstream
                         echo Html::a('Más Información', ['/evento/view', "id" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
+=======
+                        echo Html::a('Más Información', ['/evento/ver-evento', "idEvento" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
+>>>>>>> Stashed changes
                         echo "</div></div></div>";
                         endif;
                     } ?>

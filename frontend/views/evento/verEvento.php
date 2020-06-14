@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
@@ -49,9 +49,62 @@ $organizadorEvento = $model->idUsuario0->nombre." ".$model->idUsuario0->apellido
 $organizadorEmailEvento = $model->idUsuario0->email;
 
 ?>
-<div class="container">
+<div class="evento-view container">
     <!--<h2 class="text-center">Su evento cargado</h2>-->
+<<<<<<< Updated upstream
     <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $model->nombreEvento ?></h2>
+=======
+    <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Cupos restantes:'.$cupos) ?></h1>
+
+    <p>
+        <?php
+        if (!Yii::$app->user->can('Administrador')) {
+            Html::a('Update', ['update', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+            Html::a('Delete', ['delete', 'id' => $evento->idEvento], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]);
+        } ?>
+        <?php
+
+        switch ($estadoEventoInscripcion){
+            case "puedeInscripcion":
+                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                break;
+            case "puedePreinscripcion":
+                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                break;
+            case "sinCupos":
+                echo Html::label('Sin cupos');
+                break;
+            case "yaAcreditado":
+                echo Html::label("Usted ya se acredito en este evento");
+                break;
+            case "inscriptoYEventoIniciado":
+                echo Html::label("El evento ya inicio, pasela bien");
+                break;
+            case "yaPreinscripto":
+                echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                break;
+            case "yaInscripto":
+                echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                break;
+            case "noInscriptoYFechaLimiteInscripcionPasada":
+                echo Html::label('No se puede inscribir, el evento ya inicio');
+                break;
+            case "puedeAcreditarse":
+                echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                break;
+        }
+
+        ?>
+>>>>>>> Stashed changes
 	
 	
     <!--<p class="text-center">Posee los siguientes datos</p>-->
@@ -146,7 +199,6 @@ $organizadorEmailEvento = $model->idUsuario0->email;
         $cont = 0;
         foreach ($presentacion as $objPresentacion) :
             $cont++;
-            $arrExpoPre = PresentacionExpositor::find()->where(['idPresentacion' => $objPresentacion->idPresentacion ])->all();
         ?>
 			<tr>
 				<th class="align-middle"><?= $cont ?></th>
@@ -158,7 +210,7 @@ $organizadorEmailEvento = $model->idUsuario0->email;
 				<td class="align-middle"><?= $objPresentacion->linkARecursos ?></td>
 				<td class="align-middle">
 					<?php
-					foreach ($arrExpoPre as $objExpoPre) {
+					foreach ($objPresentacion->presentacionExpositors as $objExpoPre) {
 						$objUsuario = Usuario::findOne($objExpoPre->idExpositor); ?>
 						<ul class="my-2">
 							<li>Nombre: <?= Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido) ?></li>
