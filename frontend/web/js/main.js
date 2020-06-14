@@ -111,7 +111,7 @@ function autocompleteProvincias(nombrePais) {
  * @param {String} nombreProvincia
  * @returns none
  */
-function autocompleteLocalidad(nombreProvincia) {
+function autocompleteLocalidades(nombreProvincia) {
     $.ajax({
         url: "index.php?r=site%2Fsearch-localidades",
         data: {provincia: nombreProvincia},
