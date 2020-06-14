@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model frontend\models\Evento */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<div class="container">
 <div class="row">
     <div class="col-md-12 col-12 m-auto">
         <h2 class="text-center">Eventos que posee cargados</h2>
@@ -42,4 +43,5 @@ use yii\widgets\ActiveForm;
             </tbody>
         </table>
     </div>
+</div>
 </div>
