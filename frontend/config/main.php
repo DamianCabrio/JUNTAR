@@ -42,12 +42,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        //  'urlManager' => [
-        //     'enablePrettyUrl' => true,
-        //    'showScriptName' => false,
-        //     'rules' => [
-        //      ],
-        //  ],
+          'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+             'rules' => [
+              ],
+          ],
     ],
     'params' => $params,
 ];

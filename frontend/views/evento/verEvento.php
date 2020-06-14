@@ -19,7 +19,7 @@ if ($model->imgLogo != null) {
 if ($model->preInscripcion == 0) {
     $preInscripcion = "No requiere preinscipcion";
 } else {
-    $preInscripcion = "<b style='color:red;'>*Requiere preinscipcion*</b>";
+    $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipcion*</b>";
 }
 if ($model->codigoAcreditacion != null) {
     $codAcreditacion = $model->codigoAcreditacion;
