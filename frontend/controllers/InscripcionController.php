@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use \yii\helpers\Url;
 use Yii;
 use common\models\Inscripcion;
 use common\models\InscripcionSearch;
@@ -79,25 +80,42 @@ class InscripcionController extends Controller
 
     public function actionPreinscripcion()
     {
+        if ( Yii::$app->user->isGuest ){
+            Url::remember();
+            return Yii::$app->getResponse()->redirect(Url::to(['site/login'],302));
+        }
+
+        //Guardo el parametro que llega por get (id del evento)
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
 
-        $inscripcion = new Inscripcion();
-        $inscripcion->idUsuario = Yii::$app->user->identity->idUsuario;
-        $inscripcion->idEvento = $idEvento;
-        $inscripcion->acreditacion = 0;
-
+        //Busco si ya existe una inscripcion anulada
+        $inscripcion = Inscripcion::find()
+                        ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
+                        ->one();
+        
+        //Si no existe creo un nueva instancia de inscripcion
+        if ($inscripcion == Null){
+            $inscripcion = new Inscripcion();
+            $inscripcion->idUsuario = Yii::$app->user->identity->id;
+            $inscripcion->idEvento = $idEvento;
+            $inscripcion->acreditacion = 0;    
+        }
+        
+        //Busco en el campo preinscripcion en el evento 
         $evento = Evento::find($idEvento)->select('preInscripcion')->one();
+        //Si requiere preinscripcion es true sino false
         $esPreInscripcion = $evento->preInscripcion == 1 ? true : false;
 
+
         if ($esPreInscripcion) {
-            $inscripcion->estado = 0;
-            $inscripcion->fecha_preinscripcion = date("Y-m-d");
+            $inscripcion->estado = 0; //es una preinscripcion
+            $inscripcion->fechaPreInscripcion = date("Y-m-d");
         }
         else{
-            $inscripcion->estado = 1;
-            $inscripcion->fecha_preinscripcion = date("Y-m-d");
-            $inscripcion->fecha_inscripcion = date("Y-m-d");
+            $inscripcion->estado = 1; // es una inscripcion directa
+            $inscripcion->fechaPreInscripcion = date("Y-m-d");
+            $inscripcion->fechaInscripcion = date("Y-m-d");
         }
         $seGuardo = $inscripcion->save();
         return $this->render('resultadoInscripcion', [
@@ -107,11 +125,21 @@ class InscripcionController extends Controller
     }
 
     public function actionEliminarInscripcion(){
+        if ( Yii::$app->user->isGuest ){
+            $request = Yii::$app->request;
+            $idEvento = $request->get('id');
+            return Yii::$app->getResponse()->redirect(Url::to(['evento/view', "id" => $idEvento],302));
+        }
+
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
 
-        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])->one();
-        $seElimino = $inscripcion->delete();
+        $inscripcion = Inscripcion::find()
+                        ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
+                        ->one();
+        //Cambio el estado a 2 = anulado
+        $inscripcion->estado = 2;
+        $seElimino = $inscripcion->save();
 
         return $this->render('resultadoDesinscripcion', [
             'seElimino' => $seElimino,

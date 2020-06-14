@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 
+use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
 $this->title = 'Proyecto Juntar';
@@ -18,34 +19,52 @@ $this->title = 'Proyecto Juntar';
                 <a href="#events" class="btn btn-primary btn-lg text-uppercase">Empezar</a>
             </div>
         </header>
-        <section class="darkish_bg">
+        <section class="darkish_bg" id="events">
             <div class="container padding_select">
-                <select class="custom-select custom-select-lg mb-3">
-                    <option selected>Funcional en la próxima entrega</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <form class="form-inline my-2 my-lg-0" action="index.php#events">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <select name="orden" class="custom-select custom-select-lg mb-3" onchange="this.form.submit()">
+                            <option selected value="0">Fecha de creacion</option>
+                            <option value="1">Fecha de inicio del evento</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" name="s">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                            <?= Html::a('Restablecer', "index#events", ['class' => 'btn btn-secondary ml-2']); ?>
+                    </div>
+                </div>
+                </form>
             </div>
         </section>
-        <section id="events" class="dark_bg">
+        <section class="dark_bg">
             <div class="container padding_section">
+                <?php if (count($eventos) != 0): ?>
             <h2 class="text-white text-uppercase">Últimos Lanzamientos</h2><br>
                 <div class="row">
                     <?php foreach ($eventos as $evento) {
+                        if($evento->idEstadoEvento == 1):
                         echo "<div class='col-12 col-md-4'>";
                         echo "<div class='card bg-light'>";
-                        echo "<img src='" . $evento["linkLogo"] . " 'class='card-img-top' alt=''...'>";
+                        echo "<img src='" . $evento["imgLogo"] . " 'class='card-img-top' alt=''...'>";
                         echo "<div class='card-body'>";
                         echo "<h5 class='card-title'>" . $evento["nombreEvento"] . "</h5>";
-                        echo "<h5 class='card-title'>" . $evento["fechaLimiteInscripcion"] . "</h5>";
+                        echo "<h5 class='card-title'>" . $evento["fechaInicioEvento"] . "</h5>";
                         echo  "<hr>";
                         echo "<p class='card-text'>" . $evento["lugar"] . "</p>";
                         echo "<p class='card-text'>" . strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n") . "</p>";
                         echo Html::a('Más Información', ['/evento/view', "id" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
                         echo "</div></div></div>";
+                        endif;
                     } ?>
                 </div>
+
+                <?php else: ?>
+                <div class="row">
+                    <h2 class="text-white text-uppercase">No se encontraron eventos, vuelva a intentar.</h2><br>
+                </div>
+                <?php endif; ?>
             </div>
         </section>
     </div>

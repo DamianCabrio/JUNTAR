@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Inscripcions';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="inscripcion-index container">
+<div class="inscripcion-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'idUsuario',
             'idEvento',
             'estado',
-            'fecha_preinscripcion',
-            //'fecha_inscripcion',
+            'fechaPreInscripcion',
+            //'fechaInscripcion',
             //'acreditacion',
             //'certificado',
 

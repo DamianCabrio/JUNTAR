@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="evento-search container">
+<div class="evento-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -19,19 +19,27 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'idUsuario') ?>
 
-    <?= $form->field($model, 'nombreEvento') ?>
+    <?= $form->field($model, 'idCategoriaEvento') ?>
 
-    <?= $form->field($model, 'descripcionEvento') ?>
+    <?= $form->field($model, 'idEstadoEvento') ?>
 
-    <?= $form->field($model, 'lugar') ?>
+    <?= $form->field($model, 'idModalidadEvento') ?>
 
-    <?php // echo $form->field($model, 'modalidad') ?>
+    <?php // echo $form->field($model, 'nombreEvento') ?>
 
-    <?php // echo $form->field($model, 'linkPresentaciones') ?>
+    <?php // echo $form->field($model, 'nombreCortoEvento') ?>
 
-    <?php // echo $form->field($model, 'linkFlyer') ?>
+    <?php // echo $form->field($model, 'descripcionEvento') ?>
 
-    <?php // echo $form->field($model, 'linkLogo') ?>
+    <?php // echo $form->field($model, 'lugar') ?>
+
+    <?php // echo $form->field($model, 'fechaInicioEvento') ?>
+
+    <?php // echo $form->field($model, 'fechaFinEvento') ?>
+
+    <?php // echo $form->field($model, 'imgFlyer') ?>
+
+    <?php // echo $form->field($model, 'imgLogo') ?>
 
     <?php // echo $form->field($model, 'capacidad') ?>
 
@@ -40,6 +48,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'fechaLimiteInscripcion') ?>
 
     <?php // echo $form->field($model, 'codigoAcreditacion') ?>
+
+    <?php // echo $form->field($model, 'fechaCreacionEvento') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

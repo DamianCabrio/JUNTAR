@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\EventoSearch;
 use common\models\LoginForm;
 use common\models\Evento;
 use frontend\models\PasswordResetRequestForm;
@@ -16,18 +17,21 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\captcha\CaptchaAction;
+use \yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
 //use yii\filters\VerbFilter;
 /**
  * Site controller
  */
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -53,16 +57,16 @@ class SiteController extends Controller {
                     'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
-//                        $module = Yii::$app->controller->module->id;
+                        //                        $module = Yii::$app->controller->module->id;
                         $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
                         $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
-//                        $route = "$module/$controller/$action";
+                        //                        $route = "$module/$controller/$action";
                         $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-//                        $post = Yii::$app->request->post();
+                        //                        $post = Yii::$app->request->post();
                         //preguntamos si el usuario tiene los permisos para visitar el sitio
-//                        if (Yii::$app->user->can($route, ['post' => $post])) {
+                        //                        if (Yii::$app->user->can($route, ['post' => $post])) {
                         if (Yii::$app->user->can($route)) {
-//                            return $this->goHome();
+                            //                            return $this->goHome();
                             return true;
                         }
                     }
@@ -76,7 +80,8 @@ class SiteController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -92,9 +97,31 @@ class SiteController extends Controller {
      * Displays homepage.
      *
      * @return mixed
+     * 
      */
-    public function actionIndex() {
-        $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->limit(6)->all();
+    public function actionIndex()
+    {
+        $request = Yii::$app->request;
+        $busqueda = $request->get("s", "");
+        $orden = $request->get("orden", "");
+
+        if($orden != ""){
+            $ordenSQL = $orden == "0" ? "fechaCreacionEvento DESC" : "fechaInicioEvento DESC";
+        }else{
+            $ordenSQL = "fechaCreacionEvento DESC";
+        }
+
+        if ($busqueda != "") {
+            $eventos = Evento::find()
+                ->innerJoin('usuario', 'usuario.idUsuario=evento.idUsuario')
+                ->orderBy($ordenSQL)
+                ->where(["idEstadoEvento" => 1])
+                ->andwhere(["like", "nombre", $busqueda])
+                ->orwhere(["like", "apellido", $busqueda])
+                ->orWhere(["like", "nombreEvento", $busqueda])->limit(6)->all();
+        }else{
+            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1])->limit(6)->all();
+        }
         return $this->render('index', ["eventos" => $eventos]);
     }
 
@@ -103,7 +130,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionProfile() {
+    public function actionProfile()
+    {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -115,19 +143,19 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goBack(Url::previous());
         } else {
             $model->password = '';
-
             return $this->render('login', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -137,7 +165,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -148,23 +177,24 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionContact() {
+    public function actionContact()
+    {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', '<h2> Consulta Recibida. </h2>'
-                        . '<p> Muchas gracias por ponerte en contacto con Juntar. </p>'
-                        . '<p> Un administrador se pondrá en contacto para responder tus consultas lo más rápido posible! </p>');
+                    . '<p> Muchas gracias por ponerte en contacto con Juntar. </p>'
+                    . '<p> Un administrador se pondrá en contacto para responder tus consultas lo más rápido posible! </p>');
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2> '
-                        . '<p> Ocurrió un error mientras se enviaba su consulta. Por favor, intentelo nuevamente. </p>'
-                        . '<p> Si cree que es un error del servidor, por favor, contacte con un administrador </p>');
+                    . '<p> Ocurrió un error mientras se enviaba su consulta. Por favor, intentelo nuevamente. </p>'
+                    . '<p> Si cree que es un error del servidor, por favor, contacte con un administrador </p>');
             }
 
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -174,23 +204,24 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
+
     private function actionContacto() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', '<h2> Consulta Recibida. </h2>'
-                        . '<p> Muchas gracias por ponerte en contacto con Juntar. </p>'
-                        . '<p> Un administrador se pondrá en contacto para responder tus consultas lo más rápido posible! </p>');
+                    . '<p> Muchas gracias por ponerte en contacto con Juntar. </p>'
+                    . '<p> Un administrador se pondrá en contacto para responder tus consultas lo más rápido posible! </p>');
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2> '
-                        . '<p> Ocurrió un error mientras se enviaba su consulta. Por favor, intentelo nuevamente. </p>'
-                        . '<p> Si cree que es un error del servidor, por favor, contacte con un administrador </p>');
+                    . '<p> Ocurrió un error mientras se enviaba su consulta. Por favor, intentelo nuevamente. </p>'
+                    . '<p> Si cree que es un error del servidor, por favor, contacte con un administrador </p>');
             }
 
             return $this->refresh();
         } else {
             return $this->render('contacto', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -200,7 +231,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionAbout() {
+    public function actionAbout()
+    {
         return $this->render('about');
     }
 
@@ -222,19 +254,20 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionSignup() {
+
+    public function actionSignup()
+    {
         //obtiene datos paises
         $dataCountry = file_get_contents("json/paises.json");
         $paises = json_decode($dataCountry, true);
         //Conversión de datos
         $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
         $paises = $this->conversionAutocomplete($paises);
-        
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
                     . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goHome();
+            return $this->goBack(Url::previous());
         }
 
         return $this->render('signup', [
@@ -345,23 +378,24 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset() {
+    public function actionRequestPasswordReset()
+    {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', '<h2> ¡Ya queda poco! </h2>'
-                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu contraseña. </p>');
+                    . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu contraseña. </p>');
 
                 return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2>'
-                        . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
-                        . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
+                    . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
+                    . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
             }
         }
 
         return $this->render('requestPasswordResetToken', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -372,7 +406,8 @@ class SiteController extends Controller {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token) {
+    public function actionResetPassword($token)
+    {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidArgumentException $e) {
@@ -381,13 +416,13 @@ class SiteController extends Controller {
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', '<h2> Cambio realizado exitosamente </h2>'
-                    . '<p> La nueva contraseña fue guardada. </p>');
+                . '<p> La nueva contraseña fue guardada. </p>');
 
             return $this->goHome();
         }
 
         return $this->render('resetPassword', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -398,7 +433,8 @@ class SiteController extends Controller {
      * @throws BadRequestHttpException
      * @return yii\web\Response
      */
-    public function actionVerifyEmail($token) {
+    public function actionVerifyEmail($token)
+    {
         try {
             $model = new VerifyEmailForm($token);
         } catch (InvalidArgumentException $e) {
@@ -407,7 +443,7 @@ class SiteController extends Controller {
         if ($user = $model->verifyEmail()) {
             if (Yii::$app->user->login($user)) {
                 Yii::$app->session->setFlash('success', '<h2> ¡Confirmación exitosa! </h2>'
-                        . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
+                    . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
 
                 //iniciamos authManager
                 $auth = Yii::$app->authManager;
@@ -423,8 +459,8 @@ class SiteController extends Controller {
         }
 
         Yii::$app->session->setFlash('error', '<h2> Algo salió mal... </h2>'
-                . '<p> Lo sentimos, no fuimos capaces de verificar su cuenta a partir del mail enviado. </p>'
-                . '<p> Si cree que esto se debe a un error en el servidor, por favor, contacte con un administrador. </p>');
+            . '<p> Lo sentimos, no fuimos capaces de verificar su cuenta a partir del mail enviado. </p>'
+            . '<p> Si cree que esto se debe a un error en el servidor, por favor, contacte con un administrador. </p>');
         return $this->goHome();
     }
 
@@ -433,22 +469,22 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionResendVerificationEmail() {
+    public function actionResendVerificationEmail()
+    {
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', '<h2> Email de verificación reenviado </h2>'
-                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones para poder activar tu cuenta. </p>');
+                    . '<p> Revisa tu cuenta de correo y sigue las instrucciones para poder activar tu cuenta. </p>');
                 return $this->goHome();
             }
             Yii::$app->session->setFlash('error', '<h2> Algo salió mal... </h2>'
-                    . '<p> Lo sentimos, no fuimos capaces de reenviar el email de confirmación a la cuenta ingresada </p>'
-                    . '<p> Si cree que esto se debe a un error en el servidor, por favor, contacte con un administrador </p>');
+                . '<p> Lo sentimos, no fuimos capaces de reenviar el email de confirmación a la cuenta ingresada </p>'
+                . '<p> Si cree que esto se debe a un error en el servidor, por favor, contacte con un administrador </p>');
         }
 
         return $this->render('resendVerificationEmail', [
-                    'model' => $model
+            'model' => $model
         ]);
     }
-
 }

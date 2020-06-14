@@ -11,8 +11,8 @@ use Yii;
  * @property int $idUsuario
  * @property int $idEvento
  * @property int $estado
- * @property string $fecha_preinscripcion
- * @property string|null $fecha_inscripcion
+ * @property string $fechaPreInscripcion
+ * @property string|null $fechaInscripcion
  * @property int|null $acreditacion
  * @property string|null $certificado
  *
@@ -35,9 +35,9 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idUsuario', 'idEvento', 'estado', 'fecha_preinscripcion'], 'required'],
+            [['idUsuario', 'idEvento', 'estado', 'fechaPreInscripcion'], 'required'],
             [['idUsuario', 'idEvento', 'estado', 'acreditacion'], 'integer'],
-            [['fecha_preinscripcion', 'fecha_inscripcion'], 'safe'],
+            [['fechaPreInscripcion', 'fechaInscripcion'], 'safe'],
             [['certificado'], 'string', 'max' => 200],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
@@ -54,8 +54,8 @@ class Inscripcion extends \yii\db\ActiveRecord
             'idUsuario' => 'Id Usuario',
             'idEvento' => 'Id Evento',
             'estado' => 'Estado',
-            'fecha_preinscripcion' => 'Fecha Preinscripcion',
-            'fecha_inscripcion' => 'Fecha Inscripcion',
+            'fechaPreInscripcion' => 'Fecha Pre Inscripcion',
+            'fechaInscripcion' => 'Fecha Inscripcion',
             'acreditacion' => 'Acreditacion',
             'certificado' => 'Certificado',
         ];

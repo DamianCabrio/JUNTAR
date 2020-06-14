@@ -85,9 +85,9 @@ AppAsset::register($this);
             <?php echo Alert::widget() ?>
 
         </div>
-        <?php // echo Yii::getAlias('@web');?>
-        <?php echo $content ?>
 
+        <?php echo $content ?>
+      
     </div>
     <section class="darkish_bg text-light">
         <div class="container" style="padding-bottom: 4vh;">

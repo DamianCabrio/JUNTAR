@@ -54,43 +54,45 @@ class EventoController extends Controller
      */
     public function actionView($id)
     {
+        /*
+   En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
+   en Where filtrar por 'estado' activo.
+*/
+        $evento = $this->findModel($id);
 
-        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])->asArray()->all();
-        $fechaEvento = Fecha::find()->where(["idEvento" => $id])->orderBy(["fecha" => "ASC"])->one();
+        if($evento == null){
+            return $this->goHome();
+        }
+
+        $cupos = $this->calcularCupos($evento);
 
         $yaInscripto = false;
-        $yaAcreditado = 0;
-        if(count($inscripcion) == 1){
-            $yaInscripto = true;
-            $yaAcreditado = $inscripcion[0]["acreditacion"];
-        }
-          /*
-             En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
-             en Where filtrar por 'estado' activo.
-          */
-        $evento = Evento::find()->select('capacidad')->where(["idEvento" =>$id])->one();
-        $cantInscriptos = Inscripcion::find()->select('capacidad')->where(["idEvento" =>$id])->count();
-        
-        $sePuedeInscribir=  $evento->capacidad;
+        $yaAcreditado = false;
 
-        if($sePuedeInscribir== 0){
-            $cupos= 1;
+        if (!Yii::$app->user->getIsGuest()){
+            $inscripcion = Inscripcion::find()
+                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])
+                ->andWhere(["!=", "estado", 2])->one();
 
-        }else{
-            $sePuedeInscribir= $evento->capacidad - $cantInscriptos;
-            $cupos= 0;
-            if(  $sePuedeInscribir>0 ){
-                $cupos= 1;
+            if ($inscripcion != null) {
+                $yaInscripto = true;
+                $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
+                $yaAcreditado = $inscripcion->acreditacion == 1;
+
+                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
+            }
+            }else{
+            if ($cupos != 0){
+                $estadoEvento = $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
+            }else{
+                $estadoEvento = "sinCupos";
             }
         }
-     
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            "fechaEvento" => $fechaEvento,
-            "yaInscripto" => $yaInscripto,
-            "acreditacion" => $yaAcreditado,
-            'cupos'=>$cupos
-        ]);
+            return $this->render('view', [
+                "evento" => $evento,
+                "estadoEvento" => $estadoEvento,
+                'cupos' => $cupos,
+            ]);
     }
 
     /**
@@ -145,6 +147,74 @@ class EventoController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function calcularCupos($evento){
+        //Cantidad de inscriptos al evento
+        $cantInscriptos = Inscripcion::find()
+            ->where(["idEvento" => $evento->idEvento, 'estado'=>1])
+            ->count();
+
+        $cupoMaximo = $evento->capacidad;
+
+        if ($cantInscriptos >= $cupoMaximo) {
+            $cupos = 0;
+        } else {
+            $cupos = $cupoMaximo - $cantInscriptos;
+        }
+
+        return $cupos;
+    }
+
+    public function obtenerEstadoEvento($evento, $yaInscripto, $yaAcreditado, $cupos, $tipoInscripcion){
+
+        // ¿Ya esta inscripto o no? - Si
+        if($yaInscripto){
+            // ¿El evento ya inicio? - Si
+            if($evento->fechaInicioEvento <= date("Y-m-d")){
+                // ¿El evento tiene codigo de acreditacion? - Si
+                if($evento->codigoAcreditacion != null){
+                    // ¿El usuario ya se acredito en el evento? - Si
+                    if($yaAcreditado != 1){
+                        return "puedeAcreditarse";
+                        // El usuario no esta acreditado
+                    }else{
+                        return "yaAcreditado";
+                    }
+                    // El evento no tiene codigo de autentifacion y inicio
+                }else{
+                    return "inscriptoYEventoIniciado";
+                }
+            // El evento no inicio todavia y el usuario esta inscripto
+            }else{
+                // Tipo de inscripcion
+                if($tipoInscripcion == "preinscripcion"){
+                    return "yaPreinscripto";
+                }else{
+                    return "yaInscripto";
+                }
+            }
+            // El usuario no esta incripto en el evento
+        }else{
+            // ¿Hay cupos en el evento? - No
+            if ($cupos == 0){
+                return "sinCupos";
+                // Hay cupos en el evento
+            }else{
+                // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
+                if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
+                    // ¿El evento tiene pre inscripcion activada? - Si
+                    if($evento->preInscripcion == 1){
+                        return "puedePreinscripcion";
+                        // El evento no tiene pre inscripcion
+                    }else{
+                        return "puedeInscripcion";
+                    }
+                }else{
+                    return "noInscriptoYFechaLimiteInscripcionPasada";
+                }
+            }
+        }
+    }
+
     /**
      * Finds the Evento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -158,6 +228,6 @@ class EventoController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 }
