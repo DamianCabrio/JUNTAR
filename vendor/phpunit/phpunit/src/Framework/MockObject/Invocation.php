@@ -61,8 +61,6 @@ final class Invocation implements SelfDescribing
         $this->object      = $object;
         $this->proxiedCall = $proxiedCall;
 
-        $returnType = \ltrim($returnType, ': ');
-
         if (\strtolower($methodName) === '__tostring') {
             $returnType = 'string';
         }
@@ -111,7 +109,20 @@ final class Invocation implements SelfDescribing
             return;
         }
 
-        switch (\strtolower($this->returnType)) {
+        $returnType = $this->returnType;
+
+        if (\strpos($returnType, '|') !== false) {
+            $types      = \explode('|', $returnType);
+            $returnType = $types[0];
+
+            foreach ($types as $type) {
+                if ($type === 'null') {
+                    return;
+                }
+            }
+        }
+
+        switch (\strtolower($returnType)) {
             case '':
             case 'void':
                 return;
@@ -136,7 +147,7 @@ final class Invocation implements SelfDescribing
 
             case 'callable':
             case 'closure':
-                return function (): void {
+                return static function (): void {
                 };
 
             case 'traversable':

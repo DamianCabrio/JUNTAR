@@ -15,6 +15,8 @@ class SignupForm extends Model {
     public $apellido;
     public $dni;
 //    public $telefono;
+    public $pais;
+    public $provincia;
     public $localidad;
 //    public $fecha_nacimiento;
     public $email;
@@ -27,10 +29,11 @@ class SignupForm extends Model {
     public function rules() {
         return [
             //Obligatorio
-            [['nombre', 'apellido', 'email', 'localidad', 'dni', 'password'], 'required'],
+            [['nombre', 'apellido', 'email', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
 
             //Reglas nombre
             ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+
             ['nombre', 'string', 'min' => 2, 'max' => 14,
                 //comentario para minlenght
                 'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
@@ -47,7 +50,24 @@ class SignupForm extends Model {
 
             //Reglas localidad
             ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
-            ['localidad', 'common\components\LocationValidator'],
+            //validamos con la api de localidades argentinas solo si el pais es argentina
+            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
+                return ($model->pais == 'Argentina');
+                }, 'whenClient' => "function (attribute, value) {
+                    return $('#signupform-pais').val() == 'Argentina';
+                }"
+            ],
+//            ['localidad', 'common\components\LocationValidator'],
+
+            //Reglas Provincia
+            ['provincia', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
+            //validamos con la api de provincias argentinas solo si el pais es argentina
+            ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) {
+                return ($model->pais == 'Argentina');
+                }, 'whenClient' => "function (attribute, value) {
+                    return $('#signupform-pais').val() == 'Argentina';
+                }"
+            ],
 
             //Reglas DNI
             ['dni', 'integer', 'min' => 10000000, 'max' => 100000000],
@@ -82,6 +102,8 @@ class SignupForm extends Model {
         $user->apellido = $this->apellido;
         $user->dni = $this->dni;
 //        $user->telefono = $this->telefono;
+        $user->pais = $this->pais;
+        $user->provincia = $this->provincia;
         $user->localidad = $this->localidad;
 //        $user->fecha_nacimiento = $this->fecha_nacimiento;
         $user->email = $this->email;
@@ -103,7 +125,7 @@ class SignupForm extends Model {
                                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                                 ['user' => $user]
                         )
-                        ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ '.Yii::$app->name])
+                        ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
                         ->setTo($this->email)
                         ->setSubject('Registro de cuenta en ' . Yii::$app->name)
                         ->send();

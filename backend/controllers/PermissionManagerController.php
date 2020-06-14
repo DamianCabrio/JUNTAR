@@ -26,7 +26,19 @@ class PermissionManagerController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email'],
+                    'actions' => [
+                        'login',
+                        'signup',
+                        'error',
+                        'request-password-reset',
+                        'PasswordReset',
+                        'resend-verification-email',
+                        'index2',
+                        'get-roles',
+                        'get-permisos-by-rol',
+                        'get-all-permisos',
+                        'assign-permission',
+                    ],
                     'roles' => ['?'], // <----- guest
                 ],
                 [
@@ -80,20 +92,139 @@ class PermissionManagerController extends Controller {
     }
 
     /**
+     * Displays homepage.
+     *
+     * @return string
+     */
+    public function actionIndex2() {
+        // Se obtiene todos los roles que estan creados.
+        $dataRoles = $this->actionGetroles();
+        $dataPermisos = $this->actionGetAllPermisos();
+
+        return $this->render('index2', [
+                    'roles' => $dataRoles,
+                    'permisos' => $dataPermisos
+        ]);
+    }
+
+    private function actionGetRoles() {
+        $roles = null;
+        if (Yii::$app->user->can('Administrador')) {
+
+            if (Yii::$app->request->post('search') != null) {
+                //define el tipo de respuesta del metodo
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            }
+
+            $rolesQuery = (new \yii\db\Query())
+                    //campos a buscar
+                    ->select(['name'])
+                    //tabla
+                    ->from('permiso')
+                    //Condicion
+                    ->where(['type' => 1]);
+
+            $roles = $rolesQuery->all();
+        }
+        return $roles;
+    }
+
+    private function actionGetAllPermisos() {
+        $permisos = null;
+        if (Yii::$app->user->can('Administrador')) {
+
+            if (Yii::$app->request->post('search') != null) {
+                //define el tipo de respuesta del metodo
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            }
+
+            $permisosQuery = (new \yii\db\Query())
+                    //campos a buscar
+                    ->select(['name', 'description'])
+                    //tabla
+                    ->from('permiso')
+                    //Condicion
+                    ->where(['type' => 2]);
+
+            $permisos = $permisosQuery->all();
+        }
+        return $permisos;
+    }
+
+    public function actionGetPermisosByRol() {
+        $permissionsRole = null;
+        if (Yii::$app->user->can('Administrador')) {
+            if (Yii::$app->request->post('unRol') != null) {
+                if (Yii::$app->request->post('search') != null) {
+                    //define el tipo de respuesta del metodo
+                    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                }
+
+                //captura el rol recibido por post
+                $unRol = Yii::$app->request->post('unRol');
+
+                //genera la query para buscar los permisos asignados al rol
+                $permissionsRoleQuery = (new \yii\db\Query())
+                        //campos a buscar
+//                        ->select(['parent', 'name', 'description'])
+                        ->select(['parent', 'name', 'description', 'type'])
+                        //distict
+                        ->distinct('name')
+                        //tabla
+                        ->from('permiso')
+                        //relacion tabla permiso_rol
+                        ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                        //Condicion permisos asignados
+//                        ->where(['permiso.type' => 2, 'permiso_rol.parent' => $unRol])
+                        ->where(['permiso_rol.parent' => $unRol]);
+                //Condicion roles asignados
+//                        ->andWhere(['permiso.type' => 1]);
+                //Order
+//                    ->orderBy("permiso_rol.parent");
+
+                $permissionsRole = $permissionsRoleQuery->all();
+            }
+        }
+        return $permissionsRole;
+    }
+
+    /**
      * Asignar permisos a roles.
      *
      * @return string
      */
-    public function actionAssingPermission($rol, $permission) {
-        $auth = Yii::$app->authManager;
-        $authRol = yii::$app->authManager->getRole($rol);
-        $authPermission = yii::$app->authManager->getPermission($permission);
-        if ($auth->hasChild($authRol, $authPermission)) {
-            $auth->removeChild($authRol, $authPermission);
-        } else {
-            $auth->addChild($authRol, $authPermission);
+    public function actionAssingPermission() {
+        $respuesta = false;
+        if (Yii::$app->user->can('Administrador')) {
+            $rol = $permiso = null;
+            if (Yii::$app->request->post('unRol') != null) {
+                $rol = Yii::$app->request->post('unRol');
+            }
+            if (Yii::$app->request->post('unPermiso') != null) {
+                $permiso = Yii::$app->request->post('unPermiso');
+            }
+            if (Yii::$app->request->post('search') != null) {
+                //define el tipo de respuesta del metodo
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            }
+//                    $mensaje = "Se removio con exito";
+            if ($rol != $permiso && $permiso != null) {
+                $auth = Yii::$app->authManager;
+
+                $unPermiso = $auth->createPermission($permiso);
+                // add "organizador" role and give this role the "createPost" permission
+                $unRol = $auth->createRole($rol);
+                
+                if ($auth->hasChild($unRol, $unPermiso)) {
+                    $auth->removeChild($unRol, $unPermiso);
+                    $respuesta['success'] = "Removed";
+                } else {
+                    $auth->addChild($unRol, $unPermiso);
+                    $respuesta['success'] = "Added";
+                }
+            }
         }
-        return $this->redirect(['permission-manager/index']);
+        return $respuesta;
     }
 
     /**
@@ -177,57 +308,6 @@ class PermissionManagerController extends Controller {
         ]);
     }
 
-    /**
-     * Metodo getControllerList --> Permite retornar el nombre de todos los controladores del sitio.
-     * Utiliza el alias del camino a consultar (frontend-backend).
-     *
-     * @param String $path
-     * @return array/null
-     */
-//    private function actionListControllers($path) {
-//        $controllersList = null;
-//        $files = FileHelper::findFiles(Yii::getAlias("@$path/controllers"), ["fileTypes" => ["php"]]);
-//
-//        $controllersList = [];
-//        foreach ($files as $controllerFile) {
-//            //utiliza Inflector para capturar el nombre del controlador
-//            $controllersList[] = Inflector::camel2id(substr(basename($controllerFile), 0, -14));
-//        }
-////        }
-//        echo json_encode($controllersList, null, 2);
-////        return $controllersList;
-//    }
-//
-//    /**
-//     * Metodo getControllerList --> Permite retornar el nombre de todas las vistas del controlador consultado.
-//     * Utiliza el alias del camino a consultar (frontend-backend) y el nombre del controlador deseado.
-//     *
-//     * @param String $path
-//     * @param String $controllerName
-//     * @return array/null
-//     */
-//    private function actionListActions($path, $controllerName) {
-//        $actions = null;
-//        $files = FileHelper::findFiles(Yii::getAlias("@$path/controllers"), ['only' => ["$controllerName" . "Controller.php"]]);
-//
-//        if ($files != null) {
-//            //Captura el unico archivo que deberia matchear al nombre
-//            $controllerFile = array_shift($files);
-//
-//            //carga el contenido del archivo en una variable para trabajarla
-//            $contents = file_get_contents($controllerFile);
-//
-//            //captura el nombre de todas las acciones(vistas) en el array $actions
-//            preg_match_all('/public function action(\w+?)\(/', $contents, $display);
-//            $actions = [];
-//            foreach ($display[1] as $oneAction) {
-//                if (strlen($oneAction) > 2) {
-//                    $actions [] = strtolower(preg_replace("/[A-Z]/", "-$0", lcfirst($oneAction)));
-//                }
-//            }
-//        }
-//        return $actions;
-//    }
 
     /**
      * Metodo actionListMissingPermissions --> Permite retornar un array conteniendo todos los permisos del

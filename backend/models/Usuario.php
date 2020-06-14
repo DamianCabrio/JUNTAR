@@ -11,9 +11,9 @@ use Yii;
  * @property string $nombre
  * @property string $apellido
  * @property int|null $dni
- * @property string|null $fecha_nacimiento
+ * @property string|null $pais
+ * @property string|null $provincia
  * @property string|null $localidad
- * @property int|null $telefono
  * @property string $email
  * @property string $auth_key
  * @property string $password_hash
@@ -44,10 +44,10 @@ class Usuario extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'apellido', 'dni', 'localidad', 'email'], 'required'],
+            [['nombre', 'apellido', 'dni', 'pais', 'provincia', 'localidad', 'email'], 'required'],
 //            [['dni', 'telefono', 'status', 'created_at', 'updated_at'], 'integer'],
 //            [['fecha_nacimiento'], 'safe'],
-            [['nombre', 'apellido', 'localidad'], 'string', 'max' => 50],
+            [['nombre', 'apellido', 'pais', 'provincia', 'localidad'], 'string', 'max' => 50],
 //            [['email', 'password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
 //            [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
@@ -66,6 +66,8 @@ class Usuario extends \yii\db\ActiveRecord
             'apellido' => 'Apellido',
             'dni' => 'Dni',
 //            'fecha_nacimiento' => 'Fecha Nacimiento',
+            'pais' => 'País',
+            'provincia' => 'Provincia',
             'localidad' => 'Localidad',
 //            'telefono' => 'Telefono',
             'email' => 'Email',

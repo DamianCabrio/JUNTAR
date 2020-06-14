@@ -31,9 +31,96 @@ $(document).ready(function () {
             $('#resetpasswordform-password').attr("type", "password");
         }
     });
+    
+    // Habilitacion de los popover
     $(function () {
         $("[data-toggle='popover']").popover({
-          trigger : 'hover'
+            trigger: 'hover'
         });
     });
+
+    //Utilizado para eliminar los caracteres especiales en nombres de provincias (acentos)
+    function eliminarDiacriticos(texto) {
+        return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    }
+
+    //buscamos valores por defecto para pais argentina
+    if ($('#signupform-pais').val() === 'Argentina') {
+        autocompleteProvincias(eliminarDiacriticos('Argentina'));
+    };
+
+    //input provincia
+    $('#signupform-pais').change(function () {
+        autocompleteProvincias(eliminarDiacriticos($(this).val()));
+    });
+
+    //input localidad
+
+    $('#signupform-provincia').change(function () {
+        autocompleteLocalidades(eliminarDiacriticos($(this).val()));
+    });
 });
+
+/**
+ * Metodo autocompleteProvincia --> Busca los datos de las provincias pertenecientes al pais seleccionado
+ * para ofrecer una lista de opciones de autocompletado.
+ *
+ * @param {String} nombrePais
+ * @returns none
+ */
+
+function autocompleteProvincias(nombrePais) {
+    $.ajax({
+        url: "index.php?r=site%2Fsearch-provincias",
+        data: {pais: nombrePais},
+        type: "POST",
+        dataType: "json"
+    })
+            .done(function (data) {
+                console.log(data);
+                if (data !== null) {
+                    if ($("#signupform-provincia").autocomplete !== undefined) {
+                        $("#signupform-provincia").autocomplete({
+                            autoFill: true,
+                            minLength: "2",
+                            source: data,
+                            select: function (event, ui) {
+                                $("#signupform-provincia").val(ui.item.id);
+                            }
+                        });
+                    }
+                }
+            });
+}
+
+/**
+ * Metodo autocompleteLocalidad --> Busca los datos de las localidades pertenecientes a la provincia seleccionada
+ * para ofrecer una lista de opciones de autocompletado.
+ *
+ * @param {String} nombreProvincia
+ * @returns none
+ */
+function autocompleteLocalidad(nombreProvincia) {
+    $.ajax({
+        url: "index.php?r=site%2Fsearch-localidades",
+        data: {provincia: nombreProvincia},
+        type: "POST",
+        dataType: "json"
+    })
+            .done(function (data) {
+                console.log(data);
+                if (data !== null) {
+//                        dataLocalidades = data;
+                    if ($("#signupform-localidad").autocomplete !== undefined) {
+                        $("#signupform-localidad").autocomplete({
+                            autoFill: true,
+                            minLength: "2",
+                            source: data,
+                            select: function (event, ui) {
+                                $("#signupform-localidad").val(ui.item.id);
+                            }
+                        });
+                    }
+                }
+            });
+}
