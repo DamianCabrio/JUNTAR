@@ -67,25 +67,25 @@ CREATE TABLE `modalidad_evento` (
 -- Estructura de tabla para la tabla `evento`
 --
 
-CREATE TABLE `evento` (
-  `idEvento` bigint(20) NOT NULL,
-  `idUsuario` bigint(20) NOT NULL,
-  `idCategoriaEvento` tinyint(4) NOT NULL,
-  `idEstadoEvento` tinyint(4) NOT NULL,
-  `idModalidadEvento` tinyint(4) NOT NULL,
-  `nombreEvento` varchar(200) NOT NULL,
-  `nombreCortoEvento` varchar(100) NOT NULL,
-  `descripcionEvento` varchar(800) NOT NULL,
-  `lugar` varchar(200) NOT NULL,
-  `fechaInicioEvento` date NOT NULL,
-  `fechaFinEvento` date NOT NULL,
-  `imgFlyer` varchar(200) DEFAULT NULL,
-  `imgLogo` varchar(200) DEFAULT NULL,
-  `capacidad` smallint(6) NOT NULL,
-  `preInscripcion` tinyint(1) NOT NULL,
-  `fechaLimiteInscripcion` date NOT NULL,
-  `codigoAcreditacion` varchar(100) DEFAULT NULL,
-  `fechaCreacionEvento` date NOT NULL
+CREATE TABLE evento (
+  idEvento bigint(20) NOT NULL,
+  idUsuario bigint(20) NOT NULL,
+  idCategoriaEvento tinyint(4) NOT NULL,
+  idEstadoEvento tinyint(4) NOT NULL,
+  idModalidadEvento tinyint(4) NOT NULL,
+  nombreEvento varchar(200) NOT NULL,
+  nombreCortoEvento varchar(100) NOT NULL,
+  descripcionEvento varchar(800) NOT NULL,
+  lugar varchar(200) NOT NULL,
+  fechaInicioEvento date NOT NULL,
+  fechaFinEvento date NOT NULL,
+  imgFlyer varchar(200) DEFAULT NULL,
+  imgLogo varchar(200) DEFAULT NULL,
+  capacidad smallint(6) NOT NULL,
+  preInscripcion tinyint(1) NOT NULL,
+  fechaLimiteInscripcion date DEFAULT NULL,
+  codigoAcreditacion varchar(100) DEFAULT NULL,
+  fechaCreacionEvento date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
