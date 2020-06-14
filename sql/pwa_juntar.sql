@@ -529,6 +529,36 @@ INSERT INTO `usuario_rol` (`item_name`, `user_id`, `created_at`) VALUES
 ('Registrado', 14, NULL),
 ('Registrado', 15, NULL);
 
+--
+-- Volcado de datos para la tabla `categoria_evento`
+--
+
+INSERT INTO categoria_evento (idCategoriaEvento, descripcionCategoria) VALUES
+(1, 'Seminario'),
+(2, 'Congreso'),
+(3, 'Diplomatura'),
+(4, 'Otra');
+
+--
+-- Volcado de datos para la tabla `estado_evento`
+--
+
+INSERT INTO estado_evento (idEstadoEvento, descripcionEstado) VALUES
+(1, 'Activo'),
+(2, 'inhabilitado'),
+(3, 'Finalizado'),
+(4, 'Borrador');
+
+--
+-- Volcado de datos para la tabla `modalidad_evento`
+--
+
+INSERT INTO modalidad_evento (idModalidadEvento, descripcionModalidad) VALUES
+(1, 'Presencial'),
+(2, 'Online'),
+(3, 'Presencial y Online'),
+(4, 'Otra');
+
 -- #######################################################################################################################
 -- #######################################################################################################################
 
