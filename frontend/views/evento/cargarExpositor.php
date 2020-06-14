@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Usuario;
+use frontend\models\Usuario;
 use yii\helpers\Html;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;

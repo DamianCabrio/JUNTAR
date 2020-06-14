@@ -25,12 +25,12 @@ $this->title = 'Proyecto Juntar';
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <select name="orden" class="custom-select custom-select-lg mb-3" onchange="this.form.submit()">
-                            <option <?= $_GET["orden"] == 0 ? "selected" : "" ?> value="0">Fecha de creacion</option>
-                            <option <?= $_GET["orden"] == 1 ? "selected" : "" ?> value="1">Fecha de inicio del evento</option>
+                            <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="0">Fecha de creacion</option>
+                            <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="1">Fecha de inicio del evento</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-6">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" name="s">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" name="s" value="<?= isset($_GET["s"]) ? $_GET["s"] : "" ?>">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                             <?= Html::a('Restablecer', "index#events", ['class' => 'btn btn-secondary ml-2']); ?>
                     </div>

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
-use backend\models\Usuario;
+use frontend\models\Usuario;
 
 if ($model->imgFlyer != null) {
     $flyer = '<img  class="img-fluid" width="300px" src='.Url::base('').'/'.$model->imgFlyer.'>';
