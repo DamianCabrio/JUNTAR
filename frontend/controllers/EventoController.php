@@ -76,23 +76,23 @@ class EventoController extends Controller
         $yaInscripto = false;
         $yaAcreditado = false;
 
-        $inscripcion = Inscripcion::find()
-            ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])
-            ->andWhere(["!=", "estado", 2])->one();
+        if (!Yii::$app->user->getIsGuest()){
 
-        if (!Yii::$app->user->getIsGuest() && $inscripcion != null){
+            $inscripcion = Inscripcion::find()
+                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])
+                ->andWhere(["!=", "estado", 2])->one();
 
+            if($inscripcion != null) {
                 $yaInscripto = true;
                 $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
                 $yaAcreditado = $inscripcion->acreditacion == 1;
-
                 $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
             }else{
-            if ($cupos != 0){
-                $estadoEvento = $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-            }else{
-                $estadoEvento = "sinCupos";
+                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
             }
+
+            }else{
+            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
         }
             return $this->render('view', [
                 "evento" => $evento,
@@ -168,6 +168,14 @@ class EventoController extends Controller
         }
 
         return $cupos;
+    }
+
+    public function obtenerEstadoEventoNoLogin($cupos, $evento){
+        if ($cupos != 0){
+            return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
+        }else{
+            return "sinCupos";
+        }
     }
 
     public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion){
