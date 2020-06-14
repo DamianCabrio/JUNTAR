@@ -55,6 +55,7 @@ $(document).ready(function () {
     });
 
     //input localidad
+
     $('#signupform-provincia').change(function () {
         autocompleteLocalidades(eliminarDiacriticos($(this).val()));
     });
@@ -67,6 +68,7 @@ $(document).ready(function () {
  * @param {String} nombrePais
  * @returns none
  */
+
 function autocompleteProvincias(nombrePais) {
     $.ajax({
         url: "index.php?r=site%2Fsearch-provincias",
@@ -98,7 +100,7 @@ function autocompleteProvincias(nombrePais) {
  * @param {String} nombreProvincia
  * @returns none
  */
-function autocompleteLocalidades(nombreProvincia) {
+function autocompleteLocalidad(nombreProvincia) {
     $.ajax({
         url: "index.php?r=site%2Fsearch-localidades",
         data: {provincia: nombreProvincia},

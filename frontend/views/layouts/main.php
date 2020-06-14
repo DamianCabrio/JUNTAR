@@ -19,6 +19,7 @@ AppAsset::register($this);
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::$app->charset; ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -71,18 +72,22 @@ AppAsset::register($this);
         ?>
 
         <div class="container">
-            <?=
+
+            <?php echo
+
                 Breadcrumbs::widget([
                     'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
                     'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ])
             ?>
-            <?= Alert::widget() ?>
+
+            <?php echo Alert::widget() ?>
 
         </div>
-        <? echo Yii::getAlias('@web');?>
-        <?= $content ?>
+        <?php // echo Yii::getAlias('@web');?>
+        <?php echo $content ?>
+
     </div>
     <section class="darkish_bg text-light">
         <div class="container" style="padding-bottom: 4vh;">
