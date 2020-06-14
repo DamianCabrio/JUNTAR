@@ -51,14 +51,14 @@ class PresentacionController extends Controller
 
     /**
      * Displays a single Presentacion model.
-     * @param integer $id
+     * @param integer $presentacion
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($presentacion)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($presentacion),
         ]);
     }
 
