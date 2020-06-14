@@ -297,11 +297,42 @@ class EventoController extends Controller
      */
     public function actionVerEvento($idEvento)
     {
-        $evento = Evento::findOne($idEvento);
+
+        $evento = $this->findModel($idEvento);
         $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
+
+        if($evento == null){
+            return $this->goHome();
+        }
+
+        $cupos = $this->calcularCupos($evento);
+
+        $yaInscripto = false;
+        $yaAcreditado = false;
+
+        if (!Yii::$app->user->getIsGuest()){
+
+            $inscripcion = Inscripcion::find()
+                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $idEvento])
+                ->andWhere(["!=", "estado", 2])->one();
+
+            if($inscripcion != null) {
+                $yaInscripto = true;
+                $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
+                $yaAcreditado = $inscripcion->acreditacion == 1;
+                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
+            }else{
+                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+            }
+
+        }else{
+            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+        }
         return $this->render('verEvento', [
-            'model'=>$evento,
-            'presentacion' => $presentaciones
+            "evento" => $evento,
+            'presentacion' => $presentaciones,
+            "estadoEvento" => $estadoEvento,
+            'cupos' => $cupos,
         ]);
     }
 

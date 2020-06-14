@@ -5,53 +5,53 @@ use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
 
-if ($model->imgFlyer != null) {
-    $flyer = '<img  class="img-fluid" width="300px" src='.Url::base('').'/'.$model->imgFlyer.'>';
+if ($evento->imgFlyer != null) {
+    $flyer = '<img  class="img-fluid" width="300px" src='.Url::base('').'/'.$evento->imgFlyer.'>';
 } else {
     $flyer = "(Flyer no cargado o en construcción)";
 }
-if ($model->imgLogo != null) {
-    $logo = '<img class="img-fluid" style="width="auto"; max-height:150px;" src='.Url::base('').'/' . $model->imgLogo . '>';
+if ($evento->imgLogo != null) {
+    $logo = '<img class="img-fluid" style="width="auto"; max-height:150px;" src='.Url::base('').'/' . $evento->imgLogo . '>';
 } else {
     $logo = "(Logo no cargado o en construcción)";
 }
 
-if ($model->preInscripcion == 0) {
+if ($evento->preInscripcion == 0) {
     $preInscripcion = "No requiere preinscipcion";
 } else {
     $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipcion*</b>";
 }
-if ($model->codigoAcreditacion != null) {
-    $codAcreditacion = $model->codigoAcreditacion;
+if ($evento->codigoAcreditacion != null) {
+    $codAcreditacion = $evento->codigoAcreditacion;
 } else {
     $codAcreditacion = "Código no cargado o en construcción";
 }
 
 
-if ($model->fechaCreacionEvento != null) {
-    $fechaPublicacion = $model->fechaCreacionEvento;
+if ($evento->fechaCreacionEvento != null) {
+    $fechaPublicacion = $evento->fechaCreacionEvento;
 } else {
     $fechaPublicacion = "Evento no publicado";
 }
 
-if ($model->fechaLimiteInscripcion != null) {
-    $fechaLimite = $model->fechaLimiteInscripcion;
+if ($evento->fechaLimiteInscripcion != null) {
+    $fechaLimite = $evento->fechaLimiteInscripcion;
 } else {
     $fechaLimite = "No posee inscripción";
 }
 
 
-$categoriaEvento = $model->idCategoriaEvento0->descripcionCategoria;
-$modalidadEvento = $model->idModalidadEvento0->descripcionModalidad;
-$estadoEvento = $model->idEstadoEvento0->descripcionEstado;
+$categoriaEvento = $evento->idCategoriaEvento0->descripcionCategoria;
+$modalidadEvento = $evento->idModalidadEvento0->descripcionModalidad;
+$estadoEvento = $evento->idEstadoEvento0->descripcionEstado;
 
-$organizadorEvento = $model->idUsuario0->nombre." ".$model->idUsuario0->apellido;
-$organizadorEmailEvento = $model->idUsuario0->email;
+$organizadorEvento = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
+$organizadorEmailEvento = $evento->idUsuario0->email;
 
 ?>
 <div class="container">
     <!--<h2 class="text-center">Su evento cargado</h2>-->
-    <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $model->nombreEvento ?></h2>
+    <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
 	
 	
     <!--<p class="text-center">Posee los siguientes datos</p>-->
@@ -70,7 +70,7 @@ $organizadorEmailEvento = $model->idUsuario0->email;
 							<?= $logo ?>
 						</div>
 					</div>
-					<?= $model->descripcionEvento ?>
+					<?= $evento->descripcionEvento ?>
 				</div>
 			</div>
 		</div>
@@ -78,13 +78,13 @@ $organizadorEmailEvento = $model->idUsuario0->email;
 			<div>
 				<h4 class="py-2 px-3 mb-2 bg-primary text-white">Detalles</h4>
 				<p><b>Fecha de Inicio:</b></p>
-				<p><?= $model->fechaInicioEvento ?></p>
+				<p><?= $evento->fechaInicioEvento ?></p>
 				<hr/>
 				<p><b>Fecha de Fin:</b></p>
-				<p><?= $model->fechaFinEvento ?></p>
+				<p><?= $evento->fechaFinEvento ?></p>
 				<hr/>
 				<p><b>Lugar:</b></p>
-				<p><?= $model->lugar ?></p>
+				<p><?= $evento->lugar ?></p>
 				<hr/>
 				<p><b>Modalidad:</b></p>
 				<p><?= $modalidadEvento ?></p>
@@ -98,7 +98,7 @@ $organizadorEmailEvento = $model->idUsuario0->email;
 				<p><?= $preInscripcion ?></p>
 				<hr/>
 				<p><b>Fecha limite de Pre-inscripcion:</b></p>
-				<p><?= $model->fechaLimiteInscripcion ?></p>
+				<p><?= $evento->fechaLimiteInscripcion ?></p>
 				<hr/>
 			</div>
 			<div>
@@ -117,7 +117,7 @@ $organizadorEmailEvento = $model->idUsuario0->email;
 			<div>
 				<h4 class="py-2 px-3 mb-2 bg-primary text-white">Otros datos</h4>
 				<p><b>Capacidad:</b></p>
-				<p><?= $model->capacidad ?> Personas</p>
+				<p><?= $evento->capacidad ?> Personas</p>
 				<hr/>
 				<p><b>Categoria:</b></p>
 				<p><?= $categoriaEvento ?></p>
