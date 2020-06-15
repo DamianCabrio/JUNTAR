@@ -81,11 +81,11 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionIndex() {
+    public function actionIndex3() {
         // Se obtiene todos los roles que estan creados.
         $roles = yii::$app->authManager->getRoles();
         $permisos = yii::$app->authManager->getPermissions();
-        return $this->render('index', [
+        return $this->render('index3', [
                     'roles' => $roles,
                     'permisos' => $permisos,
         ]);
@@ -96,12 +96,12 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionIndex2() {
+    public function actionIndex() {
         // Se obtiene todos los roles que estan creados.
         $dataRoles = $this->actionGetroles();
         $dataPermisos = $this->actionGetAllPermisos();
 
-        return $this->render('index2', [
+        return $this->render('index', [
                     'roles' => $dataRoles,
                     'permisos' => $dataPermisos
         ]);
