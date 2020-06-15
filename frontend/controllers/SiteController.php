@@ -19,6 +19,7 @@ use yii\filters\AccessControl;
 use yii\captcha\CaptchaAction;
 use \yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use yii\data\Pagination;
 
 //use yii\filters\VerbFilter;
 /**
@@ -118,11 +119,22 @@ class SiteController extends Controller
                 ->where(["idEstadoEvento" => 1])
                 ->andwhere(["like", "nombre", $busqueda])
                 ->orwhere(["like", "apellido", $busqueda])
-                ->orWhere(["like", "nombreEvento", $busqueda])->limit(6)->all();
+                ->orWhere(["like", "nombreEvento", $busqueda]);
         }else{
-            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1])->limit(6)->all();
+            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1]);
         }
-        return $this->render('index', ["eventos" => $eventos]);
+
+         //Paginación para 6 eventos por pagina
+        $countQuery = clone $eventos;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->pageSize=6;
+        //$pages->applyLimit = $countQuery->count();
+        $models = $eventos->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+
+
+        return $this->render('index', ["eventos" =>  $models, 'pages' => $pages,]);
     }
 
     /**

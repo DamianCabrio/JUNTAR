@@ -4,6 +4,7 @@
 
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\widgets\LinkPager;
 
 $this->title = 'Proyecto Juntar';
 ?>
@@ -58,6 +59,15 @@ $this->title = 'Proyecto Juntar';
                         echo "</div></div></div>";
                         endif;
                     } ?>
+                </div>
+
+                <div class="row">
+                    <?<?php // display pagination
+                        echo LinkPager::widget([
+                        'pagination' => $pages,
+                        ]); 
+                    ?>
+        
                 </div>
 
                 <?php else: ?>
