@@ -198,7 +198,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 			<tr>
 				<th class="align-middle"><?= $cont ?></th>
 				<td class="align-middle"><?= $objPresentacion->tituloPresentacion ?><br/><?= Html::a('(Más información)', ['presentacion/view', 'presentacion' => $objPresentacion->idPresentacion]) ?></td>
-				<td class="align-middle"><?= $objPresentacion->descripcionPresentacion ?></td>
+				<!--<td class="align-middle"><?= $objPresentacion->descripcionPresentacion ?></td>-->
 				<td class="align-middle"><?= $objPresentacion->diaPresentacion ?></td>
 				<td class="align-middle"><?= $objPresentacion->horaInicioPresentacion ?></td>
 				<td class="align-middle"><?= $objPresentacion->horaFinPresentacion ?></td>
