@@ -96,7 +96,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 echo Html::label('No se puede inscribir, el evento ya inicio');
                 break;
             case "puedeAcreditarse":
-                echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvent, "slug" => $evento->nombreCortoEventoo], ['class' => 'btn btn-primary']);
+                echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
                 break;
         }
 
