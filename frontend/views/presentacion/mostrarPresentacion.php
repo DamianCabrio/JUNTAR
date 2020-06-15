@@ -19,14 +19,16 @@ $this->title = $model->tituloPresentacion;
                 </div>
                 <br>
                 <hr>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center p-4">
                     <div>
                         <?= Html::a('Nueva Presentación', ['cargar-presentacion', 'idEvento' => $evento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?= Html::a('Ver evento', ['evento/ver-evento', 'idEvento' => $evento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?= Html::a('Editar evento ', ['evento/editar-evento', 'idEvento' => $evento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?= Html::a('Publicar evento ', ['evento/publicar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                     </div>
-                </div>    
+                </div>
+                <br>
+                <hr>    
         </div>
     </div>
 </div>
