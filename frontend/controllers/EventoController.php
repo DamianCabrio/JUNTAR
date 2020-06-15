@@ -387,7 +387,7 @@ class EventoController extends Controller
                  }
             }
             $model->save();
-            return $this->redirect(['ver-evento', 'idEvento' => $model->idEvento]);
+            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
         }
 
         return $this->render('editarEvento', [
