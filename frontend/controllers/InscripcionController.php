@@ -88,6 +88,7 @@ class InscripcionController extends Controller
         //Guardo el parametro que llega por get (id del evento)
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
+        $slug = $request->get('slug');
 
         //Busco si ya existe una inscripcion anulada
         $inscripcion = Inscripcion::find()
@@ -118,10 +119,17 @@ class InscripcionController extends Controller
             $inscripcion->fechaInscripcion = date("Y-m-d");
         }
         $seGuardo = $inscripcion->save();
-        return $this->render('resultadoInscripcion', [
-            'esPreInscripcion' => $esPreInscripcion,
-            'seGuardo' => $seGuardo,
-        ]);
+
+        if($seGuardo){
+            $texto = $esPreInscripcion ? "Se ha pre-inscripto con exito" : "Se ha inscripto con exito";
+            Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
+                . '<p> Buena suerte </p>');
+            return $this->redirect(['eventos/ver-evento/' . $slug]);
+        }else{
+            Yii::$app->session->setFlash('error', '<h2> Ocurrio un error </h2>'
+                . '<p> Por favor vuelva a intentar </p>');
+            return $this->redirect(['eventos/ver-evento/' . $slug]);
+        }
     }
 
     public function actionEliminarInscripcion(){
@@ -133,6 +141,7 @@ class InscripcionController extends Controller
 
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
+        $slug = $request->get('slug');
 
         $inscripcion = Inscripcion::find()
                         ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
@@ -141,9 +150,18 @@ class InscripcionController extends Controller
         $inscripcion->estado = 2;
         $seElimino = $inscripcion->save();
 
-        return $this->render('resultadoDesinscripcion', [
-            'seElimino' => $seElimino,
-        ]);
+        $esPreInscripcion = $inscripcion->estado == 1 ? true : false;
+
+        if($seElimino){
+            $texto = $esPreInscripcion ? "Se ha anulado su pre-inscripto con exito" : "Se ha anulado inscripto con exito";
+            Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
+                . '<p> Vuelva otro dia </p>');
+            return $this->redirect(['eventos/ver-evento/' . $slug]);
+        }else{
+            Yii::$app->session->setFlash('error', '<h2> Ocurrio un error </h2>'
+                . '<p> Por favor vuelva a intentar </p>');
+            return $this->redirect(['eventos/ver-evento/' . $slug]);
+        }
     }
 
     /**

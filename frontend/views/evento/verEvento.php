@@ -72,10 +72,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
         switch ($estadoEventoInscripcion){
             case "puedeInscripcion":
-                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
                 break;
             case "puedePreinscripcion":
-                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
                 break;
             case "sinCupos":
                 echo Html::label('Sin cupos');
@@ -87,16 +87,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 echo Html::label("El evento ya inicio, pasela bien");
                 break;
             case "yaPreinscripto":
-                echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
                 break;
             case "yaInscripto":
-                echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
                 break;
             case "noInscriptoYFechaLimiteInscripcionPasada":
                 echo Html::label('No se puede inscribir, el evento ya inicio');
                 break;
             case "puedeAcreditarse":
-                echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvent, "slug" => $evento->nombreCortoEventoo], ['class' => 'btn btn-primary']);
                 break;
         }
 
