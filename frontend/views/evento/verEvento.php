@@ -202,7 +202,14 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				<td class="align-middle"><?= $objPresentacion->diaPresentacion ?></td>
 				<td class="align-middle"><?= $objPresentacion->horaInicioPresentacion ?></td>
 				<td class="align-middle"><?= $objPresentacion->horaFinPresentacion ?></td>
-				<td class="align-middle"><?= $objPresentacion->linkARecursos ?></td>
+				<?php
+				if($objPresentacion->linkARecursos == null || $objPresentacion->linkARecursos == ""){
+					?>
+					<td class="align-middle">No hay links para mostrar.</td>
+					<?php }
+				else { ?>
+					<td class="align-middle"><a href="<?= $objPresentacion->linkARecursos ?>">Link</a></td>
+				<?php } ?>
 				<td class="align-middle">
 					<?php
 					foreach ($objPresentacion->presentacionExpositors as $objExpoPre) {
@@ -213,7 +220,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 						</ul>
 					<?php } ?>
 				</td>
-				<td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
+				
+				<?php 
+				if(Yii::$app->user->can('Organizador')){ ?>
+					<td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
+				<?php } ?>
 					   
 				<?php endforeach; ?>
 			</tr>
