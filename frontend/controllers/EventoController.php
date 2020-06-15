@@ -268,12 +268,12 @@ class EventoController extends Controller
 
             if($modelLogo->imageLogo != null){
                 if($modelLogo->upload()){
-                    $model->imgLogo = Url::base('').'/'. $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
             }    
             if($modelFlyer->imageFlyer != null){
                 if($modelFlyer->upload()){
-                    $model->imgFlyer = Url::base('').'/'. $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                  }
             }
             $model->save();
@@ -331,7 +331,7 @@ class EventoController extends Controller
         return $this->render('verEvento', [
             "evento" => $evento,
             'presentacion' => $presentaciones,
-            "estadoEvento" => $estadoEvento,
+            "estadoEventoInscripcion" => $estadoEvento,
             'cupos' => $cupos,
         ]);
     }
@@ -353,7 +353,7 @@ class EventoController extends Controller
      /**
      * Recibe por parámetro un id de evento, se buscar y se obtiene la instancia del evento, se visualiza un formulario 
      * cargado con los datos del evento permitiendo cambiar esos datos.
-     * Una ves reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
+     * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
      public function actionEditarEvento($idEvento){
 
@@ -371,12 +371,12 @@ class EventoController extends Controller
 
             if($modelLogo->imageLogo != null){
                 if($modelLogo->upload()){
-                    $model->imgLogo =  Url::base('').'/'. $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
             }    
             if($modelFlyer->imageFlyer != null){
                 if($modelFlyer->upload()){
-                    $model->imgFlyer = Url::base('').'/'. $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                  }
             }
             $model->save();
