@@ -21,6 +21,7 @@ AppAsset::register($this);
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::$app->charset; ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050714" />
 
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -112,17 +113,17 @@ AppAsset::register($this);
                     <h5 class="white-text">Contacto</h5>
                     <ul>
                         <li>
-                            <a class="white-text" href="#!">juntar@fi.uncoma.edu.ar</a>
+                            <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
-                <div class="col s12 m6">
+                <div class="col-12 col-md-6 py-3">
                     <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
                 </div>
-                <div class="col s12 m6">
+                <div class="col-12 col-md-6 py-3">
                     <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>

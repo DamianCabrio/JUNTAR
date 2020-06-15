@@ -68,7 +68,7 @@ $this->title = 'Proyecto Juntar';
                         } ?>
                     </div>
 
-                    <div class="row m-auto center-content py-5">
+                    <div class="row py-5 pagination-lg pagination_center">
                         <?= // display pagination
                             LinkPager::widget([
                                 'pagination' => $pages,
