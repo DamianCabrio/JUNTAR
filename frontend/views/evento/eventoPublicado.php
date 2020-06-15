@@ -12,14 +12,16 @@ use yii\helpers\Html;
                 </div>
                 <br>
                 <hr>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center p-4">
                     <div>
                         <?= Html::a('Ver evento', ['ver-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?= Html::a('Despublicar evento ', ['despublicar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
                         <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                     </div>
-                </div>    
+                </div>
+                <br>
+                <hr>     
         </div>
     </div>
 </div>
