@@ -182,7 +182,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 			<thead>
 				<th scope="col" class="text-center">#</th>
 				<th scope="col" class="text-center">Título</th>
-				<th scope="col" class="text-center">Descripción</th>
+				<!--<th scope="col" class="text-center">Descripción</th>-->
 				<th scope="col" class="text-center">Día</th>
 				<th scope="col" class="text-center">Hora Inicio </th>
 				<th scope="col" class="text-center">Hora Fin </th>
