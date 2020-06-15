@@ -213,7 +213,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 						</ul>
 					<?php } ?>
 				</td>
-				<td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
+				
+				<?php 
+				if(Yii::$app->user->can('Organizador')){ ?>
+					<td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
+				<?php } ?>
 					   
 				<?php endforeach; ?>
 			</tr>
