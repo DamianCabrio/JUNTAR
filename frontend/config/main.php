@@ -43,7 +43,7 @@ return [
             'errorAction' => 'site/error',
         ],
           'urlManager' => [
-            'enablePrettyUrl' => true,
+            'enablePrettyUrl' => false,
             'showScriptName' => false,
              'rules' => [
                  'eventos/ver-evento/<slug>' => 'evento/ver-evento',
