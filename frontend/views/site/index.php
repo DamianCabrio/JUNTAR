@@ -54,8 +54,7 @@ $this->title = 'Proyecto Juntar';
                             echo "<hr>";
                             echo "<p class='card-text'>" . $evento["lugar"] . "</p>";
                             echo "<p class='card-text'>" . strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n") . "</p>";
-                            echo Html::a('Más Información', ['/evento/ver-evento', "idEvento" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
-                            echo Html::a('Test', ['eventos/ver-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                            echo Html::a('Más Información', ['eventos/ver-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                         echo "</div></div></div>";
                         endif;
                     } ?>
