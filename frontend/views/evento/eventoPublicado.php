@@ -16,7 +16,7 @@ use yii\helpers\Html;
                     <div>
                         <?= Html::a('Ver evento', ['ver-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                        <?= Html::a('Despublicar evento ', ['despublicar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+                        <?= Html::a('Suspender evento ', ['despublicar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
                         <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                     </div>
                 </div>
