@@ -66,6 +66,11 @@ $this->title = 'Proyecto Juntar';
                             endif;
                         } ?>
                     </div>
+                    <?php else : ?>
+                    <div class="row">
+                        <h2 class="text-white text-uppercase">No se encontraron eventos, vuelva a intentar.</h2><br>
+                    </div>
+                <?php endif; ?>
 
                     <div class="row">
                         <?= // display pagination
@@ -76,11 +81,7 @@ $this->title = 'Proyecto Juntar';
 
                     </div>
 
-                <?php else : ?>
-                    <div class="row">
-                        <h2 class="text-white text-uppercase">No se encontraron eventos, vuelva a intentar.</h2><br>
-                    </div>
-                <?php endif; ?>
+        
             </div>
         </section>
     </div>
