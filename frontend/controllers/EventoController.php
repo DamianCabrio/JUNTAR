@@ -236,10 +236,17 @@ class EventoController extends Controller
      * @return Evento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id = "", $slug = "")
     {
-        if (($model = Evento::findOne($id)) !== null) {
-            return $model;
+
+        if($id == ""){
+            if (($model = Evento::findOne(["nombreCortoEvento" => $slug])) !== null) {
+                return $model;
+            }
+        }elseif($slug == ""){
+            if (($model = Evento::findOne(["idEvento" => $id])) !== null) {
+                return $model;
+            }
         }
 
         throw new NotFoundHttpException('La página solicitada no existe.');
@@ -277,17 +284,17 @@ class EventoController extends Controller
                  }
             }
             $model->save();
-            return $this->redirect(['evento-cargado', 'idEvento' => $model->idEvento]);
+            return $this->redirect(['eventos/evento-cargado/'. $model->nombreCortoEvento]);
   
         }
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer]);
     }
 
 
-    public function actionEventoCargado($idEvento)
+    public function actionEventoCargado($slug)
     {
         return $this->render('eventoCargado', [
-            'model' => $this->findModel($idEvento),
+            'model' => $this->findModel("",$slug),
         ]);
     }
 
@@ -295,11 +302,11 @@ class EventoController extends Controller
      * Recibe por parámetro un id, se busca esa instancia del event y se obtienen todos las presentaciones que pertenecen a ese evento.
      * Se envia la instancia del evento junto con todas la presentaciones sobre un arreglo.
      */
-    public function actionVerEvento($idEvento)
+    public function actionVerEvento($slug)
     {
 
-        $evento = $this->findModel($idEvento);
-        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
+        $evento = $this->findModel("",$slug);
+        $presentaciones = Presentacion::find()->where(['idEvento' => $evento->idEvento])->orderBy('idPresentacion')->all();
 
         if($evento == null){
             return $this->goHome();
@@ -313,7 +320,7 @@ class EventoController extends Controller
         if (!Yii::$app->user->getIsGuest()){
 
             $inscripcion = Inscripcion::find()
-                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $idEvento])
+                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])
                 ->andWhere(["!=", "estado", 2])->one();
 
             if($inscripcion != null) {
@@ -355,9 +362,9 @@ class EventoController extends Controller
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-     public function actionEditarEvento($idEvento){
+     public function actionEditarEvento($slug){
 
-        $model = $this->findModel($idEvento);
+        $model = $this->findModel("",$slug);
 
         $modelLogo = new UploadFormLogo();
         $modelFlyer = new UploadFormFlyer();
@@ -380,7 +387,7 @@ class EventoController extends Controller
                  }
             }
             $model->save();
-            return $this->redirect(['ver-evento', 'idEvento' => $model->idEvento]);
+            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
         }
 
         return $this->render('editarEvento', [
@@ -396,8 +403,8 @@ class EventoController extends Controller
       * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
       * atributo idEstadoEvento por el valor 1.
       */
-     public function actionPublicarEvento($idEvento){
-        $model = $this->findModel($idEvento);
+     public function actionPublicarEvento($slug){
+        $model = $this->findModel("",$slug);
        
         $model->fechaCreacionEvento = date('Y-m-d');    
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
@@ -413,8 +420,8 @@ class EventoController extends Controller
       * Cambia en el atributo fechaCreacionEvento por null, y en el
       * atributo idEstadoEvento por el valor 4.
       */
-     public function actionDespublicarEvento($idEvento){
-        $model = $this->findModel($idEvento);
+     public function actionDespublicarEvento($slug){
+        $model = $this->findModel("", $slug);
        
         $model->fechaCreacionEvento = null;   
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador

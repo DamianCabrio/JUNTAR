@@ -107,9 +107,9 @@ class SiteController extends Controller
         $orden = $request->get("orden", "");
 
         if($orden != ""){
-            $ordenSQL = $orden == "0" ? "fechaCreacionEvento DESC" : "fechaInicioEvento DESC";
+            $ordenSQL = $orden == "0" ? "fechaCreacionEvento ASC" : "fechaInicioEvento ASC";
         }else{
-            $ordenSQL = "fechaCreacionEvento DESC";
+            $ordenSQL = "fechaCreacionEvento ASC";
         }
 
         if ($busqueda != "") {
@@ -182,6 +182,18 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionSlug($slug)
+    {
+        $model = Evento::find()->where(['nombreCortoEvento'=>$slug])->one();
+        if (!is_null($model)) {
+            return $this->render('evento/verEvento', [
+                'evento' => $model,
+            ]);
+        } else {
+            return $this->redirect('/site/index');
+        }
     }
 
     /**
