@@ -5,6 +5,19 @@
  */
 $(document).ready(function () {
 
+    //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite 
+    $("#evento-preinscripcion").change(function () {
+        respuesta = $("#evento-preinscripcion").val();
+        if (respuesta == 0) {
+            $("#fechaLimite").hide();
+            $("#evento-fechalimiteinscripcion").attr("required", false);
+        }
+        if (respuesta == 1) {
+            $("#fechaLimite").show();
+            $("#evento-fechalimiteinscripcion").attr("required", true);
+        }
+    });
+
     $('.showpw .custom-control-input').click(function () {
         var type = $('#signupform-password').attr("type");
 
@@ -31,17 +44,7 @@ $(document).ready(function () {
             $('#resetpasswordform-password').attr("type", "password");
         }
 
-        $("#evento-preinscripcion").change(function () {
-            respuesta = $("#evento-preinscripcion").val();
-            if (respuesta == 0) {
-                $("#fechaLimite").hide();
-                $("#evento-fechalimiteinscripcion").attr("required", false);
-            }
-            if (respuesta == 1) {
-                $("#fechaLimite").show();
-                $("#evento-fechalimiteinscripcion").attr("required", true);
-            }
-        });
+       
     });
     
     // Habilitacion de los popover
