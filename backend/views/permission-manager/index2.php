@@ -28,21 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Roles tab links-->
 
         <!-- Tab contents by role -->
-        <div class="col-md-8 col-sm-12 m-auto">
+        <div class="col-md-8 col-sm-12 m-auto d-none" id="dataPermission">
             <h1 class="text-center"> Permisos </h1>
-            <div class="row invisible" id="dataContainer">
+            <div class="row" id="dataContainer">
                 <div class="col-md-3 col-sm-12" id="roleDiv">
                     <?php
-                    foreach ($roles as $index => $rol):
+                    foreach ($roles as $index => $rol) {
                         if ($rol['name'] != "Administrador") {
                             ?>
-                            <div class="<?php echo'order-' . Html::encode($index); ?>" id="<?php echo Html::encode($rol['name']); ?>"> 
+                            <div class="<?php echo'order-' . Html::encode($index); ?> roles" id="<?php echo Html::encode($rol['name']); ?>"> 
                                 <p> <?php echo Html::encode($rol['name']); ?> </p>
-                                <span class="imageDiv"></span>
+                                <div class="roleActionDiv"></div>
                             </div>
                             <?php
                         }
-                    endforeach;
+                    }
+//                    endforeach;
                     ?>
                 </div>
 
@@ -51,8 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tbody>
                             <?php foreach ($permisos as $index => $unPermiso): ?>
                                 <tr class="<?php echo Html::encode($unPermiso['name']); ?>">
-                                    <td class="col-6">  <?php echo Html::encode($unPermiso['name']); ?>  </td>
-                                    <td class="col-4">
+                                    <td class="col-md-6">  <?php echo Html::encode($unPermiso['name']); ?>  </td>
+                                    <td class="col-md-2">
                                         <dfn>
                                             <abbr title="<?php echo Html::encode($unPermiso['description']); ?>">
                                                 <img src="icons/question-circle.svg" class="d-none d-md-inline-block filter-blue fixed-right" role="img" width="20" height="20" style="margin: 0px 10px 0 20px;">
@@ -60,9 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </dfn>
                                         <p class="d-sm-none d-inline-block"> <?php echo Html::encode($unPermiso['description']); ?> </p>
                                     </td>
-                                    <td class="col-2">
-                                        <!--<div class="col-md-2 <?php // echo "button".Html::encode($unPermiso['name']); ?>"></div>-->
-                                        <div class="col-md-2 buttonDiv"></div>
+                                    <td class="col-md-4 actionDiv">
+                                        <!--<div class="col-md-2 <?php // echo "button".Html::encode($unPermiso['name']);     ?>"></div>-->
+                                        <!--<div class="col-md-2 buttonDiv"></div>-->
+                                        <!--<div class="col-md-2 textRoleDiv"></div>-->
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -70,13 +72,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </table>
                 </div>
             </div>
-            <!-- Tab contents by role -->
-
         </div>
+        <!-- Tab contents by role -->
     </div>
-    <?php
-    $this->registerJs('$(function (){
-  $("#tab-permission").children().first().addClass("active show");
-  $("#nav-rol").children().first().children().addClass("active");
-});', \yii\web\View::POS_READY);
-    ?>
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    
