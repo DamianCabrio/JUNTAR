@@ -22,12 +22,12 @@ $this->title = 'Proyecto Juntar';
         </header>
         <section class="darkish_bg" id="events">
             <div class="container padding_select">
-                <form class="form-inline my-2 my-lg-0" action="index.php#events">
+                <form class="form-inline my-2 my-lg-0" action="#events">
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <select name="orden" class="custom-select custom-select-lg mb-3" onchange="this.form.submit()">
                             <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="0">Fecha de creacion</option>
-                            <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="1">Fecha de inicio del evento</option>
+                            <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 1) ? "selected" : "" ?> value="1">Fecha de inicio del evento</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-6">
@@ -55,15 +55,15 @@ $this->title = 'Proyecto Juntar';
                         echo  "<hr>";
                         echo "<p class='card-text'>" . $evento["lugar"] . "</p>";
                         echo "<p class='card-text'>" . strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n") . "</p>";
-                        echo Html::a('Más Información', ['/evento/view', "id" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
+                        echo Html::a('Más Información', ['/evento/ver-evento', "idEvento" => $evento["idEvento"]], ['class' => 'btn btn-primary btn-lg full_width']);
                         echo "</div></div></div>";
                         endif;
                     } ?>
                 </div>
 
                 <div class="row">
-                    <?<?php // display pagination
-                        echo LinkPager::widget([
+                    <?= // display pagination
+                         LinkPager::widget([
                         'pagination' => $pages,
                         ]); 
                     ?>
