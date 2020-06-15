@@ -33,7 +33,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('@web/images/juntar-icon-b.svg',  ['style' => 'width:30px']),
+            'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg',  ['style' => 'width:30px']),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
@@ -98,7 +98,7 @@ AppAsset::register($this);
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('images/juntar-logo-b.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
             <div class="row">

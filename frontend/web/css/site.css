@@ -269,3 +269,10 @@ section {
 #fechaLimite{
     display: none;
 }
+
+@media only screen and (max-width: 767px) {
+    .padding_logo{
+        padding-left: 10vw;
+        padding-right: 10vh;
+    }
+}
