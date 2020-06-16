@@ -12,6 +12,7 @@ use frontend\models\EventoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * InscripcionController implements the CRUD actions for Inscripcion model.
