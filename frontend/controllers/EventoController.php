@@ -13,7 +13,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\helpers\Url;
 
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
