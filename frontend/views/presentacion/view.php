@@ -15,7 +15,7 @@ $this->title = $model->tituloPresentacion;
 
     <h1><?= Html::encode($this->title) ?></h1>
 	<?php
-	if(Yii::$app->user->can('Organizador')){
+	if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idEvento0->idUsuario0->idUsuario){
 		?>
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->idPresentacion], ['class' => 'btn btn-primary']) ?>

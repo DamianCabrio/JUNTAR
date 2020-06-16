@@ -146,6 +146,9 @@ a.desc:after {
     padding-top: 1vh;
     padding-bottom: 4vh;
 }
+.pagination_center {
+    justify-content: center;
+ }
 header{
     margin-top: -100px;
 }
@@ -268,4 +271,11 @@ section {
 
 #fechaLimite{
     display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .padding_logo{
+        padding-left: 10vw;
+        padding-right: 10vh;
+    }
 }

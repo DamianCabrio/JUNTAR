@@ -55,6 +55,7 @@ class AcreditacionController extends Controller
 
         $request = Yii::$app->request;
         $idEvento = $request->get('id');
+        $slug = $request->get("slug");
         $evento = Evento::find()->where(["idEvento" => $idEvento])->one();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -64,9 +65,11 @@ class AcreditacionController extends Controller
                 $inscripcion->save();
                 Yii::$app->session->setFlash('success', '<h2> Acreditado. </h2>'
                     . '<p> Usted se acredito. </p>');
+
+                return $this->redirect(['eventos/ver-evento/' . $slug]);
             } else {
-                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2> '
-                    . '<p> El codigo que ingreso es erroneo, vuelva a intentar. </p>');
+                Yii::$app->session->setFlash('error', '<h2> El codigo ingresado es invalido </h2> '
+                    . '<p> Por favor vuelva a intentar </p>');
             }
 
             return $this->refresh();
