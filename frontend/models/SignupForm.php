@@ -79,7 +79,7 @@ class SignupForm extends Model {
             //Reglas password
             ['password', 'match', 'pattern' => '/\d/', 'message' => 'La contraseña debe tener al menos un número.'],
             ['password', 'match', 'pattern' => '/\w*[A-Z]/', 'message' => 'La contraseña debe tener al menos una mayúscula.'],
-            ['password', 'string', 'min' => 8, 'max' => 50, 'message' => 'La contraseña ingresada no es válida.',
+            ['password', 'string', 'min' => 6, 'max' => 50, 'message' => 'La contraseña ingresada no es válida.',
                 'tooShort' => 'La contraseña debe tener como mínimo 8 caracteres.', //comentario para minlenght
                 'tooLong' => 'La contraseña debe tener como máximo 20 caracteres.'], //comentario para maxlenght
         ];
