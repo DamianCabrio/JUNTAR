@@ -46,6 +46,13 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
              'rules' => [
+                 'eventos/ver-evento/<slug>' => 'evento/ver-evento',
+                 'eventos/evento-cargado/<slug>' => 'evento/evento-cargado',
+                 'eventos/editar-evento/<slug>' => 'evento/editar-evento',
+                 'eventos/publicar-evento/<slug>' => 'evento/publicar-evento',
+                 'eventos/despublicar-evento/<slug>' => 'evento/despublicar-evento',
+                 'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
+                 'defaultRoute' => '/site/index',
               ],
           ],
     ],

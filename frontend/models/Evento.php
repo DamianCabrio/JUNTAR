@@ -5,6 +5,7 @@ use frontend\models\Usuario;
 
 use frontend\models\ModalidadEvento;
 use Yii;
+use yii\behaviors\SluggableBehavior;
 
 /**
  * This is the model class for table "evento".
@@ -37,6 +38,20 @@ use Yii;
  */
 class Evento extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return [
+         [
+             "class" => SluggableBehavior::className(),
+             "attribute" => "nombreCortoEvento",
+             "slugAttribute" => "nombreCortoEvento",
+             "immutable" => true,
+             "ensureUnique" => true,
+         ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
