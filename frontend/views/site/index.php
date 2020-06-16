@@ -5,6 +5,7 @@
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\LinkPager;
+use yii\helpers\Url;
 
 $this->title = 'Proyecto Juntar';
 ?>
@@ -55,7 +56,7 @@ $this->title = 'Proyecto Juntar';
                             if ($evento->idEstadoEvento == 1) :
                                 echo "<div class='col-12 col-md-4 mb-3'>";
                                 echo "<div class='card bg-light'>";
-                                echo "<img src='" . $evento["imgLogo"] . " 'class='card-img-top' alt=''...'>";
+                                echo "<img src='".Url::base('')."/" . $evento["imgLogo"]."' class='card-img-top' alt=''...'>";
                                 echo "<div class='card-body'>";
                                 echo "<h5 class='card-title'>" . $evento["nombreEvento"] . "</h5>";
                                 echo "<h5 class='card-title'>" . $evento["fechaInicioEvento"] . "</h5>";
