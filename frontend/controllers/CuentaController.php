@@ -2,12 +2,12 @@
 
 namespace frontend\controllers;
 
-
 use frontend\models\Usuario;
 use frontend\models\SignupForm;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+
 /**
  * Site controller
  */
@@ -76,15 +76,39 @@ class CuentaController extends Controller {
                 ->innerJoin('usuario_rol', 'usuario_rol.user_id = usuario.idUsuario')
                 //condicion
                 ->where(['idUsuario' => Yii::$app->user->identity->id]);
-                //Agrupamiento
-                //->groupBy(['jugador.posicion']);
-                
+        //Agrupamiento
+        //->groupBy(['jugador.posicion']);
         //obtenemos el array asociativo a partir de la query
         $userData = $queryUser->all();
 
         return $this->render('profile', [
                     'data' => $userData,
 //                    'data' => $queryUser,
+        ]);
+    }
+
+    /**
+     * Permite actualizar la información del perfil
+     *
+     * @return mixed
+     */
+    public function actionEditprofile() {
+
+        //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
+        $model = $this->findModel(Yii::$app->user->identity->id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
+                    . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+            return $this->redirect(['profile']);
+        }
+//        if (Yii::$app->request->post('search') != null) {
+//            //define el tipo de respuesta del metodo
+//            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//        }
+
+        return $this->render('editprofile', [
+                    'model' => $model,
         ]);
     }
 
@@ -106,27 +130,6 @@ class CuentaController extends Controller {
         ]);
     }
 
-    /**
-     * Permite actualizar la información del perfil
-     *
-     * @return mixed
-     */
-    public function actionEditprofile() {
-
-        //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
-        $model = $this->findModel(Yii::$app->user->identity->id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
-                    . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
-            return $this->redirect(['profile']);
-        }
-
-        return $this->render('editprofile', [
-                    'model' => $model,
-        ]);
-    }
-
     protected function findModel($id) {
         if (($model = Usuario::findOne($id)) !== null) {
             return $model;
@@ -134,21 +137,19 @@ class CuentaController extends Controller {
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    
-    
+
     /**
      * Habilitar ser gestor de eventos.
      * @param int $id identificador del usuario.
      * @return mixed
      */
-     public function actionChangeRol($id)
-     {
-       $organizateRol = yii::$app->authManager->getRole('Organizador');
-       if (yii::$app->authManager->getAssignment('Organizador', $id ) == null) {
-         yii::$app->authManager->assign($organizateRol, $id);
-         Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
-       }
-       return $this->redirect(['profile']);
-     }
+    public function actionChangeRol($id) {
+        $organizateRol = yii::$app->authManager->getRole('Organizador');
+        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
+            yii::$app->authManager->assign($organizateRol, $id);
+            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
+        }
+        return $this->redirect(['profile']);
+    }
 
 }
