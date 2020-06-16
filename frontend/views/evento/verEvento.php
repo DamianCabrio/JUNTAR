@@ -104,7 +104,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 	
     <!--<p class="text-center">Posee los siguientes datos</p>-->
 	<div class="row">
-		<div class="col-8">
+		<div class="col-12 col-md-8">
 			<div class="row">
 				<div class="col-12 text-center">
 					<?= $flyer ?>
@@ -122,7 +122,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				</div>
 			</div>
 		</div>
-		<div class="col-4 p-4" style="background-color:#f2f2f2;">
+		<div class="col-12 col-md-4 p-4" style="background-color:#f2f2f2;">
 			<div>
 				<h4 class="py-2 px-3 mb-2 bg-primary text-white">Detalles</h4>
 				<p><b>Fecha de Inicio:</b></p>
@@ -181,7 +181,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 		<table class="table table-bordered" style="font-size: 0.8rem;">
 			<thead>
 				<th scope="col" class="text-center">#</th>
-				<th scope="col" class="text-center">Título</th>
+				<th scope="col" class="text-center w-25">Título</th>
 				<!--<th scope="col" class="text-center">Descripción</th>-->
 				<th scope="col" class="text-center">Día</th>
 				<th scope="col" class="text-center">Hora Inicio </th>
@@ -197,7 +197,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
         ?>
 			<tr>
 				<th class="align-middle"><?= $cont ?></th>
-				<td class="align-middle"><?= $objPresentacion->tituloPresentacion ?><br/><?= Html::a('(Más información)', ['presentacion/view', 'presentacion' => $objPresentacion->idPresentacion]) ?></td>
+				<td class="align-middle w-25"><?= $objPresentacion->tituloPresentacion ?><br/><?= Html::a('(Más información)', ['presentacion/view', 'presentacion' => $objPresentacion->idPresentacion]) ?></td>
 				<!--<td class="align-middle"><?= $objPresentacion->descripcionPresentacion ?></td>-->
 				<td class="align-middle"><?= $objPresentacion->diaPresentacion ?></td>
 				<td class="align-middle"><?= $objPresentacion->horaInicioPresentacion ?></td>
