@@ -9,9 +9,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-
-
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
 use frontend\models\Evento;
