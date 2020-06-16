@@ -33,8 +33,8 @@ use yii\widgets\ActiveForm;
                          <?php }?>
                          <?php 
                              if(($objEvento->idEstadoEvento) == 1){
-                         ?>
-                                 <?= Html::a('Despublicar evento ', ['eventos/despublicar-evento/' . $objEvento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         ?>  
+                           <?= Html::a('Suspender evento ', ['despublicar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
                          <?php }?>
 
                     </td>
