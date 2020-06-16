@@ -212,33 +212,6 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
-
-    private function actionContacto() {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', '<h2> Consulta Recibida. </h2>'
-                    . '<p> Muchas gracias por ponerte en contacto con Juntar. </p>'
-                    . '<p> Un administrador se pondrá en contacto para responder tus consultas lo más rápido posible! </p>');
-            } else {
-                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2> '
-                    . '<p> Ocurrió un error mientras se enviaba su consulta. Por favor, intentelo nuevamente. </p>'
-                    . '<p> Si cree que es un error del servidor, por favor, contacte con un administrador </p>');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contacto', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
      * Displays about page.
      *
      * @return mixed
@@ -460,7 +433,7 @@ class SiteController extends Controller
                 //iniciamos authManager
                 $auth = Yii::$app->authManager;
                 //indicamos el rol que deseamos asignarle al usuario
-                $usuarioRegistrado = $auth->createRole('Registrado');
+                $usuarioRegistrado = $auth->createRole('Organizador');
                 // Asignamos el rol al usuario registrado
                 $auth->assign($usuarioRegistrado, (Yii::$app->user->id));
                 //destruimos la referencha al authManager
