@@ -5,7 +5,7 @@
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
-use yii\widgets\LinkPager;
+use yii\bootstrap4\LinkPager;
 
 $this->title = 'Proyecto Juntar';
 ?>
