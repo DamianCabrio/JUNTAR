@@ -43,10 +43,8 @@ $(document).ready(function () {
         } else {
             $('#resetpasswordform-password').attr("type", "password");
         }
-
-       
     });
-    
+
     // Habilitacion de los popover
     $(function () {
         $("[data-toggle='popover']").popover({
@@ -61,7 +59,8 @@ $(document).ready(function () {
     //buscamos valores por defecto para pais argentina
     if ($('#signupform-pais').val() === 'Argentina') {
         autocompleteProvincias(eliminarDiacriticos('Argentina'));
-    };
+    }
+    ;
 
     //input provincia
     $('#signupform-pais').change(function () {
@@ -73,7 +72,39 @@ $(document).ready(function () {
     $('#signupform-provincia').change(function () {
         autocompleteLocalidades(eliminarDiacriticos($(this).val()));
     });
+
+    //funcionalidad editar perfil
+    $('.editProfile').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        editProfileModal();
+    });
 });
+
+/**
+ * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
+ * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
+ * 
+ * @returns none
+ */
+function editProfileModal() {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: "index.php?r=cuenta/editprofile",
+//        data: {data: data}
+    }).done(function (data) {
+        //hacemos visible el modal
+        $('#modalProfile').modal('show');
+        //convertimos a html el documento recibido
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en el html recibido y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.profileForm').each(function () {
+            $('.modal-body').append($(this).html());
+        });
+    });
+}
 
 /**
  * Metodo autocompleteProvincia --> Busca los datos de las provincias pertenecientes al pais seleccionado
@@ -82,7 +113,6 @@ $(document).ready(function () {
  * @param {String} nombrePais
  * @returns none
  */
-
 function autocompleteProvincias(nombrePais) {
     $.ajax({
         url: "index.php?r=site%2Fsearch-provincias",

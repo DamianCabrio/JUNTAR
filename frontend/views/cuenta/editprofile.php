@@ -17,15 +17,16 @@ $this->params['breadcrumbs'][] = 'Actualizar información';
     <?php // echo $this->render('_form', ['model' => $model,]) ?>
 
     <div class="row">
-        <div class="col-lg-5 m-auto">
+        <div class="col-lg-5 m-auto profileForm">
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'nombre')->label('Nombre *') ?>
-            <?= $form->field($model, 'apellido')->label('Apellido *') ?>
-            <?= $form->field($model, 'dni')->input('number')->label('DNI *'); ?>
-            <?php // echo $form->field($model, 'telefono')->label('Telefono *'); ?>
-            <?= $form->field($model, 'localidad')->label('Localidad *'); ?>
-            <?php // echo $form->field($model, 'fecha_nacimiento')->input('date')->label('Fecha de Nacimiento *'); ?>
+            <?= $form->field($model, 'nombre')->label('Nombre (*)')->textInput(['placeholder' => 'Ejemplo: Juan']) ?>
+            <?= $form->field($model, 'apellido')->label('Apellido (*)')->textInput(['placeholder' => 'Ejemplo: Perez']) ?>
+            <?= $form->field($model, 'dni')->label('DNI (*)')->textInput(['placeholder' => 'Ejemplo: 26734824']); ?>
+            <?= $form->field($model, 'pais')->label('Pais (*)')->textInput(['value' => 'Argentina']); ?>
+            <?= $form->field($model, 'provincia')->label('Provincia (*)')->textInput(['placeholder' => 'Ejemplo: Buenos Aires']); ?>
+            <?= $form->field($model, 'localidad')->label('Localidad (*)')->textInput(['placeholder' => 'Ejemplo: Neuquen']); ?>
+            <?= $form->field($model, 'email')->input('email')->label('Dirección de Correo (*)')->textInput(['placeholder' => 'Ejemplo: myEmail@gmail.com']); ?>
 
             <?php // echo $form->field($model, 'email')->input('email')->label('Email *'); ?>
             <div class="form-group">
