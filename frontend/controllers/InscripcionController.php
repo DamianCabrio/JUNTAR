@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use yii\filters\AccessControl;
 use \yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
