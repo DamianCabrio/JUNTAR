@@ -35,6 +35,13 @@ class EventoController extends Controller
             'rules' => [
                 [
                     'allow' => true,
+                    'actions' => [
+                        "ver-evento"
+                    ],
+                    'roles' => ['?'], // <----- guest
+                ],
+                [
+                    'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
                         //                        $module = Yii::$app->controller->module->id;
