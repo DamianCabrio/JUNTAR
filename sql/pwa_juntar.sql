@@ -67,25 +67,25 @@ CREATE TABLE `modalidad_evento` (
 -- Estructura de tabla para la tabla `evento`
 --
 
-CREATE TABLE `evento` (
-  `idEvento` bigint(20) NOT NULL,
-  `idUsuario` bigint(20) NOT NULL,
-  `idCategoriaEvento` tinyint(4) NOT NULL,
-  `idEstadoEvento` tinyint(4) NOT NULL,
-  `idModalidadEvento` tinyint(4) NOT NULL,
-  `nombreEvento` varchar(200) NOT NULL,
-  `nombreCortoEvento` varchar(100) NOT NULL,
-  `descripcionEvento` varchar(800) NOT NULL,
-  `lugar` varchar(200) NOT NULL,
-  `fechaInicioEvento` date NOT NULL,
-  `fechaFinEvento` date NOT NULL,
-  `imgFlyer` varchar(200) DEFAULT NULL,
-  `imgLogo` varchar(200) DEFAULT NULL,
-  `capacidad` smallint(6) NOT NULL,
-  `preInscripcion` tinyint(1) NOT NULL,
-  `fechaLimiteInscripcion` date NOT NULL,
-  `codigoAcreditacion` varchar(100) DEFAULT NULL,
-  `fechaCreacionEvento` date NOT NULL
+CREATE TABLE evento (
+  idEvento bigint(20) NOT NULL,
+  idUsuario bigint(20) NOT NULL,
+  idCategoriaEvento tinyint(4) NOT NULL,
+  idEstadoEvento tinyint(4) NOT NULL,
+  idModalidadEvento tinyint(4) NOT NULL,
+  nombreEvento varchar(200) NOT NULL,
+  nombreCortoEvento varchar(100) NOT NULL,
+  descripcionEvento varchar(800) NOT NULL,
+  lugar varchar(200) NOT NULL,
+  fechaInicioEvento date NOT NULL,
+  fechaFinEvento date NOT NULL,
+  imgFlyer varchar(200) DEFAULT NULL,
+  imgLogo varchar(200) DEFAULT NULL,
+  capacidad smallint(6) NOT NULL,
+  preInscripcion tinyint(1) NOT NULL,
+  fechaLimiteInscripcion date DEFAULT NULL,
+  codigoAcreditacion varchar(100) DEFAULT NULL,
+  fechaCreacionEvento date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -272,7 +272,7 @@ ALTER TABLE `permiso_rol`
 --
 ALTER TABLE `presentacion`
   ADD PRIMARY KEY (`idPresentacion`),
-  ADD UNIQUE KEY `idEvento` (`idEvento`);
+  ADD KEY `idEvento` (`idEvento`);
 
 --
 -- Indices de la tabla `presentacion_expositor`
@@ -421,20 +421,32 @@ ALTER TABLE `usuario_rol`
 --
 
 INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('acreditacion/acreditacion', 2, 'Permite a un usuario acreditarse en un evento', NULL, NULL, 1592267103, 1592267103),
 ('Administrador', 1, 'Superusuario Administrador', NULL, NULL, 1590382997, 1590382997),
 ('cuenta/change-rol', 2, 'Permite a un usuario cambiar su rol', NULL, NULL, 1591577677, 1591577677),
 ('cuenta/editprofile', 2, 'Modificar datos del perfil', NULL, NULL, 1591368838, 1591368838),
 ('cuenta/profile', 2, 'Perfil de usuario', NULL, NULL, 1591354697, 1591354697),
+('evento/cargar-evento', 2, 'Permite cargar un evento en la plataforma', NULL, NULL, 1592267549, 1592267549),
+('evento/cargar-expositor', 2, 'Permite cargar un expositor al evento', NULL, NULL, 1592267671, 1592267671),
+('evento/despublicar-evento', 2, 'Permite eliminar la publicacion de un evento de la plataforma', NULL, NULL, 1592267644, 1592267644),
+('evento/editar-evento', 2, 'Permite editar un evento de la plataforma', NULL, NULL, 1592267568, 1592267568),
+('evento/listar-eventos', 2, 'Permite visualizar todos los eventos creados por un organizador', NULL, NULL, 1592267591, 1592267591),
+('evento/publicar-evento', 2, 'Permite publicar un evento en la plataforma', NULL, NULL, 1592267609, 1592267609),
+('evento/ver-evento', 2, 'Permite ver eventos', NULL, NULL, 1592266904, 1592266904),
+('inscripcion/eliminar-inscripcion', 2, 'Permite a un usuario anular la inscripcion a un evento', NULL, NULL, 1592267073, 1592267073),
+('inscripcion/preinscripcion', 2, 'Permite a un usuario preinscribirse a un evento', NULL, NULL, 1592267029, 1592267029),
 ('Organizador', 1, 'Usuario gestor de eventos', NULL, NULL, 1590382997, 1590382997),
 ('permission-manager/assing-permission', 2, NULL, NULL, NULL, NULL, NULL),
 ('permission-manager/create-permission', 2, 'Permite crear un nuevo permiso para la plataforma', NULL, NULL, 1591336656, 1591336656),
 ('permission-manager/create-rol', 2, 'Permite crear un nuevo rol en la plataforma', NULL, NULL, 1591336774, 1591336774),
+('permission-manager/get-permisos-by-rol', 2, 'Gestión de permisos por Rol.', NULL, NULL, NULL, NULL),
 ('permission-manager/index', 2, 'Permite visualizar los roles para asignarles permisos', NULL, NULL, 1591336739, 1591336739),
-('permission-manager/index2', 2, 'Index de prueba', NULL, NULL, 1591524752, 1591524752),
+('permission-manager/index3', 2, 'Index de prueba', NULL, NULL, 1591524752, 1591524752),
 ('permission-manager/list-controllers', 2, NULL, NULL, NULL, NULL, NULL),
 ('permission-manager/remove', 2, 'Permite borrar permisos', NULL, NULL, 1591577405, 1591577405),
 ('permission-manager/update-permission', 2, 'Permite actualizar un permiso', NULL, NULL, 1591577497, 1591577497),
 ('permission-manager/update-rol', 2, 'Permite actualizar roles', NULL, NULL, 1591577363, 1591577363),
+('presentacion/cargar-presentacion', 2, 'Permite cargar una presentacion de un evento', NULL, NULL, 1592267738, 1592267738),
 ('Registrado', 1, 'Usuario registrado en la plataforma', NULL, NULL, NULL, NULL),
 ('site/about', 2, 'Permite visualizar el acerca de la pagina', NULL, NULL, 1591337803, 1591337803),
 ('site/captcha', 2, 'Permite visualizar captchas', NULL, NULL, 1591346343, 1591346343),
@@ -460,11 +472,13 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 ('Administrador', 'permission-manager/assing-permission'),
 ('Administrador', 'permission-manager/create-permission'),
 ('Administrador', 'permission-manager/create-rol'),
+('Administrador', 'permission-manager/get-permisos-by-rol'),
 ('Administrador', 'permission-manager/index'),
 ('Administrador', 'permission-manager/list-controllers'),
 ('Administrador', 'permission-manager/remove'),
 ('Administrador', 'permission-manager/update-permission'),
 ('Administrador', 'permission-manager/update-rol'),
+('Administrador', 'Registrado'),
 ('Administrador', 'site/error'),
 ('Administrador', 'site/index'),
 ('Administrador', 'site/login'),
@@ -475,9 +489,21 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 ('Administrador', 'usuario/index'),
 ('Administrador', 'usuario/update'),
 ('Administrador', 'usuario/view'),
+('Organizador', 'evento/cargar-evento'),
+('Organizador', 'evento/cargar-expositor'),
+('Organizador', 'evento/despublicar-evento'),
+('Organizador', 'evento/editar-evento'),
+('Organizador', 'evento/listar-eventos'),
+('Organizador', 'evento/publicar-evento'),
+('Organizador', 'presentacion/cargar-presentacion'),
 ('Organizador', 'Registrado'),
+('Registrado', 'acreditacion/acreditacion'),
+('Registrado', 'cuenta/change-rol'),
 ('Registrado', 'cuenta/editprofile'),
 ('Registrado', 'cuenta/profile'),
+('Registrado', 'evento/ver-evento'),
+('Registrado', 'inscripcion/eliminar-inscripcion'),
+('Registrado', 'inscripcion/preinscripcion'),
 ('Registrado', 'site/about'),
 ('Registrado', 'site/captcha'),
 ('Registrado', 'site/contact'),
@@ -500,7 +526,7 @@ INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `localidad`, `e
 (6, 'Alejandro', 'Medario', 32976700, 'Neuquén', 'registrado01@test.com', 'nE1auJs4ex8KmM7mo5UEtvrkFtSt94FI', '$2y$13$TkAsHr/QXEWKXR0OAxCm/.9ij2nod5iBibpk6ly0ZkTz9YeHmrEha', NULL, 10, 1590994878, 1590994878, 'vucICXx57O0zJv3LkAK7ueInqv9vrF1I_1590994878'),
 (7, 'Matias', 'Contreras', 31179842, 'Cipolletti', 'registrado02@test.com', '5pjZV8xixJkfcspDznsGCq3QuIbU05da', '$2y$13$gc42YUd7Qsp2vrJACHZYLOn3b.Mh9JmS1N/ZOLIf7ayyFhKre7rgW', NULL, 10, 1590994958, 1590994958, 'GApav7SolKFCdriU-_NNYnTleAfenZyz_1590994958'),
 (8, 'Lidia', 'Calderon', 32684666, 'Plottier', 'registrado03@test.com', 'dHMzF22B5zRjX4dSLn6J-fqlXPpvJYa2', '$2y$13$4Ym0uF4zAjqdCFboFsSurOekefP0bdSsR7faxqrlQaSK8Ma7NAqEq', NULL, 10, 1590995084, 1590995084, '_UvCdkNDMuJCQLjRlfQOjb6Hv_SaWb48_1590995084'),
-(9, 'Anastasia', 'Palomo', 34740201, 'Centenario', 'registrado04@test.com', 'LHalzRHycE2DAdCGiyGCetHUDEPVaFoK', '$2y$13$FerwjQJV1hAAiE6d6tBiueIDQoB4brUfBQJFUzYwLjZPeywtp27b6', NULL, 10, 1590995156, 1590995156, 'inbyGzB29SLhZquC0z4tw-mZpX0VzcL6_1590995156'),
+(9, 'Anastasia', 'Meza', 34740201, 'Centenario', 'registrado04@test.com', 'LHalzRHycE2DAdCGiyGCetHUDEPVaFoK', '$2y$13$FerwjQJV1hAAiE6d6tBiueIDQoB4brUfBQJFUzYwLjZPeywtp27b6', NULL, 10, 1590995156, 1590995156, 'inbyGzB29SLhZquC0z4tw-mZpX0VzcL6_1590995156'),
 (10, 'Joana', 'Otero', 24464510, 'Neuquén', 'registrado05@test.com', 'qKdu_wt2JYETR6_E2u87OYY3iOy16cBx', '$2y$13$rnVUVvZutr/96w1cS4HhfetZw3dBQBlD9u.1ya4cdg7FPKDwUoov.', NULL, 10, 1590995182, 1590995182, 'TR9EWhAvtwWD8FR3-Sm1qc9HdBGRO6BP_1590995182'),
 (11, 'Araceli', 'Manzano', 31747790, 'Neuquén', 'registrado06@test.com', 'sHy4nUiJC24Ahf7iAoM6LLdbqrozvcAA', '$2y$13$2bjcaQxu2/4UnjjwStwPSeQJgNNS/B09gbdw8uJPsbm6TLcCNcFi6', NULL, 10, 1590995202, 1590995202, '8wjkPYwqlYBeop4L8bL_VHabpkfLpUgL_1590995202'),
 (12, 'Fabiola', 'Maroto', 33102179, 'Plottier', 'registrado07@test.com', 'ipIF8YUsd4YWUho4xQk26K1LNyfh4Znz', '$2y$13$baEfEtJVIbb7NTQZLerLyeZdpWW/S525t0Ky.zTSx3c9pPwjBlp3a', NULL, 10, 1590995230, 1590995230, '_6rZyiqUDrYVG9Qsq2RUFnloz09aKVqN_1590995230'),
@@ -521,13 +547,86 @@ INSERT INTO `usuario_rol` (`item_name`, `user_id`, `created_at`) VALUES
 ('Registrado', 6, NULL),
 ('Registrado', 7, NULL),
 ('Registrado', 8, NULL),
-('Registrado', 9, 1591271733),
+('Registrado', 9, NULL),
 ('Registrado', 10, NULL),
 ('Registrado', 11, NULL),
 ('Registrado', 12, NULL),
 ('Registrado', 13, NULL),
 ('Registrado', 14, NULL),
 ('Registrado', 15, NULL);
+
+--
+-- Volcado de datos para la tabla `categoria_evento`
+--
+
+INSERT INTO categoria_evento (idCategoriaEvento, descripcionCategoria) VALUES
+(1, 'Seminario'),
+(2, 'Congreso'),
+(3, 'Diplomatura'),
+(4, 'Otra');
+
+--
+-- Volcado de datos para la tabla `estado_evento`
+--
+
+INSERT INTO estado_evento (idEstadoEvento, descripcionEstado) VALUES
+(1, 'Activo'),
+(2, 'inhabilitado'),
+(3, 'Finalizado'),
+(4, 'Borrador');
+
+--
+-- Volcado de datos para la tabla `modalidad_evento`
+--
+
+INSERT INTO modalidad_evento (idModalidadEvento, descripcionModalidad) VALUES
+(1, 'Presencial'),
+(2, 'Online'),
+(3, 'Presencial y Online'),
+(4, 'Otra');
+
+--
+-- Volcado de datos para la tabla `evento`
+--
+
+INSERT INTO `evento` (`idEvento`, `idUsuario`, `idCategoriaEvento`, `idEstadoEvento`, `idModalidadEvento`, `nombreEvento`, `nombreCortoEvento`, `descripcionEvento`, `lugar`, `fechaInicioEvento`, `fechaFinEvento`, `imgFlyer`, `imgLogo`, `capacidad`, `preInscripcion`, `fechaLimiteInscripcion`, `codigoAcreditacion`, `fechaCreacionEvento`) VALUES
+(1, 3, 1, 1, 2, 'Flisol Argentina', 'Flisol', 'El FLISoL es el evento de difusión de Software Libre más grande en Latinoamérica y está dirigido a todo tipo de público: estudiantes, académicos, empresarios, trabajadores, funcionarios públicos, entusiastas y aun personas que no poseen conocimiento informático. La entrada es gratuita y su principal objetivo es promover el uso del software libre, dando a conocer al público en general su filosofía, alcances, avances y desarrollo. Durante el evento normalmente se instala, de manera gratuita y totalmente legal, software libre en las computadoras que llevan los asistentes y simultáneamente se darán charlas de divulgación, pero en el marco del aislamiento en el que estamos todos, este año vamos dar charlas de forma virtual.', 'Facultad de infomática Uncoma', '2020-06-25', '2020-06-26', '/eventos/images/flyers/flisol.png', '/eventos/images/logos/logoFlisol.png', 150, 1, '2020-06-18', '', '2020-06-15'),
+(2, 3, 2, 1, 2, 'Tecnologia en Educación & Educación en Tecnologia', 'TeyeT', 'Anualmente, la Red de Universidades Nacionales con carreras de Informática (RedUNCI) desarrolla el Congreso de “Tecnología en Educación” y “Educación en Tecnología” (TE&ET). TE&ET tiene por objetivo la exposición y discusión de trabajos relacionados con la educación y la tecnología, en un contexto multidisciplinario. Los trabajos presentados en TE&ET relacionan Tecnologías de la Información y la Comunicación (TIC) aplicadas en Educación y a su vez, se presentan trabajos respecto del enfoque educativo de las TICs.\r\n\r\nLa edición 2020, ha sido declarado de interes por el Consejo Directivo de la Facultad de Informática de la Universidad Nacional del Comahue RESOLUCION CD FAIF Nº003/2020', 'Facultad de infomática Uncoma', '2020-07-06', '2020-07-07', NULL, '/eventos/images/logos/tytLogo.png', 150, 1, '2020-07-01', '', '2020-06-15'),
+(3, 3, 1, 1, 2, 'Herramientas y Tips Prácticos para facilitar el Teletrabajo ', 'WEBINAR', 'Desmitificar el teletrabajo. Sensibilizar a los tomadores de decisiones (directivos/gerentes/jefes) para que se animen al teletrabajo. Brindar tips y/o herramientas para facilitar el teletrabajo. Seguridad de la Información.', 'facultad de infomática Uncoma', '2020-07-01', '2020-07-01', '/eventos/images/flyers/flyerWebbinar.jpg', NULL, 45, 1, '2020-06-26', '', '2020-06-15'),
+(4, 3, 4, 1, 1, 'Desarrollo de Apps para Estudiantes Secundarios ', 'Taller ', 'Descubrí un nuevo mundo, el de ser autor de tus propias Aplicaciones con la herramienta AppInventor. AppInventor es un intuitivo ambiente de programación visual que permite a cualquiera -inclusive chicos- construir apps totalmente funcionales para tablets y teléfonos celulares.\r\n\r\n', 'Facultad de infomática Uncoma', '2020-06-25', '2020-06-25', '/eventos/images/flyers/flyerTallerapp.jpg', NULL, 60, 0, NULL, '', '2020-06-15'),
+(5, 3, 2, 4, 2, 'ROBOTICS SUMMIT & EXPO', 'ROBOTICS', 'Este evento tiene la exclusiva característica de aunar las ferias comerciales con eventos de asociación y conferencias académicas y ha estado dirigida a Tecnologías, herramientas de sujeción y seguimiento de plataformas, Diseño y desarrollo y Manufactura, Negocios y sus modelos.', 'Seaport Worl Trade Center', '2020-06-17', '2020-06-18', '/eventos/images/flyers/robotica2020.jpg', '/eventos/images/logos/Robotics.png', 50, 0, NULL, '123456', NULL),
+(6, 3, 2, 4, 1, 'Cybersecurity Bank & Government', 'Cybersecurity', 'Máximo y único evento que tiene como finalidad mostrar las tendencias, estrategias, herramientas, normas internacionales, estadísticas, y equipamiento relacionado a la Ciberseguridad de los sectores Bancario, Grandes Empresas y Gobierno Latinoamericano en especial Argentina. Participarán los principales organismos estatales, bancarios y financieros de la región junto a las grandes empresas, dedicados a la defensa, normativa y gestión de la seguridad informática y seguridad de la información. Espacio ideal para capacitarte, informarte y relacionarte en un ámbito de especialistas.', 'Buenos Aires, Argentina', '2020-07-14', '2020-07-14', '/eventos/images/flyers/flyerciberseguridad.jpg', '/eventos/images/logos/logocybersecurity.jpg', 20, 0, NULL, '', NULL);
+
+--
+-- Volcado de datos para la tabla `presentacion`
+--
+
+INSERT INTO `presentacion` (`idPresentacion`, `idEvento`, `tituloPresentacion`, `descripcionPresentacion`, `diaPresentacion`, `horaInicioPresentacion`, `horaFinPresentacion`, `linkARecursos`) VALUES
+(1, 1, 'Introducción a GNU/Linux', 'GNU/Linux es la denominación técnica y generalizada que reciben una serie de sistemas operativos de tipo Unix, que también son multiplataforma, multiusuario y multitarea.? Estos sistemas operativos están formados mediante la combinación de varios proyectos, entre los cuales destaca el entorno GNU, encabezado por el programador estadounidense Richard Stallman junto a la Free Software Foundation, una fundación cuyo propósito es difundir el software libre, así como también el núcleo de sistema operativo conocido como «Linux», encabezado por el programador finlandés Linus Torvalds.', '2020-06-25', '15:00:00', '15:35:00', ''),
+(3, 2, 'Bienvenida Autoridades Locales', 'Docente de grado de la Universidad de UNCuyo y de posgrado en varias universidades en espacios curriculares vinculados a las Tecnologías Digitales y la Educación. ', '2020-07-06', '11:00:00', '12:00:00', ''),
+(5, 3, '¿Qué es el teletrabajo?', 'El teletrabajo es aquel que se realiza fuera de las instalaciones de una empresa mediante la utilización de todo tipo de tecnología de la información y de las comunicaciones (TIC). Esta modalidad está siendo adoptada cada vez más por trabajadores, empresas y organismos, a nivel mundial. ', '2020-07-01', '14:30:00', '18:30:00', 'https://tiuma.github.io/telework-presentation/#/'),
+(6, 4, 'Desarrollo de mi primer App', 'Tallerista\r\n\r\nMatias es Estudiante de la Licenciatura en Ciencias de la Computación. Es docente de nivel medio y ha participado activamente en diferentes proyectos de Extensión y del proyecto de Vocaciones TICs dictando numerosos talleres de AppInventor.', '2020-06-25', '15:00:00', '17:00:00', 'https://drive.google.com/drive/folders/1drYhE3i4ewzks94MTr2QRvXWnb2N2uLU'),
+(7, 1, 'Montun paso a paso Instalación', 'El desarrollo de estos sistemas operativos es uno de los ejemplos más prominentes de software libre: todo su código fuente puede ser utilizado, modificado y redistribuido libremente por cualquier persona, empresa o institución, bajo los términos de la Licencia Pública General de GNU, así como de otra serie de licencias, si se desea.3? La idea de desarrollar un sistema operativo libre y basado en el sistema operativo Unix, se remonta a mediados de la década de 1980 con el proyecto GNU. ', '2020-06-25', '15:35:00', '16:05:00', ''),
+(8, 1, 'Homenaje al Oso. Anécdotas, Charlas, Ideas, Preguntas, Respuestas y Recuerdos de una gran persona Eduardo Grosclaude - el oso,', 'A pesar de que en la jerga cotidiana la mayoría de las personas usan el vocablo «Linux» para referirse a este sistema operativo,4?5? en realidad ese es solo el nombre del kernel o núcleo, ya que el sistema completo está formado también por una gran cantidad de componentes del proyecto GNU, que van desde compiladores hasta entornos de escritorio.', '2020-06-25', '16:06:00', '16:35:00', ''),
+(9, 1, 'reconectar++', 'Sin embargo, tras publicar Torvalds su núcleo Linux en 1991 y ser este usado junto al software del proyecto GNU, una parte significativa de los medios generales y especializados han utilizado el término «Linux» para referirse a estos sistemas operativos completos', '2020-06-25', '16:35:00', '17:05:00', ''),
+(10, 4, 'Agregando comportamiento a mi App', 'Tallerista\r\n\r\nCarlos es Estudiante de la Licenciatura en Ciencias de la Computación y ha participado activamente en diferentes proyectos de Extensión y del proyecto de Vocaciones TICs dictando numerosos talleres de AppInventor.', '2020-06-26', '17:00:00', '18:30:00', ''),
+(11, 2, 'Conferencia Inaugural - La pandemia como aprendizaje para la post pandemia', 'Ha ocupado diferentes cargos en el ámbito de la Gestión Universitaria. En la actualidad es Directora de la Maestría en “Enseñanza en Escenarios Digitales” de la AUSA y de la Diplomatura “Educación en la Cultura Digital” de la FED.', '2020-07-07', '14:30:00', '16:00:00', ''),
+(12, 3, 'Ventajas del Teletrabajo', 'En este contexto de pandemia, no tiene sentido hablar de ventajas. Hoy es una necesidad. Es una ventaja en si.', '2020-07-01', '18:30:00', '19:00:00', '');
+
+--
+-- Volcado de datos para la tabla `presentacion_expositor`
+--
+
+INSERT INTO `presentacion_expositor` (`idExpositor`, `idPresentacion`) VALUES
+(2, 10),
+(6, 5),
+(6, 7),
+(7, 8),
+(8, 1),
+(10, 12),
+(12, 9),
+(13, 3),
+(13, 11);
 
 -- #######################################################################################################################
 -- #######################################################################################################################

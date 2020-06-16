@@ -33,7 +33,6 @@ class SignupForm extends Model {
 
             //Reglas nombre
             ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
-
             ['nombre', 'string', 'min' => 2, 'max' => 14,
                 //comentario para minlenght
                 'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
@@ -57,7 +56,6 @@ class SignupForm extends Model {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
-//            ['localidad', 'common\components\LocationValidator'],
 
             //Reglas Provincia
             ['provincia', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
@@ -120,6 +118,7 @@ class SignupForm extends Model {
      */
     protected function sendEmail($user) {
         return Yii::$app
+
                         ->mailer
                         ->compose(
                                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
@@ -132,3 +131,4 @@ class SignupForm extends Model {
     }
 
 }
+

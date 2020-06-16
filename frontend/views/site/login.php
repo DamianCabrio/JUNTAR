@@ -5,13 +5,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use \yii\helpers\Url;
 
 $this->title = 'Iniciar sesion';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login container">
         <h1 class="text-center mb-2"><?= Html::encode($this->title) ?></h1>
-
         <div class="row">
             <div class="col-lg-5 m-auto">
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
@@ -24,6 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'rememberMe')->checkbox()->label("Recordarme") ?>
 
                 <div  class="form-advice">
+                    ¿No tiene cuenta? <?= Html::a('Registrece', ['site/signup']) ?>.
+                    <br>
                     Si olvidaste tu contraseña puedes <?= Html::a('restablecerla', ['site/request-password-reset']) ?>.
                     <br>
                     ¿No pudiste realizar la verificación? <?= Html::a('Solicitar nuevo correo de verificacion', ['site/resend-verification-email']) ?>

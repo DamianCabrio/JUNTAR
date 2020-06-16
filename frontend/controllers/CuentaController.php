@@ -23,11 +23,6 @@ class CuentaController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['login', 'signup', 'error', 'request-password-reset', 'PasswordReset', 'resend-verification-email'],
-                    'roles' => ['?'], // <----- guest 
-                ],
-                [
-                    'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
 //                        $module = Yii::$app->controller->module->id;

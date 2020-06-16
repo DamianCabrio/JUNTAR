@@ -13,6 +13,10 @@ return [
     'bootstrap' => ['log'],
     'language' => "es_AR",
     'timeZone' => 'America/Argentina/Buenos_Aires',
+    'aliases' =>[
+        '@rutaLogo' => '/eventos/images/logos/',
+        '@rutaFlyer' => '/eventos/images/flyers/',
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -38,12 +42,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-//        'urlManager' => [
-//            'enablePrettyUrl' => true,
-//            'showScriptName' => false,
-//            'rules' => [
-//            ],
-//        ],
+          'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+             'rules' => [
+              ],
+          ],
     ],
     'params' => $params,
 ];

@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Eventos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="evento-index container">
+<div class="evento-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -28,17 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'idEvento',
             'idUsuario',
-            'nombreEvento',
-            'descripcionEvento',
-            'lugar',
-            //'modalidad',
-            //'linkPresentaciones',
-            //'linkFlyer',
-            //'linkLogo',
+            'idCategoriaEvento',
+            'idEstadoEvento',
+            'idModalidadEvento',
+            //'nombreEvento',
+            //'nombreCortoEvento',
+            //'descripcionEvento',
+            //'lugar',
+            //'fechaInicioEvento',
+            //'fechaFinEvento',
+            //'imgFlyer',
+            //'imgLogo',
             //'capacidad',
             //'preInscripcion',
             //'fechaLimiteInscripcion',
             //'codigoAcreditacion',
+            //'fechaCreacionEvento',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
