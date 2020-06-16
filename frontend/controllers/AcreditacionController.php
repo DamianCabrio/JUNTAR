@@ -7,9 +7,11 @@ use frontend\models\Evento;
 use frontend\models\EventoSearch;
 use frontend\models\Inscripcion;
 use frontend\models\AcreditacionForm;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * EventoController implements the CRUD actions for Evento model.

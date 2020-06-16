@@ -9,6 +9,7 @@ use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,6 +33,13 @@ class EventoController extends Controller
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
             'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        "ver-evento"
+                    ],
+                    'roles' => ['?'], // <----- guest
+                ],
                 [
                     'allow' => true,
                     'roles' => ['@'],

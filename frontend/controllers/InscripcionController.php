@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use yii\filters\AccessControl;
 use \yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -11,6 +12,7 @@ use frontend\models\EventoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * InscripcionController implements the CRUD actions for Inscripcion model.
