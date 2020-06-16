@@ -222,7 +222,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				</td>
 				
 				<?php 
-				if(Yii::$app->user->can('Organizador')){ ?>
+				if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario){ ?>
 					<td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
 				<?php } ?>
 					   
