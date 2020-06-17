@@ -52,8 +52,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 <div class="evento-view container">
     <!--<h2 class="text-center">Su evento cargado</h2>-->
     <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
-
-    <h1><?= Html::encode($this->title) ?></h1>
+    
     <h1><?= Html::encode('Cupos restantes:'.$cupos) ?></h1>
 
     <p>
