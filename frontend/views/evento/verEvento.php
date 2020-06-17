@@ -103,8 +103,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 			<h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
 		</div>
 		<div class="col-12 text-center">
-		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar evento</a>
-		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar agenda</a>
+            <?= Html::a('editar evento', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg text-uppercase']); ?>
+            <?= Html::a('editar agento (temp)', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg text-uppercase']); ?>
 		</div>
 	</div>
 

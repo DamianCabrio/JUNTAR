@@ -134,14 +134,21 @@ class InscripcionController extends Controller
         $evento = Evento::find($idEvento)->one();
         $cupos = $this->calcularCupos($evento);
 
-        if ($cupos !== 0 || $cupos === null) {
+        if ($cupos != 0 || $cupos == null) {
             //Busco si ya existe una inscripcion anulada
             $inscripcion = Inscripcion::find()
                 ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
                 ->one();
 
-            //Si no existe creo un nueva instancia de inscripcion
-            if ($inscripcion == Null) {
+
+            if($inscripcion != null){
+                if($inscripcion->estado == 1 || $inscripcion->estado == 0) {
+                    Yii::$app->session->setFlash('error', '<h2> Error </h2>'
+                        . '<p> Ya se encuentra inscripto a este evento </p>');
+                    return $this->redirect(['eventos/ver-evento/' . $slug]);
+                }
+            }else {
+                //Si no existe creo un nueva instancia de inscripcion
                 $inscripcion = new Inscripcion();
                 $inscripcion->idUsuario = Yii::$app->user->identity->id;
                 $inscripcion->idEvento = $idEvento;
