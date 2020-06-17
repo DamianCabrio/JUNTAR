@@ -60,8 +60,16 @@ if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->
                 <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style'=>'width: auto'])->label('Fecha Inicio *') ?>
                 
                 <?= $form->field($model, 'fechaFinEvento')->input('date', ['style'=>'width: auto'])->label('Fecha Fin *') ?>
-                
-                <?= $form->field($model, 'capacidad')->input('number' , ['placeholder' => 'Ingrese número de espectadores'], [ 'min' => 1 , 'max' => 9999])->label('Capacidad de espectadores *')  ?>
+
+                <label>¿Posee límite de espectadores?</label><br>
+                <input type="radio" id="espectadores-no" name="posee-espectadores" value="-1" checked required>
+                <label for="espectadores-no">No</label><br>
+                <input type="radio" id="espectadores-si" name="posee-espectadores" value="2">
+                <label for="espectadores-si">Si</label><br>
+
+                <div id="mostrarCapacidad">
+                    <?= $form->field($model, 'capacidad')->input('number',[ 'min' => 1 , 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                </div>    
 
                 <!-- select requiere preInscripcion -->
                 <?php $requiere = ['0' => 'No', '1' => 'Si' ]; ?>
