@@ -82,13 +82,43 @@ $(document).ready(function () {
     });
 
     //funcionalidad editar perfil
-    $('.uploadProfileImage').click(function (link) {
+    $('.editarEvento').click(function (link) {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
+        var slug = $('.editarEvento').data('id');
+        alert(slug);
         //llamamos a la funcion que se encargue de mostrar el formulario
-        uploadNewProfileImage();
+        editEventoModal(slug);
     });
 });
+
+/**
+ * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
+ * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
+ * 
+ * @returns none
+ */
+function editEventoModal(slug) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: "index.php?r=evento/editar-evento?slug="+slug,
+//        data: {data: data}
+    }).done(function (data) {
+        console.log(data);
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.evento-form').each(function () {
+//            $('.modal-header').append("Nueva imagen de perfil");
+            $('.modal-header').html("<h3> Editar evento </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
 
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
@@ -127,7 +157,7 @@ function editProfileModal() {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "index.php?r=cuenta/editprofile",
+        url: "index.php?r=cuenta/editprofile"
 //        data: {data: data}
     }).done(function (data) {
         //data recibe la vista que deberia renderizarse al visitar la url
