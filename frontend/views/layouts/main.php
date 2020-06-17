@@ -21,6 +21,7 @@ AppAsset::register($this);
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::$app->charset; ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050714" />
 
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -33,7 +34,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('@web/images/juntar-icon-b.svg',  ['style' => 'width:30px']),
+            'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg',  ['style' => 'width:30px']),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
@@ -57,7 +58,9 @@ AppAsset::register($this);
                     $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
                     //Logout
                     $menuItems[] = [
+
                         'label' => '<img class="ml-1 filter-white" src="icons/person-circle.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
+
                         'items' => [
                             ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
                             ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
@@ -98,7 +101,7 @@ AppAsset::register($this);
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('images/juntar-logo-b.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
             <div class="row">
@@ -112,17 +115,17 @@ AppAsset::register($this);
                     <h5 class="white-text">Contacto</h5>
                     <ul>
                         <li>
-                            <a class="white-text" href="#!">juntar@fi.uncoma.edu.ar</a>
+                            <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
-                <div class="col s12 m6">
+                <div class="col-12 col-md-6 py-3">
                     <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
                 </div>
-                <div class="col s12 m6">
+                <div class="col-12 col-md-6 py-3">
                     <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>

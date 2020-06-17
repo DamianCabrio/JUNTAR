@@ -15,10 +15,10 @@ use yii\helpers\Html;
                 <hr>
                 <div class="d-flex justify-content-center p-4">
                     <div>
-                        <?= Html::a('Ver evento ', ['ver-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                        <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                        <?= Html::a('Publicar evento ', ['publicar-evento', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                        <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $model->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                        <?= Html::a('Ver evento ', ['eventos/ver-evento/' . $model->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                        <?= Html::a('Editar evento ', ['eventos/editar-evento/' . $model->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                        <?= Html::a('Publicar evento ', ['eventos/publicar-evento/' . $model->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                        <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion/' . $model->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                     </div>
                 </div>
                 <br>

@@ -19,17 +19,7 @@ use yii\bootstrap4\ActiveForm;
 
                 <?php $form = ActiveForm::begin(); ?>
 
-                <!-- Select de los eventos creados por el usuario -->
-                <?php
-                $idUsuario = Yii::$app->user->identity->idUsuario;
-                $item = Evento::find()     //buscar los eventos del usuario              
-                    ->select(['nombreEvento'])
-                    ->indexBy('idEvento')
-                    ->where(['idUsuario' => $idUsuario, 'idEvento' => $idEvento])
-                    ->column();
-                $evento = Evento::findOne($idEvento);
-                ?>
-                <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value' => $idEvento, 'readonly' => true])->label('Seleccione un evento *');
+                <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value' => $evento->idEvento, 'readonly' => true])->label('Seleccione un evento *');
                 ?>
 
                 <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true,  'placeholder' => 'Ingrese título de la presentación'])->label('Titulo de la presentación *') ?>
