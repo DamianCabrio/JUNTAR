@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use frontend\models\Usuario;
 use frontend\models\SignupForm;
+use frontend\models\UploadProfileImage;
+use yii\web\UploadedFile;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -64,10 +66,16 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $model = new Usuario();
+        $profileImageRoute = "icons/person-bounding-box.svg";
+        $rutaImagenPerfil = "profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
+
+        if (file_exists($rutaImagenPerfil)) {
+            $profileImageRoute = $rutaImagenPerfil;
+        }
+//        $model = new Usuario();
         $queryUser = (new \yii\db\Query())
                 //campos buscados
-                ->select(['nombre, apellido, dni, localidad, email, (usuario_rol.item_name) as rol'])
+                ->select(['nombre, apellido, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
                 //distintos en
                 //->distinct('jugador.posicion')
                 //tabla
@@ -83,6 +91,8 @@ class CuentaController extends Controller {
 
         return $this->render('profile', [
                     'data' => $userData,
+                    'profileImage' => $profileImageRoute,
+                    'route' => $rutaImagenPerfil
 //                    'data' => $queryUser,
         ]);
     }
@@ -97,9 +107,30 @@ class CuentaController extends Controller {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = $this->findModel(Yii::$app->user->identity->id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
-                    . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $viejoNombreUsuario = Yii::$app->user->identity->nombre;
+                $cambioImagen = false;
+                if ($model->nombre != $viejoNombreUsuario) {
+                    $rutaImagenPerfil = "profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . $viejoNombreUsuario . '.jpg');
+                    if (file_exists($rutaImagenPerfil)) {
+                        $nuevaRutaImagen = "profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . $model->nombre . '.jpg');
+                        if (rename($rutaImagenPerfil, $nuevaRutaImagen)) {
+                            $cambioImagen = true;
+                        }
+                    }
+                }
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
+                            . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+                } else {
+                    Yii::$app->session->setFlash('error', '<h2> Ha ocurrido un error ): </h2>'
+                            . '<p> Tu perfil no pudo ser actualizado </p>');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', '<h2> Ha ocurrido un error ): </h2>'
+                        . '<p> Ingreso de datos no permitido </p>');
+            }
             return $this->redirect(['profile']);
         }
 //        if (Yii::$app->request->post('search') != null) {
@@ -108,6 +139,33 @@ class CuentaController extends Controller {
 //        }
 
         return $this->render('editprofile', [
+                    'model' => $model,
+        ]);
+    }
+
+    /**
+     * Permite actualizar la información del perfil
+     *
+     * @return mixed
+     */
+    public function actionUploadProfileImage() {
+        //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
+        $model = new UploadProfileImage();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->profileImage = UploadedFile::getInstance($model, 'profileImage');
+
+            if ($model->profileImage != null) {
+                if ($model->upload()) {
+                    $model->profileImage = (Yii::getAlias("@web/profile/images/")) . $model->profileImage->baseName . '.' . $model->profileImage->extension;
+                }
+            }
+            Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
+                    . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+            return $this->redirect(['profile']);
+        }
+
+        return $this->render('uploadProfileImage', [
                     'model' => $model,
         ]);
     }
