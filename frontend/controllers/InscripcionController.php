@@ -163,17 +163,15 @@ class InscripcionController extends Controller
                 $inscripcion->fechaInscripcion = date("Y-m-d");
             }
             $seGuardo = $inscripcion->save();
-
-            if($seGuardo){
-                $texto = $esPreInscripcion ? "Se ha pre-inscripto con exito" : "Se ha inscripto con exito";
-                Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
-                    . '<p> Buena suerte </p>');
-                return $this->redirect(['eventos/ver-evento/' . $slug]);
-            }else{
-                Yii::$app->session->setFlash('error', '<h2> Ocurrio un error </h2>'
-                    . '<p> Por favor vuelva a intentar </p>');
-                return $this->redirect(['eventos/ver-evento/' . $slug]);
-            }
+        if($seGuardo){
+            $texto = $esPreInscripcion ? "Se ha pre-inscripto con éxito" : "Se ha inscripto con éxito";
+            Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
+                . '<p> Buena suerte </p>');
+            return $this->redirect(['eventos/ver-evento/' . $slug]);
+        }else{
+            Yii::$app->session->setFlash('error', '<h2> Ocurrió un error </h2>'
+                . '<p> Por favor vuelva a intentar </p>');
+            return $this->redirect(['eventos/ver-evento/' . $slug]);
         }
     }
 
@@ -198,12 +196,12 @@ class InscripcionController extends Controller
         $esPreInscripcion = $inscripcion->estado == 1 ? true : false;
 
         if($seElimino){
-            $texto = $esPreInscripcion ? "Se ha anulado su pre-inscripto con exito" : "Se ha anulado inscripto con exito";
+            $texto = $esPreInscripcion ? "Se ha anulado su pre-inscripto con éxito" : "Se ha anulado su inscripción con éxito";
             Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
-                . '<p> Vuelva otro dia </p>');
+                . '<p> Vuelva otro día </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }else{
-            Yii::$app->session->setFlash('error', '<h2> Ocurrio un error </h2>'
+            Yii::$app->session->setFlash('error', '<h2> Ocurrió un error </h2>'
                 . '<p> Por favor vuelva a intentar </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }

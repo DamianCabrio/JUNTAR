@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php if ($seElimino) {
-        echo "Se desinscribio con exito";
+        echo "Se desinscribió con éxito";
     }else{
-        echo "No se desinscribio con exito";
+        echo "No se desinscribió con éxito";
     }
     ?>
 

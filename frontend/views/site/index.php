@@ -50,25 +50,25 @@ $this->title = 'Juntar';
         </section>
         <section class="dark_bg">
             <div class="container padding_section">
-                <?php if (count($eventos) != 0): ?>
-            <h2 class="text-white text-uppercase">Últimos Lanzamientos</h2><br>
-                <div class="row">
-                    <?php foreach ($eventos as $evento): ?>
-                        <div class='col-12 col-md-4'>
-                        <div class='card bg-light mb-3'>
-                        <?= Html::img(Url::base('').'/'. Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
-                            <div class='card-body'>
-                                <h5 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h5>
-                                <h5 class='card-title'><?= Html::encode($evento["fechaInicioEvento"]) ?></h5>
-                                <hr>
-                                <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
-                                <p class='card-text'><?= Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
-                                <?= Html::a('Más Información', ['/eventos/ver-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
+                <?php if (count($eventos) != 0) : ?>
+                    <h2 class="text-white text-uppercase">Últimos Lanzamientos</h2><br>
+                    <div class="card-columns">
+                        <?php foreach ($eventos as $evento) : ?>
+                            <div class='card'>
+                                <div class='card bg-light mb-3'>
+                                    <?= Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
+                                    <div class='card-body'>
+                                        <h5 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h5>
+                                        <h5 class='card-title'><?= Html::encode($evento["fechaInicioEvento"]) ?></h5>
+                                        <hr>
+                                        <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
+                                        <p class='card-text'><?= Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
+                                        <?= Html::a('Más Información', ['/eventos/ver-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
+                                    </div>
                                 </div>
-                        </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
 
                     <div class="row py-5 pagination-lg pagination_center">
                         <?= // display pagination
@@ -79,12 +79,14 @@ $this->title = 'Juntar';
                         ?>
                     </div>
             </div>
-
         <?php else : ?>
+            <div class="container">
             <div class="row">
-                <h2 class="text-white text-uppercase">No se encontraron eventos, vuelva a intentar.</h2><br>
+                <h2 class="text-white text-uppercase padding_section">No se encontraron eventos, vuelva a intentar.</h2><br>
+            </div>
             </div>
         <?php endif; ?>
+
     </div>
     </section>
 </div>
