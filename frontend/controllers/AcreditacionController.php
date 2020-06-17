@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use function PHPUnit\Framework\isJson;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -50,33 +51,59 @@ class AcreditacionController extends Controller
         return $behaviors;
     }
 
+    public function acreditar($evento){
+        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])->one();
+        if($inscripcion == null || $inscripcion->acreditacion == 1){
+            Yii::$app->session->setFlash('error', '<h2> Error </h2>'
+                . '<p> Usted no se puede acreditar. </p>');
+            return false;
+        }
+
+        Yii::$app->session->setFlash('success', '<h2> Acreditado. </h2>'
+            . '<p> Usted se acredito. </p>');
+        $inscripcion->acreditacion = 1;
+        $inscripcion->save();
+        return true;
+    }
+
     public function actionAcreditacion(){
         $model = new AcreditacionForm();
 
         $request = Yii::$app->request;
-        $idEvento = $request->get('id');
         $slug = $request->get("slug");
-        $evento = Evento::find()->where(["idEvento" => $idEvento])->one();
+        $evento = Evento::find()->where(["nombreCortoEvento" => $slug])->one();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($evento->codigoAcreditacion == $model->codigoAcreditacion) {
-                $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $idEvento])->one();
-                $inscripcion->acreditacion = 1;
-                $inscripcion->save();
-                Yii::$app->session->setFlash('success', '<h2> Acreditado. </h2>'
-                    . '<p> Usted se acredito. </p>');
 
-                return $this->redirect(['eventos/ver-evento/' . $slug]);
-            } else {
-                Yii::$app->session->setFlash('error', '<h2> El codigo ingresado es invalido </h2> '
-                    . '<p> Por favor vuelva a intentar </p>');
+            if(!isJson($evento->codigoAcreditacion)) {
+                if ($evento->codigoAcreditacion == $model->codigoAcreditacion) {
+                    $this->acreditar($evento);
+                    return $this->redirect(['eventos/ver-evento/' . $slug]);
+                } else {
+                    Yii::$app->session->setFlash('error', '<h2> El codigo ingresado es invalido </h2> '
+                        . '<p> Por favor vuelva a intentar </p>');
+                }
+            }else{
+                $respuestaEnBase = json_decode($evento->codigoAcreditacion)->respuesta;
+                if($respuestaEnBase == $model->codigoAcreditacion){
+                    $this->acreditar($evento);
+                    return $this->redirect(['eventos/ver-evento/' . $slug]);
+                }else {
+                    Yii::$app->session->setFlash('error', '<h2> La respuesta ingresada es incorrecta </h2> '
+                        . '<p> Por favor vuelva a intentar </p>');
+                }
             }
 
             return $this->refresh();
         } else {
+            $acrPreg = false;
+            if(isJson($evento->codigoAcreditacion)){
+                $acrPreg = json_decode($evento->codigoAcreditacion);
+            }
             return $this->render('acreditacion', [
                 'model' => $model,
                 'evento' => $evento,
+                "acrPreg" => $acrPreg,
             ]);
         }
     }

@@ -126,18 +126,17 @@ class InscripcionController extends Controller
 
         //Guardo el parametro que llega por get (id del evento)
         $request = Yii::$app->request;
-        $idEvento = $request->get('id');
         $slug = $request->get('slug');
 
 
         //Busco en el campo preinscripcion en el evento
-        $evento = Evento::find($idEvento)->one();
+        $evento = Evento::find()->where(["nombreCortoEvento" => $slug])->one();
         $cupos = $this->calcularCupos($evento);
 
         if ($cupos != 0 || $cupos == null) {
             //Busco si ya existe una inscripcion anulada
             $inscripcion = Inscripcion::find()
-                ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
+                ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $evento->idEvento])
                 ->one();
 
 
@@ -151,7 +150,7 @@ class InscripcionController extends Controller
                 //Si no existe creo un nueva instancia de inscripcion
                 $inscripcion = new Inscripcion();
                 $inscripcion->idUsuario = Yii::$app->user->identity->id;
-                $inscripcion->idEvento = $idEvento;
+                $inscripcion->idEvento = $evento->idEvento;
                 $inscripcion->acreditacion = 0;
             }
 
@@ -188,17 +187,24 @@ class InscripcionController extends Controller
     public function actionEliminarInscripcion(){
         if ( Yii::$app->user->isGuest ){
             $request = Yii::$app->request;
-            $idEvento = $request->get('id');
-            return Yii::$app->getResponse()->redirect(Url::to(['evento/view', "id" => $idEvento],302));
+            $slug = $request->get('slug');
+            return Yii::$app->getResponse()->redirect(Url::to(['evento/verEvento' . $slug],302));
         }
 
         $request = Yii::$app->request;
-        $idEvento = $request->get('id');
         $slug = $request->get('slug');
+        $evento = Evento::find()->where(["nombreCortoEvento" => $slug])->one();
 
         $inscripcion = Inscripcion::find()
-                        ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
+                        ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])
                         ->one();
+
+        if($inscripcion == null || $inscripcion->estado == 2){
+            Yii::$app->session->setFlash('error', '<h2> Error</h2>'
+                . '<p> Usted no esta inscripto en este evento </p>');
+            return $this->redirect(['eventos/ver-evento/' . $slug]);
+        }
+
         //Cambio el estado a 2 = anulado
         $inscripcion->estado = 2;
         $seElimino = $inscripcion->save();

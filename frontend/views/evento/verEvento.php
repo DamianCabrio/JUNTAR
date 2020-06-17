@@ -103,8 +103,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 			<h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
 		</div>
 		<div class="col-12 text-center">
-            <?= Html::a('editar evento', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg text-uppercase']); ?>
-            <?= Html::a('editar agento (temp)', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg text-uppercase']); ?>
+            <a href="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]); ?>" class="btn btn-primary btn-lg text-uppercase">editar evento</a>
+            <?= Html::a('editar agenda (temp)', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg text-uppercase']); ?>
 		</div>
 	</div>
 
@@ -121,10 +121,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
 		switch ($estadoEventoInscripcion) {
 			case "puedeInscripcion":
-				echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
+				echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 				break;
 			case "puedePreinscripcion":
-				echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
+				echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 				break;
 			case "sinCupos":
 				echo Html::label('Sin cupos');
@@ -136,16 +136,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				echo Html::label("El evento ya inicio, pasela bien");
 				break;
 			case "yaPreinscripto":
-				echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
+				echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 				break;
 			case "yaInscripto":
-				echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
+				echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 				break;
 			case "noInscriptoYFechaLimiteInscripcionPasada":
 				echo Html::label('No se puede inscribir, el evento ya inicio');
 				break;
 			case "puedeAcreditarse":
-				echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
+				echo Html::a('Acreditación', ['acreditacion/acreditacion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 				break;
 		}
 

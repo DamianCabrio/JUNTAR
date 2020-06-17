@@ -16,7 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(['id' => 'acreditacion-form']); ?>
 
+    <?php if($acrPreg == false): ?>
     <?= $form->field($model, 'codigoAcreditacion')->textInput(['autofocus' => true])->label("Ingrese el codigo de acreditacion: ") ?>
+    <?php else: ?>
+    <?= $form->field($model, 'codigoAcreditacion')->textInput(['autofocus' => true])->label($acrPreg->pregunta) ?>
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
