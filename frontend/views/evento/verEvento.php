@@ -94,7 +94,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 		<div class="col-12 text-center">
 			<h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
 		</div>
+		<div class="col-12 text-center">
+		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar evento</a>
+		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar agenda</a>
+		</div>
 	</div>
+
 </div>
 <div id="evento" class="evento-view container">
 	<!--<h2 class="text-center">Su evento cargado</h2>-->
