@@ -23,13 +23,13 @@ use yii\widgets\ActiveForm;
                 <tr>
                     <td><?= $objEvento->nombreEvento ?></td>
                     <td>
-                         <?= Html::a('Ver evento', ['ver-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                         <?= Html::a('Editar evento ', ['editar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                         <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?= Html::a('Ver evento ', ['eventos/ver-evento/' . $objEvento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?= Html::a('Editar evento ', ['eventos/editar-evento/' . $objEvento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                         <?= Html::a('Cargar presentaciones ', ['presentacion/cargar-presentacion/' . $objEvento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                          <?php 
                              if(($objEvento->idEstadoEvento) == 4){
                          ?>     
-                            <?= Html::a('Publicar evento ', ['publicar-evento', 'idEvento' => $objEvento->idEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                            <?= Html::a('Publicar evento ', ['eventos/publicar-evento/' . $objEvento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                          <?php }?>
                          <?php 
                              if(($objEvento->idEstadoEvento) == 1){

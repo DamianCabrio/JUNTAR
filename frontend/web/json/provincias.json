@@ -43,13 +43,13 @@
                 }
             },
             {
-                "nombre_completo": "Provincia de Entre Ríos",
+                "nombre_completo": "Provincia de Entre Rios",
                 "fuente": "IGN",
                 "iso_id": "AR-E",
-                "nombre": "Entre Ríos",
+                "nombre": "Entre Rios",
                 "id": "30",
                 "categoria": "Provincia",
-                "iso_nombre": "Entre Ríos",
+                "iso_nombre": "Entre Rios",
                 "centroide": {
                     "lat": -32.0588735436448,
                     "lon": -59.2014475514635
@@ -69,13 +69,13 @@
                 }
             },
             {
-                "nombre_completo": "Provincia de Río Negro",
+                "nombre_completo": "Provincia de Rio Negro",
                 "fuente": "IGN",
                 "iso_id": "AR-R",
-                "nombre": "Río Negro",
+                "nombre": "Rio Negro",
                 "id": "62",
                 "categoria": "Provincia",
-                "iso_nombre": "Río Negro",
+                "iso_nombre": "Rio Negro",
                 "centroide": {
                     "lat": -40.4057957178801,
                     "lon": -67.229329893694
@@ -95,13 +95,13 @@
                 }
             },
             {
-                "nombre_completo": "Provincia de Córdoba",
+                "nombre_completo": "Provincia de Cordoba",
                 "fuente": "IGN",
                 "iso_id": "AR-X",
-                "nombre": "Córdoba",
+                "nombre": "Cordoba",
                 "id": "14",
                 "categoria": "Provincia",
-                "iso_nombre": "Córdoba",
+                "iso_nombre": "Cordoba",
                 "centroide": {
                     "lat": -32.142932663607,
                     "lon": -63.8017532741662
@@ -199,26 +199,26 @@
                 }
             },
             {
-                "nombre_completo": "Provincia de Tucumán",
+                "nombre_completo": "Provincia de Tucuman",
                 "fuente": "IGN",
                 "iso_id": "AR-T",
-                "nombre": "Tucumán",
+                "nombre": "Tucuman",
                 "id": "90",
                 "categoria": "Provincia",
-                "iso_nombre": "Tucumán",
+                "iso_nombre": "Tucuman",
                 "centroide": {
                     "lat": -26.9478001830786,
                     "lon": -65.3647579441481
                 }
             },
             {
-                "nombre_completo": "Provincia del Neuquén",
+                "nombre_completo": "Provincia del Neuquen",
                 "fuente": "IGN",
                 "iso_id": "AR-Q",
-                "nombre": "Neuquén",
+                "nombre": "Neuquen",
                 "id": "58",
                 "categoria": "Provincia",
-                "iso_nombre": "Neuquén",
+                "iso_nombre": "Neuquen",
                 "centroide": {
                     "lat": -38.6417575824599,
                     "lon": -70.1185705180601
@@ -277,13 +277,13 @@
                 }
             },
             {
-                "nombre_completo": "Ciudad Autónoma de Buenos Aires",
+                "nombre_completo": "Ciudad Autonoma de Buenos Aires",
                 "fuente": "IGN",
                 "iso_id": "AR-C",
-                "nombre": "Ciudad Autónoma de Buenos Aires",
+                "nombre": "Ciudad Autonoma de Buenos Aires",
                 "id": "02",
-                "categoria": "Ciudad Autónoma",
-                "iso_nombre": "Ciudad Autónoma de Buenos Aires",
+                "categoria": "Ciudad Autonoma",
+                "iso_nombre": "Ciudad Autonoma de Buenos Aires",
                 "centroide": {
                     "lat": -34.6144934119689,
                     "lon": -58.4458563545429
