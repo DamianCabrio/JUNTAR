@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\EventoSearch;
 use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
+use frontend\models\PresentacionSearch;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
 use yii\data\ActiveDataProvider;
@@ -14,6 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use yii\data\Pagination;
 
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
@@ -36,7 +38,8 @@ class EventoController extends Controller
                 [
                     'allow' => true,
                     'actions' => [
-                        "ver-evento"
+                        "ver-evento",
+						"ver-evento2"
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -328,7 +331,7 @@ class EventoController extends Controller
      * Recibe por parámetro un id, se busca esa instancia del event y se obtienen todos las presentaciones que pertenecen a ese evento.
      * Se envia la instancia del evento junto con todas la presentaciones sobre un arreglo.
      */
-    public function actionVerEvento($slug)
+    public function actionVerEvento2($slug)
     {
 
         $evento = $this->findModel("",$slug);
@@ -361,11 +364,64 @@ class EventoController extends Controller
         }else{
             $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
         }
-        return $this->render('verEvento', [
+        return $this->render('verEvento2', [
             "evento" => $evento,
             'presentacion' => $presentaciones,
             "estadoEventoInscripcion" => $estadoEvento,
             'cupos' => $cupos,
+        ]);
+    }
+    
+    public function actionVerEvento($slug)
+    {
+
+        $evento = $this->findModel("",$slug);
+//        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
+        
+        //data GridView
+//        $pages = new Pagination(['totalCount' => count(Presentacion::findAll(0)) ]);
+//        $pages->pageSize = 10;
+        $searchModel = new PresentacionSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['idEvento' => $evento->idEvento]),
+            'sort' => ['attributes' => ['name', 'description']]
+        ]);
+        
+        if($evento == null){
+            return $this->goHome();
+        }
+
+        $cupos = $this->calcularCupos($evento);
+
+        $yaInscripto = false;
+        $yaAcreditado = false;
+
+        if (!Yii::$app->user->getIsGuest()){
+
+            $inscripcion = Inscripcion::find()
+                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])
+                ->andWhere(["!=", "estado", 2])->one();
+
+            if($inscripcion != null) {
+                $yaInscripto = true;
+                $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
+                $yaAcreditado = $inscripcion->acreditacion == 1;
+                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
+            }else{
+                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+            }
+
+        }else{
+            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+        }
+        return $this->render('verEvento', [
+            "evento" => $evento,
+//            'presentacion' => $presentaciones,
+            "estadoEventoInscripcion" => $estadoEvento,
+            'cupos' => $cupos,
+            //agregada la data necesaria para gridview
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
