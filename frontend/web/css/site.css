@@ -269,3 +269,16 @@ section {
 #fechaLimite{
     display: none;
 }
+
+.filter-white{
+    filter: invert(99%) sepia(6%) saturate(443%) hue-rotate(113deg) brightness(121%) contrast(100%);
+}
+/* button subir imagen a perfil */
+.uploadProfileImage{
+    width: 150px;
+    margin-top: -20px;
+}
+.uploadProfileImage img{
+    filter: invert(99%) sepia(6%) saturate(443%) hue-rotate(113deg) brightness(121%) contrast(100%);
+}
+

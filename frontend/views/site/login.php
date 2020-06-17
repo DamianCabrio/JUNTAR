@@ -24,15 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'rememberMe')->checkbox()->label("Recordarme") ?>
 
                 <div  class="form-advice">
-                    ¿No tiene cuenta? <?= Html::a('Registrece', ['site/signup']) ?>.
+                    ¿No tiene cuenta en Juntar? Debe <?= Html::a('registrarse', ['site/signup']) ?>.
                     <br>
                     Si olvidaste tu contraseña puedes <?= Html::a('restablecerla', ['site/request-password-reset']) ?>.
                     <br>
-                    ¿No pudiste realizar la verificación? <?= Html::a('Solicitar nuevo correo de verificacion', ['site/resend-verification-email']) ?>
+                    ¿No pudiste realizar la verificación? <?= Html::a('Solicitar nuevo correo', ['site/resend-verification-email']) ?>
                 </div>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Ingresar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Ingresar', ['class' => 'btn btn-primary mt-2', 'name' => 'login-button']) ?>
                 </div>
 
                 <?php ActiveForm::end(); ?>
