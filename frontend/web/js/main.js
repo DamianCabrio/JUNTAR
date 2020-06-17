@@ -18,6 +18,22 @@ $(document).ready(function () {
         }
     });
 
+    //Verifica si en evento posee capacidad de espectadores 
+        $("#w0 input[name=posee-espectadores]").change(function () {
+            capacidad = $(this).val();
+            if(capacidad == 2){
+              $("#mostrarCapacidad").show();
+              $("#mostrarCapacidad").attr("required", true);
+              
+            }
+            else if(capacidad == -1){
+              $("#mostrarCapacidad").hide();
+              $("#mostrarCapacidad").attr("required", false);
+              $("#evento-capacidad").val(null);
+            }
+         });
+    
+
     $('.showpw .custom-control-input').click(function () {
         var type = $('#signupform-password').attr("type");
 
