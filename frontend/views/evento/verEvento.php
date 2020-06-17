@@ -16,6 +16,12 @@ $openGraph->getBasic()
         ->setLocale('es_AR')
         ->render();
 
+$openGraph->useTwitterCard()
+    ->setCard('summary')
+    ->setSite(Yii::$app->request->hostInfo . Yii::$app->request->url)
+    ->setCreator(Html::encode($organizadorEvento))
+    ->render();
+
 if($evento->imgLogo != null){
     $openGraph->getImage()
         ->setUrl(Html::encode($evento->imgLogo))
@@ -76,7 +82,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
     <!--<h2 class="text-center">Su evento cargado</h2>-->
     <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
 
+    <?php if($cupos != false): ?>
     <h1><?= Html::encode('Cupos restantes:'.$cupos) ?></h1>
+    <?php endif; ?>
 
     <p>
         <?php
