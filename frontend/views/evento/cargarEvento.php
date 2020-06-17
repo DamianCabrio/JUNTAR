@@ -55,8 +55,17 @@ use yii\bootstrap4\ActiveForm;
                 <!-- input flyer -->
                 <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?>
 
-                <?= $form->field($model, 'capacidad')->input('number', ['placeholder' => 'Ingrese número de espectadores'], [ 'min' => 1 , 'max' => 9999])->label('Capacidad de espectadores *')  ?>
+               
+                <label>¿Posee límite de espectadores?</label><br>
+                <input type="radio" id="espectadores-no" name="posee-espectadores" value="-1" checked >
+                <label for="espectadores-no">No</label><br>
+                <input type="radio" id="espectadores-si" name="posee-espectadores" value="2">
+                <label for="espectadores-si">Si</label><br>
 
+                
+                <div id="mostrarCapacidad">
+                    <?= $form->field($model, 'capacidad')->input('number',[ 'min' => 1 , 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                </div>    
                 <!-- select requiere preInscripcion -->
                 <?php $requiere = ['0' => 'No', '1' => 'Si' ]; ?>
                 <?= $form->field($model, 'preInscripcion')->dropDownList($requiere, ['prompt' => '¿Requiere preinscripción? *']) ?>
