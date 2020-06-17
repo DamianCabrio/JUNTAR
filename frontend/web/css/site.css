@@ -272,6 +272,9 @@ section {
 #fechaLimite{
     display: none;
 }
+#mostrarCapacidad{
+    display: none;
+}
 
 @media only screen and (max-width: 767px) {
     .padding_logo{
