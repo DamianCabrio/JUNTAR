@@ -23,12 +23,11 @@ $(document).ready(function () {
         capacidad = $(this).val();
         if(capacidad == 2){
           $("#mostrarCapacidad").show();
-          $("#mostrarCapacidad").attr("required", true);
-          
+          $("#evento-capacidad").attr("required", true);
         }
-        else if(capacidad == -1){
+        if(capacidad == -1){
           $("#mostrarCapacidad").hide();
-          $("#mostrarCapacidad").attr("required", false);
+          $("#evento-capacidad").attr("required", false);
           $("#evento-capacidad").val(null);
         }
      });
