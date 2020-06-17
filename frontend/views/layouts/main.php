@@ -22,6 +22,8 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#050714" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -81,18 +83,15 @@ AppAsset::register($this);
             ]);
             NavBar::end();
             ?>
-                <?= Breadcrumbs::widget([
-                    'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
-                    'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-            ?>
 
-            <?php echo Alert::widget() ?>
 
+            <?php echo Alert::widget([
+                'options' => ['class' => 'text-center']
+            ]) ?>
+            <?php echo $content ?>
         </div>
 
-        <?php echo $content ?>
+        
       
     </div>
     <section class="darkish_bg text-light">
