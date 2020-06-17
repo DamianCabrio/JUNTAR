@@ -163,8 +163,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
             </div>
             <div class="col-12 text-center">
-
-                <a href="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]); ?>" class="btn btn-primary btn-lg text-uppercase editarEvento" data-id="<?= Html::encode($evento->nombreCortoEvento) ?>"> editar evento </a>
+                <a href="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]); ?>" class="btn btn-primary btn-lg text-uppercase editarEvento" data-id="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]) ?>"> editar evento </a>
                 <a href="#agendaTable" class="btn btn-primary btn-lg text-uppercase"> editar agenda </a>
             </div>
         </div>

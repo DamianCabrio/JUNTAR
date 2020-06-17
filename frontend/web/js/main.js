@@ -98,11 +98,11 @@ $(document).ready(function () {
  * 
  * @returns none
  */
-function editEventoModal(slug) {
+function editEventoModal(url) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "?slug="+slug,
+        url: url,
 //        data: {data: data}
     }).done(function (data) {
         console.log(data);
