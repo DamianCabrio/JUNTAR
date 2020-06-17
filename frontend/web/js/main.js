@@ -102,7 +102,7 @@ function editEventoModal(slug) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "index.php?r=evento/editar-evento?slug="+slug,
+        url: "?slug="+slug,
 //        data: {data: data}
     }).done(function (data) {
         console.log(data);
