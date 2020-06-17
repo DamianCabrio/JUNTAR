@@ -21,6 +21,9 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
+        'opengraph' => [
+            'class' => 'umanskyi31\opengraph\OpenGraph',
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,

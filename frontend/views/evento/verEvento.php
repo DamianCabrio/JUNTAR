@@ -1,9 +1,32 @@
 <?php
-$this->title = $evento->nombreCortoEvento . " - Juntar";
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
+
+$this->title = $evento->nombreCortoEvento . " - Juntar";
+
+$openGraph = Yii::$app->opengraph;
+
+$openGraph->getBasic()
+    ->setUrl(Yii::$app->request->hostInfo . Yii::$app->request->url)
+    ->setTitle(Html::encode($evento->nombreEvento))
+    ->setDescription(Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"))))
+        ->setSiteName("Juntar")
+        ->setLocale('es_AR')
+        ->render();
+
+if($evento->imgLogo != null){
+    $openGraph->getImage()
+        ->setUrl(Html::encode($evento->imgLogo))
+        ->setAttributes([
+            'secure_url' => Html::encode($evento->imgLogo),
+            'width'      => 100,
+            'height'     => 100,
+            'alt'        => "Logo Evento",
+        ])
+        ->render();
+}
 
 if ($evento->imgFlyer != null) {
     $flyer = '<img  class="img-fluid" width="300px" src='.Url::base('').'/'.$evento->imgFlyer.'>';
@@ -52,7 +75,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 <div class="evento-view container">
     <!--<h2 class="text-center">Su evento cargado</h2>-->
     <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
-    
+
     <h1><?= Html::encode('Cupos restantes:'.$cupos) ?></h1>
 
     <p>
