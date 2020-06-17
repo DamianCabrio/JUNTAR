@@ -80,7 +80,36 @@ $organizadorEvento = $evento->idUsuario0->nombre . " " . $evento->idUsuario0->ap
 $organizadorEmailEvento = $evento->idUsuario0->email;
 
 ?>
-<div class="evento-view container">
+<div class="evento-view ">
+<header class="hero gradient-hero">
+	<div class="container-fluid center-content text-center padding_hero">
+		<h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
+		<br>
+		<h5 class="text-white">Evento no patrocinado por la UNCOMA</h5>
+		<br>
+		<a href="#evento" class="btn btn-primary btn-lg text-uppercase">VER</a>
+	</div>
+</header>
+
+<div class="container-fluid darkish_bg padding_hero">
+	<div class="row">
+		<div class="col-12 col-md-6 text-center text-md-right">
+			<h3 class="text-white">Inicio: <?= $evento->fechaInicioEvento ?></h3>
+		</div>
+		<div class="col-12 col-md-6 text-center text-md-left">
+			<h3 class="text-white text-md-left">Fin: <?= $evento->fechaFinEvento ?></h3>
+		</div>
+		<div class="col-12 text-center">
+			<h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
+		</div>
+		<div class="col-12 text-center">
+		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar evento</a>
+		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar agenda</a>
+		</div>
+	</div>
+
+</div>
+	<div class="container">
     <!--<h2 class="text-center">Su evento cargado</h2>-->
     <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
 
@@ -135,34 +164,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
         ?>
 	
     <!--<p class="text-center">Posee los siguientes datos</p>-->
-<header class="hero gradient-hero">
-	<div class="container-fluid center-content text-center padding_hero">
-		<h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
-		<br>
-		<h5 class="text-white">Evento no patrocinado por la UNCOMA</h5>
-		<br>
-		<a href="#evento" class="btn btn-primary btn-lg text-uppercase">VER</a>
-	</div>
-</header>
 
-<div class="container-fluid darkish_bg padding_hero">
-	<div class="row">
-		<div class="col-12 col-md-6 text-center text-md-right">
-			<h3 class="text-white">Inicio: <?= $evento->fechaInicioEvento ?></h3>
-		</div>
-		<div class="col-12 col-md-6 text-center text-md-left">
-			<h3 class="text-white text-md-left">Fin: <?= $evento->fechaFinEvento ?></h3>
-		</div>
-		<div class="col-12 text-center">
-			<h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
-		</div>
-		<div class="col-12 text-center">
-		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar evento</a>
-		<a href="#" class="btn btn-primary btn-lg text-uppercase">editar agenda</a>
-		</div>
-	</div>
-
-</div>
 <div id="evento" class="evento-view container">
 	<!--<h2 class="text-center">Su evento cargado</h2>-->
 	<h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
@@ -342,4 +344,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 					</tr>
 			</tbody>
 		</table>
+	</div>
+
 </div>
