@@ -20,7 +20,7 @@ $openGraph->getBasic()
 $openGraph->useTwitterCard()
     ->setCard('summary')
     ->setSite(Yii::$app->request->hostInfo . Yii::$app->request->url)
-    ->setCreator(Html::encode($organizadorEvento))
+    ->setCreator(Html::encode($evento->idUsuario0->nombre . " " . $evento->idUsuario0->apellido))
     ->render();
 
 if($evento->imgLogo != null){
