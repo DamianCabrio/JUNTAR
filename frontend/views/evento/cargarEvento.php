@@ -8,6 +8,8 @@ use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Evento */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->title = "Cargar Evento";
 ?>
 <div class="container">
     <div class = "row">

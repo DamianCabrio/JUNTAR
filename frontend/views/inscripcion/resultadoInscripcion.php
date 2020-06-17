@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\InscripcionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Resultado inscripcion';
+$this->title = 'Inscripto';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

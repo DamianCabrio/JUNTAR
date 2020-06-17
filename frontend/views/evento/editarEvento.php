@@ -10,6 +10,8 @@ use frontend\models\ModalidadEvento;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Evento */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->title = "Editar Evento - " . $model->nombreCortoEvento;
 ?>
 <?php
 if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario){

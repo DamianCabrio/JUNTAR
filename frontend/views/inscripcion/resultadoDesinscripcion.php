@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\InscripcionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Resultado inscripcion';
+$this->title = 'Anular Inscripcion';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inscripcion-index container">

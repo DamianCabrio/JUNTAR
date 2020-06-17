@@ -3690,74 +3690,6 @@
         "conflict": {
             "masterminds/html5": "<2.6"
         },
-        "time": "2020-05-27T08:34:37+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.1-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "function.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "A generic function and convention to trigger deprecation notices",
-        "homepage": "https://symfony.com",
-        "funding": [
-            {
-                "url": "https://symfony.com/sponsor",
-                "type": "custom"
-            },
-            {
-                "url": "https://github.com/fabpot",
-                "type": "github"
-            },
-            {
-                "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                "type": "tidelift"
-            }
-        ]
-    },
-    {
-        "name": "symfony/dom-crawler",
-        "version": "v5.1.0",
-        "version_normalized": "5.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/dom-crawler.git",
-            "reference": "907187782c465a564f9030a0c6ace59e8821106f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/907187782c465a564f9030a0c6ace59e8821106f",
-            "reference": "907187782c465a564f9030a0c6ace59e8821106f",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=7.2.5",
-            "symfony/polyfill-ctype": "~1.8",
-            "symfony/polyfill-mbstring": "~1.0",
-            "symfony/polyfill-php80": "^1.15"
-        },
-        "conflict": {
-            "masterminds/html5": "<2.6"
-        },
         "require-dev": {
             "masterminds/html5": "^2.6",
             "symfony/css-selector": "^4.4|^5.0"
@@ -5000,6 +4932,63 @@
             }
         ],
         "description": "A small library for converting tokenized PHP source code into XML and potentially other formats"
+    },
+    {
+        "name": "umanskyi31/opengraph",
+        "version": "2.0.0",
+        "version_normalized": "2.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vumanskyi/yii2-opengraph.git",
+            "reference": "726aadbd1fc43e926e8902a39d393ea0aaad96ca"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vumanskyi/yii2-opengraph/zipball/726aadbd1fc43e926e8902a39d393ea0aaad96ca",
+            "reference": "726aadbd1fc43e926e8902a39d393ea0aaad96ca",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=7.1",
+            "yiisoft/yii2": "~2.0.14"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2.0",
+            "phpunit/phpunit": "~7.1",
+            "scrutinizer/ocular": "~1.1"
+        },
+        "time": "2019-03-31T11:16:43+00:00",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "umanskyi31\\opengraph\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Vlad Umanskyi",
+                "email": "vladumanskyi@gmail.com"
+            }
+        ],
+        "description": "Created a new component for Yii2. The Open Graph component for your website",
+        "homepage": "https://github.com/vumanskyi/yii2-opengraph",
+        "keywords": [
+            "Vlad Umanskyi",
+            "VladUmanskyi",
+            "component",
+            "extension",
+            "facebook",
+            "open-graph",
+            "opengraph",
+            "seo",
+            "twitter-card",
+            "yii2"
+        ]
     },
     {
         "name": "webmozart/assert",

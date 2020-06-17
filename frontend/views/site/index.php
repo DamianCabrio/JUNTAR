@@ -7,7 +7,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\bootstrap4\LinkPager;
 
-$this->title = 'Proyecto Juntar';
+$this->title = 'Juntar';
 ?>
 <div class="site-index">
 
