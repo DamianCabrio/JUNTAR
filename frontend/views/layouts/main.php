@@ -60,7 +60,9 @@ AppAsset::register($this);
                     $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
                     //Logout
                     $menuItems[] = [
-                        'label' => '<img class="ml-1" src="icons/person-circle-w.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
+
+                        'label' => '<img class="ml-1 filter-white" src="icons/person-circle.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
+
                         'items' => [
                             ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
                             ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],

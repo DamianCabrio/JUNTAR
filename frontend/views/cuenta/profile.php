@@ -16,7 +16,7 @@ $dataUser = array_shift($data);
         <div class="col-sm-3 mt-4 bg-profile-sidebar">
             <ul class="nav nav-tabs mt-2 text-center">
                 <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link" data-toggle="tab" data-target="01" href=""> Información de la Cuenta </a>
+                    <a class="nav-link active" data-toggle="tab" data-target="01" href="cuenta/profile"> Información de la Cuenta </a>
                 </li>
                 <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Cambiar Contraseña </a>
@@ -51,7 +51,7 @@ $dataUser = array_shift($data);
                         <h4 class="col-md-9 col-sm-12">Perfil de <?= Html::encode($dataUser['nombre'] . ' ' . $dataUser['apellido']); ?> </h4>
                         <?=
                         Html::a(' Editar Perfil '
-                                . '<img class="ml-1" src="icons/pencil.svg" alt="Editar" width="18" height="18" title="Editar" role="img" style="margin-top: -4px;">',
+                                . '<img class="ml-1 filter-white" src="icons/pencil.svg" alt="Editar" width="18" height="18" title="Editar" role="img" style="margin-top: -4px;">',
                                 Url::toRoute(['editprofile']),
                                 ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile']);
                         ?>
@@ -64,49 +64,50 @@ $dataUser = array_shift($data);
                     <div class="row">
 
                         <!-- Profile Card Body IMG -->
-                        <div class="col-md-5 col-sm-12">
-                            <img class="card-img" width="450" height="400" src="icons/person-bounding-box.svg" title="<?= Html::encode($dataUser['nombre']); ?>">
+                        <div class="col-md-5 col-sm-12">                            
+                            <img class="card-img" width="450" height="" src="<?php echo $profileImage ?>" title="<?= Html::encode($dataUser['nombre']); ?>">
+                            <!-- Input profile image -->
+                            <div class=".text-center d-flex justify-content-center">
+                                <?=
+                                Html::a(' Subir imagen '
+                                        . '<img class="ml-1" src="icons/cloud-upload.svg" alt="Subir Imagen" title="Subir Imagen" width="18" height="18" role="img">',
+                                        Url::toRoute(['upload-profile-image']),
+                                        ['class' => 'btn btn-primary uploadProfileImage']);
+                                ?>
+                            </div>
+                            <?php // echo $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
                         </div>
                         <!-- Profile Card Body IMG -->
 
                         <!-- Profile Card Body Content -->
-                        <div class="col-md-7 col-sm-12">
-                            <table class="table table-hover table-responsive">
-                                <tbody>
-                                    <tr>
-                                        <th> Nombre: </td>
-                                        <td> <?= Html::encode($dataUser['nombre']); ?> </td>
-                                    </tr>
-                                    <tr>
-                                        <th> Apellido: </td>
-                                        <td> <?php echo Html::encode($dataUser['apellido']); ?> </td>
-                                    </tr>
-                                    <tr>
-                                        <th> DNI: </td>
-                                        <td> <?php echo Html::encode($dataUser['dni']); ?> </td>
-                                    </tr>
-    <!--                                <tr>
-                                        <th> Fecha Nacimiento: </td>
-                                        <td> <?php // echo Html::encode($dataUser['fecha_nacimiento']);   ?> </td>
-                                    </tr>
-                                    <tr>
-                                        <th> Teléfono: </td>
-                                        <td> <?php // echo Html::encode($dataUser['telefono']);   ?> </td>
-                                    </tr>-->
-                                    <tr>
-                                        <th> Localidad: </td>
-                                        <td> <?php echo Html::encode($dataUser['localidad']); ?> </td>
-                                    </tr>
-                                    <tr>
-                                        <th> Email: </td>
-                                        <td> <?php echo Html::encode($dataUser['email']); ?> </td>
-                                    </tr>
-                                    <tr>
-                                        <th> Rol: </th>
-                                        <td><?php echo Html::encode($dataUser['rol']); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="col-md-7 col-sm-12 mt-3">
+                            <div class="row">
+                                <div class="col-8 mb-3">
+                                    <h5>Nombre:</h5>
+                                    <?= Html::encode($dataUser['nombre']) . ' ' . Html::encode($dataUser['apellido']); ?>
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <h5> DNI: </h5>
+                                    <?= Html::encode($dataUser['dni']); ?>
+                                </div>
+                                <div class="col-12 mb-5">
+                                    <h5> Email: </h5>
+                                    <?= Html::encode($dataUser['email']); ?>
+                                </div>
+                                <div class="col-md-4 col-sm-3">
+                                    <h5> Pais: </h5>
+                                    <?= Html::encode($dataUser['pais']); ?>
+                                </div>
+                                <div class="col-md-4 col-sm-3">
+                                    <h5> Provincia: </h5>
+                                    <?= Html::encode($dataUser['provincia']); ?>
+                                </div>
+                                <div class="col-md-4 col-sm-5">
+                                    <h5> Localidad: </h5>
+                                    <?= Html::encode($dataUser['localidad']); ?>
+                                </div>
+                                
+                            </div>
                         </div>
                         <!-- Profile Card Body Content -->
 
@@ -121,34 +122,11 @@ $dataUser = array_shift($data);
                 'id' => 'modalProfile',
                 'size' => 'modal-lg'
             ]);
-            echo "<div id='modalContent'></div>";
+//            echo "<div id='modalContent'></div>";
             Modal::end();
             ?>
         </div>
         <!-- Profile Card Content -->
 
     </div>
-<!--    <div class="modal fade" id="modalProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="profileName"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    jejejej
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
-
-
-<!--<a href="<?= Url::toRoute(['club/listarposicionesclub']); ?>">Volver</a>-->
