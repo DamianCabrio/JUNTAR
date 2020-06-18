@@ -56,7 +56,7 @@ $dataUser = array_shift($data);
                                 . Html::img($urlPencil, ["alt" => "Editar", "title" => "Editar", "width" => "18", "height" => "18", "role" => "img",
                                 "class" => "ml-1 filter-white", "style" => "margin-top: -4px;", "data-id" => Url::toRoute(["editprofile"])]),
                                 Url::toRoute(['editprofile']),
-                                ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile']);
+                                ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile', "data-id" => Url::toRoute(["editprofile"])]);
                         ?>
                     </div>
                 </div>
