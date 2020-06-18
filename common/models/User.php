@@ -222,4 +222,13 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setInactive()
+    {
+        $this->status = 9;
+        self::save();
+    }
 }
