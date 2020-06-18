@@ -87,7 +87,42 @@ $(document).ready(function () {
     $('#signupform-provincia').change(function () {
         autocompleteLocalidades(eliminarDiacriticos($(this).val()));
     });
+    
+    //funcionalidad editar perfil
+    $('.editarPresentacion').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        editPresentacionModal($(this).attr('href'));
+    });
 });
+
+/**
+ * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
+ * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
+ * 
+ * @returns none
+ */
+function editPresentacionModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+//        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.presentacion-form').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Editar presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
 
 /**
  * Metodo autocompleteProvincia --> Busca los datos de las provincias pertenecientes al pais seleccionado
