@@ -81,7 +81,7 @@ CREATE TABLE evento (
   fechaFinEvento date NOT NULL,
   imgFlyer varchar(200) DEFAULT NULL,
   imgLogo varchar(200) DEFAULT NULL,
-  capacidad smallint(6) NOT NULL,
+  capacidad smallint(6) NULL,
   preInscripcion tinyint(1) NOT NULL,
   fechaLimiteInscripcion date DEFAULT NULL,
   codigoAcreditacion varchar(100) DEFAULT NULL,
@@ -399,8 +399,8 @@ ALTER TABLE `presentacion`
 -- Filtros para la tabla `presentacion_expositor`
 --
 ALTER TABLE `presentacion_expositor`
-  ADD CONSTRAINT `presentacion_expositor_ibfk_1` FOREIGN KEY (`idExpositor`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `presentacion_expositor_ibfk_2` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion` (`idPresentacion`);
+  ADD CONSTRAINT `presentacion_expositor_ibfk_1` FOREIGN KEY (`idExpositor`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `presentacion_expositor_ibfk_2` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion` (`idPresentacion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_rol`
