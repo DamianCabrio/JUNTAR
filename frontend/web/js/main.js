@@ -5,32 +5,54 @@
  */
 $(document).ready(function () {
 
-    //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite 
-    $("#evento-preinscripcion").change(function () {
-        respuesta = $("#evento-preinscripcion").val();
-        if (respuesta == 0) {
-            $("#fechaLimite").hide();
-            $("#evento-fechalimiteinscripcion").attr("required", false);
-        }
+    //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite
+    if ($("#evento-fechalimiteinscripcion").val() != 0) {
+        $("#fechaLimite").show();
+        $("#evento-fechalimiteinscripcion").attr("required", true);
+        $("#i1").attr('checked', true);
+    } else {
+        $("#fechaLimite").hide();
+        $("#evento-fechalimiteinscripcion").attr("required", false);
+        $("#evento-fechalimiteinscripcion").val(null);
+        $("#i0").attr('checked', true);
+    }
+    $("#evento-preinscripcion input").change(function () {
+        respuesta = $(this).val();
         if (respuesta == 1) {
             $("#fechaLimite").show();
             $("#evento-fechalimiteinscripcion").attr("required", true);
+            $("#evento-fechalimiteinscripcion").addClass("is-invalid");
+        }
+        if (respuesta == 0) {
+            $("#fechaLimite").hide();
+            $("#evento-fechalimiteinscripcion").attr("required", false);
+            $("#evento-fechalimiteinscripcion").val(null);
         }
     });
 
-    //Verifica si en evento posee capacidad de espectadores 
+    //Verifica si en evento posee capacidad de espectadores
+    if ($("#evento-capacidad").val() != 0) {
+        $("#mostrarCapacidad").show();
+        $("#evento-capacidad").attr("required", true);
+        $("#espectadores-si").attr('checked', true);
+    } else {
+        $("#mostrarCapacidad").hide();
+        $("#evento-capacidad").attr("required", false);
+        $("#evento-capacidad").val(null);
+        $("#espectadores-no").attr('checked', true);
+    }
     $("#w0 input[name=posee-espectadores]").change(function () {
         capacidad = $(this).val();
-        if(capacidad == 2){
-          $("#mostrarCapacidad").show();
-          $("#evento-capacidad").attr("required", true);
+        if (capacidad == 2) {
+            $("#mostrarCapacidad").show();
+            $("#evento-capacidad").attr("required", true);
         }
-        if(capacidad == -1){
-          $("#mostrarCapacidad").hide();
-          $("#evento-capacidad").attr("required", false);
-          $("#evento-capacidad").val(null);
+        if (capacidad == -1) {
+            $("#mostrarCapacidad").hide();
+            $("#evento-capacidad").attr("required", false);
+            $("#evento-capacidad").val(null);
         }
-     });
+    });
 
     $('.showpw .custom-control-input').click(function () {
         var type = $('#signupform-password').attr("type");
@@ -58,9 +80,9 @@ $(document).ready(function () {
             $('#resetpasswordform-password').attr("type", "password");
         }
 
-       
+
     });
-    
+
     // Habilitacion de los popover
     $(function () {
         $("[data-toggle='popover']").popover({
@@ -87,7 +109,7 @@ $(document).ready(function () {
     $('#signupform-provincia').change(function () {
         autocompleteLocalidades(eliminarDiacriticos($(this).val()));
     });
-    
+
     //funcionalidad editar perfil
     $('.editarPresentacion').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -108,7 +130,7 @@ function editPresentacionModal(link) {
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
         url: link,
-//        data: {data: data}
+        //        data: {data: data}
     }).done(function (data) {
         //data recibe la vista que deberia renderizarse al visitar la url
         //hacemos visible el modal
@@ -135,25 +157,25 @@ function editPresentacionModal(link) {
 function autocompleteProvincias(nombrePais) {
     $.ajax({
         url: "index.php?r=site%2Fsearch-provincias",
-        data: {pais: nombrePais},
+        data: { pais: nombrePais },
         type: "POST",
         dataType: "json"
     })
-            .done(function (data) {
-                console.log(data);
-                if (data !== null) {
-                    if ($("#signupform-provincia").autocomplete !== undefined) {
-                        $("#signupform-provincia").autocomplete({
-                            autoFill: true,
-                            minLength: "2",
-                            source: data,
-                            select: function (event, ui) {
-                                $("#signupform-provincia").val(ui.item.id);
-                            }
-                        });
-                    }
+        .done(function (data) {
+            console.log(data);
+            if (data !== null) {
+                if ($("#signupform-provincia").autocomplete !== undefined) {
+                    $("#signupform-provincia").autocomplete({
+                        autoFill: true,
+                        minLength: "2",
+                        source: data,
+                        select: function (event, ui) {
+                            $("#signupform-provincia").val(ui.item.id);
+                        }
+                    });
                 }
-            });
+            }
+        });
 }
 
 /**
@@ -166,24 +188,24 @@ function autocompleteProvincias(nombrePais) {
 function autocompleteLocalidades(nombreProvincia) {
     $.ajax({
         url: "index.php?r=site%2Fsearch-localidades",
-        data: {provincia: nombreProvincia},
+        data: { provincia: nombreProvincia },
         type: "POST",
         dataType: "json"
     })
-            .done(function (data) {
-                console.log(data);
-                if (data !== null) {
-//                        dataLocalidades = data;
-                    if ($("#signupform-localidad").autocomplete !== undefined) {
-                        $("#signupform-localidad").autocomplete({
-                            autoFill: true,
-                            minLength: "2",
-                            source: data,
-                            select: function (event, ui) {
-                                $("#signupform-localidad").val(ui.item.id);
-                            }
-                        });
-                    }
+        .done(function (data) {
+            console.log(data);
+            if (data !== null) {
+                //                        dataLocalidades = data;
+                if ($("#signupform-localidad").autocomplete !== undefined) {
+                    $("#signupform-localidad").autocomplete({
+                        autoFill: true,
+                        minLength: "2",
+                        source: data,
+                        select: function (event, ui) {
+                            $("#signupform-localidad").val(ui.item.id);
+                        }
+                    });
                 }
-            });
+            }
+        });
 }

@@ -287,7 +287,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 'headerOptions' => ['style' => 'text-align:center;'],
                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                             ],
-                            //                    'expositores',
+                            //'expositores',
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 //genera una url para cada evento
