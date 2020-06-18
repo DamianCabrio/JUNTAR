@@ -492,9 +492,7 @@ class EventoController extends Controller
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
 
         $model->save();
-        return $this->render('eventoPublicado', [
-            'model' => $model,
-            ]);
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
      }   
 
      /**
@@ -509,9 +507,7 @@ class EventoController extends Controller
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
 
         $model->save();
-        return $this->render('eventoDespublicado', [
-            'model' => $model,
-            ]);
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
      }   
      
      public function actionCargarExpositor($idPresentacion)
