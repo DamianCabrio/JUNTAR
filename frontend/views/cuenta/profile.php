@@ -16,16 +16,17 @@ $dataUser = array_shift($data);
         <div class="col-sm-3 mt-4 bg-profile-sidebar">
             <ul class="nav nav-tabs mt-2 text-center">
                 <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link active" data-toggle="tab" data-target="01" href="cuenta/profile"> Información de la Cuenta </a>
+                    <a class="nav-link active" href="cuenta/profile"> Información de la Cuenta </a>
                 </li>
+<!--                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link bg-gray" href=""> Cambiar Contraseña </a>
+                </li>-->
+                <!-- a futuro -->
+<!--                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link" href=""> Preferencias de Email </a>
+                </li>-->
                 <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Cambiar Contraseña </a>
-                </li>
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link" data-toggle="tab" data-target="01" href=""> Preferencias de Email </a>
-                </li>
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Desactivar mi Cuenta </a>
+                    <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
                 </li>
                 <li class="nav-item mt-2 profile-sidebar col-12">
                     <?php $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
