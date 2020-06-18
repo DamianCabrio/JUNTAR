@@ -10,6 +10,14 @@ use yii\bootstrap4\Nav;
 
 $this->title = 'Asignación de Roles';
 $this->params['breadcrumbs'][] = $this->title;
+//print_r($permisos2);
+//print_r($roles);
+//echo "<br><br>";
+//print_r($roles2);
+//echo "<br><br>";
+//print_r($permisos3);
+//echo "<br><br>";
+//print_r($permisos4);
 ?>
 <div class="rol-index">
 
