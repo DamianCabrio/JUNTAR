@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap4\Html;
+use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
