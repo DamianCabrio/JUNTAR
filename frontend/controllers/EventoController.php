@@ -203,7 +203,7 @@ class EventoController extends Controller
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento){
-        if ($cupos !== 0 && is_null($cupos)){
+        if ($cupos !== 0 || is_null($cupos)){
             return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
         }else{
             return "sinCupos";

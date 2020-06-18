@@ -79,99 +79,44 @@ $estadoEvento = $evento->idEstadoEvento0->descripcionEstado;
 $organizadorEvento = $evento->idUsuario0->nombre . " " . $evento->idUsuario0->apellido;
 $organizadorEmailEvento = $evento->idUsuario0->email;
 ?>
-<div class="evento-view container">
-    <!--<h2 class="text-center">Su evento cargado</h2>-->
-    <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
+<div class="evento-view ">
+<header class="hero gradient-hero">
+	<div class="container-fluid center-content text-center padding_hero">
+		<h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
+		<br>
+		<h5 class="text-white">Evento no patrocinado por la UNCOMA</h5>
+		<br>
+		<a href="#evento" class="btn btn-primary btn-lg text-uppercase">VER</a>
+	</div>
+</header>
 
-    <?php if ($cupos != false): ?>
-        <h1><?= Html::encode('Cupos restantes:' . $cupos) ?></h1>
-    <?php endif; ?>
+<div class="container-fluid darkish_bg padding_hero">
+	<div class="row">
+		<div class="col-12 col-md-6 text-center text-md-right">
+			<h3 class="text-white">Inicio: <?= $evento->fechaInicioEvento ?></h3>
+		</div>
+		<div class="col-12 col-md-6 text-center text-md-left">
+			<h3 class="text-white text-md-left">Fin: <?= $evento->fechaFinEvento ?></h3>
+		</div>
+		<div class="col-12 text-center">
+			<h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
+		</div>
+		<div class="col-12 text-center">
+            <?= Html::a('editar evento', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg text-uppercase']); ?>
+            <?= Html::a('editar agento (temp)', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg text-uppercase']); ?>
+		</div>
+	</div>
 
-    <p>
-        <?php
-        if (!Yii::$app->user->can('Administrador')) {
-            Html::a('Update', ['update', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
-            Html::a('Delete', ['delete', 'id' => $evento->idEvento], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
-                    'method' => 'post',
-                ],
-            ]);
-        }
-        ?>
-        <?php
-        switch ($estadoEventoInscripcion) {
-            case "puedeInscripcion":
-                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
-                break;
-            case "puedePreinscripcion":
-                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
-                break;
-            case "sinCupos":
-                echo Html::label('Sin cupos');
-                break;
-            case "yaAcreditado":
-                echo Html::label("Usted ya se acredito en este evento");
-                break;
-            case "inscriptoYEventoIniciado":
-                echo Html::label("El evento ya inicio, pasela bien");
-                break;
-            case "yaPreinscripto":
-                echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
-                break;
-            case "yaInscripto":
-                echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
-                break;
-            case "noInscriptoYFechaLimiteInscripcionPasada":
-                echo Html::label('No se puede inscribir, el evento ya inicio');
-                break;
-            case "puedeAcreditarse":
-                echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
-                break;
-        }
-        ?>
+</div>
+	<div class="container">
+    <!--<p class="text-center">Posee los siguientes datos</p>-->
 
-<!--<p class="text-center">Posee los siguientes datos</p>-->
-    <header class="hero gradient-hero">
-        <div class="container-fluid center-content text-center padding_hero">
-            <h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
-            <br>
-            <h5 class="text-white">Evento no patrocinado por la UNCOMA</h5>
-            <br>
-            <a href="#evento" class="btn btn-primary btn-lg text-uppercase">VER</a>
-        </div>
-    </header>
-    <?php
-    Modal::begin([
-//                'header' => '<h2> algo </h2>',
-        'id' => 'modalEvento',
-        'size' => 'modal-lg'
-    ]);
-//            echo "<div id='modalContent'></div>";
-    Modal::end();
-    ?>
-    <div class="container-fluid darkish_bg padding_hero">
-        <div class="row">
-            <div class="col-12 col-md-6 text-center text-md-right">
-                <h3 class="text-white">Inicio: <?= $evento->fechaInicioEvento ?></h3>
-            </div>
-            <div class="col-12 col-md-6 text-center text-md-left">
-                <h3 class="text-white text-md-left">Fin: <?= $evento->fechaFinEvento ?></h3>
-            </div>
-            <div class="col-12 text-center">
-                <h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
-            </div>
-            <div class="col-12 text-center">
-                <a href="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]); ?>" class="btn btn-primary btn-lg text-uppercase editarEvento" data-id="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]) ?>"> editar evento </a>
-                <a href="#agendaTable" class="btn btn-primary btn-lg text-uppercase"> editar agenda </a>
-            </div>
-        </div>
-    </div>
+<div id="evento" class="evento-view container">
+	<!--<h2 class="text-center">Su evento cargado</h2>-->
+	<h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
 
-    <div id="evento" class="evento-view container">
-        <!--<h2 class="text-center">Su evento cargado</h2>-->
-        <h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
+	<h1><?= Html::encode('Cupos restantes:' . $cupos) ?></h1>
+		<?php
 
         <h1><?= Html::encode('Cupos restantes:' . $cupos) ?></h1>
 
@@ -343,8 +288,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
                         <?php } ?>
 
-                    <?php endforeach; ?>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+					<?php endforeach; ?>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>
