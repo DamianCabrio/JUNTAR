@@ -478,13 +478,18 @@ class EventoController extends Controller
             $model->save();
             return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
+            $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
 
-        return $this->render('editarEvento', [
-            'model' => $model,
-            'modelLogo' => $modelLogo,
-            'modelFlyer' => $modelFlyer
-        ]);
-    }
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+
+         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
+        }
 
 
     /**

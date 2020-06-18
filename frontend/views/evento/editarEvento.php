@@ -35,20 +35,10 @@ if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->
 
                 <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'] , ['maxlength' => true])->label('Lugar *') ?>
 
-                <!-- select categoria -->
-                <?php $categoriasEventos = CategoriaEvento::find()     //buscar todas las categorias         
-                    ->select(['descripcionCategoria'])
-                    ->indexBy('idCategoriaEvento')
-                    ->column();
-                ?>
+            
                 <?= $form->field($model, 'idCategoriaEvento')->dropdownList($categoriasEventos,  ['prompt' => 'Seleccione una categoria'])->label('Categoria *'); ?>
 
-                <!-- select modalidad -->
-                <?php $modalidadEvento = modalidadEvento::find()     //buscar todas las categorias         
-                    ->select(['descripcionModalidad'])
-                    ->indexBy('idModalidadEvento')
-                    ->column();
-                ?>
+
                 <?= $form->field($model, 'idModalidadEvento')->dropdownList($modalidadEvento,  ['prompt' => 'Selecciona una modalidad'])->label('Modalidad *'); ?>
 
                 <!-- input logo -->
