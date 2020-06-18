@@ -18,7 +18,7 @@ public function init() {
       return <<<JS
         var selectedProvince = $("#signupform-provincia").val();
         var selectedLocation = $("#signupform-localidad").val();
-        deferred.push($.getJSON('json/localidades.json', function(json){
+        deferred.push($.getJSON('../json/localidades.json', function(json){
           var result = false;
           $.each(json, function(id, province){
             if (province.nombre == selectedProvince ) {
