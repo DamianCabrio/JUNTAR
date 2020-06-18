@@ -109,6 +109,31 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
         Modal::end();
         ?>
 
+        <div class="row">
+			<div class="col-12">
+				<div class="d-flex justify-content-end">
+				<?php 
+					if( $evento->idUsuario == Yii::$app->user->identity->idUsuario){
+						if(($evento->idEstadoEvento) == 4){
+						?>  
+						<?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+						<?php }?>
+				
+						<?php 
+						if(($evento->idEstadoEvento) == 1){
+						?>  
+						<?= Html::a('Suspender', ['eventos/despublicar-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+						<?php
+						}
+						?>
+						<?= Html::a('Editar', ['eventos/editar-evento/' .  $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+						<?php  
+					}	
+					?>
+				</div>
+			<div>
+		</div>
+
 <!--<p class="text-center">Posee los siguientes datos</p>-->
     <div class="row">
         <div class="col-12 col-md-8">
