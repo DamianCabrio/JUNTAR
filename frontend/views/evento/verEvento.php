@@ -176,6 +176,15 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 			</div>
 			<div class="col-12 col-md-4 p-4" style="background-color:#f2f2f2;">
 				<div>
+          <?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado'): ?>
+          <h4 class="py-2 px-3 mb-2 bg-primary text-white">Certificado</h4>
+            <?= $this->render('/certificado/index', [
+              "evento" => $evento,
+              'OrganizadorEmail' =>$organizadorEmailEvento,
+              'categoria' => $categoriaEvento,
+              'presentaciones' => $presentacion,
+            ]); ?>
+          <?php endif; ?>
 					<h4 class="py-2 px-3 mb-2 bg-primary text-white">Detalles</h4>
 					<p><b>Fecha de Inicio:</b></p>
 					<p><?= $evento->fechaInicioEvento ?></p>
