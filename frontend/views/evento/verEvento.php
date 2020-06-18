@@ -57,6 +57,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
     <h1><?= Html::encode('Cupos restantes:'.$cupos) ?></h1>
 
     <p>
+	
+
         <?php
         if (!Yii::$app->user->can('Administrador')) {
             Html::a('Update', ['update', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
@@ -69,7 +71,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             ]);
         } ?>
         <?php
-
+		
+		
         switch ($estadoEventoInscripcion){
             case "puedeInscripcion":
                 echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
@@ -99,8 +102,33 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
                 break;
         }
-
+		
         ?>
+		<div class="row">
+			<div class="col-12">
+				<div class="d-flex justify-content-end">
+				<?php 
+					if( $evento->idUsuario == Yii::$app->user->identity->idUsuario){
+						if(($evento->idEstadoEvento) == 4){
+						?>  
+						<?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+						<?php }?>
+				
+						<?php 
+						if(($evento->idEstadoEvento) == 1){
+						?>  
+						<?= Html::a('Suspender', ['eventos/despublicar-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+						<?php
+						}
+						?>
+						<?= Html::a('Editar', ['eventos/editar-evento/' .  $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+						<?php  
+					}	
+					?>
+				</div>
+			<div>
+		</div>
+		
 	
     <!--<p class="text-center">Posee los siguientes datos</p>-->
 	<div class="row">
@@ -229,5 +257,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				<?php endforeach; ?>
 			</tr>
 		</tbody>
-	</table>    
+	</table>   
+ 
+	</div>
 </div>
