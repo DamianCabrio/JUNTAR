@@ -78,6 +78,7 @@ class Evento extends \yii\db\ActiveRecord
             [['idModalidadEvento'], 'exist', 'skipOnError' => true, 'targetClass' => ModalidadEvento::className(), 'targetAttribute' => ['idModalidadEvento' => 'idModalidadEvento']],
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
             ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
+            ['fechaLimiteInscripcion','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'<='],
         ];
     }
 
