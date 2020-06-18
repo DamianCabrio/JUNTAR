@@ -16,7 +16,7 @@ $dataUser = array_shift($data);
         <div class="col-sm-3 mt-4 bg-profile-sidebar">
             <ul class="nav nav-tabs mt-2 text-center">
                 <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link active" href="cuenta/profile"> Información de la Cuenta </a>
+                    <a class="nav-link active" href="profile"> Información de la Cuenta </a>
                 </li>
 <!--                <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link bg-gray" href=""> Cambiar Contraseña </a>
