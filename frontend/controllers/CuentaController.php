@@ -2,15 +2,19 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Usuario;
-use common\models\User;
-use frontend\models\SignupForm;
-use frontend\models\UploadProfileImage;
+use Yii;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
-use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
+use common\models\User;
+use frontend\models\Usuario;
+use frontend\models\UploadProfileImage;
+use frontend\models\EventoSearch;
+use frontend\models\InscripcionSearch;
+
+//use frontend\models\Evento;
 
 /**
  * Site controller
@@ -68,8 +72,8 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $profileImageRoute = Url::base(true)  .  "/iconos/person-bounding-box.svg";
-        $rutaImagenPerfil = Url::base(true)  . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
+        $profileImageRoute = Url::base(true) . "/iconos/person-bounding-box.svg";
+        $rutaImagenPerfil = Url::base(true) . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
 
         if (@GetImageSize($rutaImagenPerfil)) {
             $profileImageRoute = $rutaImagenPerfil;
@@ -190,14 +194,70 @@ class CuentaController extends Controller {
             return $this->goHome();
         }
         $model = User::findIdentity(Yii::$app->user->identity->idUsuario);
-        if(Yii::$app->request->post()){
+        if (Yii::$app->request->post()) {
             $model->setInactive();
             Yii::$app->user->logout();
             return $this->goHome();
         }
         return $this->render('desactivarCuenta');
     }
-    
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionMisEventosGestionados() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $usuario = Yii::$app->user->identity->idUsuario;
+//        $searchModel = new Evento();
+        $searchModel = new EventoSearch();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['idUsuario' => $usuario]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => ['attributes' => ['fechaCreacionEvento']]
+        ]);
+
+        return $this->render('misEventosGestionados', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionMisInscripcionesAEventos() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $usuario = Yii::$app->user->identity->idUsuario;
+//        $searchModel = new Evento();
+        $searchModel = new InscripcionSearch();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['idUsuario' => $usuario]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => ['attributes' => ['fechaPreInscripcion']]
+        ]);
+
+        return $this->render('misInscripciones', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Habilitar ser gestor de eventos.
      * @param int $id identificador del usuario.
