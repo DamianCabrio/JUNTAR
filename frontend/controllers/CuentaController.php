@@ -6,6 +6,7 @@ use frontend\models\Usuario;
 use common\models\User;
 use frontend\models\SignupForm;
 use frontend\models\UploadProfileImage;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 use Yii;
 use yii\web\Controller;
@@ -67,10 +68,10 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $profileImageRoute = "icons/person-bounding-box.svg";
-        $rutaImagenPerfil = "profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
+        $profileImageRoute = Url::base(true)  .  "/iconos/person-bounding-box.svg";
+        $rutaImagenPerfil = Url::base(true)  . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
 
-        if (file_exists($rutaImagenPerfil)) {
+        if (@GetImageSize($rutaImagenPerfil)) {
             $profileImageRoute = $rutaImagenPerfil;
         }
 //        $model = new Usuario();

@@ -1,5 +1,6 @@
 <?php
 
+$this->title = $evento->nombreCortoEvento . " - Juntar";
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
@@ -18,9 +19,9 @@ if ($evento->imgLogo != null) {
 }
 
 if ($evento->preInscripcion == 0) {
-    $preInscripcion = "No requiere preinscipcion";
+    $preInscripcion = "No requiere preinscipción";
 } else {
-    $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipcion*</b>";
+    $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipción*</b>";
 }
 if ($evento->codigoAcreditacion != null) {
     $codAcreditacion = $evento->codigoAcreditacion;
@@ -81,16 +82,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 echo Html::label('Sin cupos');
                 break;
             case "yaAcreditado":
-                echo Html::label("Usted ya se acredito en este evento");
+                echo Html::label("Usted ya se acreditó en este evento");
                 break;
             case "inscriptoYEventoIniciado":
                 echo Html::label("El evento ya inicio, pasela bien");
                 break;
             case "yaPreinscripto":
-                echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
                 break;
             case "yaInscripto":
-                echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
                 break;
             case "noInscriptoYFechaLimiteInscripcionPasada":
                 echo Html::label('No se puede inscribir, el evento ya inicio');

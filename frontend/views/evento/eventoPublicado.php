@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 
+
+$this->title = "Evento Publicado - " . $model->nombreCortoEvento;
 ?>
 <div class="container">
     <div class = "row">

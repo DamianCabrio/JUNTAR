@@ -5,6 +5,7 @@
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
@@ -22,6 +23,8 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#050714" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -57,9 +60,17 @@ AppAsset::register($this);
                     $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
                     $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
                     //Logout
+
+                /** @var TYPE_NAME $urlImagenPerfil */
+                $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre .".jpg" ;
+                    if(@GetImageSize($urlImagenPerfil)){
+                        $imgPerfil = $urlImagenPerfil;
+                    }else{
+                        $imgPerfil = '@web/iconos/person-circle-w.svg';
+                    }
                     $menuItems[] = [
 
-                        'label' => '<img class="ml-1 filter-white" src="icons/person-circle.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
+                        'label' => Html::img($imgPerfil,  ['class' => 'ml-1', "alt" => "Cuenta", "width" => "30", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
 
                         'items' => [
                             ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
@@ -83,25 +94,22 @@ AppAsset::register($this);
             ]);
             NavBar::end();
             ?>
-                <?= Breadcrumbs::widget([
-                    'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
-                    'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-            ?>
 
-            <?php echo Alert::widget() ?>
 
+            <?php echo Alert::widget([
+                'options' => ['class' => 'text-center']
+            ]) ?>
+            <?php echo $content ?>
         </div>
 
-        <?php echo $content ?>
+        
       
     </div>
     <section class="darkish_bg text-light">
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
             <div class="row">
@@ -123,10 +131,10 @@ AppAsset::register($this);
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img( "@web/images/uncoma.png",  ['class' => 'img-fluid']); ?>
                 </div>
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
         </div>
@@ -134,7 +142,7 @@ AppAsset::register($this);
     <footer class="footer dark_bg text-light">
 
         <div class="container">
-            <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            <p class="pull-left">&copy; <?=  Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
         </div>
     </footer>
 

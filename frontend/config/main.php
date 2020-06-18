@@ -21,6 +21,9 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
+        'opengraph' => [
+            'class' => 'umanskyi31\opengraph\OpenGraph',
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -46,6 +49,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
              'rules' => [
+                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                  'eventos/ver-evento/<slug>' => 'evento/ver-evento',
                  'eventos/evento-cargado/<slug>' => 'evento/evento-cargado',
                  'eventos/editar-evento/<slug>' => 'evento/editar-evento',

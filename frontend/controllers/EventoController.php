@@ -16,10 +16,12 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\data\Pagination;
+use frontend\components\validateEmail;
 
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
+use function PHPUnit\Framework\isNull;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -182,24 +184,27 @@ class EventoController extends Controller
     }
 
     public function calcularCupos($evento){
-        //Cantidad de inscriptos al evento
-        $cantInscriptos = Inscripcion::find()
-            ->where(["idEvento" => $evento->idEvento, 'estado'=>1])
-            ->count();
+        if(!is_null($evento->capacidad)){
+            //Cantidad de inscriptos al evento
+            $cantInscriptos = Inscripcion::find()
+                ->where(["idEvento" => $evento->idEvento, 'estado'=>1])
+                ->count();
 
-        $cupoMaximo = $evento->capacidad;
+            $cupoMaximo = $evento->capacidad;
 
-        if ($cantInscriptos >= $cupoMaximo) {
-            $cupos = 0;
-        } else {
-            $cupos = $cupoMaximo - $cantInscriptos;
+            if ($cantInscriptos >= $cupoMaximo) {
+                $cupos = 0;
+            } else {
+                $cupos = $cupoMaximo - $cantInscriptos;
+            }
+            return $cupos;
+        }else {
+            return null;
         }
-
-        return $cupos;
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento){
-        if ($cupos != 0){
+        if ($cupos !== 0 || is_null($cupos)){
             return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
         }else{
             return "sinCupos";
@@ -237,7 +242,7 @@ class EventoController extends Controller
             // El usuario no esta incripto en el evento
         }else{
             // ¿Hay cupos en el evento? - No
-            if ($cupos == 0){
+            if ($cupos === 0 && !is_null($cupos)){
                 return "sinCupos";
                 // Hay cupos en el evento
             }else{
@@ -363,11 +368,16 @@ class EventoController extends Controller
         }else{
             $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
         }
+
+        $validarEmail = new validateEmail();
+        $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
+
         return $this->render('verEvento', [
             "evento" => $evento,
             'presentacion' => $presentaciones,
             "estadoEventoInscripcion" => $estadoEvento,
             'cupos' => $cupos,
+            "esFai" => $esFai,
         ]);
     }
     

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 
+$this->title = "Evento Cargado - " . $model->nombreCortoEvento;
 ?>
 <div class="container">
 

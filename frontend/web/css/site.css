@@ -8,19 +8,16 @@ html, body {
 }
 
 .wrap {
+    min-height: 100%;
     height: auto;
-    margin: 0 auto -60px;
-    margin-top: 100px;
+    margin: 58px auto -60px;
     padding: 0 0 60px;
 }
 
-.body-content {
-    padding-top: 50px;
+.wrap>.container {
+    padding: 70px 15px 20px;
 }
 
-.wrap>.container {
-    padding: 0px 0px 0px;
-}
 
 .navbar-dark {
     background-color: #050714
@@ -149,9 +146,7 @@ a.desc:after {
 .pagination_center {
     justify-content: center;
  }
-header{
-    margin-top: -100px;
-}
+
 .hero {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1456428746267-a1756408f782?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
     background-position: center;
@@ -185,7 +180,7 @@ header{
 }
 
 .center-content {
-    width: 600px;
+    width: 700px;
     display: -webkit-box;
     display: flex;
     -webkit-box-orient: vertical;
@@ -199,9 +194,12 @@ header{
 
 
 .padding_hero {
-    padding-bottom: 5vh;
+    padding-top: 7vh;
+    padding-bottom: 7vh;
 }
-
+.alert{
+    margin-bottom: 0px;
+}
 .btn {
     background-color: #FE1355;
     color: aliceblue!important;
@@ -233,7 +231,12 @@ header{
 section {
     padding: 70px 15px 20px;
 }
-
+.page-link{
+    color: #FE1355;
+}
+.page-link a:hover{
+    color: #050714;
+}
 @media(max-width:767px) {
     .nav li>form>button.logout {
         display: block;

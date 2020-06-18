@@ -10,6 +10,8 @@ use frontend\models\ModalidadEvento;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Evento */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->title = "Editar Evento - " . $model->nombreCortoEvento;
 ?>
 <?php
 if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario){
@@ -18,9 +20,9 @@ if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->
     <div class = "row">
         <div class = "col-md-8 col-12 m-auto">
 
-            <div class="evento-form">
-                <h2 class="text-center">Editar evento</h2>
+            <h2 class="text-center">Editar evento</h2>
                 <p class="text-center">Complete los siguientes campos</p>
+            <div class="evento-form">
 
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
                 <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
