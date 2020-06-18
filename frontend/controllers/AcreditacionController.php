@@ -75,7 +75,7 @@ class AcreditacionController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            if(!isJson($evento->codigoAcreditacion)) {
+            if(!is_object(json_decode($evento->codigoAcreditacion))) {
                 if ($evento->codigoAcreditacion == $model->codigoAcreditacion) {
                     $this->acreditar($evento);
                     return $this->redirect(['eventos/ver-evento/' . $slug]);
@@ -96,8 +96,9 @@ class AcreditacionController extends Controller
 
             return $this->refresh();
         } else {
-            $acrPreg = false;
-            if(isJson($evento->codigoAcreditacion)){
+            if(!is_object(json_decode($evento->codigoAcreditacion))){
+                $acrPreg = false;
+            }else{
                 $acrPreg = json_decode($evento->codigoAcreditacion);
             }
             return $this->render('acreditacion', [
