@@ -60,14 +60,17 @@ AppAsset::register($this);
                     $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
                     $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
                     //Logout
-                    if(file_exists(Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre )){
-                        $imgPerfil = Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre;
+
+                /** @var TYPE_NAME $urlImagenPerfil */
+                $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre .".jpg" ;
+                    if(@GetImageSize($urlImagenPerfil)){
+                        $imgPerfil = $urlImagenPerfil;
                     }else{
-                        $imgPerfil = Yii::$app->request->baseUrl .'/person-circle-w.svg';
+                        $imgPerfil = '@web/iconos/person-circle-w.svg';
                     }
                     $menuItems[] = [
 
-                        'label' => Html::img($imgPerfil,  ['class' => 'ml-1 filter-white', "alt" => "Cuenta", "width" => "30", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
+                        'label' => Html::img($imgPerfil,  ['class' => 'ml-1', "alt" => "Cuenta", "width" => "30", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
 
                         'items' => [
                             ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],

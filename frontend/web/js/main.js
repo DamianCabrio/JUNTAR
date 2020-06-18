@@ -82,7 +82,6 @@ $(document).ready(function () {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
         var slug = $('.editarEvento').data('id');
-        alert(slug);
         //llamamos a la funcion que se encargue de mostrar el formulario
         editEventoModal(slug);
     });
@@ -101,7 +100,6 @@ function editEventoModal(url) {
         url: url,
 //        data: {data: data}
     }).done(function (data) {
-        console.log(data);
         //data recibe la vista que deberia renderizarse al visitar la url
         //hacemos visible el modal
         $('#modalEvento').modal('show');
@@ -122,11 +120,11 @@ function editEventoModal(url) {
  * 
  * @returns none
  */
-function uploadNewProfileImage() {
+function uploadNewProfileImage(url) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "index.php?r=cuenta/upload-profile-image",
+        url: url,
 //        data: {data: data}
     }).done(function (data) {
         //data recibe la vista que deberia renderizarse al visitar la url
@@ -149,15 +147,16 @@ function uploadNewProfileImage() {
  * 
  * @returns none
  */
-function editProfileModal() {
+function editProfileModal(url) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "index.php?r=cuenta/editprofile"
+        url: url
 //        data: {data: data}
     }).done(function (data) {
         //data recibe la vista que deberia renderizarse al visitar la url
         //hacemos visible el modal
+        console.log(data);
         $('#modalProfile').modal('show');
         //convertimos a html la vista recibida
         var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().

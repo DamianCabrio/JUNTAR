@@ -42,16 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo Html::label('Sin cupos');
                 break;
             case "yaAcreditado":
-                echo Html::label("Usted ya se acredito en este evento");
+                echo Html::label("Usted ya se acreditó en este evento");
                 break;
             case "inscriptoYEventoIniciado":
                 echo Html::label("El evento ya inicio, pasela bien");
                 break;
             case "yaPreinscripto":
-                echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
                 break;
             case "yaInscripto":
-                echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
+                echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento], ['class' => 'btn btn-primary']);
                 break;
             case "noInscriptoYFechaLimiteInscripcionPasada":
                 echo Html::label('No se puede inscribir, el evento ya inicio');
