@@ -499,57 +499,34 @@ class EventoController extends Controller
      * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
      * atributo idEstadoEvento por el valor 1.
      */
-    public function actionPublicarEvento($slug)
-    {
+    public function actionPublicarEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = date('Y-m-d');
+       
+        $model->fechaCreacionEvento = date('Y-m-d');    
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
-
         $model->save();
-<<<<<<< HEAD
+
         return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
-     }   
+     }     
 
      /**
       * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
       * Cambia en el atributo fechaCreacionEvento por null, y en el
       * atributo idEstadoEvento por el valor 4.
       */
-     public function actionDespublicarEvento($slug){
-=======
-        return $this->render('eventoPublicado', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
-     * Cambia en el atributo fechaCreacionEvento por null, y en el
-     * atributo idEstadoEvento por el valor 4.
-     */
-    public function actionDespublicarEvento($slug)
-    {
->>>>>>> 09906c75b86671f53359798bc46e07fde22f1e11
+      public function actionDespublicarEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = null;
+        
+        $model->fechaCreacionEvento = null;   
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
-
         $model->save();
-<<<<<<< HEAD
+
         return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
-     }   
-     
-     public function actionCargarExpositor($idPresentacion)
-=======
-        return $this->render('eventoDespublicado', [
-            'model' => $model,
-        ]);
-    }
+     } 
+
 
     public function actionCargarExpositor($idPresentacion)
->>>>>>> 09906c75b86671f53359798bc46e07fde22f1e11
+
     {
         $model = new PresentacionExpositor();
         $objPresentacion = Presentacion::findOne($idPresentacion);
