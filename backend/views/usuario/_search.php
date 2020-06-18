@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\UsuarioSearch */
+/* @var $model backend\models\UsuarioSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="usuario-search">
 
-    <?php echo $form = ActiveForm::begin([
+    <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dni') ?>
 
-    <?php //echo $form->field($model, 'pais') ?>
+    <?= $form->field($model, 'pais') ?>
 
     <?php // echo $form->field($model, 'provincia') ?>
 
@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'password_reset_token') ?>
 
-    <?php echo $form->field($model, 'status') ?>
+    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
@@ -50,6 +50,6 @@ use yii\widgets\ActiveForm;
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
-    <?php echo ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

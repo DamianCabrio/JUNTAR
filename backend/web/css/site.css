@@ -132,6 +132,10 @@ a.desc:after {
     filter: invert(49%) sepia(98%) saturate(324%) hue-rotate(159deg) brightness(88%) contrast(97%);
 }
 
+.filter-white{
+    filter: invert(99%) sepia(6%) saturate(443%) hue-rotate(113deg) brightness(121%) contrast(100%);
+}
+
 .buttonRol:hover{
     background-color: lightblue;
     /*border: 1px solid red;*/

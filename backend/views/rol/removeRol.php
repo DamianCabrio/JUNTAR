@@ -9,7 +9,7 @@ use yii\bootstrap4\ActiveForm;
 <div class="row">
   <div class="col-10 col  offset-1">
 <?php
-$this->title = 'Actualizar Rol';
+$this->title = 'Eliminar Rol';
 $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -18,12 +18,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->dropdownlist($roles); ?>
-    <?= $form->field($model, 'new_name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'name')->dropdownlist($item, ['class' => 'form-control', 'prompt'=>'Seleccione un rol...']); ?>
 
     <div class="form-group">
-      <?= Html::submitButton('Actualizar', ['class' => 'btn btn-primary']) ?>
+      <?= Html::submitButton('Eliminar', [
+        'class' => 'btn btn-danger',
+        'data' => [
+          'confirm' => '¿Está seguro de querer eliminar el Rol?'
+        ],
+        ]) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
