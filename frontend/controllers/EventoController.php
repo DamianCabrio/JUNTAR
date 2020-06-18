@@ -317,7 +317,7 @@ class EventoController extends Controller
                 }
             }
             $model->save();
-            return $this->redirect(['eventos/evento-cargado/' . $model->nombreCortoEvento]);
+            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
         }
         $categoriasEventos = CategoriaEvento::find()
             ->select(['descripcionCategoria'])
@@ -334,13 +334,6 @@ class EventoController extends Controller
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
     }
 
-
-    public function actionEventoCargado($slug)
-    {
-        return $this->render('eventoCargado', [
-            'model' => $this->findModel("", $slug),
-        ]);
-    }
 
     /**
      * Recibe por parámetro un id, se busca esa instancia del event y se obtienen todos las presentaciones que pertenecen a ese evento.
