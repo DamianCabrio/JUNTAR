@@ -150,6 +150,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				echo Html::a('Acreditación', ['acreditacion/acreditacion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 				break;
         }
+
+        Modal::begin([
+            'id' => 'modalEvento',
+            'size' => 'modal-lg'
+        ]);
+        Modal::end();
         ?>
             <?php
             if (!Yii::$app->user->can('Administrador')) {
