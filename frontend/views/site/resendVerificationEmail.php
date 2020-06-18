@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
-$this->title = 'Reenviar confirmación de correo';
+$this->title = 'Confirmación de correo';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-resend-verification-email container">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
             <div  class="form-advice">
-                <p class=""> El correo de confirmación será enviado a dicha cuenta.</p>
+                <p class=""> El correo de activación será enviado a dicha cuenta. </p>
             </div>
 
             <div class="form-group">

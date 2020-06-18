@@ -15,7 +15,7 @@ $this->title = 'Juntar';
     <div class="body-content">
         <header class="hero gradient-hero">
             <div class="center-content">
-                <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid padding_logo']); ?>
+                <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid padding_logo']); ?>
                 <br>
                 <h5 class="text-white text-uppercase">Sistema Gestión de Eventos</h5>
                 <br>

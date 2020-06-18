@@ -1,8 +1,5 @@
 <?php
-
 use yii\helpers\Html;
-use yii\bootstrap\NavBar;
-use yii\bootstrap4\Nav;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioSearch */
@@ -10,14 +7,6 @@ use yii\bootstrap4\Nav;
 
 $this->title = 'Asignación de Roles';
 $this->params['breadcrumbs'][] = $this->title;
-//print_r($permisos2);
-//print_r($roles);
-//echo "<br><br>";
-//print_r($roles2);
-//echo "<br><br>";
-//print_r($permisos3);
-//echo "<br><br>";
-//print_r($permisos4);
 ?>
 <div class="rol-index">
 
@@ -27,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4 col-sm-12">
             <h1 class="text-center"> Roles </h1>
             <?php foreach ($roles as $rol): ?>
-                <a class="btn col-12 buttonRol nav-link" data-toggle="pill" data-id="<?php echo Html::encode($rol['name']) ?>" href="#"> 
+                <a class="btn col-12 buttonRol" data-id="<?php echo Html::encode($rol['name']) ?>" href="#"> 
                     <?php echo $rol['name'] ?> 
                 </a>
             <?php endforeach; ?>
@@ -64,13 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="col-md-2">
                                         <dfn>
                                             <abbr title="<?php echo Html::encode($unPermiso['description']); ?>">
-                                                <img src="icons/question-circle.svg" class="d-none d-md-inline-block filter-blue fixed-right" role="img" width="20" height="20" style="margin: 0px 10px 0 20px;">
+                                                <img src="iconos/question-circle.svg" class="d-none d-md-inline-block filter-blue fixed-right" role="img" width="20" height="20" style="margin: 0px 10px 0 20px;">
                                             </abbr>
                                         </dfn>
                                         <p class="d-sm-none d-inline-block"> <?php echo Html::encode($unPermiso['description']); ?> </p>
                                     </td>
                                     <td class="col-md-4 actionDiv">
-                                        <!--<div class="col-md-2 <?php // echo "button".Html::encode($unPermiso['name']);     ?>"></div>-->
+                                        <!--<div class="col-md-2 <?php // echo "button".Html::encode($unPermiso['name']);      ?>"></div>-->
                                         <!--<div class="col-md-2 buttonDiv"></div>-->
                                         <!--<div class="col-md-2 textRoleDiv"></div>-->
                                     </td>
@@ -83,6 +72,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <!-- Tab contents by role -->
     </div>
-
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    

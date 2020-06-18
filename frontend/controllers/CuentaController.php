@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use frontend\models\Usuario;
+use common\models\User;
 use frontend\models\SignupForm;
 use frontend\models\UploadProfileImage;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 use Yii;
 use yii\web\Controller;
@@ -66,10 +68,10 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $profileImageRoute = "icons/person-bounding-box.svg";
-        $rutaImagenPerfil = Yii::getAlias("@web") . "profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
+        $profileImageRoute = Url::base(true)  .  "/iconos/person-bounding-box.svg";
+        $rutaImagenPerfil = Url::base(true)  . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
 
-        if (file_exists($rutaImagenPerfil)) {
+        if (@GetImageSize($rutaImagenPerfil)) {
             $profileImageRoute = $rutaImagenPerfil;
         }
 //        $model = new Usuario();
@@ -170,24 +172,6 @@ class CuentaController extends Controller {
         ]);
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-    private function actionSignup() {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
-                    . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goHome();
-        }
-
-        return $this->render('signup', [
-                    'model' => $model,
-        ]);
-    }
-
     protected function findModel($id) {
         if (($model = Usuario::findOne($id)) !== null) {
             return $model;
@@ -196,6 +180,24 @@ class CuentaController extends Controller {
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionDesactivarCuenta() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = User::findIdentity(Yii::$app->user->identity->idUsuario);
+        if(Yii::$app->request->post()){
+            $model->setInactive();
+            Yii::$app->user->logout();
+            return $this->goHome();
+        }
+        return $this->render('desactivarCuenta');
+    }
+    
     /**
      * Habilitar ser gestor de eventos.
      * @param int $id identificador del usuario.
