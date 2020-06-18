@@ -5013,7 +5013,7 @@
     },
     {
         "id": 2,
-        "nombre": "Ciudad Autonoma De Bs As",
+        "nombre": "Ciudad Autónoma De Bs As",
         "ciudades": [
             {
                 "id": "3961",
@@ -5211,7 +5211,7 @@
     },
     {
         "id": 14,
-        "nombre": "Cordoba",
+        "nombre": "Córdoba",
         "ciudades": [
             {
                 "id": "1310",
@@ -5663,7 +5663,7 @@
             },
             {
                 "id": "1106",
-                "nombre": "Cordoba"
+                "nombre": "Córdoba"
             },
             {
                 "id": "1318",
@@ -7669,7 +7669,7 @@
             },
             {
                 "id": "1649",
-                "nombre": "Villa Cordoba"
+                "nombre": "Villa Córdoba"
             },
             {
                 "id": "1644",
@@ -7691,7 +7691,7 @@
     },
     {
         "id": 30,
-        "nombre": "Entre Rios",
+        "nombre": "Entre Ríos",
         "ciudades": [
             {
                 "id": "1934",
@@ -11221,7 +11221,7 @@
     },
     {
         "id": 58,
-        "nombre": "Neuquen",
+        "nombre": "Neuquén",
         "ciudades": [
             {
                 "id": "2739",
@@ -11345,7 +11345,7 @@
             },
             {
                 "id": "2752",
-                "nombre": "Neuquen"
+                "nombre": "Neuquén"
             },
             {
                 "id": "2782",
@@ -11451,7 +11451,7 @@
     },
     {
         "id": 62,
-        "nombre": "Rio Negro",
+        "nombre": "Río Negro",
         "ciudades": [
             {
                 "id": "2921",
@@ -15699,7 +15699,7 @@
     },
     {
         "id": 90,
-        "nombre": "Tucuman",
+        "nombre": "Tucumán",
         "ciudades": [
             {
                 "id": "3909",
@@ -16043,7 +16043,7 @@
             },
             {
                 "id": "3925",
-                "nombre": "San Miguel De Tucuman (Est. Tucuman)"
+                "nombre": "San Miguel De Tucumán (Est. Tucumán)"
             },
             {
                 "id": "3950",
