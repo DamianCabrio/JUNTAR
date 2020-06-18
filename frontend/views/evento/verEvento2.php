@@ -1,5 +1,6 @@
 <?php
 
+$this->title = $evento->nombreCortoEvento . " - Juntar";
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;

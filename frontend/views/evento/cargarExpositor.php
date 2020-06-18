@@ -11,6 +11,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Expositor */
 
+$this->title = "Cargar Expositor";
 ?>
 <div class="container">
     <div class = "row">

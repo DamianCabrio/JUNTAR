@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 
+$this->title = "Evento Anulado - " . $model->nombreCortoEvento;
 ?>
 <div class="container">
     <div class = "row">

@@ -97,6 +97,26 @@ class InscripcionController extends Controller
         ]);
     }
 
+    public function calcularCupos($evento){
+        if(!is_null($evento->capacidad)){
+            //Cantidad de inscriptos al evento
+            $cantInscriptos = Inscripcion::find()
+                ->where(["idEvento" => $evento->idEvento, 'estado'=>1])
+                ->count();
+
+            $cupoMaximo = $evento->capacidad;
+
+            if ($cantInscriptos >= $cupoMaximo) {
+                $cupos = 0;
+            } else {
+                $cupos = $cupoMaximo - $cantInscriptos;
+            }
+            return $cupos;
+        }else {
+            return null;
+        }
+    }
+
     public function actionPreinscripcion()
     {
         if ( Yii::$app->user->isGuest ){
@@ -109,43 +129,47 @@ class InscripcionController extends Controller
         $idEvento = $request->get('id');
         $slug = $request->get('slug');
 
-        //Busco si ya existe una inscripcion anulada
-        $inscripcion = Inscripcion::find()
-                        ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
-                        ->one();
-        
-        //Si no existe creo un nueva instancia de inscripcion
-        if ($inscripcion == Null){
-            $inscripcion = new Inscripcion();
-            $inscripcion->idUsuario = Yii::$app->user->identity->id;
-            $inscripcion->idEvento = $idEvento;
-            $inscripcion->acreditacion = 0;    
-        }
-        
-        //Busco en el campo preinscripcion en el evento 
-        $evento = Evento::find($idEvento)->select('preInscripcion')->one();
-        //Si requiere preinscripcion es true sino false
-        $esPreInscripcion = $evento->preInscripcion == 1 ? true : false;
 
 
-        if ($esPreInscripcion) {
-            $inscripcion->estado = 0; //es una preinscripcion
-            $inscripcion->fechaPreInscripcion = date("Y-m-d");
-        }
-        else{
-            $inscripcion->estado = 1; // es una inscripcion directa
-            $inscripcion->fechaPreInscripcion = date("Y-m-d");
-            $inscripcion->fechaInscripcion = date("Y-m-d");
-        }
-        $seGuardo = $inscripcion->save();
+        //Busco en el campo preinscripcion en el evento
+        $evento = Evento::find($idEvento)->one();
+        $cupos = $this->calcularCupos($evento);
 
+        if($cupos !== 0 || $cupos === null){
+            //Busco si ya existe una inscripcion anulada
+            $inscripcion = Inscripcion::find()
+                ->where(["idUsuario" => Yii::$app->user->identity->id, "idEvento" => $idEvento])
+                ->one();
+
+            //Si no existe creo un nueva instancia de inscripcion
+            if ($inscripcion == Null){
+                $inscripcion = new Inscripcion();
+                $inscripcion->idUsuario = Yii::$app->user->identity->id;
+                $inscripcion->idEvento = $idEvento;
+                $inscripcion->acreditacion = 0;
+            }
+
+            //Si requiere preinscripcion es true sino false
+            $esPreInscripcion = $evento->preInscripcion == 1 ? true : false;
+
+
+            if ($esPreInscripcion) {
+                $inscripcion->estado = 0; //es una preinscripcion
+                $inscripcion->fechaPreInscripcion = date("Y-m-d");
+            }
+            else{
+                $inscripcion->estado = 1; // es una inscripcion directa
+                $inscripcion->fechaPreInscripcion = date("Y-m-d");
+                $inscripcion->fechaInscripcion = date("Y-m-d");
+            }
+            $seGuardo = $inscripcion->save();
         if($seGuardo){
-            $texto = $esPreInscripcion ? "Se ha pre-inscripto con exito" : "Se ha inscripto con exito";
+            $texto = $esPreInscripcion ? "Se ha pre-inscripto con éxito" : "Se ha inscripto con éxito";
             Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
                 . '<p> Buena suerte </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }else{
-            Yii::$app->session->setFlash('error', '<h2> Ocurrio un error </h2>'
+            Yii::$app->session->setFlash('error', '<h2> Ocurrió un error </h2>'
                 . '<p> Por favor vuelva a intentar </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }
@@ -172,12 +196,12 @@ class InscripcionController extends Controller
         $esPreInscripcion = $inscripcion->estado == 1 ? true : false;
 
         if($seElimino){
-            $texto = $esPreInscripcion ? "Se ha anulado su pre-inscripto con exito" : "Se ha anulado inscripto con exito";
+            $texto = $esPreInscripcion ? "Se ha anulado su pre-inscripto con éxito" : "Se ha anulado su inscripción con éxito";
             Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
-                . '<p> Vuelva otro dia </p>');
+                . '<p> Vuelva otro día </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }else{
-            Yii::$app->session->setFlash('error', '<h2> Ocurrio un error </h2>'
+            Yii::$app->session->setFlash('error', '<h2> Ocurrió un error </h2>'
                 . '<p> Por favor vuelva a intentar </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }

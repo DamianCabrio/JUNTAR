@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b661b26c110b72d9023c8325898efb17",
+    "content-hash": "cf8cc66a0bba88bc21a64e57c382b647",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -1112,6 +1112,61 @@
             "time": "2020-05-12T16:47:27+00:00"
         },
         {
+            "name": "umanskyi31/opengraph",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vumanskyi/yii2-opengraph.git",
+                "reference": "726aadbd1fc43e926e8902a39d393ea0aaad96ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vumanskyi/yii2-opengraph/zipball/726aadbd1fc43e926e8902a39d393ea0aaad96ca",
+                "reference": "726aadbd1fc43e926e8902a39d393ea0aaad96ca",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "yiisoft/yii2": "~2.0.14"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "phpunit/phpunit": "~7.1",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "umanskyi31\\opengraph\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vlad Umanskyi",
+                    "email": "vladumanskyi@gmail.com"
+                }
+            ],
+            "description": "Created a new component for Yii2. The Open Graph component for your website",
+            "homepage": "https://github.com/vumanskyi/yii2-opengraph",
+            "keywords": [
+                "Vlad Umanskyi",
+                "VladUmanskyi",
+                "component",
+                "extension",
+                "facebook",
+                "open-graph",
+                "opengraph",
+                "seo",
+                "twitter-card",
+                "yii2"
+            ],
+            "time": "2019-03-31T11:16:43+00:00"
+        },
+        {
             "name": "yiisoft/yii2",
             "version": "2.0.35",
             "source": {
@@ -1366,52 +1421,6 @@
         {
             "name": "yiisoft/yii2-jui",
             "version": "2.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yiisoft/yii2-jui.git",
-                "reference": "ce45c16d4fbbe7d1c516d8d0e8311e07f6138eed"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/ce45c16d4fbbe7d1c516d8d0e8311e07f6138eed",
-                "reference": "ce45c16d4fbbe7d1c516d8d0e8311e07f6138eed",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery-ui": "~1.12.1",
-                "yiisoft/yii2": "~2.0.4"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "yii\\jui\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Qiang Xue",
-                    "email": "qiang.xue@gmail.com"
-                }
-            ],
-            "description": "The Jquery UI extension for the Yii framework",
-            "keywords": [
-                "jQuery UI",
-                "yii2"
-            ],
-            "time": "2017-11-25T15:32:29+00:00"
-        },
-        {
-            "name": "yiisoft/yii2-swiftmailer",
-            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-jui.git",

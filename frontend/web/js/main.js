@@ -80,7 +80,72 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editProfileModal();
     });
+
+    //funcionalidad editar perfil
+    $('.editarEvento').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        var slug = $('.editarEvento').data('id');
+        alert(slug);
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        editEventoModal(slug);
+    });
 });
+
+/**
+ * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
+ * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
+ * 
+ * @returns none
+ */
+function editEventoModal(url) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: url,
+//        data: {data: data}
+    }).done(function (data) {
+        console.log(data);
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.evento-form').each(function () {
+//            $('.modal-header').append("Nueva imagen de perfil");
+            $('.modal-header').html("<h3> Editar evento </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+/**
+ * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
+ * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
+ * 
+ * @returns none
+ */
+function uploadNewProfileImage() {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: "index.php?r=cuenta/upload-profile-image",
+//        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalProfile').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.uploadProfileImageForm').each(function () {
+//            $('.modal-header').append("Nueva imagen de perfil");
+            $('.modal-header').html("<h3> Nueva imagen de perfil </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
 
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
@@ -92,16 +157,18 @@ function editProfileModal() {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "index.php?r=cuenta/editprofile",
+        url: "index.php?r=cuenta/editprofile"
 //        data: {data: data}
     }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
         //hacemos visible el modal
         $('#modalProfile').modal('show');
-        //convertimos a html el documento recibido
+        //convertimos a html la vista recibida
         var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
-        //buscamos el div que queremos mostrar en el html recibido y lo escribimos sobre el cuerpo del modal
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
         $(dataHTML).find('div.profileForm').each(function () {
-            $('.modal-body').append($(this).html());
+            $('.modal-header').html("<h3> Editar Perfil </h3>");
+            $('.modal-body').html($(this).html());
         });
     });
 }

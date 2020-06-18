@@ -66,4 +66,13 @@ return array (
       '@kartik/mpdf' => $vendorDir . '/kartik-v/yii2-mpdf/src',
     ),
   ),
+  'umanskyi31/opengraph' => 
+  array (
+    'name' => 'umanskyi31/opengraph',
+    'version' => '2.0.0.0',
+    'alias' => 
+    array (
+      '@umanskyi31/opengraph' => $vendorDir . '/umanskyi31/opengraph/src',
+    ),
+  ),
 );
