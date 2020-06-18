@@ -75,9 +75,9 @@ $dataUser = array_shift($data);
                                 <?=
                                 Html::a(' Subir imagen '
                                         . Html::img($urlUpload, ["alt" => "Subir Imagen", "title" => "Subir Imagen", "width" => "18", "height" => "18",
-                                        "role" => "img", "class" => "ml-1", "data-id" => Url::toRoute(["upload-profile-image"])]),
+                                        "role" => "img", "class" => "ml-1"]),
                                         Url::toRoute(['upload-profile-image']),
-                                        ['class' => 'btn btn-primary uploadProfileImage']);
+                                        ['class' => 'btn btn-primary uploadProfileImage', "data-id" => Url::toRoute(["upload-profile-image"])]);
                                 ?>
                             </div>
                             <?php // echo $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
