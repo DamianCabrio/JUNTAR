@@ -85,7 +85,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 	<div class="container-fluid center-content text-center padding_hero">
 		<h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
 		<br>
-		<h5 class="text-white">Evento no patrocinado por la UNCOMA</h5>
+        <?php if(!$esFai): ?>
+		<h5 class="text-white">Evento no organizado por la FAI</h5>
+        <?php else: ?>
+        <h5 class="text-white">Evento organizado por la FAI</h5>
+        <?php endif; ?>
 		<br>
 		<a href="#evento" class="btn btn-primary btn-lg text-uppercase">VER</a>
 	</div>
@@ -115,7 +119,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 <div id="evento" class="evento-view container">
 	<!--<h2 class="text-center">Su evento cargado</h2>-->
 	<h2 class="text-center py-2 px-3 mt-4 mb-3 bg-info text-white"><?= $evento->nombreEvento ?></h2>
-
 	<h1><?= Html::encode('Cupos restantes:' . $cupos) ?></h1>
 		<?php
 
