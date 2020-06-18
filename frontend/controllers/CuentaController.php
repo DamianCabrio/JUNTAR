@@ -70,7 +70,7 @@ class CuentaController extends Controller {
         $profileImageRoute = Url::base(true)  .  "/iconos/person-bounding-box.svg";
         $rutaImagenPerfil = Url::base(true)  . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
 
-        if (file_exists($rutaImagenPerfil)) {
+        if (@GetImageSize($rutaImagenPerfil)) {
             $profileImageRoute = $rutaImagenPerfil;
         }
 //        $model = new Usuario();

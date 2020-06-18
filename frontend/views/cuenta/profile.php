@@ -52,7 +52,8 @@ $dataUser = array_shift($data);
                         <?php $urlPencil = Url::base(true) . '/iconos/pencil.svg'; ?>
                         <?=
                         Html::a(' Editar Perfil '
-                                . Html::img($urlPencil, ["alt" => "Editar", "title" => "Editar", "width" => "18", "height" => "18", "role" => "img", "class" => "ml-1 filter-white", "style" => "margin-top: -4px;"]),
+                                . Html::img($urlPencil, ["alt" => "Editar", "title" => "Editar", "width" => "18", "height" => "18", "role" => "img",
+                                "class" => "ml-1 filter-white", "style" => "margin-top: -4px;", "data-id" => Url::toRoute(["editprofile"])]),
                                 Url::toRoute(['editprofile']),
                                 ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile']);
                         ?>
@@ -72,7 +73,8 @@ $dataUser = array_shift($data);
                                 <?php $urlUpload = Url::base(true) . '/iconos/cloud-upload.svg'; ?>
                                 <?=
                                 Html::a(' Subir imagen '
-                                        . Html::img($urlUpload, ["alt" => "Subir Imagen", "title" => "Subir Imagen", "width" => "18", "height" => "18", "role" => "img", "class" => "ml-1"]),
+                                        . Html::img($urlUpload, ["alt" => "Subir Imagen", "title" => "Subir Imagen", "width" => "18", "height" => "18",
+                                        "role" => "img", "class" => "ml-1", "data-id" => Url::toRoute(["upload-profile-image"])]),
                                         Url::toRoute(['upload-profile-image']),
                                         ['class' => 'btn btn-primary uploadProfileImage']);
                                 ?>

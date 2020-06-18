@@ -60,10 +60,13 @@ AppAsset::register($this);
                     $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
                     $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
                     //Logout
-                    if(file_exists(Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre )){
-                        $imgPerfil = Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre;
+
+                /** @var TYPE_NAME $urlImagenPerfil */
+                $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre .".jpg" ;
+                    if(@GetImageSize($urlImagenPerfil)){
+                        $imgPerfil = $urlImagenPerfil;
                     }else{
-                        $imgPerfil = Url::base(true) . '/iconos/person-circle-w.svg';
+                        $imgPerfil = '@web/iconos/person-circle-w.svg';
                     }
                     $menuItems[] = [
 
