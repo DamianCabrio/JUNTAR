@@ -167,20 +167,27 @@ class PresentacionController extends Controller {
             throw new NotFoundHttpException('El evento no fue encontrado.');
         }
         $item = Evento::find()     //buscar los eventos del usuario
-                ->select(['nombreEvento'])
-                ->indexBy('idEvento')
-                ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
-                ->column();
+            ->select(['nombreEvento'])
+            ->indexBy('idEvento')
+            ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
+            ->column();
+
+        $data = Usuario::find() //arreglo de usuarios para autocomplete
+            ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
+            ->asArray()
+            ->all();
 
         return $this->render('cargarPresentacion', [
-                    'model' => $model,
-                    'item' => $item,
-                    "evento" => $evento,
-                    'preExpositor' => $preExpositor
+            'model' => $model,
+            'item' => $item,
+            "evento" => $evento,
+            'preExpositor' => $preExpositor,
+            'arrUsuario' => $data
         ]);
     }
 
-    public function actionMostrarPresentacion($idPresentacion, $idEvento) {
+    public function actionMostrarPresentacion($idPresentacion,  $idEvento)
+    {
 
         $objEvento = Evento::findOne($idEvento);
         $preExpositor = PresentacionExpositor::findOne($idPresentacion);
@@ -191,5 +198,4 @@ class PresentacionController extends Controller {
                     'evento' => $objEvento
         ]);
     }
-
 }

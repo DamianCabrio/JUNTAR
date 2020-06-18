@@ -16,6 +16,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\data\Pagination;
+use frontend\models\ModalidadEvento;
+use frontend\models\CategoriaEvento;
 
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
@@ -39,7 +41,7 @@ class EventoController extends Controller
                     'allow' => true,
                     'actions' => [
                         "ver-evento",
-						"ver-evento2"
+                        "ver-evento2"
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -96,7 +98,7 @@ class EventoController extends Controller
 */
         $evento = $this->findModel($id);
 
-        if($evento == null){
+        if ($evento == null) {
             return $this->goHome();
         }
 
@@ -105,29 +107,28 @@ class EventoController extends Controller
         $yaInscripto = false;
         $yaAcreditado = false;
 
-        if (!Yii::$app->user->getIsGuest()){
+        if (!Yii::$app->user->getIsGuest()) {
 
             $inscripcion = Inscripcion::find()
                 ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])
                 ->andWhere(["!=", "estado", 2])->one();
 
-            if($inscripcion != null) {
+            if ($inscripcion != null) {
                 $yaInscripto = true;
                 $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
                 $yaAcreditado = $inscripcion->acreditacion == 1;
-                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
-            }else{
-                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+                $estadoEvento = $this->obtenerEstadoEvento($evento, $yaInscripto, $yaAcreditado, $cupos, $tipoInscripcion);
+            } else {
+                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
             }
-
-            }else{
-            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+        } else {
+            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
         }
-            return $this->render('view', [
-                "evento" => $evento,
-                "estadoEvento" => $estadoEvento,
-                'cupos' => $cupos,
-            ]);
+        return $this->render('view', [
+            "evento" => $evento,
+            "estadoEvento" => $estadoEvento,
+            'cupos' => $cupos,
+        ]);
     }
 
     /**
@@ -182,10 +183,11 @@ class EventoController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function calcularCupos($evento){
+    public function calcularCupos($evento)
+    {
         //Cantidad de inscriptos al evento
         $cantInscriptos = Inscripcion::find()
-            ->where(["idEvento" => $evento->idEvento, 'estado'=>1])
+            ->where(["idEvento" => $evento->idEvento, 'estado' => 1])
             ->count();
 
         $cupoMaximo = $evento->capacidad;
@@ -199,59 +201,61 @@ class EventoController extends Controller
         return $cupos;
     }
 
-    public function obtenerEstadoEventoNoLogin($cupos, $evento){
-        if ($cupos != 0){
+    public function obtenerEstadoEventoNoLogin($cupos, $evento)
+    {
+        if ($cupos != 0) {
             return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-        }else{
+        } else {
             return "sinCupos";
         }
     }
 
-    public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion){
+    public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion)
+    {
 
         // ¿Ya esta inscripto o no? - Si
-        if($yaInscripto){
+        if ($yaInscripto) {
             // ¿El evento ya inicio? - Si
-            if($evento->fechaInicioEvento <= date("Y-m-d")){
+            if ($evento->fechaInicioEvento <= date("Y-m-d")) {
                 // ¿El evento tiene codigo de acreditacion? - Si
-                if($evento->codigoAcreditacion != null){
+                if ($evento->codigoAcreditacion != null) {
                     // ¿El usuario ya se acredito en el evento? - Si
-                    if($yaAcreditado != 1){
+                    if ($yaAcreditado != 1) {
                         return "puedeAcreditarse";
                         // El usuario no esta acreditado
-                    }else{
+                    } else {
                         return "yaAcreditado";
                     }
                     // El evento no tiene codigo de autentifacion y inicio
-                }else{
+                } else {
                     return "inscriptoYEventoIniciado";
                 }
-            // El evento no inicio todavia y el usuario esta inscripto
-            }else{
+                // El evento no inicio todavia y el usuario esta inscripto
+            } else {
                 // Tipo de inscripcion
-                if($tipoInscripcion == "preinscripcion"){
+                if ($tipoInscripcion == "preinscripcion") {
                     return "yaPreinscripto";
-                }else{
+                } else {
                     return "yaInscripto";
                 }
             }
             // El usuario no esta incripto en el evento
-        }else{
+        } else {
             // ¿Hay cupos en el evento? - No
-            if ($cupos == 0){
+            if ($cupos == 0) {
                 return "sinCupos";
                 // Hay cupos en el evento
-            }else{
+            } else {
                 // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
-                if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
+                if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
                     // ¿El evento tiene pre inscripcion activada? - Si
-                    if($evento->preInscripcion == 1){
+                    if ($evento->preInscripcion == 1) {
                         return "puedePreinscripcion";
                         // El evento no tiene pre inscripcion
-                    }else{
+                    } else {
                         return "puedeInscripcion";
                     }
-                }else{
+                } else {
                     return "noInscriptoYFechaLimiteInscripcionPasada";
                 }
             }
@@ -268,11 +272,11 @@ class EventoController extends Controller
     protected function findModel($id = "", $slug = "")
     {
 
-        if($id == ""){
+        if ($id == "") {
             if (($model = Evento::findOne(["nombreCortoEvento" => $slug])) !== null) {
                 return $model;
             }
-        }elseif($slug == ""){
+        } elseif ($slug == "") {
             if (($model = Evento::findOne(["idEvento" => $id])) !== null) {
                 return $model;
             }
@@ -291,39 +295,50 @@ class EventoController extends Controller
 
         $model = new Evento();
         $modelLogo = new UploadFormLogo();
-        $modelFlyer = new UploadFormFlyer();        
+        $modelFlyer = new UploadFormFlyer();
 
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
 
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if($modelLogo->imageLogo != null){
-                if($modelLogo->upload()){
+            if ($modelLogo->imageLogo != null) {
+                if ($modelLogo->upload()) {
                     $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
-            }    
-            if($modelFlyer->imageFlyer != null){
-                if($modelFlyer->upload()){
+            }
+            if ($modelFlyer->imageFlyer != null) {
+                if ($modelFlyer->upload()) {
                     $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
-                 }
+                }
             }
             $model->save();
-            return $this->redirect(['eventos/evento-cargado/'. $model->nombreCortoEvento]);
-  
+            return $this->redirect(['eventos/evento-cargado/' . $model->nombreCortoEvento]);
         }
-        return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer]);
+        $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
+
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+
+
+
+        return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
     }
 
 
     public function actionEventoCargado($slug)
     {
         return $this->render('eventoCargado', [
-            'model' => $this->findModel("",$slug),
+            'model' => $this->findModel("", $slug),
         ]);
     }
 
@@ -334,10 +349,10 @@ class EventoController extends Controller
     public function actionVerEvento2($slug)
     {
 
-        $evento = $this->findModel("",$slug);
+        $evento = $this->findModel("", $slug);
         $presentaciones = Presentacion::find()->where(['idEvento' => $evento->idEvento])->orderBy('idPresentacion')->all();
 
-        if($evento == null){
+        if ($evento == null) {
             return $this->goHome();
         }
 
@@ -346,23 +361,22 @@ class EventoController extends Controller
         $yaInscripto = false;
         $yaAcreditado = false;
 
-        if (!Yii::$app->user->getIsGuest()){
+        if (!Yii::$app->user->getIsGuest()) {
 
             $inscripcion = Inscripcion::find()
                 ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])
                 ->andWhere(["!=", "estado", 2])->one();
 
-            if($inscripcion != null) {
+            if ($inscripcion != null) {
                 $yaInscripto = true;
                 $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
                 $yaAcreditado = $inscripcion->acreditacion == 1;
-                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
-            }else{
-                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+                $estadoEvento = $this->obtenerEstadoEvento($evento, $yaInscripto, $yaAcreditado, $cupos, $tipoInscripcion);
+            } else {
+                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
             }
-
-        }else{
-            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+        } else {
+            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
         }
         return $this->render('verEvento2', [
             "evento" => $evento,
@@ -371,23 +385,23 @@ class EventoController extends Controller
             'cupos' => $cupos,
         ]);
     }
-    
+
     public function actionVerEvento($slug)
     {
 
-        $evento = $this->findModel("",$slug);
-//        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
-        
+        $evento = $this->findModel("", $slug);
+        //        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
+
         //data GridView
-//        $pages = new Pagination(['totalCount' => count(Presentacion::findAll(0)) ]);
-//        $pages->pageSize = 10;
+        //        $pages = new Pagination(['totalCount' => count(Presentacion::findAll(0)) ]);
+        //        $pages->pageSize = 10;
         $searchModel = new PresentacionSearch();
         $dataProvider = new ActiveDataProvider([
             'query' => $searchModel::find()->where(['idEvento' => $evento->idEvento]),
             'sort' => ['attributes' => ['name', 'description']]
         ]);
-        
-        if($evento == null){
+
+        if ($evento == null) {
             return $this->goHome();
         }
 
@@ -396,27 +410,26 @@ class EventoController extends Controller
         $yaInscripto = false;
         $yaAcreditado = false;
 
-        if (!Yii::$app->user->getIsGuest()){
+        if (!Yii::$app->user->getIsGuest()) {
 
             $inscripcion = Inscripcion::find()
                 ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])
                 ->andWhere(["!=", "estado", 2])->one();
 
-            if($inscripcion != null) {
+            if ($inscripcion != null) {
                 $yaInscripto = true;
                 $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
                 $yaAcreditado = $inscripcion->acreditacion == 1;
-                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
-            }else{
-                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+                $estadoEvento = $this->obtenerEstadoEvento($evento, $yaInscripto, $yaAcreditado, $cupos, $tipoInscripcion);
+            } else {
+                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
             }
-
-        }else{
-            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
+        } else {
+            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
         }
         return $this->render('verEvento', [
             "evento" => $evento,
-//            'presentacion' => $presentaciones,
+            //            'presentacion' => $presentaciones,
             "estadoEventoInscripcion" => $estadoEvento,
             'cupos' => $cupos,
             //agregada la data necesaria para gridview
@@ -438,15 +451,16 @@ class EventoController extends Controller
     }
 
 
-    
-     /**
+
+    /**
      * Recibe por parámetro un id de evento, se buscar y se obtiene la instancia del evento, se visualiza un formulario 
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-     public function actionEditarEvento($slug){
+    public function actionEditarEvento($slug)
+    {
 
-        $model = $this->findModel("",$slug);
+        $model = $this->findModel("", $slug);
 
         $modelLogo = new UploadFormLogo();
         $modelFlyer = new UploadFormFlyer();
@@ -454,44 +468,46 @@ class EventoController extends Controller
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if($model->load(Yii::$app->request->post())) {
-            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); 
-            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); 
+        if ($model->load(Yii::$app->request->post())) {
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if($modelLogo->imageLogo != null){
-                if($modelLogo->upload()){
+            if ($modelLogo->imageLogo != null) {
+                if ($modelLogo->upload()) {
                     $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
-            }    
-            if($modelFlyer->imageFlyer != null){
-                if($modelFlyer->upload()){
+            }
+            if ($modelFlyer->imageFlyer != null) {
+                if ($modelFlyer->upload()) {
                     $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
-                 }
+                }
             }
             $model->save();
-            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
 
         return $this->render('editarEvento', [
             'model' => $model,
-            'modelLogo' => $modelLogo, 
+            'modelLogo' => $modelLogo,
             'modelFlyer' => $modelFlyer
         ]);
-     }
+    }
 
-   
-     /**
-      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
-      * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
-      * atributo idEstadoEvento por el valor 1.
-      */
-     public function actionPublicarEvento($slug){
-        $model = $this->findModel("",$slug);
-       
-        $model->fechaCreacionEvento = date('Y-m-d');    
+
+    /**
+     * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
+     * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
+     * atributo idEstadoEvento por el valor 1.
+     */
+    public function actionPublicarEvento($slug)
+    {
+        $model = $this->findModel("", $slug);
+
+        $model->fechaCreacionEvento = date('Y-m-d');
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
 
         $model->save();
+<<<<<<< HEAD
         return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
      }   
 
@@ -501,16 +517,39 @@ class EventoController extends Controller
       * atributo idEstadoEvento por el valor 4.
       */
      public function actionDespublicarEvento($slug){
+=======
+        return $this->render('eventoPublicado', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
+     * Cambia en el atributo fechaCreacionEvento por null, y en el
+     * atributo idEstadoEvento por el valor 4.
+     */
+    public function actionDespublicarEvento($slug)
+    {
+>>>>>>> 09906c75b86671f53359798bc46e07fde22f1e11
         $model = $this->findModel("", $slug);
-       
-        $model->fechaCreacionEvento = null;   
+
+        $model->fechaCreacionEvento = null;
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
 
         $model->save();
+<<<<<<< HEAD
         return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
      }   
      
      public function actionCargarExpositor($idPresentacion)
+=======
+        return $this->render('eventoDespublicado', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionCargarExpositor($idPresentacion)
+>>>>>>> 09906c75b86671f53359798bc46e07fde22f1e11
     {
         $model = new PresentacionExpositor();
         $objPresentacion = Presentacion::findOne($idPresentacion);
@@ -526,5 +565,4 @@ class EventoController extends Controller
             'model' => $model
         ]);
     }
-
 }
