@@ -51,7 +51,7 @@ $dataUser = array_shift($data);
                         <h4 class="col-md-9 col-sm-12">Perfil de <?= Html::encode($dataUser['nombre'] . ' ' . $dataUser['apellido']); ?> </h4>
                         <?=
                         Html::a(' Editar Perfil '
-                                . '<img class="ml-1 filter-white" src="icons/pencil.svg" alt="Editar" width="18" height="18" title="Editar" role="img" style="margin-top: -4px;">',
+                                . '<img class="ml-1 filter-white" src="'. Yii::getAlias("@web") . 'icons/pencil.svg" alt="Editar" width="18" height="18" title="Editar" role="img" style="margin-top: -4px;">',
                                 Url::toRoute(['editprofile']),
                                 ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile']);
                         ?>
