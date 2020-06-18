@@ -318,3 +318,4 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 </tbody>
 </table> -->   
 </div>
+</div>
