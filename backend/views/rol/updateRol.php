@@ -6,7 +6,7 @@ use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
 
-$this->title = 'Actualizar Permiso';
+$this->title = 'Actualizar Rol';
 $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= Html::encode($this->title) ?></h1>
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'name')->dropdownlist($permission); ?>
-            <?= $form->field($model, 'new_name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name')->dropdownlist($roles, ['class' => 'form-control', 'prompt'=>'Seleccione un rol...']); ?>
+            <?php echo $form->field($model, 'new_name')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
             <div class="form-group">

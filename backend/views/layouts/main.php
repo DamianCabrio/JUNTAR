@@ -42,14 +42,31 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'ABMUsuarios', 'url' => ['/usuario/index']];
         //MenuItems ABM Permisos
         $menuItems[] = [
-                       'label' => 'Gestor de Permisos',
+                       'label' => 'Gestor de Permisos OLD',
                        'items' => [
                             ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
-                            ['label' => 'Crear Rol', 'url' => ['/permission-manager/create-rol']],
-                            ['label' => 'Actualizar Rol', 'url' => ['/permission-manager/update-rol']],
-                            ['label' => 'Crear Permiso', 'url' => ['/permission-manager/create-permission']],
-                            ['label' => 'Actualizar Permiso', 'url' => ['/permission-manager/update-permission']],
-                            ['label' => 'Eliminar', 'url' => ['/permission-manager/remove']],
+                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
+                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
+                            ],
+                        ];
+        //MenuItems ABM Permisos
+        $menuItems[] = [
+                       'label' => 'Gestor de Permisos',
+                       'items' => [
+                            ['label' => 'Asignar Permisos', 'url' => ['/permission/asignar-permisos']],
+                            ['label' => 'Listado Permisos', 'url' => ['/permission/index']],
+                            ['label' => 'Crear Permiso', 'url' => ['/permission/create-permiso']],
+                            ['label' => 'Actualizar Permiso', 'url' => ['/permission/update-permiso']],
+                            ['label' => 'Eliminar Permiso', 'url' => ['/permission/remove-permiso']],
+                            ],
+                        ];
+        $menuItems[] = [
+                       'label' => 'Gestor de Roles',
+                       'items' => [
+                            ['label' => 'Listado Roles', 'url' => ['/rol/index']],
+                            ['label' => 'Crear Rol', 'url' => ['/rol/create-rol']],
+                            ['label' => 'Actualizar Rol', 'url' => ['/rol/update-rol']],
+//                            ['label' => 'Eliminar Rol', 'url' => ['/rol/remove-rol']],
                             ],
                         ];
         //Logout

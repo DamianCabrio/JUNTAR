@@ -9,7 +9,7 @@ use yii\bootstrap4\ActiveForm;
 <div class="row">
   <div class="col-10 col  offset-1">
 <?php
-$this->title = 'Actualizar Rol';
+$this->title = 'Eliminar Permiso';
 $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->dropdownlist($item); ?>
+    <?= $form->field($model, 'name')->dropdownlist($item, ['class' => 'form-control', 'prompt'=>'Seleccione un permiso...']); ?>
 
     <div class="form-group">
       <?= Html::submitButton('Eliminar', [
