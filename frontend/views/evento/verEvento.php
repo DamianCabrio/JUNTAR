@@ -181,7 +181,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     echo Html::label('Sin cupos');
                     break;
                 case "yaAcreditado":
-                    echo Html::label("Usted ya se acredito en este evento");
+                    echo Html::label("Usted ya se acreditó en este evento");
                     break;
                 case "inscriptoYEventoIniciado":
                     echo Html::label("El evento ya inicio, pasela bien");
