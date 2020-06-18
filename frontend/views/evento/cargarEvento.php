@@ -29,20 +29,8 @@ use yii\bootstrap4\ActiveForm;
 
                 <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 
-                <!-- select categoria -->
-                <?php $categoriasEventos = CategoriaEvento::find()           
-                    ->select(['descripcionCategoria'])
-                    ->indexBy('idCategoriaEvento')
-                    ->column();
-                ?>
                 <?= $form->field($model, 'idCategoriaEvento')->dropdownList($categoriasEventos,  ['prompt' => 'Seleccione una categoria'])->label('Categoria *'); ?>
 
-                <!-- select modalidad -->
-                <?php $modalidadEvento = modalidadEvento::find()             
-                    ->select(['descripcionModalidad'])
-                    ->indexBy('idModalidadEvento')
-                    ->column();
-                ?>
                 <?= $form->field($model, 'idModalidadEvento')->dropdownList($modalidadEvento,  ['prompt' => 'Selecciona una modalidad'])->label('Modalidad *'); ?>
 
                 <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style'=>'width: auto'])->label('Fecha Inicio *') ?>

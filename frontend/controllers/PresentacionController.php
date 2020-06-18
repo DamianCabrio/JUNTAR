@@ -154,7 +154,7 @@ class PresentacionController extends Controller
     public function actionCargarPresentacion($slug)
     {
         $model = new Presentacion();
-        $preExpositor = new PresentacionExpositor(); 
+        $preExpositor = new PresentacionExpositor();
 
         if ($model->load(Yii::$app->request->post()) && $preExpositor->load(Yii::$app->request->post())) {
             if ($model->save()) {
@@ -168,20 +168,26 @@ class PresentacionController extends Controller
         $idUsuario = Yii::$app->user->identity->idUsuario;
         $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
 
-        if($evento == null){
+        if ($evento == null) {
             throw new NotFoundHttpException('El evento no fue encontrado.');
         }
         $item = Evento::find()     //buscar los eventos del usuario
-        ->select(['nombreEvento'])
+            ->select(['nombreEvento'])
             ->indexBy('idEvento')
             ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
             ->column();
 
+        $data = Usuario::find() //arreglo de usuarios para autocomplete
+            ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
+            ->asArray()
+            ->all();
+
         return $this->render('cargarPresentacion', [
             'model' => $model,
-            'item'=> $item,
+            'item' => $item,
             "evento" => $evento,
-            'preExpositor' => $preExpositor
+            'preExpositor' => $preExpositor,
+            'arrUsuario' => $data
         ]);
     }
 
@@ -189,17 +195,14 @@ class PresentacionController extends Controller
 
     public function actionMostrarPresentacion($idPresentacion,  $idEvento)
     {
-       
+
         $objEvento = Evento::findOne($idEvento);
         $preExpositor = PresentacionExpositor::findOne($idPresentacion);
-        
+
         return $this->render('mostrarPresentacion', [
             'model' => $this->findModel($idPresentacion),
             'preExpositor' =>  $preExpositor,
             'evento' => $objEvento
         ]);
     }
-
-
-
-}   
+}
