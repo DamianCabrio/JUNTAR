@@ -51,26 +51,22 @@ $(document).ready(function () {
             trigger: 'hover'
         });
     });
-    //Utilizado para eliminar los caracteres especiales en nombres de provincias (acentos)
-    function eliminarDiacriticos(texto) {
-        return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-    }
 
     //buscamos valores por defecto para pais argentina
     if ($('#signupform-pais').val() === 'Argentina') {
-        autocompleteProvincias(eliminarDiacriticos('Argentina'));
+        autocompleteProvincias('Argentina');
     }
     ;
 
     //input provincia
     $('#signupform-pais').change(function () {
-        autocompleteProvincias(eliminarDiacriticos($(this).val()));
+        autocompleteProvincias($(this).val());
     });
 
     //input localidad
 
     $('#signupform-provincia').change(function () {
-        autocompleteLocalidades(eliminarDiacriticos($(this).val()));
+        autocompleteLocalidades($(this).val());
     });
 
     //funcionalidad editar perfil
@@ -182,7 +178,7 @@ function editProfileModal() {
  */
 function autocompleteProvincias(nombrePais) {
     $.ajax({
-        url: "index.php?r=site%2Fsearch-provincias",
+        url: "search-provincias",
         data: {pais: nombrePais},
         type: "POST",
         dataType: "json"
@@ -213,7 +209,7 @@ function autocompleteProvincias(nombrePais) {
  */
 function autocompleteLocalidades(nombreProvincia) {
     $.ajax({
-        url: "index.php?r=site%2Fsearch-localidades",
+        url: "search-localidades",
         data: {provincia: nombreProvincia},
         type: "POST",
         dataType: "json"
