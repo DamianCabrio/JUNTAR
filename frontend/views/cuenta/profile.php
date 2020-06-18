@@ -49,9 +49,10 @@ $dataUser = array_shift($data);
                 <div class="card-header">
                     <div class="row">
                         <h4 class="col-md-9 col-sm-12">Perfil de <?= Html::encode($dataUser['nombre'] . ' ' . $dataUser['apellido']); ?> </h4>
+                        <?php $urlPencil = Url::base(true) . '/iconos/pencil.svg'; ?>
                         <?=
                         Html::a(' Editar Perfil '
-                                . '<img class="ml-1 filter-white" src="'. Yii::getAlias("@web") . 'icons/pencil.svg" alt="Editar" width="18" height="18" title="Editar" role="img" style="margin-top: -4px;">',
+                                . Html::img($urlPencil, ["alt" => "Editar", "title" => "Editar", "width" => "18", "height" => "18", "role" => "img", "class" => "ml-1 filter-white", "style" => "margin-top: -4px;"]),
                                 Url::toRoute(['editprofile']),
                                 ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile']);
                         ?>
@@ -68,9 +69,10 @@ $dataUser = array_shift($data);
                             <img class="card-img" width="450" height="" src="<?php echo $profileImage ?>" title="<?= Html::encode($dataUser['nombre']); ?>">
                             <!-- Input profile image -->
                             <div class=".text-center d-flex justify-content-center">
+                                <?php $urlUpload = Url::base(true) . '/iconos/cloud-upload.svg'; ?>
                                 <?=
                                 Html::a(' Subir imagen '
-                                        . '<img class="ml-1" src="icons/cloud-upload.svg" alt="Subir Imagen" title="Subir Imagen" width="18" height="18" role="img">',
+                                        . Html::img($urlUpload, ["alt" => "Subir Imagen", "title" => "Subir Imagen", "width" => "18", "height" => "18", "role" => "img", "class" => "ml-1"]),
                                         Url::toRoute(['upload-profile-image']),
                                         ['class' => 'btn btn-primary uploadProfileImage']);
                                 ?>

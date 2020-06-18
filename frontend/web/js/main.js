@@ -96,7 +96,7 @@ $(document).ready(function () {
  * 
  * @returns none
  */
-function uploadNewProfileImage() {
+function uploadNewProfileImage(url) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({

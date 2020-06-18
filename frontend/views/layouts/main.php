@@ -63,7 +63,7 @@ AppAsset::register($this);
                     if(file_exists(Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre )){
                         $imgPerfil = Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre;
                     }else{
-                        $imgPerfil = Yii::$app->request->baseUrl .'/person-circle-w.svg';
+                        $imgPerfil = Url::base(true) . '/iconos/person-circle-w.svg';
                     }
                     $menuItems[] = [
 
