@@ -16,6 +16,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\data\Pagination;
+use frontend\components\validateEmail;
 
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
@@ -203,7 +204,7 @@ class EventoController extends Controller
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento){
-        if ($cupos !== 0 && is_null($cupos)){
+        if ($cupos !== 0 || is_null($cupos)){
             return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
         }else{
             return "sinCupos";
@@ -367,11 +368,16 @@ class EventoController extends Controller
         }else{
             $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
         }
+
+        $validarEmail = new validateEmail();
+        $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
+
         return $this->render('verEvento', [
             "evento" => $evento,
             'presentacion' => $presentaciones,
             "estadoEventoInscripcion" => $estadoEvento,
             'cupos' => $cupos,
+            "esFai" => $esFai,
         ]);
     }
     

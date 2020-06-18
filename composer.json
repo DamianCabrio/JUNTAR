@@ -21,7 +21,8 @@
         "yiisoft/yii2-jui": "^2.0",
         "fortawesome/font-awesome": "^5.13.0",
         "kartik-v/yii2-mpdf": "dev-master",
-        "umanskyi31/opengraph": "^2.0"
+        "umanskyi31/opengraph": "^2.0",
+      "ext-json": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

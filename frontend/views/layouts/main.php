@@ -5,6 +5,7 @@
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
@@ -59,9 +60,14 @@ AppAsset::register($this);
                     $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
                     $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
                     //Logout
+                    if(file_exists(Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre )){
+                        $imgPerfil = Yii::getAlias("@web") . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre;
+                    }else{
+                        $imgPerfil = Yii::$app->request->baseUrl .'/person-circle-w.svg';
+                    }
                     $menuItems[] = [
 
-                        'label' => '<img class="ml-1 filter-white" src="icons/person-circle.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
+                        'label' => Html::img($imgPerfil,  ['class' => 'ml-1 filter-white', "alt" => "Cuenta", "width" => "30", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
 
                         'items' => [
                             ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
@@ -100,7 +106,7 @@ AppAsset::register($this);
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
             <div class="row">
@@ -122,10 +128,10 @@ AppAsset::register($this);
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img( "@web/images/uncoma.png",  ['class' => 'img-fluid']); ?>
                 </div>
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
         </div>
@@ -133,7 +139,7 @@ AppAsset::register($this);
     <footer class="footer dark_bg text-light">
 
         <div class="container">
-            <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            <p class="pull-left">&copy; <?=  Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
         </div>
     </footer>
 
