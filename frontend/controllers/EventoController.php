@@ -448,16 +448,14 @@ class EventoController extends Controller
       * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
       * atributo idEstadoEvento por el valor 1.
       */
-     public function actionPublicarEvento($slug){
-        $model = $this->findModel("",$slug);
+      public function actionPublicarEvento($slug){
+        $model = $this->findModel("", $slug);
        
         $model->fechaCreacionEvento = date('Y-m-d');    
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
-
         $model->save();
-        return $this->render('eventoPublicado', [
-            'model' => $model,
-            ]);
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
      }   
 
      /**
@@ -465,17 +463,16 @@ class EventoController extends Controller
       * Cambia en el atributo fechaCreacionEvento por null, y en el
       * atributo idEstadoEvento por el valor 4.
       */
-     public function actionDespublicarEvento($slug){
+      public function actionDespublicarEvento($slug){
         $model = $this->findModel("", $slug);
-       
+        
         $model->fechaCreacionEvento = null;   
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
-
         $model->save();
-        return $this->render('eventoDespublicado', [
-            'model' => $model,
-            ]);
-     }   
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     } 
+
      
      public function actionCargarExpositor($idPresentacion)
     {

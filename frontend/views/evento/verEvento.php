@@ -3,6 +3,7 @@
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
+use frontend\models\Presentacion;
 use frontend\models\Usuario;
 
 if ($evento->imgFlyer != null) {
@@ -218,7 +219,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     ?>
             </div>
         </div>
-    </div>   
+    </div>  
 		<table class="table table-bordered" style="font-size: 0.8rem;">
 			<thead>
 				<th scope="col" class="text-center">#</th>
@@ -265,6 +266,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				<?php 
 				if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario){ ?>
 					<td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
+					<td class="align-middle"><?= Html::a('Editar', ['presentacion/editar-presentacion/' . $objPresentacion->tituloPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
 				<?php } ?>
 					   
 				<?php endforeach; ?>
