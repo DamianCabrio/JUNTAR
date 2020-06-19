@@ -265,7 +265,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				
 				<?php 
 				if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario){ ?>
-					<td class="align-middle"><?= Html::a('+', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
+					<?php $url = Url::to(['evento/cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion,'slug' => $objPresentacion->tituloPresentacion]);?>
+					<td class="align-middle"><?= Html::a('+',$url , ['class' => 'btn btn-outline-success btn-sm']) ?></td>
 					<td class="align-middle"><?= Html::a('Editar', ['presentacion/editar-presentacion/' . $objPresentacion->tituloPresentacion], ['class' => 'btn btn-outline-success btn-sm']) ?></td>
 				<?php } ?>
 					   

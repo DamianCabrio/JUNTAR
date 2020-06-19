@@ -474,7 +474,7 @@ class EventoController extends Controller
      } 
 
      
-     public function actionCargarExpositor($idPresentacion)
+     public function actionCargarExpositor($idPresentacion,$slug)
     {
         $model = new PresentacionExpositor();
         $objPresentacion = Presentacion::findOne($idPresentacion);
@@ -483,7 +483,7 @@ class EventoController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->idPresentacion = $idPresentacion;
             $model->save();
-            return $this->redirect(['ver-evento', 'idEvento' => $objEvento->idEvento]);
+            return $this->redirect(['eventos/ver-evento/'. $objEvento->nombreCortoEvento]);
         }
 
         return $this->render('cargarExpositor', [
