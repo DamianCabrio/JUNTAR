@@ -6,32 +6,53 @@
 $(document).ready(function () {
 
     //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite 
-    $("#evento-preinscripcion").change(function () {
-        respuesta = $("#evento-preinscripcion").val();
-        if (respuesta == 0) {
-            $("#fechaLimite").hide();
-            $("#evento-fechalimiteinscripcion").attr("required", false);
-        }
+    if ($("#evento-fechalimiteinscripcion").val() != 0) {
+        $("#fechaLimite").show();
+        $("#evento-fechalimiteinscripcion").attr("required", true);
+        $("#i1").attr('checked', true);
+    } else {
+        $("#fechaLimite").hide();
+        $("#evento-fechalimiteinscripcion").attr("required", false);
+        $("#evento-fechalimiteinscripcion").val(null);
+        $("#i0").attr('checked', true);
+    }
+    $("#evento-preinscripcion input").change(function () {
+        respuesta = $(this).val();
         if (respuesta == 1) {
             $("#fechaLimite").show();
             $("#evento-fechalimiteinscripcion").attr("required", true);
+            $("#evento-fechalimiteinscripcion").addClass("is-invalid");
+        }
+        if (respuesta == 0) {
+            $("#fechaLimite").hide();
+            $("#evento-fechalimiteinscripcion").attr("required", false);
+            $("#evento-fechalimiteinscripcion").val(null);
         }
     });
 
-    //Verifica si en evento posee capacidad de espectadores 
-        $("#w0 input[name=posee-espectadores]").change(function () {
-            capacidad = $(this).val();
-            if(capacidad == 2){
-              $("#mostrarCapacidad").show();
-              $("#mostrarCapacidad").attr("required", true);
-              
-            }
-            else if(capacidad == -1){
-              $("#mostrarCapacidad").hide();
-              $("#mostrarCapacidad").attr("required", false);
-              $("#evento-capacidad").val(null);
-            }
-         });
+    //Verifica si en evento posee capacidad de espectadores
+    if ($("#evento-capacidad").val() != 0) {
+        $("#mostrarCapacidad").show();
+        $("#evento-capacidad").attr("required", true);
+        $("#espectadores-si").attr('checked', true);
+    } else {
+        $("#mostrarCapacidad").hide();
+        $("#evento-capacidad").attr("required", false);
+        $("#evento-capacidad").val(null);
+        $("#espectadores-no").attr('checked', true);
+    }
+    $("#w0 input[name=posee-espectadores]").change(function () {
+        capacidad = $(this).val();
+        if (capacidad == 2) {
+            $("#mostrarCapacidad").show();
+            $("#evento-capacidad").attr("required", true);
+        }
+        if (capacidad == -1) {
+            $("#mostrarCapacidad").hide();
+            $("#evento-capacidad").attr("required", false);
+            $("#evento-capacidad").val(null);
+        }
+    });
     
 
     $('.showpw .custom-control-input').click(function () {

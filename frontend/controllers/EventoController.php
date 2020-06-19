@@ -14,6 +14,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use frontend\models\ModalidadEvento;
+use frontend\models\CategoriaEvento;
 
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
@@ -288,32 +290,43 @@ class EventoController extends Controller
 
         $model = new Evento();
         $modelLogo = new UploadFormLogo();
-        $modelFlyer = new UploadFormFlyer();        
+        $modelFlyer = new UploadFormFlyer();
 
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
 
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if($modelLogo->imageLogo != null){
-                if($modelLogo->upload()){
+            if ($modelLogo->imageLogo != null) {
+                if ($modelLogo->upload()) {
                     $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
-            }    
-            if($modelFlyer->imageFlyer != null){
-                if($modelFlyer->upload()){
+            }
+            if ($modelFlyer->imageFlyer != null) {
+                if ($modelFlyer->upload()) {
                     $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
-                 }
+                }
             }
             $model->save();
-            return $this->redirect(['eventos/evento-cargado/'. $model->nombreCortoEvento]);
-  
+            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
         }
-        return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer]);
+        $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
+
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+
+
+
+        return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
     }
 
 
@@ -388,9 +401,10 @@ class EventoController extends Controller
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-     public function actionEditarEvento($slug){
+    public function actionEditarEvento($slug)
+    {
 
-        $model = $this->findModel("",$slug);
+        $model = $this->findModel("", $slug);
 
         $modelLogo = new UploadFormLogo();
         $modelFlyer = new UploadFormFlyer();
@@ -398,30 +412,35 @@ class EventoController extends Controller
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if($model->load(Yii::$app->request->post())) {
-            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); 
-            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); 
+        if ($model->load(Yii::$app->request->post())) {
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if($modelLogo->imageLogo != null){
-                if($modelLogo->upload()){
+            if ($modelLogo->imageLogo != null) {
+                if ($modelLogo->upload()) {
                     $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
-            }    
-            if($modelFlyer->imageFlyer != null){
-                if($modelFlyer->upload()){
+            }
+            if ($modelFlyer->imageFlyer != null) {
+                if ($modelFlyer->upload()) {
                     $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
-                 }
+                }
             }
             $model->save();
-            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
+            $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
 
-        return $this->render('editarEvento', [
-            'model' => $model,
-            'modelLogo' => $modelLogo, 
-            'modelFlyer' => $modelFlyer
-        ]);
-     }
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+
+         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
+        }
 
    
      /**
