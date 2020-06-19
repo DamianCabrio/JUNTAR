@@ -81,7 +81,7 @@ if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->
                     * Campos obligatorios.
                 <p>
                 <div class="form-group">
-                    <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton('Guardar', ['class' => 'btn btn-lg btn-success']) ?>
                 </div>
 
                 <?php ActiveForm::end(); ?>

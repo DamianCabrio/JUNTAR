@@ -23,8 +23,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#050714" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
+    
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -43,7 +42,7 @@ AppAsset::register($this);
             ],
         ]);
             $menuItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'Inicio', 'url' => ['/site/index']],
                 
             ];
             if (Yii::$app->user->isGuest) {
@@ -53,11 +52,19 @@ AppAsset::register($this);
                 // Opciones solo para usuario con rol organizador 
                 if (Yii::$app->user->can('Organizador')) {
 
-                    $menuItems[] = ['label' => 'Cargar Evento', 'url' => ['/evento/cargar-evento']];
-                    $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/listar-eventos']];
+                    $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
+                    
                 }  
-                    $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
-                    $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
+                $menuItems[] = [
+
+                    'label' => 'Mis Eventos',
+
+                    'items' => [
+                        ['label' => 'Inscripciones', 'url' => ['/evento/listar-eventos']],
+                        ['label' => 'Certificados', 'url' => ['/evento/listar-eventos']],
+                        ['label' => 'Organizar Eventos', 'url' => ['/evento/listar-eventos']],
+                    ],
+                ];
                     //Logout
                     $menuItems[] = [
 
