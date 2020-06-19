@@ -14,8 +14,6 @@ use frontend\models\UploadProfileImage;
 use frontend\models\EventoSearch;
 use frontend\models\InscripcionSearch;
 
-//use frontend\models\Evento;
-
 /**
  * Site controller
  */
