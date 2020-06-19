@@ -29,6 +29,13 @@ class PresentacionController extends Controller
             'rules' => [
                 [
                     'allow' => true,
+                    'actions' => [
+                        "ver-evento"
+                    ],
+                    'roles' => ['?'], // <----- guest
+                ],
+                [
+                    'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
                         //                        $module = Yii::$app->controller->module->id;
@@ -164,9 +171,6 @@ class PresentacionController extends Controller
                 return $this->redirect(['eventos/ver-evento/'. $evento->nombreCortoEvento]);
             }
         }
-
-        
-
         if($evento == null){
             throw new NotFoundHttpException('El evento no fue encontrado.');
         }
@@ -180,6 +184,25 @@ class PresentacionController extends Controller
             'model' => $model,
             'item'=> $item,
             "evento" => $evento
+        ]);
+    }
+
+
+
+    public function actionEditarPresentacion($slug)
+    {
+        //busca la presentacion
+        $model = $this->findModel("", $slug);
+        $evento = Evento::findOne($model->idEvento);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //volvemos a la pagina de la que vinimos
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        return $this->render('editarPresentacion', [
+            'model' => $model,
+            'evento' => $evento,
         ]);
     }
 
