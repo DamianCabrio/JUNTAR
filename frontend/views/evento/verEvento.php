@@ -335,7 +335,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
 				</div>
 				<div class="modal-footer">
-					<a href="<?= $flyer ?>" class="btn btn-secondary" data-dismiss="modal">Bajar</a>
+					<a href="<?= $flyer ?>" class="btn btn-secondary"  download>Bajar</a>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
