@@ -74,15 +74,15 @@ $(document).ready(function () {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
         //llamamos a la funcion que se encargue de mostrar el formulario
-        editProfileModal($(this).attr('href'));
+        editarPerfilModal($(this).attr('href'), 'Datos de la cuenta');
     });
-    
+
     //funcionalidad editar perfil
     $('.uploadProfileImage').click(function (link) {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
         //llamamos a la funcion que se encargue de mostrar el formulario
-        uploadNewProfileImage($(this).attr('href'));
+        editarPerfilModal($(this).attr('href'), 'Nueva imagen de Perfil');
     });
 
     //funcionalidad editar perfil
@@ -119,6 +119,21 @@ function editEventoModal(url) {
             $('.modal-header').html("<h3> Editar evento </h3>");
             $('.modal-body').html($(this).html());
         });
+    });
+}
+
+function editarPerfilModal(unaUrl, titulo) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+//        data: {data: data}
+    }).done(function (data) {
+        $('#profileModal').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#profileModal').find('.modal-header')
+                .html("<h3> " + titulo + " </h3>");
     });
 }
 
