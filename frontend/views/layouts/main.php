@@ -48,12 +48,21 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
             } else {
-                // Opciones solo para usuario con rol organizador 
                 if (Yii::$app->user->can('Organizador')) {
 
-                    $menuItems[] = ['label' => 'Cargar Evento', 'url' => ['/evento/cargar-evento']];
-                    $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/listar-eventos']];
+                    $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
+                    
                 }  
+                $menuItems[] = [
+
+                    'label' => 'Mis Eventos',
+
+                    'items' => [
+                        ['label' => 'Inscripciones', 'url' => ['/evento/listar-eventos']],
+                        ['label' => 'Certificados', 'url' => ['/evento/listar-eventos']],
+                        ['label' => 'Organizar Eventos', 'url' => ['/evento/organizar-eventos']],
+                    ],
+                ]; 
                     $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
                     $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
                     //Logout
