@@ -16,16 +16,17 @@ $dataUser = array_shift($data);
         <div class="col-sm-3 mt-4 bg-profile-sidebar">
             <ul class="nav nav-tabs mt-2 text-center">
                 <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link active" data-toggle="tab" data-target="01" href="cuenta/profile"> Información de la Cuenta </a>
+                    <a class="nav-link active" href="profile"> Información de la Cuenta </a>
                 </li>
+<!--                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link bg-gray" href=""> Cambiar Contraseña </a>
+                </li>-->
+                <!-- a futuro -->
+<!--                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link" href=""> Preferencias de Email </a>
+                </li>-->
                 <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Cambiar Contraseña </a>
-                </li>
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link" data-toggle="tab" data-target="01" href=""> Preferencias de Email </a>
-                </li>
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" data-toggle="tab" data-target="02" href=""> Desactivar mi Cuenta </a>
+                    <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
                 </li>
                 <li class="nav-item mt-2 profile-sidebar col-12">
                     <?php $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
@@ -49,11 +50,13 @@ $dataUser = array_shift($data);
                 <div class="card-header">
                     <div class="row">
                         <h4 class="col-md-9 col-sm-12">Perfil de <?= Html::encode($dataUser['nombre'] . ' ' . $dataUser['apellido']); ?> </h4>
+                        <?php $urlPencil = Url::base(true) . '/iconos/pencil.svg'; ?>
                         <?=
                         Html::a(' Editar Perfil '
-                                . '<img class="ml-1 filter-white" src="icons/pencil.svg" alt="Editar" width="18" height="18" title="Editar" role="img" style="margin-top: -4px;">',
+                                . Html::img($urlPencil, ["alt" => "Editar", "title" => "Editar", "width" => "18", "height" => "18", "role" => "img",
+                                "class" => "ml-1 filter-white", "style" => "margin-top: -4px;", "data-id" => Url::toRoute(["editprofile"])]),
                                 Url::toRoute(['editprofile']),
-                                ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile']);
+                                ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile', "data-id" => Url::toRoute(["editprofile"])]);
                         ?>
                     </div>
                 </div>
@@ -68,11 +71,13 @@ $dataUser = array_shift($data);
                             <img class="card-img" width="450" height="" src="<?php echo $profileImage ?>" title="<?= Html::encode($dataUser['nombre']); ?>">
                             <!-- Input profile image -->
                             <div class=".text-center d-flex justify-content-center">
+                                <?php $urlUpload = Url::base(true) . '/iconos/cloud-upload.svg'; ?>
                                 <?=
                                 Html::a(' Subir imagen '
-                                        . '<img class="ml-1" src="icons/cloud-upload.svg" alt="Subir Imagen" title="Subir Imagen" width="18" height="18" role="img">',
+                                        . Html::img($urlUpload, ["alt" => "Subir Imagen", "title" => "Subir Imagen", "width" => "18", "height" => "18",
+                                        "role" => "img", "class" => "ml-1"]),
                                         Url::toRoute(['upload-profile-image']),
-                                        ['class' => 'btn btn-primary uploadProfileImage']);
+                                        ['class' => 'btn btn-primary uploadProfileImage', "data-id" => Url::toRoute(["upload-profile-image"])]);
                                 ?>
                             </div>
                             <?php // echo $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>

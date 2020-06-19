@@ -51,26 +51,22 @@ $(document).ready(function () {
             trigger: 'hover'
         });
     });
-    //Utilizado para eliminar los caracteres especiales en nombres de provincias (acentos)
-    function eliminarDiacriticos(texto) {
-        return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-    }
 
     //buscamos valores por defecto para pais argentina
     if ($('#signupform-pais').val() === 'Argentina') {
-        autocompleteProvincias(eliminarDiacriticos('Argentina'));
+        autocompleteProvincias('Argentina');
     }
     ;
 
     //input provincia
     $('#signupform-pais').change(function () {
-        autocompleteProvincias(eliminarDiacriticos($(this).val()));
+        autocompleteProvincias($(this).val());
     });
 
     //input localidad
 
     $('#signupform-provincia').change(function () {
-        autocompleteLocalidades(eliminarDiacriticos($(this).val()));
+        autocompleteLocalidades($(this).val());
     });
 
     //funcionalidad editar perfil
@@ -78,15 +74,24 @@ $(document).ready(function () {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
         //llamamos a la funcion que se encargue de mostrar el formulario
-        editProfileModal();
+        editProfileModal($(this).attr('href'));
     });
-
+    
     //funcionalidad editar perfil
     $('.uploadProfileImage').click(function (link) {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
         //llamamos a la funcion que se encargue de mostrar el formulario
-        uploadNewProfileImage();
+        uploadNewProfileImage($(this).attr('href'));
+    });
+
+    //funcionalidad editar perfil
+    $('.editarEvento').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        var slug = $('.editarEvento').data('id');
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        editEventoModal(slug);
     });
 });
 
@@ -96,11 +101,38 @@ $(document).ready(function () {
  * 
  * @returns none
  */
-function uploadNewProfileImage() {
+function editEventoModal(url) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "index.php?r=cuenta/upload-profile-image",
+        url: url,
+//        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.evento-form').each(function () {
+//            $('.modal-header').append("Nueva imagen de perfil");
+            $('.modal-header').html("<h3> Editar evento </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+/**
+ * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
+ * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
+ * 
+ * @returns none
+ */
+function uploadNewProfileImage(url) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: url,
 //        data: {data: data}
     }).done(function (data) {
         //data recibe la vista que deberia renderizarse al visitar la url
@@ -123,15 +155,16 @@ function uploadNewProfileImage() {
  * 
  * @returns none
  */
-function editProfileModal() {
+function editProfileModal(url) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
-        url: "index.php?r=cuenta/editprofile",
+        url: url
 //        data: {data: data}
     }).done(function (data) {
         //data recibe la vista que deberia renderizarse al visitar la url
         //hacemos visible el modal
+        console.log(data);
         $('#modalProfile').modal('show');
         //convertimos a html la vista recibida
         var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
@@ -152,7 +185,7 @@ function editProfileModal() {
  */
 function autocompleteProvincias(nombrePais) {
     $.ajax({
-        url: "index.php?r=site%2Fsearch-provincias",
+        url: "search-provincias",
         data: {pais: nombrePais},
         type: "POST",
         dataType: "json"
@@ -183,7 +216,7 @@ function autocompleteProvincias(nombrePais) {
  */
 function autocompleteLocalidades(nombreProvincia) {
     $.ajax({
-        url: "index.php?r=site%2Fsearch-localidades",
+        url: "search-localidades",
         data: {provincia: nombreProvincia},
         type: "POST",
         dataType: "json"

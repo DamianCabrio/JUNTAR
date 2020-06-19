@@ -2,13 +2,17 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Usuario;
-use frontend\models\SignupForm;
-use frontend\models\UploadProfileImage;
-use yii\web\UploadedFile;
 use Yii;
+use yii\helpers\Url;
+use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
+use common\models\User;
+use frontend\models\Usuario;
+use frontend\models\UploadProfileImage;
+use frontend\models\EventoSearch;
+use frontend\models\InscripcionSearch;
 
 /**
  * Site controller
@@ -66,10 +70,10 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $profileImageRoute = "icons/person-bounding-box.svg";
-        $rutaImagenPerfil = "profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
+        $profileImageRoute = Url::base(true) . "/iconos/person-bounding-box.svg";
+        $rutaImagenPerfil = Url::base(true) . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
 
-        if (file_exists($rutaImagenPerfil)) {
+        if (@GetImageSize($rutaImagenPerfil)) {
             $profileImageRoute = $rutaImagenPerfil;
         }
 //        $model = new Usuario();
@@ -170,30 +174,86 @@ class CuentaController extends Controller {
         ]);
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-    private function actionSignup() {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
-                    . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goHome();
-        }
-
-        return $this->render('signup', [
-                    'model' => $model,
-        ]);
-    }
-
     protected function findModel($id) {
         if (($model = Usuario::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionDesactivarCuenta() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = User::findIdentity(Yii::$app->user->identity->idUsuario);
+        if (Yii::$app->request->post()) {
+            $model->setInactive();
+            Yii::$app->user->logout();
+            return $this->goHome();
+        }
+        return $this->render('desactivarCuenta');
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionMisEventosGestionados() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $usuario = Yii::$app->user->identity->idUsuario;
+//        $searchModel = new Evento();
+        $searchModel = new EventoSearch();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['idUsuario' => $usuario]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => ['attributes' => ['fechaCreacionEvento']]
+        ]);
+
+        return $this->render('misEventosGestionados', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionMisInscripcionesAEventos() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $usuario = Yii::$app->user->identity->idUsuario;
+//        $searchModel = new Evento();
+        $searchModel = new InscripcionSearch();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['idUsuario' => $usuario]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => ['attributes' => ['fechaPreInscripcion']]
+        ]);
+
+        return $this->render('misInscripciones', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

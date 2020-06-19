@@ -9,7 +9,7 @@ use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Presentacion */
 /* @var $form yii\widgets\ActiveForm */
-$this->title = "Cargar Presentacion - ". $evento->nombreCortoEvento;
+$this->title = "Cargar Presentación - ". $evento->nombreCortoEvento;
 
 ?>
 <div class="container">

@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <br>
                     Si olvidaste tu contraseña puedes <?= Html::a('restablecerla', ['site/request-password-reset']) ?>.
                     <br>
-                    ¿No pudiste realizar la verificación? <?= Html::a('Solicitar nuevo correo', ['site/resend-verification-email']) ?>
+                    ¿Necesitas activar tu cuenta? <?= Html::a('Solicitar correo de Activación', ['site/resend-verification-email']) ?>
                 </div>
 
                 <div class="form-group">

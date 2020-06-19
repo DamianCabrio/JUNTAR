@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap4\Html;
+use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
@@ -77,7 +78,6 @@ $estadoEvento = $evento->idEstadoEvento0->descripcionEstado;
 
 $organizadorEvento = $evento->idUsuario0->nombre . " " . $evento->idUsuario0->apellido;
 $organizadorEmailEvento = $evento->idUsuario0->email;
-
 ?>
 <div class="evento-view ">
 	<header class="hero gradient-hero">
@@ -93,6 +93,37 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 			<a href="#evento" class="btn btn-primary btn-lg text-uppercase">VER</a>
 		</div>
 	</header>
+<header class="hero gradient-hero">
+	<div class="container-fluid center-content text-center padding_hero">
+		<h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
+		<br>
+        <?php if(!$esFai): ?>
+		<h5 class="text-white">Evento no organizado por la FAI</h5>
+        <?php else: ?>
+        <h5 class="text-white">Evento organizado por la FAI</h5>
+        <?php endif; ?>
+		<br>
+		<a href="#evento" class="btn btn-primary btn-lg text-uppercase">VER</a>
+	</div>
+</header>
+
+<div class="container-fluid darkish_bg padding_hero">
+	<div class="row">
+		<div class="col-12 col-md-6 text-center text-md-right">
+			<h3 class="text-white">Inicio: <?= $evento->fechaInicioEvento ?></h3>
+		</div>
+		<div class="col-12 col-md-6 text-center text-md-left">
+			<h3 class="text-white text-md-left">Fin: <?= $evento->fechaFinEvento ?></h3>
+		</div>
+		<div class="col-12 text-center">
+			<h3 class="text-white">Lugar: <?= $evento->lugar ?></h3>
+		</div>
+		<div class="col-12 text-center">
+            <?php if($esDueño): ?>
+            <a href="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]); ?>" class="btn btn-primary btn-lg text-uppercase editarEvento" data-id="<?= Url::toRoute(['/eventos/editar-evento/' . $evento->nombreCortoEvento]) ?>"> editar evento </a>
+		    <?php endif; ?>
+        </div>
+	</div>
 
 	<div id="evento" class="container-fluid padding_event darkish_bg">
 		<div class="container">
@@ -134,10 +165,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 								<?php
 								switch ($estadoEventoInscripcion) {
 									case "puedeInscripcion":
-										echo Html::a('Inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-lg btn-primary full_width']);
+										echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 										break;
 									case "puedePreinscripcion":
-										echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-lg btn-primary full_width']);
+										echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 										break;
 									case "sinCupos":
 										echo Html::label('Sin cupos');
@@ -149,19 +180,25 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										echo Html::label("El evento ya inicio, pasela bien");
 										break;
 									case "yaPreinscripto":
-										echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-lg btn-primary full_width']);
+										echo Html::a('Anular Pre-inscripcion', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 										break;
 									case "yaInscripto":
-										echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-lg btn-primary full_width']);
+										echo Html::a('Anular Inscripcion', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 										break;
 									case "noInscriptoYFechaLimiteInscripcionPasada":
 										echo Html::label('No se puede inscribir, el evento ya inicio');
 										break;
 									case "puedeAcreditarse":
-										echo Html::a('Acreditación', ['acreditacion/acreditacion', 'id' => $evento->idEvento, "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-lg btn-primary full_width']);
+										echo Html::a('Acreditación', ['acreditacion/acreditacion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary']);
 										break;
 								}
+								Modal::begin([
+									'id' => 'modalEvento',
+									'size' => 'modal-lg'
+								]);
+								Modal::end();
 								?>
+							
 							</div>
 
 						</div>
@@ -289,7 +326,14 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 		</div>
 	</div>
 
-
+	<?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado'): ?>
+          <h4 class="py-2 px-3 mb-2 bg-primary text-white">Certificado</h4>
+            <?= $this->render('/certificado/index', [
+              "evento" => $evento,
+              'OrganizadorEmail' =>$organizadorEmailEvento,
+              'categoria' => $categoriaEvento,
+              'presentaciones' => $presentacion,
+            ]); ?>
 
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
