@@ -477,7 +477,7 @@ class EventoController extends Controller
             ]);
      }   
      
-     public function actionCargarExpositor($idPresentacion)
+     public function actionCargarExpositor($idPresentacion,$slug)
     {
         $model = new PresentacionExpositor();
         $objPresentacion = Presentacion::findOne($idPresentacion);

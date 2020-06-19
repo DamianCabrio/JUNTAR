@@ -157,13 +157,10 @@ class PresentacionController extends Controller
         $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
 
         $model = new Presentacion();
-        $preExpositor = new PresentacionExpositor(); 
+        
 
-        if ($model->load(Yii::$app->request->post()) && $preExpositor->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
-                //$preExpositor->idExpositor = $preExpositor->idExpositor ;  
-                $preExpositor->idPresentacion = $model->idPresentacion;
-                $preExpositor->save();
                 return $this->redirect(['eventos/ver-evento/'. $evento->nombreCortoEvento]);
             }
         }
@@ -182,8 +179,7 @@ class PresentacionController extends Controller
         return $this->render('cargarPresentacion', [
             'model' => $model,
             'item'=> $item,
-            "evento" => $evento,
-            'preExpositor' => $preExpositor
+            "evento" => $evento
         ]);
     }
 
