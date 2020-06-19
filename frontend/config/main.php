@@ -52,6 +52,7 @@ return [
                  'eventos/publicar-evento/<slug>' => 'evento/publicar-evento',
                  'eventos/despublicar-evento/<slug>' => 'evento/despublicar-evento',
                  'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
+                 'presentacion/editar-presentacion/<slug>' => 'presentacion/editar-presentacion',
                  'defaultRoute' => '/site/index',
               ],
           ],
