@@ -206,6 +206,19 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
         </div>
     </div>
         <h2 class="text-center mt-4 mb-3 py-2 px-3 bg-info text-white"><?= Html::encode('Agenda') ?></h2>
+		<div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-end">
+                    <?php
+                    if ($evento->idUsuario == Yii::$app->user->identity->idUsuario) {
+                    ?>
+                        <?= Html::a('Agregar', ['presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                    <?php 
+                    }
+                    ?>
+            </div>
+        </div>
+    </div>   
 		<table class="table table-bordered" style="font-size: 0.8rem;">
 			<thead>
 				<th scope="col" class="text-center">#</th>

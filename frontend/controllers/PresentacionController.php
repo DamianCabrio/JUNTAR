@@ -153,6 +153,9 @@ class PresentacionController extends Controller
      */
     public function actionCargarPresentacion($slug)
     {
+        $idUsuario = Yii::$app->user->identity->idUsuario;
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+
         $model = new Presentacion();
         $preExpositor = new PresentacionExpositor(); 
 
@@ -161,12 +164,11 @@ class PresentacionController extends Controller
                 //$preExpositor->idExpositor = $preExpositor->idExpositor ;  
                 $preExpositor->idPresentacion = $model->idPresentacion;
                 $preExpositor->save();
-                return $this->redirect(['mostrar-presentacion', 'idPresentacion' => $model->idPresentacion, 'idEvento' => $model->idEvento]);
+                return $this->redirect(['eventos/ver-evento/'. $evento->nombreCortoEvento]);
             }
         }
 
-        $idUsuario = Yii::$app->user->identity->idUsuario;
-        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        
 
         if($evento == null){
             throw new NotFoundHttpException('El evento no fue encontrado.');
