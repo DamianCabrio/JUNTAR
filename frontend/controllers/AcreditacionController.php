@@ -4,14 +4,10 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Evento;
-use frontend\models\EventoSearch;
 use frontend\models\Inscripcion;
 use frontend\models\AcreditacionForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use function PHPUnit\Framework\isJson;
 
 /**
  * EventoController implements the CRUD actions for Evento model.

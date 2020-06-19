@@ -118,7 +118,18 @@ a.desc:after {
 .darkish_bg {
     background-color: #0B0D19;
 }
-
+.grey_bg{
+    background-color: #EEEBEB;
+}
+.greyish_bg{
+    background-color: #F2F2F2;
+}
+.grayish_bg{
+    background-color: #F9F9F9;
+}
+.pinkish_bg{
+    background-color: #FE1355;
+}
 .full_width {
     width: 100%;
 }
@@ -128,7 +139,10 @@ a.desc:after {
     color: black;
     background-color: #EFEFEF;
 }
-
+.btn_icon {
+    color: white;
+    padding: 6px 6px 0px 6px;
+  }
 .nopadding {
     padding-left: 0px;
     padding-right: 0px;
@@ -197,6 +211,10 @@ a.desc:after {
     padding-top: 7vh;
     padding-bottom: 7vh;
 }
+.padding_event{
+    padding-top: 15vh;
+    padding-bottom: 15vh;
+}
 .alert{
     margin-bottom: 0px;
 }
@@ -236,6 +254,9 @@ section {
 }
 .page-link a:hover{
     color: #050714;
+}
+.borderless td, .borderless th {
+    border: none;
 }
 @media(max-width:767px) {
     .nav li>form>button.logout {

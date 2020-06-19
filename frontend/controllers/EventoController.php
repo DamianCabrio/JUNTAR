@@ -3,25 +3,17 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\EventoSearch;
 use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
-use frontend\models\PresentacionSearch;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\helpers\Url;
-use yii\data\Pagination;
 use frontend\components\validateEmail;
-
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
-use function PHPUnit\Framework\isNull;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -66,121 +58,6 @@ class EventoController extends Controller
         ];
 
         return $behaviors;
-    }
-
-    /**
-     * Lists all Evento models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new EventoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Evento model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        /*
-   En caso que se agregue a la tabla Evento el campo 'estado' modificar la consulta Evento::find()..
-   en Where filtrar por 'estado' activo.
-*/
-        $evento = $this->findModel($id);
-
-        if($evento == null){
-            return $this->goHome();
-        }
-
-        $cupos = $this->calcularCupos($evento);
-
-        $yaInscripto = false;
-        $yaAcreditado = false;
-
-        if (!Yii::$app->user->getIsGuest()){
-
-            $inscripcion = Inscripcion::find()
-                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $id])
-                ->andWhere(["!=", "estado", 2])->one();
-
-            if($inscripcion != null) {
-                $yaInscripto = true;
-                $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
-                $yaAcreditado = $inscripcion->acreditacion == 1;
-                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
-            }else{
-                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
-            }
-
-            }else{
-            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
-        }
-            return $this->render('view', [
-                "evento" => $evento,
-                "estadoEvento" => $estadoEvento,
-                'cupos' => $cupos,
-            ]);
-    }
-
-    /**
-     * Creates a new Evento model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Evento();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idEvento]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Evento model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idEvento]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Evento model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     public function calcularCupos($evento){
@@ -259,6 +136,14 @@ class EventoController extends Controller
                     return "noInscriptoYFechaLimiteInscripcionPasada";
                 }
             }
+        }
+    }
+
+    public function verificarDueño($model){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -371,6 +256,7 @@ class EventoController extends Controller
 
         $validarEmail = new validateEmail();
         $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
+        $esDueño = $this->verificarDueño($evento);
 
         return $this->render('verEvento', [
             "evento" => $evento,
@@ -378,75 +264,9 @@ class EventoController extends Controller
             "estadoEventoInscripcion" => $estadoEvento,
             'cupos' => $cupos,
             "esFai" => $esFai,
+            "esDueño" => $esDueño,
         ]);
     }
-    
-    public function actionVerEvento2($idEvento)
-    {
-
-        $evento = $this->findModel($idEvento);
-//        $presentaciones = Presentacion::find()->where(['idEvento' => $idEvento])->orderBy('idPresentacion')->all();
-        
-        //data GridView
-//        $pages = new Pagination(['totalCount' => count(Presentacion::findAll(0)) ]);
-//        $pages->pageSize = 10;
-        $searchModel = new PresentacionSearch();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find()->where(['idEvento' => $idEvento]),
-            'sort' => ['attributes' => ['name', 'description']]
-        ]);
-        
-        if($evento == null){
-            return $this->goHome();
-        }
-
-        $cupos = $this->calcularCupos($evento);
-
-        $yaInscripto = false;
-        $yaAcreditado = false;
-
-        if (!Yii::$app->user->getIsGuest()){
-
-            $inscripcion = Inscripcion::find()
-                ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $idEvento])
-                ->andWhere(["!=", "estado", 2])->one();
-
-            if($inscripcion != null) {
-                $yaInscripto = true;
-                $tipoInscripcion = $inscripcion->estado == 0 ? "preinscripcion" : "inscripcion";
-                $yaAcreditado = $inscripcion->acreditacion == 1;
-                $estadoEvento = $this->obtenerEstadoEvento($evento,$yaInscripto,$yaAcreditado, $cupos, $tipoInscripcion);
-            }else{
-                $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
-            }
-
-        }else{
-            $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos,$evento);
-        }
-        return $this->render('verEvento2', [
-            "evento" => $evento,
-//            'presentacion' => $presentaciones,
-            "estadoEventoInscripcion" => $estadoEvento,
-            'cupos' => $cupos,
-            //agregada la data necesaria para gridview
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-
-    /**
-     * Identifica al usuario logueado, obtiene su instancia y busca todos los eventos que pertenezcan a ese usuario
-     * Se envia en la vista un arreglo con todos los eventos.   
-     */
-    public function actionListarEventos()
-    {
-        $idUsuario = Yii::$app->user->identity->idUsuario;
-        $listaEventos = Evento::find()->where(['idUsuario' => $idUsuario])->orderBy('idEvento')->all();
-        return $this->render('listarEventos', ['model' => $listaEventos]);
-    }
-
-
     
      /**
      * Recibe por parámetro un id de evento, se buscar y se obtiene la instancia del evento, se visualiza un formulario 
@@ -456,36 +276,42 @@ class EventoController extends Controller
      public function actionEditarEvento($slug){
 
         $model = $this->findModel("",$slug);
+        $esDueño = $this->verificarDueño($model);
 
-        $modelLogo = new UploadFormLogo();
-        $modelFlyer = new UploadFormFlyer();
+             if ($esDueño) {
 
-        $rutaLogo = (Yii::getAlias("@rutaLogo"));
-        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
+             $modelLogo = new UploadFormLogo();
+             $modelFlyer = new UploadFormFlyer();
 
-        if($model->load(Yii::$app->request->post())) {
-            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); 
-            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); 
+             $rutaLogo = (Yii::getAlias("@rutaLogo"));
+             $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-            if($modelLogo->imageLogo != null){
-                if($modelLogo->upload()){
-                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
-                }
-            }    
-            if($modelFlyer->imageFlyer != null){
-                if($modelFlyer->upload()){
-                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+             if ($model->load(Yii::$app->request->post())) {
+                 $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+                 $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
+
+                 if ($modelLogo->imageLogo != null) {
+                     if ($modelLogo->upload()) {
+                         $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                     }
                  }
-            }
-            $model->save();
-            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
-        }
+                 if ($modelFlyer->imageFlyer != null) {
+                     if ($modelFlyer->upload()) {
+                         $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                     }
+                 }
+                 $model->save();
+                 return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
+             }
 
-        return $this->render('editarEvento', [
-            'model' => $model,
-            'modelLogo' => $modelLogo, 
-            'modelFlyer' => $modelFlyer
-        ]);
+             return $this->render('editarEvento', [
+                 'model' => $model,
+                 'modelLogo' => $modelLogo,
+                 'modelFlyer' => $modelFlyer
+             ]);
+         }else{
+                 throw new NotFoundHttpException('La página solicitada no existe.');
+             }
      }
 
    
