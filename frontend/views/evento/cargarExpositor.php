@@ -29,13 +29,6 @@ use yii\widgets\ActiveForm;
                         </div>
                     <?php } ?>
                     <?php $form = ActiveForm::begin(); ?>
-
-                    <?php $data = Usuario::find()
-                        ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
-                        ->asArray()
-                        ->all();
-                    ?>
-
                     <?=
                         'Expositor ' . '<br>' .
                             AutoComplete::widget([

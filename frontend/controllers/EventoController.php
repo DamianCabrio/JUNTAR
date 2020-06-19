@@ -483,7 +483,11 @@ class EventoController extends Controller
         $model = new PresentacionExpositor();
         $objPresentacion = Presentacion::findOne($idPresentacion);
         $objEvento = Evento::findOne($objPresentacion->idEvento);
-        $mensaje="";
+        $mensaje = "";
+        $data = Usuario::find()
+            ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
+            ->asArray()
+            ->all();
         if ($model->load(Yii::$app->request->post())) {
             $verExpoPrese = PresentacionExpositor::find()->where(['idPresentacion' => $idPresentacion, 'idExpositor' => $model->idExpositor])->one();
             if (!(isset($verExpoPrese))) {
@@ -492,19 +496,23 @@ class EventoController extends Controller
                 $model->save();
                 return $this->redirect(['eventos/ver-evento/' . $objEvento->nombreCortoEvento]);
             } else {
-                $usuario=Usuario::findOne($model->idExpositor);
+                $usuario = Usuario::findOne($model->idExpositor);
                 $model = new PresentacionExpositor();
-                $mensaje= $usuario->nombre." ".$usuario->apellido." ya se encuentra registrado como expositor de la presentacion: <strong>".$objPresentacion->tituloPresentacion."</strong>";
+                $mensaje = $usuario->nombre . " " . $usuario->apellido . " ya se encuentra registrado como expositor de la presentacion: <strong>" . $objPresentacion->tituloPresentacion . "</strong>";
                 return $this->render('cargarExpositor', [
                     'model' => $model,
-                    'alert' => $mensaje
+                    'alert' => $mensaje,
+                    'data' => $data,
+
                 ]);
             }
         }
 
+
         return $this->render('cargarExpositor', [
             'model' => $model,
-            'alert' => $mensaje
+            'alert' => $mensaje,
+            'data' => $data,
         ]);
     }
 }
