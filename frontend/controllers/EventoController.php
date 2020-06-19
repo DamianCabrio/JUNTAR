@@ -371,6 +371,7 @@ class EventoController extends Controller
 
         $validarEmail = new validateEmail();
         $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
+        $esDueño = $this->verificarDueño($evento);
 
         return $this->render('verEvento', [
             "evento" => $evento,
@@ -378,6 +379,7 @@ class EventoController extends Controller
             "estadoEventoInscripcion" => $estadoEvento,
             'cupos' => $cupos,
             "esFai" => $esFai,
+            "esDueño" => $esDueño,
         ]);
     }
     
@@ -446,7 +448,13 @@ class EventoController extends Controller
         return $this->render('listarEventos', ['model' => $listaEventos]);
     }
 
-
+    public function verificarDueño($model){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
      /**
      * Recibe por parámetro un id de evento, se buscar y se obtiene la instancia del evento, se visualiza un formulario 
@@ -456,36 +464,42 @@ class EventoController extends Controller
      public function actionEditarEvento($slug){
 
         $model = $this->findModel("",$slug);
+        $esDueño = $this->verificarDueño($model);
 
-        $modelLogo = new UploadFormLogo();
-        $modelFlyer = new UploadFormFlyer();
+             if ($esDueño) {
 
-        $rutaLogo = (Yii::getAlias("@rutaLogo"));
-        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
+             $modelLogo = new UploadFormLogo();
+             $modelFlyer = new UploadFormFlyer();
 
-        if($model->load(Yii::$app->request->post())) {
-            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo'); 
-            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer'); 
+             $rutaLogo = (Yii::getAlias("@rutaLogo"));
+             $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-            if($modelLogo->imageLogo != null){
-                if($modelLogo->upload()){
-                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
-                }
-            }    
-            if($modelFlyer->imageFlyer != null){
-                if($modelFlyer->upload()){
-                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+             if ($model->load(Yii::$app->request->post())) {
+                 $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+                 $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
+
+                 if ($modelLogo->imageLogo != null) {
+                     if ($modelLogo->upload()) {
+                         $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                     }
                  }
-            }
-            $model->save();
-            return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
-        }
+                 if ($modelFlyer->imageFlyer != null) {
+                     if ($modelFlyer->upload()) {
+                         $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                     }
+                 }
+                 $model->save();
+                 return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
+             }
 
-        return $this->render('editarEvento', [
-            'model' => $model,
-            'modelLogo' => $modelLogo, 
-            'modelFlyer' => $modelFlyer
-        ]);
+             return $this->render('editarEvento', [
+                 'model' => $model,
+                 'modelLogo' => $modelLogo,
+                 'modelFlyer' => $modelFlyer
+             ]);
+         }else{
+                 throw new NotFoundHttpException('La página solicitada no existe.');
+             }
      }
 
    
