@@ -74,7 +74,15 @@ $(document).ready(function () {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
         //llamamos a la funcion que se encargue de mostrar el formulario
-        editProfileModal();
+        editProfileModal($(this).attr('href'));
+    });
+    
+    //funcionalidad editar perfil
+    $('.uploadProfileImage').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        uploadNewProfileImage($(this).attr('href'));
     });
 
     //funcionalidad editar perfil

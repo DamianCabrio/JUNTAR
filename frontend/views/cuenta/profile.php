@@ -16,7 +16,7 @@ $dataUser = array_shift($data);
         <div class="col-sm-3 mt-4 bg-profile-sidebar">
             <ul class="nav nav-tabs mt-2 text-center">
                 <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link active" href="cuenta/profile"> Información de la Cuenta </a>
+                    <a class="nav-link active" href="profile"> Información de la Cuenta </a>
                 </li>
 <!--                <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link bg-gray" href=""> Cambiar Contraseña </a>
@@ -56,7 +56,7 @@ $dataUser = array_shift($data);
                                 . Html::img($urlPencil, ["alt" => "Editar", "title" => "Editar", "width" => "18", "height" => "18", "role" => "img",
                                 "class" => "ml-1 filter-white", "style" => "margin-top: -4px;", "data-id" => Url::toRoute(["editprofile"])]),
                                 Url::toRoute(['editprofile']),
-                                ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile']);
+                                ['class' => 'col-md-3 col-sm-12 btn btn-primary editProfile', "data-id" => Url::toRoute(["editprofile"])]);
                         ?>
                     </div>
                 </div>
@@ -75,9 +75,9 @@ $dataUser = array_shift($data);
                                 <?=
                                 Html::a(' Subir imagen '
                                         . Html::img($urlUpload, ["alt" => "Subir Imagen", "title" => "Subir Imagen", "width" => "18", "height" => "18",
-                                        "role" => "img", "class" => "ml-1", "data-id" => Url::toRoute(["upload-profile-image"])]),
+                                        "role" => "img", "class" => "ml-1"]),
                                         Url::toRoute(['upload-profile-image']),
-                                        ['class' => 'btn btn-primary uploadProfileImage']);
+                                        ['class' => 'btn btn-primary uploadProfileImage', "data-id" => Url::toRoute(["upload-profile-image"])]);
                                 ?>
                             </div>
                             <?php // echo $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>

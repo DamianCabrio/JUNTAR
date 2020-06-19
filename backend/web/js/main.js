@@ -65,6 +65,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.addPermiso, .removePermiso', function () {
         var permisoSeleccionado = $(this).data('id');
+//        var permisoSeleccionado = $(this).data('key');
         console.log(permisoSeleccionado);
         var esRol = ($(".addPermiso, .removePermiso").hasClass("esRol") ? 'true' : null);
         agregarPermiso(permisoSeleccionado, rolSeleccionado, $(this), esRol);
@@ -145,11 +146,11 @@ function cargarBotonera(rolSeleccionado, click) {
                     if (click === "click") {
                         if (tablaCoincideConPermiso.length !== 0) {
                             //si el permiso existe agrega el boton quitar bajo la clase removePermiso
-                            html = '<a class="btn btn-sm btn-light removePermiso" data-id="' + permiso + '">';
+                            html = '<a class="btn btn-sm btn-light removePermiso" data-id="' + permiso.attr("data-key") + '">';
                             html += '<img src="iconos/x-circle.svg" class="filter-red" alt="Quitar" title="Quitar" role="img" width="20" height="20" style="margin-top: -4px 0 0;">';
                         } else {
                             //si el permiso no existe, agrega el boton agregar bajo la clase addPermiso
-                            html = '<a class="btn btn-sm btn-light addPermiso" data-id="' + permiso + '">';
+                            html = '<a class="btn btn-sm btn-light addPermiso" data-id="' + permiso.attr("data-key") + '">';
                             html += '<img src="iconos/plus-circle.svg" class="filter-green" alt="Agregar" title="Agregar" role="img" width="20" height="20" style="margin-top: -4px 0 0;">';
                         }
                         //cierra tag enlace
