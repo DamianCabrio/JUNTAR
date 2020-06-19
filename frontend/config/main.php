@@ -18,6 +18,10 @@ return [
         '@rutaFlyer' => '/eventos/images/flyers/',
     ],
     'components' => [
+        'qr' => [
+            'class' => '\Da\QrCode\Component\QrCodeComponent',
+            // ... you can configure more properties of the component here
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

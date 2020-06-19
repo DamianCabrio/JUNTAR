@@ -22,7 +22,8 @@
         "fortawesome/font-awesome": "^5.13.0",
         "kartik-v/yii2-mpdf": "dev-master",
         "umanskyi31/opengraph": "^2.0",
-      "ext-json": "*"
+      "ext-json": "*",
+        "2amigos/qrcode-library": "~1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
