@@ -189,22 +189,33 @@ class PresentacionController extends Controller
 
 
 
-    public function actionEditarPresentacion($slug)
+    public function actionEditarPresentacion($idPresentacion, $slug)
     {
-        //busca la presentacion
-        $model = $this->findModel("", $slug);
+    
+        $model = $this->findModel($idPresentacion);
         $evento = Evento::findOne($model->idEvento);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //volvemos a la pagina de la que vinimos
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(['eventos/ver-evento/'. $evento->nombreCortoEvento]);
         }
-
         return $this->render('editarPresentacion', [
             'model' => $model,
-            'evento' => $evento,
         ]);
     }
+
+
+    public function actionBorrarPresentacion($idPresentacion, $slug)
+    {
+    
+        $model = $this->findModel($idPresentacion);
+        $evento = Evento::findOne($model->idEvento);
+        $this->findModel($idPresentacion)->delete();
+        
+            return $this->redirect(['eventos/ver-evento/'. $evento->nombreCortoEvento]);
+
+ 
+    }
+
 
 
 
