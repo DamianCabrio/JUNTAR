@@ -2,13 +2,7 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Evento;
-use frontend\models\EventoSearch;
-use frontend\models\Presentacion;
-use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 
 /**

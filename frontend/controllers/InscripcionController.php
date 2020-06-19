@@ -6,12 +6,9 @@ use yii\filters\AccessControl;
 use \yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
-use frontend\models\InscripcionSearch;
 use frontend\models\Evento;
-use frontend\models\EventoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * InscripcionController implements the CRUD actions for Inscripcion model.
@@ -49,52 +46,6 @@ class InscripcionController extends Controller
         ];
 
         return $behaviors;
-    }
-
-    /**
-     * Lists all Inscripcion models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new InscripcionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Inscripcion model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Inscripcion model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Inscripcion();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idInscripcion]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     public function calcularCupos($evento){
@@ -221,40 +172,6 @@ class InscripcionController extends Controller
                 . '<p> Por favor vuelva a intentar </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }
-    }
-
-    /**
-     * Updates an existing Inscripcion model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idInscripcion]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Inscripcion model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
