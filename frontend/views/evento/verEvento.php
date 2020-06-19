@@ -37,7 +37,8 @@ if ($evento->imgLogo != null) {
 }
 
 if ($evento->imgFlyer != null) {
-	$flyer = '<img  class="full_width" src=' . Url::base('') . '/' . $evento->imgFlyer . '>';
+	$flyer = Url::base('') . '/' . $evento->imgFlyer;
+	/* var del flyer archivo para bajarlo*/
 } else {
 	$flyer = "(Flyer no cargado o en construcción)";
 }
@@ -248,17 +249,17 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 											<th scope="col" class="text-center">Links a recursos </th>
 											<th scope="col" class="text-center">Expositores</th>
 											<?PHP
-											if ($esDueño){
+											if ($esDueño) {
 												echo '<th scope="col" class="text-center">Acciones</th>';
 											}
 											?>
-											
+
 										</thead>
 										<tbody>
 											<?php
-										$cont = 0;
-										foreach ($presentacion as $objPresentacion) :
-											$cont++;
+											$cont = 0;
+											foreach ($presentacion as $objPresentacion) :
+												$cont++;
 											?>
 												<tr>
 													<th class="align-middle"><?= $cont ?></th>
@@ -330,9 +331,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 					</button>
 				</div>
 				<div class="modal-body">
-					<?= $flyer ?>
+					<img class="full_width" src='<?= $flyer ?>'>
+
 				</div>
 				<div class="modal-footer">
+					<a href="<?= $flyer ?>" class="btn btn-secondary" data-dismiss="modal">Bajar</a>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
