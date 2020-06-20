@@ -117,6 +117,38 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editPresentacionModal($(this).attr('href'));
     });
+	
+	$('.agregarPresentacion').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        agregarPresentacionModal($(this).attr('href'));
+    });
+	
+	$('.agregarExpositor').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        agregarExpositorModal($(this).attr('href'));
+    });
+	
+	$('.verPresentacion').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        verPresentacionModal($(this).attr('href'));
+    });
+	
+	$('.verExpositores').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        verExpositoresModal($(this).attr('href'));
+    });
 });
 
 /**
@@ -125,6 +157,27 @@ $(document).ready(function () {
  * 
  * @returns none
  */
+ function verExpositoresModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.expositores-lista').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Lista de expositores </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+ 
 function editPresentacionModal(link) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se envia.
@@ -141,6 +194,70 @@ function editPresentacionModal(link) {
         $(dataHTML).find('div.presentacion-form').each(function () {
             console.log($(this).html());
             $('.modal-header').html("<h3> Editar presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+function agregarPresentacionModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.presentacion-form').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Agregar presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+function verPresentacionModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+		//alert(dataHTML);
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.presentacion-view').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+function agregarExpositorModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.expositor-form').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Agregar expositor</h3>");
             $('.modal-body').html($(this).html());
         });
     });
