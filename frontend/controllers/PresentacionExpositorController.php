@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\PresentacionExpositor;
 use yii\data\ActiveDataProvider;
+use frontend\models\Presentacion;
+
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -52,7 +54,7 @@ class PresentacionExpositorController extends Controller
      * Lists all PresentacionExpositor models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($idPresentacion)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => PresentacionExpositor::find(),
@@ -60,6 +62,20 @@ class PresentacionExpositorController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+        ]);
+    }
+	
+	public function actionVerExpositores($idPresentacion)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => PresentacionExpositor::find()->where(['idPresentacion' => $idPresentacion]),
+        ]);
+		$model = Presentacion::find()->where(['idPresentacion' => $idPresentacion])->one();
+
+        return $this->render('verExpositores', [
+            'dataProvider' => $dataProvider,
+			'idPresentacion' => $idPresentacion,
+			'model' => $model,
         ]);
     }
 
