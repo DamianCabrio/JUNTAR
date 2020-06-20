@@ -99,8 +99,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 		</div>
 	</header>
 
-    <div class="container-fluid darkish_bg">
-        <div id="evento" class="dark_light_bg padding_hero">
+    <div class="container-fluid dark_light_bg">
+        <div id="evento" class=" padding_hero">
             <div class="container">
                 <div class="card bg-white">
                     <?PHP
