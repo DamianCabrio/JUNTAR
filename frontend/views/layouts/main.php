@@ -48,14 +48,22 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
             } else {
-                // Opciones solo para usuario con rol organizador 
-                if (Yii::$app->user->can('Organizador')) {
+               // Opciones solo para usuario con rol organizador 
+               if (Yii::$app->user->can('Organizador')) {
 
-                    $menuItems[] = ['label' => 'Cargar Evento', 'url' => ['/evento/cargar-evento']];
-                    $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/listar-eventos']];
-                }  
-                    $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
-                    $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
+                $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
+                
+            }  
+            $menuItems[] = [
+
+                'label' => 'Mis Eventos',
+
+                'items' => [
+                    ['label' => 'Inscripciones', 'url' => ['/evento/listar-eventos']],
+                    ['label' => 'Certificados', 'url' => ['/evento/listar-eventos']],
+                    ['label' => 'Organizar Eventos', 'url' => ['/evento/organizar-eventos']],
+                ],
+            ];
                     //Logout
                     $menuItems[] = [
                         'label' => '<img class="ml-1" src="icons/person-circle-w.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
