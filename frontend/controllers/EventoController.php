@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use Da\QrCode\QrCode;
+//use BaconQrCode\Common\ErrorCorrectionLevelInter;
+use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
@@ -16,6 +19,7 @@ use frontend\models\UploadFormLogo;     //Para contener la instacion de la image
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
+use UI\Controls\Label;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -200,6 +204,12 @@ class EventoController extends Controller {
                     $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                 }
             }
+            if ($model->codigoAcreditacion != null) {
+                //necesita variables, porque sino hace referencia al objeto model
+                $codAcre = $model->codigoAcreditacion;
+                $slug = $model->nombreCortoEvento;
+                $this->actionGenerarQRAcreditacion($codAcre, $slug);
+            }
             $model->save();
             return $this->redirect(['eventos/evento-cargado/' . $model->nombreCortoEvento]);
         }
@@ -212,6 +222,29 @@ class EventoController extends Controller {
         ]);
     }
 
+    private function actionGenerarQRAcreditacion($codigoAcreditacion, $slug) {
+//        $label = (new Label($slug))
+        $label = ($slug);
+//                ->setFont(__DIR__ . '/../resources/fonts/monsterrat.otf')
+//                ->setFontSize(14);
+
+        $qrCode = (new QrCode( Url::to(['/acreditacion/acreditacion']).$codigoAcreditacion))
+                ->useLogo( "../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
+//                ->useForegroundColor(51, 153, 255)
+//                ->useBackgroundColor(200, 220, 210)
+//                //white and black (se ve horrendo
+//                ->useForegroundColor(255,255,255)
+//                ->useBackgroundColor(0,0,0)
+                ->useEncoding('UTF-8')
+//                ->setErrorCorrectionLevel(ErrorCorrectionLevelInterface::HIGH)
+                ->setLogoWidth(80)
+                ->setSize(400)
+                ->setMargin(5)
+                ->setLabel($label);
+
+        $qrCode->writeFile('../web/eventos/images/qrcodes/jeje'.$slug.'.png');
+    }
+
     /**
      * Recibe por parámetro un id, se busca esa instancia del event y se obtienen todos las presentaciones que pertenecen a ese evento.
      * Se envia la instancia del evento junto con todas la presentaciones sobre un arreglo.
@@ -219,7 +252,7 @@ class EventoController extends Controller {
     public function actionVerEvento($slug) {
 
         $evento = $this->findModel("", $slug);
-        
+
         $presentacionSearchModel = new PresentacionSearch();
 
         $presentacionDataProvider = new ActiveDataProvider([
