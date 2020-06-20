@@ -148,6 +148,8 @@ class PresentacionController extends Controller {
      * Carga una nueva presentacion al evento 
      */
     public function actionCargarPresentacion($slug) {
+        
+
         $model = new Presentacion();
         $preExpositor = new PresentacionExpositor();
 
@@ -156,7 +158,7 @@ class PresentacionController extends Controller {
                 //$preExpositor->idExpositor = $preExpositor->idExpositor ;  
                 $preExpositor->idPresentacion = $model->idPresentacion;
                 $preExpositor->save();
-                return $this->redirect(['mostrar-presentacion', 'idPresentacion' => $model->idPresentacion, 'idEvento' => $model->idEvento]);
+                return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
             }
         }
 
@@ -166,16 +168,16 @@ class PresentacionController extends Controller {
         if ($evento == null) {
             throw new NotFoundHttpException('El evento no fue encontrado.');
         }
-        $item = Evento::find()     //buscar los eventos del usuario
-            ->select(['nombreEvento'])
-            ->indexBy('idEvento')
-            ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
-            ->column();
+            $item = Evento::find()     //buscar los eventos del usuario
+                ->select(['nombreEvento'])
+                ->indexBy('idEvento')
+                ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
+                ->column();
 
-        $data = Usuario::find() //arreglo de usuarios para autocomplete
-            ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
-            ->asArray()
-            ->all();
+            $data = Usuario::find() //arreglo de usuarios para autocomplete
+                ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
+                ->asArray()
+                ->all();
 
         return $this->render('cargarPresentacion', [
             'model' => $model,
