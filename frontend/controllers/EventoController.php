@@ -537,7 +537,7 @@ class EventoController extends Controller
         }
 
         return $this->render('cargarExpositor', [
-            'model' => $model
+            'model' => $model,
             'objetoEvento' => $objEvento,
         ]);
     }
