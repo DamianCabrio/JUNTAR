@@ -41,6 +41,10 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
             'yii\\bootstrap4\\' => 15,
             'yii\\' => 4,
         ),
+        'w' => 
+        array (
+            'wbraganca\\dynamicform\\' => 22,
+        ),
         'u' => 
         array (
             'umanskyi31\\opengraph\\' => 21,
@@ -166,6 +170,10 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'wbraganca\\dynamicform\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wbraganca/yii2-dynamicform',
         ),
         'umanskyi31\\opengraph\\' => 
         array (
