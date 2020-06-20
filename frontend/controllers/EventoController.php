@@ -390,7 +390,7 @@ class EventoController extends Controller {
         $objPresentacion = Presentacion::findOne($idPresentacion);
         $objEvento = Evento::findOne($objPresentacion->idEvento);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->idPresentacion = $idPresentacion;
             $model->save();
             return $this->redirect(['ver-evento', 'idEvento' => $objEvento->idEvento]);
