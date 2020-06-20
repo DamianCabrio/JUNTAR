@@ -11,7 +11,8 @@ $this->title = $model->tituloPresentacion;
 //$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="container presentacion-view">
+<div class="container">
+<div class="presentacion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 	<?php
@@ -64,4 +65,5 @@ $this->title = $model->tituloPresentacion;
         ],
     ]) ?>
 
+</div>
 </div>
