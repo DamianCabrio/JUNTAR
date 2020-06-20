@@ -11,7 +11,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use frontend\models\Evento;
 /**
  * PresentacionExpositorController implements the CRUD actions for PresentacionExpositor model.
  */
@@ -26,6 +26,14 @@ class PresentacionExpositorController extends Controller
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
             'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        "ver-expositores",
+                        "delete"
+                    ],
+                    'roles' => ['@'], // <----- guest
+                ],
                 [
                     'allow' => true,
                     'roles' => ['@'],
@@ -71,7 +79,7 @@ class PresentacionExpositorController extends Controller
             'query' => PresentacionExpositor::find()->where(['idPresentacion' => $idPresentacion]),
         ]);
 		$model = Presentacion::find()->where(['idPresentacion' => $idPresentacion])->one();
-
+        
         return $this->render('verExpositores', [
             'dataProvider' => $dataProvider,
 			'idPresentacion' => $idPresentacion,
@@ -143,8 +151,10 @@ class PresentacionExpositorController extends Controller
     public function actionDelete($idExpositor, $idPresentacion)
     {
         $this->findModel($idExpositor, $idPresentacion)->delete();
+        $objPresentacion = Presentacion::findOne($idPresentacion);
+        $objEvento = Evento::findOne($objPresentacion->idEvento);
 
-        return $this->redirect(['index']);
+        return $this->redirect(['eventos/ver-evento/'. $objEvento->nombreCortoEvento]);
     }
 
     /**
