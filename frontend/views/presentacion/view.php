@@ -16,6 +16,7 @@ $this->title = $model->tituloPresentacion;
 
     <h1><?= Html::encode($this->title) ?></h1>
 	<?php
+	/*
 	if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idEvento0->idUsuario0->idUsuario){
 		?>
     <p>
@@ -29,7 +30,7 @@ $this->title = $model->tituloPresentacion;
         ]) ?>
 	
     </p>
-	<?php } ?>
+	<?php } */?>
 
     <?= DetailView::widget([
         'model' => $model,

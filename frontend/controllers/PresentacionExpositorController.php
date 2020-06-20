@@ -26,6 +26,13 @@ class PresentacionExpositorController extends Controller
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
             'rules' => [
+		    [
+		    'allow' => true,
+		    'actions' => [
+			"ver-expositores",
+		    ],
+		    'roles' => ['?'], // <----- guest
+               		],
                 [
                     'allow' => true,
                     'actions' => [

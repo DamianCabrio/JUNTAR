@@ -113,21 +113,32 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             <div class="col-12">
                 <div class="d-flex justify-content-end">
                     <?php
-                    if ($evento->idUsuario == Yii::$app->user->identity->idUsuario) {
-                        if (($evento->idEstadoEvento) == 4) {
-                    ?>
-                            <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                        <?php } ?>
+                    if (!Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario) {
 
-                        <?php
-                        if (($evento->idEstadoEvento) == 1) {
-                        ?>
-                            <?= Html::a('Suspender', ['eventos/despublicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+                       if($evento->idEstadoEvento == 3){
+                       ?>
+
+                        <div class="text-center">
+                             <p>Evento Finalizado</p>
+                        </div>
+                       <?php 
+                       }
+                       else{ 
+                            if (($evento->idEstadoEvento) == 4) {
+                            ?>
+                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                            <?php } ?>
+
+                            <?php
+                            if (($evento->idEstadoEvento) == 1) {
+                            ?>
+                                <?= Html::a('Suspender', ['eventos/despublicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+                            <?php
+                            }
+                            ?>
+                            <?= Html::a('Editar', ['eventos/editar-evento/' .  $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?php
                         }
-                        ?>
-                        <?= Html::a('Editar', ['eventos/editar-evento/' .  $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                    <?php
                     }
                     ?>
                 </div>
@@ -239,7 +250,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         //                        'filterModel' => $searchModel,
                         'options' => ['style' => 'width:100%;'],
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                            [
+				    'class' => 'yii\grid\SerialColumn',
+				    'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+			    ],
                             //'idPresentacion',
                             //'tituloPresentacion',
                             [
@@ -304,6 +318,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     //HACER IF
 									if(count($dataProvider->presentacionExpositors) == 0){
 										$string = "No hay expositores";
+										if(!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
+											$string .= ' '.Html::a('<i class="material-icons large align-middle">add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => 'agregarExpositor']);
+										}
 									}
 									else{
 										$string = '<a class="verExpositores" href="/presentacion-expositor/ver-expositores?idPresentacion='.$dataProvider->idPresentacion.'">Ver Expositores</a>';
@@ -337,7 +354,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         return Url::to(['presentacion/update', 'presentacion' => $key]);
                                     }
                                     if ($action == "delete") {
-                                        return Url::to(['presentacion/delete', 'presentacion' => $key]);
+                                        return Url::to(['presentacion/borrar', 'presentacion' => $key]);
                                     }
 									// if ($action == "view") {
                                         // return Url::to(['evento/cargar-expositor', 'idPresentacion' => $key]);
@@ -355,6 +372,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         // return Html::a('<img src="' . Yii::getAlias('@web/icons/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn agregarExpositor']);
                                     // },
                                 ],
+				'visible' => !Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario,
                                 'header' => 'Acciones',
                                 'headerOptions' => ['style' => 'text-align:center;'],
                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],

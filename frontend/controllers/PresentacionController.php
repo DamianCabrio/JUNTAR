@@ -28,6 +28,13 @@ class PresentacionController extends Controller {
             'rules' => [
                 [
                     'allow' => true,
+                    'actions' => [
+                        "view",
+                    ],
+                    'roles' => ['?'], // <----- guest
+                ],
+                [
+                    'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
                         //                        $module = Yii::$app->controller->module->id;
@@ -72,6 +79,11 @@ class PresentacionController extends Controller {
      */
     public function actionView($presentacion) {
         return $this->render('view', [
+                    'model' => $this->findModel($presentacion),
+        ]);
+    }
+    public function actionBorrar($presentacion) { //Ventana de confirmacion modal
+        return $this->render('borrar', [
                     'model' => $this->findModel($presentacion),
         ]);
     }
