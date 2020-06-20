@@ -113,7 +113,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             <div class="col-12">
                 <div class="d-flex justify-content-end">
                     <?php
-                    if ($evento->idUsuario == Yii::$app->user->identity->idUsuario) {
+                    if (!Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario) {
                         if (($evento->idEstadoEvento) == 4) {
                     ?>
                             <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
