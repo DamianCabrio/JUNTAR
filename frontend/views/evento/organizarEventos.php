@@ -52,7 +52,7 @@ $this->title = 'Proyecto Juntar';
         <section class="dark_bg">
             <div class="container padding_section">
                 <?php if (count($eventos) != 0): ?>
-            <h2 class="text-white text-uppercase">Mis eventos</h2><br>
+            <h2 class="text-white text-uppercase">Mis eventos creados</h2><br>
                 <div class="row">
                     <?php foreach ($eventos as $evento): ?>
                         <div class='col-12 col-md-4'>
