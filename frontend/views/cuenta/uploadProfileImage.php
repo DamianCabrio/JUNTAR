@@ -1,14 +1,14 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Jugador */
 
-$this->title = 'Actualizar Información: ';
+$this->title = 'Actualizar imagen: ';
 
-$this->params['breadcrumbs'][] = 'Actualizar información';
+//$this->params['breadcrumbs'][] = 'Actualizar imagen ';
 ?>
 <div class="profile-update container">
 
@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = 'Actualizar información';
     <?php // echo $this->render('_form', ['model' => $model,]) ?>
 
     <div class="row">
-        <div class="col-lg-5 m-auto uploadProfileImageForm">
-            <?php $form = ActiveForm::begin(); ?>
+        <div class="col-12 m-auto uploadProfileImageForm">
+            <?php $form = ActiveForm::begin(['id' => 'updateProfileImage']); ?>
             <!-- input image -->
             <?= $form->field($model, 'profileImage')->fileInput()->label('Ingrese una imagen de perfil:') ?>
             <div class="form-group">
