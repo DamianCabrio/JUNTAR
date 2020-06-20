@@ -271,7 +271,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                             ],
                             //'horaFinPresentacion',
-                            [
+                            /* [
                                 'attribute' => 'Hora de Fin',
                                 'value' => function ($dataProvider) {
                                     $horaSinSegundos = date('H:i', strtotime($dataProvider->horaFinPresentacion));
@@ -279,7 +279,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 },
                                 'headerOptions' => ['style' => 'text-align:center;'],
                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                            ],
+                            ], */
                             //'linkARecursos',
                             [
                                 'attribute' => 'Recursos',
@@ -297,6 +297,38 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                             ],
                             //'expositores',
+							[
+                                'attribute' => 'Expositores',
+                                'format' => 'raw',
+                                'value' => function ($dataProvider) {
+                                    //HACER IF
+									if(count($dataProvider->presentacionExpositors) == 0){
+										$string = "No hay expositores";
+									}
+									else{
+										$string = '<a class="verExpositores" href="/presentacion-expositor/ver-expositores?idPresentacion='.$dataProvider->idPresentacion.'">Ver Expositores</a>';
+											/* $string .='<div class="ver-expositores ">
+											<table class="table">
+												<thead>
+													<th>Nombre</th>
+													<th>Contacto</th>
+												</thead>
+												<tbody>';
+										foreach ($dataProvider->presentacionExpositors as $objExpoPre) {
+											$objUsuario = $objExpoPre->idExpositor0; 
+											//$string .= '<ul class="my-2"><li>Nombre:'.Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido).'</li><li>Contacto:'.Html::encode($objUsuario->email).'</li></ul>';
+											$string .= '<td>'.$objUsuario->nombre . ', ' . $objUsuario->apellido.'</td><td>'.$objUsuario->email.'</td>';
+										 }
+										 $string .= '</tbody>
+											</table>
+											</div>'; */
+									}
+									return $string;
+								},
+                                'headerOptions' => ['style' => 'text-align:center;'],
+                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                            ],
+							
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 //genera una url para cada evento
@@ -307,21 +339,21 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     if ($action == "delete") {
                                         return Url::to(['presentacion/delete', 'presentacion' => $key]);
                                     }
-									if ($action == "view") {
-                                        return Url::to(['evento/cargar-expositor', 'idPresentacion' => $key]);
-                                    }
+									// if ($action == "view") {
+                                        // return Url::to(['evento/cargar-expositor', 'idPresentacion' => $key]);
+                                    // }
                                 },
                                 //describe los botones de accion
                                 'buttons' => [
                                     'update' => function ($url, $model) {
-                                        return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn editarPresentacion']);
+                                        return Html::a('<i class="material-icons large align-middle">edit</i>', $url, ['class' => 'btn editarPresentacion']);
                                     },
                                     'delete' => function ($url, $model) {
-                                        return Html::a('<img src="' . Yii::getAlias('@web/icons/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn borrarPresentacion']);
+                                        return Html::a('<i class="material-icons large align-middle">delete</i>', $url, ['class' => 'btn borrarPresentacion']);
                                     },
-									'view' => function ($url, $model) {
-                                        return Html::a('<img src="' . Yii::getAlias('@web/icons/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn agregarExpositor']);
-                                    },
+									// 'view' => function ($url, $model) {
+                                        // return Html::a('<img src="' . Yii::getAlias('@web/icons/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn agregarExpositor']);
+                                    // },
                                 ],
                                 'header' => 'Acciones',
                                 'headerOptions' => ['style' => 'text-align:center;'],
