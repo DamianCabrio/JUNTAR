@@ -99,14 +99,17 @@ $(document).ready(function () {
         $('#automaticSlug').html("");
         generarOpcionesNombreCorto(eliminarDiacriticos($(this).val()));
     });
+//    $('#evento-descripcionevento').click(function () {
+//        alert($('#evento-nombrecortoevento').val());
+//    });
 
     //seleccion de nombres cortos
     $(document).on('click', '.nombresCortos input:radio', function () {
         if ($(this).attr('id') !== 'otro') {
-            $('#evento-nombrecortoevento').attr('disabled', 'disabled');
+            $('#evento-nombrecortoevento').prop('readonly', true);
             $('#evento-nombrecortoevento').val($(this).val());
         }else{
-            $('#evento-nombrecortoevento').removeAttr('disabled');
+            $('#evento-nombrecortoevento').prop('readonly', false);
         }
     });
 });

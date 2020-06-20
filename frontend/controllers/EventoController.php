@@ -204,14 +204,14 @@ class EventoController extends Controller {
                     $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                 }
             }
+            //necesita variables, porque sino hace referencia al objeto model y la referencia pierde el valor si crea una nueva instancia
+            $nombreCortoEvento = $model->nombreCortoEvento;
             if ($model->codigoAcreditacion != null) {
-                //necesita variables, porque sino hace referencia al objeto model
                 $codAcre = $model->codigoAcreditacion;
-                $slug = $model->nombreCortoEvento;
-                $this->actionGenerarQRAcreditacion($codAcre, $slug);
+                $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
             }
             $model->save();
-            return $this->redirect(['eventos/evento-cargado/' . $model->nombreCortoEvento]);
+            return $this->redirect(['eventos/evento-cargado/' . $nombreCortoEvento]);
         }
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer]);
     }
@@ -228,8 +228,8 @@ class EventoController extends Controller {
 //                ->setFont(__DIR__ . '/../resources/fonts/monsterrat.otf')
 //                ->setFontSize(14);
 
-        $qrCode = (new QrCode( Url::to(['/acreditacion/acreditacion']).$codigoAcreditacion))
-                ->useLogo( "../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
+        $qrCode = (new QrCode(Url::to(['/acreditacion/acreditacion']) . $codigoAcreditacion))
+                ->useLogo("../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
 //                ->useForegroundColor(51, 153, 255)
 //                ->useBackgroundColor(200, 220, 210)
 //                //white and black (se ve horrendo
@@ -242,7 +242,7 @@ class EventoController extends Controller {
                 ->setMargin(5)
                 ->setLabel($label);
 
-        $qrCode->writeFile('../web/eventos/images/qrcodes/jeje'.$slug.'.png');
+        $qrCode->writeFile('../web/eventos/images/qrcodes/jeje' . $slug . '.png');
     }
 
     /**
