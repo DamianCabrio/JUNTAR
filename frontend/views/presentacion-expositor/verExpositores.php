@@ -13,7 +13,13 @@ use yii\helpers\Url;
 
 
     <h1>
-        <?= $model->tituloPresentacion.' '.Html::a('<i class="material-icons large align-middle">add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $idPresentacion])], ['class' => 'agregarExpositor']); ?>
+		<?php
+		$cadenaAgregar = "";
+		if(!Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
+			$cadenaAgregar = Html::a('<i class="material-icons large align-middle">add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $model->idPresentacion])], ['class' => 'agregarExpositor']);
+		}
+		?>
+        <?= $model->tituloPresentacion.' '.$cadenaAgregar; ?>
     </h1>
 
 
