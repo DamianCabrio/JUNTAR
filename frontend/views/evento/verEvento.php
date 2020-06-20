@@ -239,6 +239,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     <p><b>Estado:</b></p>
                     <p><?= $estadoEvento ?></p>
                     <hr />
+                    <p><b>Descargar lista de Inscriptos:</b></p>
+					<p><?=
+                       Html::a('listado.xls', ['evento/inscriptos-excel',
+                       'model'=>$evento
+                       
+                       ]);
+
+					
+					?></p>
+					<hr />
                 </div>
                 <div>
                     <h4 class="py-2 px-3 mb-2 bg-primary text-white">Pre-inscripcion</h4>
