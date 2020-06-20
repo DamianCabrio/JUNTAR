@@ -86,7 +86,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 			<h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
 			<div class="row padding_section">
 				<div class="col text-center">
-					<h4 class="text-white">Inicio: <?= $evento->fechaInicioEvento ?></h4>
+					<h4 class="text-white">Inicio: <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
 					<h4><?= $evento->lugar ?></h4>
 					<?php if (!$esFai) : ?>
 						<h5 class="text-white">Evento no organizado por la FAI</h5>
@@ -114,7 +114,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 						<div class="row padding_section">
 							<div class="col-sm-12 col-md-8">
 								<div class="padding_section">
-									<i class="material-icons align-middle">today</i><span class=" align-middle"> <?= $evento->fechaInicioEvento ?></span>
+									<i class="material-icons align-middle">today</i><span class=" align-middle"> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></span>
 									<br>
 									<br>
 									<h2><strong><?= $evento->nombreEvento ?></strong>
@@ -165,7 +165,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 											echo Html::label('No se puede inscribir, el evento ya inicio');
 											break;
 										case "puedeAcreditarse":
-											echo Html::a('Acreditación', ['acreditacion/acreditacion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+											echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
 											break;
 									}
 									Modal::begin([
@@ -195,15 +195,15 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 								<ul class="list-group">
 									<li class="list-group-item">
 										<p><b>Fecha de Inicio: </b></p>
-										<span><?= $evento->fechaInicioEvento ?></span>
+										<span><?= date("d-m-Y", strtotime( $evento->fechaInicioEvento)) ?></span>
 									</li>
 									<li class="list-group-item">
 										<p><b>Fecha de Finalización: </b></p>
-										<span><?= $evento->fechaFinEvento ?></span>
+										<span><?= date("d-m-Y", strtotime( $evento->fechaFinEvento)) ?></span>
 									</li>
 									<li class="list-group-item">
 										<p><b>Fecha Límite Pre-Inscripción: </b></p>
-										<span><?= $evento->fechaLimiteInscripcion ?></span>
+										<span><?= date("d-m-Y", strtotime( $evento->fechaLimiteInscripcion)) ?></span>
 									</li>
 									<li class="list-group-item">
 										<p><b>Lugar: </b></p>
@@ -219,7 +219,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 									</li>
 									<li class="list-group-item">
 										<p><b>Fecha Pubilcación: </b></p>
-										<span><?= $fechaPublicacion ?></span>
+										<span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
 									</li>
 								</ul>
 							</div>
@@ -265,7 +265,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 													<th class="align-middle"><?= $cont ?></th>
 													<td class="align-middle w-25"><?= $objPresentacion->tituloPresentacion ?><br /><?= Html::a('(Más información)', ['presentacion/view', 'presentacion' => $objPresentacion->idPresentacion]) ?></td>
 													<!--<td class="align-middle"><?= $objPresentacion->descripcionPresentacion ?></td>-->
-													<td class="align-middle"><?= $objPresentacion->diaPresentacion ?></td>
+													<td class="align-middle"><?= date("d-m-Y", strtotime( $objPresentacion->diaPresentacion )) ?></td>
 													<td class="align-middle"><?= $objPresentacion->horaInicioPresentacion ?></td>
 													<td class="align-middle"><?= $objPresentacion->horaFinPresentacion ?></td>
 													<?php

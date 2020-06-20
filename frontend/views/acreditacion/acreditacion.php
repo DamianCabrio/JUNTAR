@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="acreditacion-view container">
 
-    <img src="<?= Url::to(['acreditacion/qr']) ?>" />
+    <img src="<?= Url::to(['acreditacion/qr?evento=' . $evento->nombreEvento]) ?>" />
 
     <?php $form = ActiveForm::begin(['id' => 'acreditacion-form']); ?>
 
