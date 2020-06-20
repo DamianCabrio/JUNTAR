@@ -16,14 +16,6 @@ use frontend\models\Expositor;
  * @property string|null $pais
  * @property string|null $provincia
  * @property string|null $localidad
- * @property string $email
- * @property string $auth_key
- * @property string $password_hash
- * @property string|null $password_reset_token
- * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property string|null $verification_token
  *
  * @property Evento[] $eventos
  * @property Expositor[] $expositors
@@ -44,43 +36,47 @@ class Usuario extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['nombre', 'apellido', 'dni', 'pais', 'provincia', 'localidad', 'email'], 'required'],
-//          //Reglas nombre
-            ['nombre', 'match', 'pattern' => '/^[a-zA-ZÀ-ÿ ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            //Obligatorio
+            [['nombre', 'apellido', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
+
+            //Reglas nombre
+            ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['nombre', 'string', 'min' => 2, 'max' => 14,
                 //comentario para minlenght
                 'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
                 //comentario para maxLenght
                 'tooLong' => 'El nombre puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
+
             //Reglas apellido
-            ['apellido', 'match', 'pattern' => '/^[a-zA-ZÀ-ÿ ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['apellido', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['apellido', 'string', 'min' => 2, 'max' => 14,
                 //comentario para minlenght
                 'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
                 //comentario para maxLenght
                 'tooLong' => 'El apellido puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
+
             //Reglas localidad
-            ['localidad', 'match', 'pattern' => '/^[a-zA-ZÀ-ÿ ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de localidades argentinas solo si el pais es argentina
-            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) {
-                    return ($model->pais == 'Argentina');
+            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
+                return ($model->pais == 'Argentina');
                 }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
+
             //Reglas Provincia
-            ['provincia', 'match', 'pattern' => '/^[a-zA-ZÀ-ÿ ]/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['provincia', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de provincias argentinas solo si el pais es argentina
             ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) {
-                    return ($model->pais == 'Argentina');
+                return ($model->pais == 'Argentina');
                 }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
+
             //Reglas DNI
-            ['dni', 'integer', 'min' => 10000000, 'max' => 100000000],
-            [['email'], 'unique'],
-//            [['password_reset_token'], 'unique'],
+            ['dni', 'integer', 'min' => 10000000, 'max' => 100000000]
         ];
     }
 
@@ -93,19 +89,9 @@ class Usuario extends \yii\db\ActiveRecord {
             'nombre' => 'Nombre',
             'apellido' => 'Apellido',
             'dni' => 'Dni',
-//            'fecha_nacimiento' => 'Fecha Nacimiento',
             'pais' => 'País',
             'provincia' => 'Provincia',
             'localidad' => 'Localidad',
-//            'telefono' => 'Telefono',
-            'email' => 'Email',
-//            'auth_key' => 'Auth Key',
-//            'password_hash' => 'Password Hash',
-//            'password_reset_token' => 'Password Reset Token',
-//            'status' => 'Status',
-//            'created_at' => 'Created At',
-//            'updated_at' => 'Updated At',
-//            'verification_token' => 'Verification Token',
         ];
     }
 

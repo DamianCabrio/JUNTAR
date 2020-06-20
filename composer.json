@@ -23,7 +23,8 @@
         "kartik-v/yii2-mpdf": "dev-master",
         "umanskyi31/opengraph": "^2.0",
       "ext-json": "*",
-        "2amigos/qrcode-library": "~1.1"
+        "2amigos/qrcode-library": "~1.1",
+        "wbraganca/yii2-dynamicform": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

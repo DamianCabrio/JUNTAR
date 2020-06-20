@@ -29,24 +29,22 @@ $dataUser = array_shift($data);
                     <!--                <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link" href=""> Preferencias de Email </a>
                 </li>-->
-                    <li class="nav-item profile-sidebar col-12">
-                        <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
-                    </li>
-                    <li class="nav-item mt-2 profile-sidebar col-12">
-                        <?php $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
-                        <?php if (!$assigned) : ?>
-                            <?=
-                                Html::a(
-                                    "Ser un Gestor de Eventos",
-                                    ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
-                                    ['class' => $assigned ? "btn btn-sm btn-outline-info" : "btn btn-sm btn-outline-info"]
-                                )
-                            ?>
-                        <?php endif; ?>
-                    </li>
-                </ul>
-            </div>
-            <!-- Profile Sidebar Menu-->
+                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
+                </li>
+                <!--<li class="nav-item mt-2 profile-sidebar col-12">-->
+                    <?php // $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
+                    <?php // if (!$assigned): ?>
+                        <?php // echo
+//                        Html::a("Ser un Gestor de Eventos",
+//                                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
+//                                ['class' => $assigned ? "btn btn-sm btn-outline-info" : "btn btn-sm btn-outline-info"])
+                        ?>
+                    <?php // endif; ?>
+                <!--</li>-->
+            </ul>
+        </div>
+        <!-- Profile Sidebar Menu-->
 
             <!-- Profile Card Content -->
             <div class="col-md-9 col-sm-4 mt-4 ">

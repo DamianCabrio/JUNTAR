@@ -111,7 +111,7 @@ class CuentaController extends Controller {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = $this->findModel(Yii::$app->user->identity->id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->validate()) {
                 $viejoNombreUsuario = Yii::$app->user->identity->nombre;
                 $cambioImagen = false;
@@ -135,16 +135,21 @@ class CuentaController extends Controller {
                 Yii::$app->session->setFlash('error', '<h2> Ha ocurrido un error ): </h2>'
                         . '<p> Ingreso de datos no permitido </p>');
             }
-            return $this->redirect(['profile']);
+            return $this->redirect(['/cuenta/profile']);
         }
 //        if (Yii::$app->request->post('search') != null) {
 //            //define el tipo de respuesta del metodo
 //            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 //        }
-
-        return $this->render('editprofile', [
-                    'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('editprofile', [
+                        'model' => $model,
+            ]);
+        } else {
+            return $this->render('editprofile', [
+                        'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -156,7 +161,7 @@ class CuentaController extends Controller {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = new UploadProfileImage();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->profileImage = UploadedFile::getInstance($model, 'profileImage');
 
             if ($model->profileImage != null) {
@@ -169,9 +174,15 @@ class CuentaController extends Controller {
             return $this->redirect(['profile']);
         }
 
-        return $this->render('uploadProfileImage', [
-                    'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('uploadProfileImage', [
+                        'model' => $model,
+            ]);
+        } else {
+            return $this->render('uploadProfileImage', [
+                        'model' => $model,
+            ]);
+        }
     }
 
     protected function findModel($id) {

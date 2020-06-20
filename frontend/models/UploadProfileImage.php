@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\web\UploadedFile;
-use yii;
+use Yii;
 
 class UploadProfileImage extends Model
 {
@@ -16,6 +16,7 @@ class UploadProfileImage extends Model
     public function rules()
     {
         return [
+            ['profileImage', 'required'],
             [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }

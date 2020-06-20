@@ -90,7 +90,7 @@ class SiteController extends Controller
              return $this->goHome();
          }
          $model = new LoginForm();
-         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+         if ($model->load(Yii::$app->request->post()) && $model->login() && $model->validate()) {
            if (!Yii::$app->user->can('Administrador')) {
                Yii::$app->user->logout();
                Yii::$app->session->setFlash('error', '<p>Acceso Denegado</p>');

@@ -2,12 +2,11 @@
 
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 ?>
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Evento */
+/* @var $model frontend\models\Evento */
 
 $this->title = "Acreditación";
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
@@ -15,8 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="acreditacion-view container">
-
-    <img src="<?= Url::to(['acreditacion/qr']) ?>" />
 
     <?php $form = ActiveForm::begin(['id' => 'acreditacion-form']); ?>
 

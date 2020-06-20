@@ -7,6 +7,7 @@ use frontend\models\Evento;
 use frontend\models\Inscripcion;
 use frontend\models\AcreditacionForm;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -61,18 +62,6 @@ class AcreditacionController extends Controller
         $inscripcion->acreditacion = 1;
         $inscripcion->save();
         return true;
-    }
-
-    public function actionQr(){
-        $qr = Yii::$app->get('qr');
-
-        Yii::$app->response->format = Response::FORMAT_RAW;
-        Yii::$app->response->headers->add('Content-Type', $qr->getContentType());
-
-        return $qr
-            ->setText('https://2amigos.us')
-            ->setLabel('2amigos consulting group llc')
-            ->writeString();
     }
 
     public function actionAcreditacion(){

@@ -32,7 +32,28 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 
                     <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
 
-                    <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label('Nombre corto del evento *') ?>
+                <div class="row">
+                    <div class="col-4 form-advice">
+                        <span class="m-auto"> Opciones automaticas: </span>
+                    </div>
+                    <div class="nombresCortos" id="automaticSlug">
+                        <!--                        <div class="col-2 d-flex justify-content-center ">
+                                                    <span class="m-auto"> <input type="radio" id="opc1" name="slug" value="">  hola </span>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center ">
+                                                    <span class="m-auto"> <input type="radio" id="opc2" name="slug" value="">  hola </span>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center ">
+                                                    <span class="m-auto"> <input type="radio" id="opc3" name="slug" value="">  hola </span>
+                                                </div>-->
+                    </div>
+                    <!--<div class="col-4 d-flex justify-content-center ">-->
+                    <br>
+                    <div class="col-12 mt-2 nombresCortos">
+                        <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
+                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label(false) ?>
+                    </div>
+                </div>
 
                     <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
 
