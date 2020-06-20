@@ -93,7 +93,65 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editEventoModal(slug);
     });
+
+    //generar opciones de nombres cortos automaticamente
+    $('#evento-nombreevento').change(function () {
+        $('#automaticSlug').html("");
+        generarOpcionesNombreCorto(eliminarDiacriticos($(this).val()));
+    });
+
+    //seleccion de nombres cortos
+    $(document).on('click', '.nombresCortos input:radio', function () {
+        if ($(this).attr('id') !== 'otro') {
+            $('#evento-nombrecortoevento').attr('disabled', 'disabled');
+            $('#evento-nombrecortoevento').val($(this).val());
+        }else{
+            $('#evento-nombrecortoevento').removeAttr('disabled');
+        }
+    });
 });
+
+//funcion utilizada para eliminar caracteres criticos en un texto
+function eliminarDiacriticos(texto) {
+    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+}
+
+function generarOpcionesNombreCorto(nombreEvento) {
+    $('#automaticSlug').append(generarSlug(nombreEvento));
+    $('#automaticSlug').append(generarInicialesYear(nombreEvento));
+    $('#automaticSlug').append(generarCortoYear(nombreEvento));
+}
+
+function generarSlug(nombreEvento) {
+    var slug = nombreEvento.toLowerCase()
+            .replace(/[^\w ]+/g, '') //reemplaza caracteres alfanumericos
+            .replace(/ +/g, '-'); //
+
+    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc1" name="shortName" value="' + slug + '"> '
+            + '<label for="opc1"> ' + slug + '</label> </span> </div>';
+    return html;
+}
+
+function generarInicialesYear(nombreEvento) {
+    var year = new Date().getFullYear();
+    var inicialesYear = nombreEvento.match(/\b(\w)/g)
+            .join('');
+    inicialesYear += year;
+
+    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc2" name="shortName" value="' + inicialesYear + '"> '
+            + '<label for="opc2"> ' + inicialesYear + '</label> </span> </div>';
+    return html;
+}
+
+function generarCortoYear(nombreEvento) {
+    var year = new Date().getFullYear();
+    var cortoYear = year;
+    cortoYear += "-" + nombreEvento.split(' ').slice(0, 2).join('-');
+
+    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc3" name="shortName" value="' + cortoYear + '"> '
+            + '<label for="opc3"> ' + cortoYear + '</label> </span> </div>';
+    return html;
+}
 
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
