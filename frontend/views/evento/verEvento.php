@@ -89,7 +89,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				<div class="col text-center">
 					<h4 class="text-white"><i class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
 					<h4><i class="material-icons large align-middle">location_on</i> <?= $evento->lugar ?></h4>
-					<h4><?= $evento->lugar ?></h4>
 					<?php if (!$esFai) : ?>
 						<h5 class="text-white">Evento no organizado por la FAI</h5>
 					<?php else : ?>
@@ -100,8 +99,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 		</div>
 	</header>
 
-    <div class="container-fluid darkish_bg padding_hero">
-        <div id="evento" class="container-fluid darkish_bg">
+    <div class="container-fluid darkish_bg">
+        <div id="evento" class="dark_light_bg padding_hero">
             <div class="container">
                 <div class="card bg-white">
                     <?PHP
@@ -440,11 +439,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
         ?>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Flyer</h5>
+                    <h5 class="modal-title" id="flyerModalLabel">Flyer</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
