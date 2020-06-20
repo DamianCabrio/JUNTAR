@@ -114,20 +114,31 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <div class="d-flex justify-content-end">
                     <?php
                     if (!Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario) {
-                        if (($evento->idEstadoEvento) == 4) {
-                    ?>
-                            <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                        <?php } ?>
 
-                        <?php
-                        if (($evento->idEstadoEvento) == 1) {
-                        ?>
-                            <?= Html::a('Suspender', ['eventos/despublicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+                       if($evento->idEstadoEvento == 3){
+                       ?>
+
+                        <div class="text-center">
+                             <p>Evento Finalizado</p>
+                        </div>
+                       <?php 
+                       }
+                       else{ 
+                            if (($evento->idEstadoEvento) == 4) {
+                            ?>
+                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
+                            <?php } ?>
+
+                            <?php
+                            if (($evento->idEstadoEvento) == 1) {
+                            ?>
+                                <?= Html::a('Suspender', ['eventos/despublicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+                            <?php
+                            }
+                            ?>
+                            <?= Html::a('Editar', ['eventos/editar-evento/' .  $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
                         <?php
                         }
-                        ?>
-                        <?= Html::a('Editar', ['eventos/editar-evento/' .  $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success btn-sm']) ?>
-                    <?php
                     }
                     ?>
                 </div>
