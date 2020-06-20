@@ -45,7 +45,10 @@ $this->title = "Cargar Evento";
                     <br>
                     <div class="col-12 mt-2 nombresCortos">
                         <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
-                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label(false) ?>
+                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
+                            'data-title' => 'Requisitos',
+                            'data-toggle' => 'popover',
+                            'data-content' => 'El nombre corto solo puede tener numeros y letras sin acentos ni ñ, y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
                     </div>
                 </div>
 
