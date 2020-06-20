@@ -37,7 +37,7 @@ use yii\bootstrap4\ActiveForm;
                         <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'Ingrese link a recursos'], ['maxlength' => true]) ?>
 
                         <div class="form-group">
-                            <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                            <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
                         </div>
                         <?php ActiveForm::end(); ?>
                     <?php yii\widgets\Pjax::end() ?>

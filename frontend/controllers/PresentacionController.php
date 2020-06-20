@@ -110,7 +110,7 @@ class PresentacionController extends Controller {
             return $this->redirect(Yii::$app->request->referrer);
         }
 
-        return $this->render('update', [
+        return $this->render('editarPresentacion', [
                     'model' => $model,
         ]);
     }
