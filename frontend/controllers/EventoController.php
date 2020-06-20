@@ -242,7 +242,7 @@ class EventoController extends Controller {
                 ->setMargin(5)
                 ->setLabel($label);
 
-        $qrCode->writeFile('../web/eventos/images/qrcodes/jeje' . $slug . '.png');
+        $qrCode->writeFile('../web/eventos/images/qrcodes/' . $slug . '.png');
     }
 
     /**
