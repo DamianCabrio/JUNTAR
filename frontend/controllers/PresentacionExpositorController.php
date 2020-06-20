@@ -29,7 +29,7 @@ class PresentacionExpositorController extends Controller
 		    [
 		    'allow' => true,
 		    'actions' => [
-			"ver-expositores",
+            "ver-expositores",
 		    ],
 		    'roles' => ['?'], // <----- guest
                		],
