@@ -29,8 +29,8 @@ $this->title = 'Proyecto Juntar';
                         <div class="col-sm-12 col-md-4 mb-3">
                             <select name="estadoEvento" class="custom-select custom-select-lg" onchange="this.form.submit()">
                                 <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 0) ? "selected" : "" ?> value="0">Estado activo</option>
-                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 0) ? "selected" : "" ?> value="1">Estado suspendido</option>
-                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 0) ? "selected" : "" ?> value="2">Estado finalizado</option>
+                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 1) ? "selected" : "" ?> value="1">Estado suspendido</option>
+                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 2) ? "selected" : "" ?> value="2">Estado finalizado</option>
                             </select>
                         </div>
 
