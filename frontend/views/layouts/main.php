@@ -50,12 +50,6 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
             } else {
-                // Opciones solo para usuario con rol organizador 
-                if (Yii::$app->user->can('Organizador')) {
-
-                    $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
-                    
-                }  
                 $menuItems[] = [
 
                     'label' => 'Mis Eventos',
@@ -63,9 +57,16 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => 'Inscripciones', 'url' => ['/evento/listar-eventos']],
                         ['label' => 'Certificados', 'url' => ['/evento/listar-eventos']],
-                        ['label' => 'Organizar Eventos', 'url' => ['/evento/listar-eventos']],
+                        ['label' => 'Organizar Eventos', 'url' => ['/cuenta/mis-eventos-gestionados']],
                     ],
                 ];
+                // Opciones solo para usuario con rol organizador 
+                if (Yii::$app->user->can('Organizador')) {
+
+                    $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
+                    
+                }  
+
                     //Logout
 
                 /** @var TYPE_NAME $urlImagenPerfil */
@@ -77,13 +78,11 @@ AppAsset::register($this);
                     }
                     $menuItems[] = [
 
-                        'label' => Html::img($imgPerfil,  ['class' => 'ml-1', "alt" => "Cuenta", "width" => "35", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
+                        'label' => Html::img($imgPerfil,  ['class' => 'ml-1 clip_circle', "alt" => "Cuenta", "width" => "35", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
 
                         'items' => [
                             ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
                             ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
-                            ['label' => 'Mis Eventos', 'url' => ['/cuenta/mis-eventos-gestionados']],
-                            ['label' => 'Mis Inscripciones', 'url' => ['/cuenta/mis-inscripciones-a-eventos']],
                             
                             [
                                 "label" => "Cerrar Sesión",
@@ -132,7 +131,13 @@ AppAsset::register($this);
                     <h5 class="white-text">Contacto</h5>
                     <ul>
                         <li>
-                            <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
+                        <?= Html::mailto('juntar@fi.uncoma.edu.ar', 'juntar@fi.uncoma.edu.ar') ?> 
+                        </li>
+                    </ul>
+                    <h5 class="white-text">Sobre</h5>
+                    <ul>
+                        <li>
+                        <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
                         </li>
                     </ul>
                 </div>

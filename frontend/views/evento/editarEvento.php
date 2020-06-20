@@ -13,77 +13,87 @@ use frontend\models\ModalidadEvento;
 
 $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 ?>
-<div class="container">
-    <div class = "row">
-        <div class = "col-md-8 col-12 m-auto">
-
-            <h2 class="text-center">Editar evento</h2>
+<div class="container-fluid padding_section dark_light_bg">
+    <div class="container">
+    <div class="card">
+        <div class="card-header pinkish_bg">
+            <h2 class="text-center text-white">Editar Evento</h2>
+        </div>
+        <div class="card-body">
+        <div class="row padding_section">
+            <div class="col-md-8 col-12 m-auto">
                 <p class="text-center">Complete los siguientes campos</p>
-            <div class="evento-form">
+                <div class="evento-form">
 
-                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-                <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
-                <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario ])->label(false); ?>
+                    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                    <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
+                    <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
 
 
-                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
+                    <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
 
-                <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label('Nombre corto del evento *') ?>
+                    <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label('Nombre corto del evento *') ?>
 
-                <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
+                    <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
 
-                <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'] , ['maxlength' => true])->label('Lugar *') ?>
+                    <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 
-                <!-- select categoria -->
-                <?php $categoriasEventos = CategoriaEvento::find()     //buscar todas las categorias         
-                    ->select(['descripcionCategoria'])
-                    ->indexBy('idCategoriaEvento')
-                    ->column();
-                ?>
-                <?= $form->field($model, 'idCategoriaEvento')->dropdownList($categoriasEventos,  ['prompt' => 'Seleccione una categoria'])->label('Categoria *'); ?>
+                    <!-- select categoria -->
+                    <?php $categoriasEventos = CategoriaEvento::find()     //buscar todas las categorias         
+                        ->select(['descripcionCategoria'])
+                        ->indexBy('idCategoriaEvento')
+                        ->column();
+                    ?>
+                    <?= $form->field($model, 'idCategoriaEvento')->dropdownList($categoriasEventos,  ['prompt' => 'Seleccione una categoría'])->label('Categoría *'); ?>
 
-                <!-- select modalidad -->
-                <?php $modalidadEvento = modalidadEvento::find()     //buscar todas las categorias         
-                    ->select(['descripcionModalidad'])
-                    ->indexBy('idModalidadEvento')
-                    ->column();
-                ?>
-                <?= $form->field($model, 'idModalidadEvento')->dropdownList($modalidadEvento,  ['prompt' => 'Selecciona una modalidad'])->label('Modalidad *'); ?>
+                    <!-- select modalidad -->
+                    <?php $modalidadEvento = modalidadEvento::find()     //buscar todas las categorias         
+                        ->select(['descripcionModalidad'])
+                        ->indexBy('idModalidadEvento')
+                        ->column();
+                    ?>
+                    <?= $form->field($model, 'idModalidadEvento')->dropdownList($modalidadEvento,  ['prompt' => 'Selecciona una modalidad'])->label('Modalidad *'); ?>
 
-                <!-- input logo -->
-                <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
-                
-                <!-- input flyer -->
-                <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?>
+                    <!-- input logo -->
+                    <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
 
-                <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style'=>'width: auto'])->label('Fecha Inicio *') ?>
-                
-                <?= $form->field($model, 'fechaFinEvento')->input('date', ['style'=>'width: auto'])->label('Fecha Fin *') ?>
-                
-                <?= $form->field($model, 'capacidad')->input('number' , ['placeholder' => 'Ingrese número de espectadores'], [ 'min' => 1 , 'max' => 9999])->label('Capacidad de espectadores *')  ?>
+                    <!-- input flyer -->
+                    <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?>
 
-                <!-- select requiere preInscripcion -->
-                <?php $requiere = ['0' => 'No', '1' => 'Si' ]; ?>
-                <?= $form->field($model, 'preInscripcion')->dropDownList($requiere, ['prompt' => '¿Requiere preinscripción? *']) ?>
+                    <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Inicio *') ?>
 
-                <!-- calendar -->
-                <div id="fechaLimite">
-                    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style'=>'width:auto'])->label('Fecha limite de inscripción *')?>
+                    <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Fin *') ?>
+
+                    <?= $form->field($model, 'capacidad')->input('number', ['placeholder' => 'Ingrese número de espectadores'], ['min' => 1, 'max' => 9999])->label('Capacidad de espectadores *')  ?>
+
+                    <!-- select requiere preInscripcion -->
+                    <?php $requiere = ['0' => 'No', '1' => 'Si']; ?>
+                    <?= $form->field($model, 'preInscripcion')->dropDownList($requiere, ['prompt' => '¿Requiere preinscripción? *']) ?>
+
+                    <!-- calendar -->
+                    <div id="fechaLimite">
+                        <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto'])->label('Fecha limite de inscripción *') ?>
+                    </div>
+                    <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
+
+                    <?= $form->field($model, 'fechaCreacionEvento')->input('date', ['style' => 'width: auto'])->label('Fecha publicación del evento *') ?>
+
+                    <p class="font-italic">
+                        * Campos obligatorios.
+                        <p>
+                            <div class="form-group">
+                                <?= Html::submitButton('Guardar', ['class' => 'btn btn-lg btn-success full_width']) ?>
+                            </div>
+
+                            <?php ActiveForm::end(); ?>
                 </div>
-                <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'] , ['maxlength' => true]) ?>
-
-                <?= $form->field($model, 'fechaCreacionEvento')->input('date', ['style'=>'width: auto'])->label('Fecha publicación del evento *') ?>
-
-                <p class="font-italic">
-                    * Campos obligatorios.
-                <p>
-                <div class="form-group">
-                    <?= Html::submitButton('Guardar', ['class' => 'btn btn-lg btn-success']) ?>
-                </div>
-
-                <?php ActiveForm::end(); ?>
             </div>
         </div>
         </div>
-    </div>    
+
+    </div>
+    </div>
+
+</div>
+
 </div>

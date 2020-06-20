@@ -10,6 +10,7 @@ $this->title = 'Actualizar Información: ';
 
 $this->params['breadcrumbs'][] = 'Actualizar información';
 ?>
+
 <div class="profile-update container">
 
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
