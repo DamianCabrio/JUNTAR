@@ -540,4 +540,51 @@ class EventoController extends Controller
             'model' => $model
         ]);
     }
+
+    public function actionOrganizarEventos()
+    {
+        $idUsuario = Yii::$app->user->identity->idUsuario;
+
+        $request = Yii::$app->request;
+        $busqueda = $request->get("s", "");
+        $estadoEvento = $request->get("estadoEvento", "");
+
+        if($estadoEvento != ""){
+           if($estadoEvento == 0){
+               $estado = 1; // activo 
+           }   
+           if($estadoEvento == 1){
+            $estado = 4; // suspendido
+           }
+           if($estadoEvento == 2){
+            $estado = 3; // finalizado
+           }  
+        }        
+
+        if ($estadoEvento != "") {
+            $eventos = Evento::find()
+                ->where(["idUsuario" => $idUsuario])
+                ->andwhere(["like", "idEstadoEvento", $estado]);     
+        }
+        elseif($busqueda != ""){
+            $eventos = Evento::find()
+                ->where(["idUsuario" => $idUsuario])
+                ->andwhere(["like", "nombreEvento", $busqueda]); 
+        }
+        else{
+            $eventos = Evento::find()->where(["idUsuario" => $idUsuario])->andwhere(["idEstadoEvento" => 1]); // por defecto mostrar los eventos propios que son activos
+        }
+
+         //Paginación para 6 eventos por pagina
+        $countQuery = clone $eventos;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->pageSize=6;
+        //$pages->applyLimit = $countQuery->count();
+        $models = $eventos->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+
+
+        return $this->render('organizarEventos', ["eventos" =>  $models, 'pages' => $pages,]);
+    }
 }
