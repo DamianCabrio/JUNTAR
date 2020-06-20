@@ -499,12 +499,6 @@ class EventoController extends Controller
                 $usuario = Usuario::findOne($model->idExpositor);
                 $model = new PresentacionExpositor();
                 $mensaje = $usuario->nombre . " " . $usuario->apellido . " ya se encuentra registrado como expositor de la presentacion: <strong>" . $objPresentacion->tituloPresentacion . "</strong>";
-                return $this->render('cargarExpositor', [
-                    'model' => $model,
-                    'alert' => $mensaje,
-                    'data' => $data,
-
-                ]);
             }
         }
 
