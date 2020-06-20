@@ -204,7 +204,7 @@ class PresentacionController extends Controller
     }
 
 
-    public function actionBorrarPresentacion($idPresentacion, $slug)
+    public function actionBorrarPresentacion($idPresentacion)
     {
     
         $model = $this->findModel($idPresentacion);
