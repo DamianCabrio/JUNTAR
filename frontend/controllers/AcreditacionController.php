@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use Da\QrCode\QrCode;
 use Yii;
 use frontend\models\Evento;
 use frontend\models\Inscripcion;
@@ -63,23 +62,6 @@ class AcreditacionController extends Controller
         $inscripcion->acreditacion = 1;
         $inscripcion->save();
         return true;
-    }
-
-    public function actionQr(){
-        $request = Yii::$app->request;
-        $evento = $request->get('evento');
-
-        $qr = Yii::$app->get('qr');
-
-        Yii::$app->response->format = Response::FORMAT_RAW;
-        Yii::$app->response->headers->add('Content-Type', $qr->getContentType());
-
-        return $qr
-            ->getLogo(Url::base(true) . '/images/juntar-logo/svg/juntar-icon-w.svg')
-            ->setText('https://192.168.0.14:8080/acreditacion/')
-            ->setLabel('Juntar Acreditacion')
-            ->writeString();
-
     }
 
     public function actionAcreditacion(){

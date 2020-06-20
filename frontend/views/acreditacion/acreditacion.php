@@ -15,9 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="acreditacion-view container">
-
-    <img src="<?= Url::to(['acreditacion/qr?evento=' . $evento->nombreEvento]) ?>" />
-
+    
     <?php $form = ActiveForm::begin(['id' => 'acreditacion-form']); ?>
 
     <?php if($acrPreg == false): ?>
