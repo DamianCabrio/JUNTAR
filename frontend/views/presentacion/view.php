@@ -38,28 +38,28 @@ $this->title = $model->tituloPresentacion;
             //'idPresentacion',
             //'idEvento',
 			[
-				'attribute'=>'Nombre del Evento',
+				'attribute'=>'Nombre',
 				'value'=>$model->idEvento0->nombreEvento,
 			],
             //'tituloPresentacion',
             //'descripcionPresentacion',
 			[
-				'attribute'=>'Descripción de la Presentación',
+				'attribute'=>'Descripción',
 				'value'=>$model->descripcionPresentacion,
 			],
             //'diaPresentacion',
 			[
-				'attribute'=>'Dia',
+				'attribute'=>'Día',
 				'value'=>date('d/m/Y', strtotime($model->diaPresentacion)),
 			],
             //'horaInicioPresentacion',
 			[
-				'attribute'=>'Hora de Inicio',
+				'attribute'=>'Hora inicio',
 				'value'=>date('H:i', strtotime($model->horaInicioPresentacion)),
 			],
             //'horaFinPresentacion',
 			[
-				'attribute'=>'Hora de Cierre',
+				'attribute'=>'Hora fin',
 				'value'=>date('H:i', strtotime($model->horaFinPresentacion)),
 			],
             'linkARecursos',

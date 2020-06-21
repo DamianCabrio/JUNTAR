@@ -56,12 +56,12 @@ class Presentacion extends \yii\db\ActiveRecord
         return [
             'idPresentacion' => 'Id Presentacion',
             'idEvento' => 'Id Evento',
-            'tituloPresentacion' => 'Titulo Presentacion',
-            'descripcionPresentacion' => 'Descripcion Presentacion',
-            'diaPresentacion' => 'Dia Presentacion',
-            'horaInicioPresentacion' => 'Hora Inicio Presentacion',
-            'horaFinPresentacion' => 'Hora Fin Presentacion',
-            'linkARecursos' => 'Link A Recursos',
+            'tituloPresentacion' => 'Título',
+            'descripcionPresentacion' => 'Descripción',
+            'diaPresentacion' => 'Día',
+            'horaInicioPresentacion' => 'Hora inicio',
+            'horaFinPresentacion' => 'Hora fin',
+            'linkARecursos' => 'Link a recursos',
         ];
     }
 

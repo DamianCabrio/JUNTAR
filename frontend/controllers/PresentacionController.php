@@ -120,6 +120,12 @@ class PresentacionController extends Controller {
         $model = $this->findModel($presentacion);
         $evento = Evento::findOne(["idEvento" => $model->idEvento]);
 
+        $horaInicioSinSeg =  date('H:i', strtotime($model->horaInicioPresentacion));
+        $horaFinSinSeg = date('H:i', strtotime($model->horaFinPresentacion));
+
+        $model->horaInicioPresentacion = $horaInicioSinSeg;
+        $model->horaFinPresentacion = $horaFinSinSeg;
+        
         //si tiene datos cargados los almacena
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //volvemos a la pagina de la que vinimos
