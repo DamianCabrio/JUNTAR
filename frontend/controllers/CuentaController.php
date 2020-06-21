@@ -2,14 +2,17 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Usuario;
-use frontend\models\SignupForm;
-use frontend\models\UploadProfileImage;
+use Yii;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
-use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
+use common\models\User;
+use frontend\models\Usuario;
+use frontend\models\UploadProfileImage;
+use frontend\models\EventoSearch;
+use frontend\models\InscripcionSearch;
 
 /**
  * Site controller
@@ -67,8 +70,8 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $profileImageRoute = Url::base(true)  .  "/iconos/person-bounding-box.svg";
-        $rutaImagenPerfil = Url::base(true)  . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
+        $profileImageRoute = Url::base(true) . "/iconos/person-bounding-box.svg";
+        $rutaImagenPerfil = Url::base(true) . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
 
         if (@GetImageSize($rutaImagenPerfil)) {
             $profileImageRoute = $rutaImagenPerfil;
@@ -108,7 +111,7 @@ class CuentaController extends Controller {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = $this->findModel(Yii::$app->user->identity->id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->validate()) {
                 $viejoNombreUsuario = Yii::$app->user->identity->nombre;
                 $cambioImagen = false;
@@ -132,16 +135,21 @@ class CuentaController extends Controller {
                 Yii::$app->session->setFlash('error', '<h2> Ha ocurrido un error ): </h2>'
                         . '<p> Ingreso de datos no permitido </p>');
             }
-            return $this->redirect(['profile']);
+            return $this->redirect(['/cuenta/profile']);
         }
 //        if (Yii::$app->request->post('search') != null) {
 //            //define el tipo de respuesta del metodo
 //            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 //        }
-
-        return $this->render('editprofile', [
-                    'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('editprofile', [
+                        'model' => $model,
+            ]);
+        } else {
+            return $this->render('editprofile', [
+                        'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -153,7 +161,7 @@ class CuentaController extends Controller {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = new UploadProfileImage();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->profileImage = UploadedFile::getInstance($model, 'profileImage');
 
             if ($model->profileImage != null) {
@@ -166,27 +174,15 @@ class CuentaController extends Controller {
             return $this->redirect(['profile']);
         }
 
-        return $this->render('uploadProfileImage', [
-                    'model' => $model,
-        ]);
-    }
-
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-    private function actionSignup() {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
-                    . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goHome();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('uploadProfileImage', [
+                        'model' => $model,
+            ]);
+        } else {
+            return $this->render('uploadProfileImage', [
+                        'model' => $model,
+            ]);
         }
-
-        return $this->render('signup', [
-                    'model' => $model,
-        ]);
     }
 
     protected function findModel($id) {
@@ -195,6 +191,80 @@ class CuentaController extends Controller {
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionDesactivarCuenta() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = User::findIdentity(Yii::$app->user->identity->idUsuario);
+        if (Yii::$app->request->post()) {
+            $model->setInactive();
+            Yii::$app->user->logout();
+            return $this->goHome();
+        }
+        return $this->render('desactivarCuenta');
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionMisEventosGestionados() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $usuario = Yii::$app->user->identity->idUsuario;
+//        $searchModel = new Evento();
+        $searchModel = new EventoSearch();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['idUsuario' => $usuario]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => ['attributes' => ['fechaCreacionEvento']]
+        ]);
+
+        return $this->render('misEventosGestionados', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    public function actionMisInscripcionesAEventos() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $usuario = Yii::$app->user->identity->idUsuario;
+//        $searchModel = new Evento();
+        $searchModel = new InscripcionSearch();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['idUsuario' => $usuario]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => ['attributes' => ['fechaPreInscripcion']]
+        ]);
+
+        return $this->render('misInscripciones', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

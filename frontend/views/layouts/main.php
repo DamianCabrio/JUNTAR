@@ -11,7 +11,6 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\rbac\Permission;
 
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -25,7 +24,6 @@ AppAsset::register($this);
     <meta name="theme-color" content="#050714" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -37,79 +35,80 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg',  ['style' => 'width:30px']),
+            'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg', ['style' => 'width:30px']),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
             ],
         ]);
-            $menuItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
-                
-            ];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
-                $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
-            } else {
-                // Opciones solo para usuario con rol organizador 
-                if (Yii::$app->user->can('Organizador')) {
+        $menuItems = [
+            ['label' => 'Inicio', 'url' => ['/site/index']],
+        ];
+        if (Yii::$app->user->isGuest) {
+            $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
+        } else {
+            // Opciones solo para usuario con rol organizador 
+            if (Yii::$app->user->can('Organizador')) {
 
-                    $menuItems[] = ['label' => 'Cargar Evento', 'url' => ['/evento/cargar-evento']];
-                    $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/listar-eventos']];
-                }  
-                    $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
-                    $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];  
-                    //Logout
-
-                /** @var TYPE_NAME $urlImagenPerfil */
-                $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre .".jpg" ;
-                    if(@GetImageSize($urlImagenPerfil)){
-                        $imgPerfil = $urlImagenPerfil;
-                    }else{
-                        $imgPerfil = '@web/iconos/person-circle-w.svg';
-                    }
-                    $menuItems[] = [
-
-                        'label' => Html::img($imgPerfil,  ['class' => 'ml-1', "alt" => "Cuenta", "width" => "30", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
-
-                        'items' => [
-                            ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
-                            ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
-                            
-                            [
-                                "label" => "Cerrar Sesión",
-                                "url" => ["/site/logout"],
-                                "linkOptions" => [
-                                    "data-method" => "post",
-                                ]
-                            ],
-                        ],
-                    ];
-               
+                $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
             }
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
-                'items' => $menuItems,
-                'encodeLabels' => false,
-            ]);
-            NavBar::end();
-            ?>
+            $menuItems[] = [
+                'label' => 'Mis Eventos',
+                'items' => [
+                    ['label' => 'Inscripciones', 'url' => ['/evento/listar-eventos']],
+                    ['label' => 'Certificados', 'url' => ['/evento/listar-eventos']],
+                    ['label' => 'Organizar Eventos', 'url' => ['/cuenta/mis-eventos-gestionados']],
+                ],
+            ];
+            //Logout
+
+            /** @var TYPE_NAME $urlImagenPerfil */
+            $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre . ".jpg";
+            if (@GetImageSize($urlImagenPerfil)) {
+                $imgPerfil = $urlImagenPerfil;
+            } else {
+                $imgPerfil = '@web/iconos/person-circle-w.svg';
+            }
+            $menuItems[] = [
+                'label' => Html::img($imgPerfil, ['class' => 'ml-1', "alt" => "Cuenta", "width" => "35", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
+                'items' => [
+                    ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
+                    ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
+                    ['label' => 'Mis Eventos', 'url' => ['/cuenta/mis-eventos-gestionados']],
+                    ['label' => 'Mis Inscripciones', 'url' => ['/cuenta/mis-inscripciones-a-eventos']],
+                    [
+                        "label" => "Cerrar Sesión",
+                        "url" => ["/site/logout"],
+                        "linkOptions" => [
+                            "data-method" => "post",
+                        ]
+                    ],
+                ],
+            ];
+        }
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
+            'items' => $menuItems,
+            'encodeLabels' => false,
+        ]);
+        NavBar::end();
+        ?>
 
 
-            <?php echo Alert::widget([
-                'options' => ['class' => 'text-center']
-            ]) ?>
-            <?php echo $content ?>
-        </div>
-
-        
-      
+        <?php
+        echo Alert::widget([
+            'options' => ['class' => 'text-center']
+        ])
+        ?>
+        <?php echo $content ?>
     </div>
+
     <section class="darkish_bg text-light">
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
             <div class="row">
@@ -126,15 +125,21 @@ AppAsset::register($this);
                             <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
                         </li>
                     </ul>
+                    <h5 class="white-text">Sobre</h5>
+                <ul>
+                    <li>
+                        <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
+                    </li>
+                </ul>
                 </div>
             </div>
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img( "@web/images/uncoma.png",  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
                 </div>
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('@web/images/fai.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
         </div>
@@ -142,7 +147,7 @@ AppAsset::register($this);
     <footer class="footer dark_bg text-light">
 
         <div class="container">
-            <p class="pull-left">&copy; <?=  Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
         </div>
     </footer>
 

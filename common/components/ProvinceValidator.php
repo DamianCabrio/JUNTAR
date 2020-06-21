@@ -18,7 +18,7 @@ public function init() {
       return <<<JS
         var selectedProvince = $("#signupform-provincia").val();
         var selectedCountry = $("#signupform-pais").val();
-        deferred.push($.getJSON('json/provincias.json', function(json){
+        deferred.push($.getJSON('../json/provincias.json', function(json){
           var result = false;
           $.each(json, function(id, country){
             if (country.name == selectedCountry ) {

@@ -23,6 +23,7 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+<<<<<<< HEAD
         'abede361264e2ae69ec1eee813a101af' => __DIR__ . '/..' . '/markbaker/complex/classes/src/functions/abs.php',
         '21a5860fbef5be28db5ddfbc3cca67c4' => __DIR__ . '/..' . '/markbaker/complex/classes/src/functions/acos.php',
         '1546e3f9d127f2a9bb2d1b6c31c26ef1' => __DIR__ . '/..' . '/markbaker/complex/classes/src/functions/acosh.php',
@@ -83,7 +84,11 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
         '6ab8ad87a734f276a6bcd5a0fe1289be' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/operations/divideinto.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
+=======
+>>>>>>> abb48e8b0f6ce7fa9a569e9e43bb0a675aa517fa
         '180092cfc969a12e06f2132a203a3184' => __DIR__ . '/..' . '/codeception/verify/src/Codeception/function.php',
+        'a9ed0d27b5a698798a89181429f162c5' => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib/Common/customFunctions.php',
+        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -97,6 +102,10 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
             'yii\\composer\\' => 13,
             'yii\\bootstrap4\\' => 15,
             'yii\\' => 4,
+        ),
+        'w' => 
+        array (
+            'wbraganca\\dynamicform\\' => 22,
         ),
         'u' => 
         array (
@@ -112,7 +121,11 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
         ),
         'Z' => 
         array (
+<<<<<<< HEAD
             'ZipStream\\' => 10,
+=======
+            'Zxing\\' => 6,
+>>>>>>> abb48e8b0f6ce7fa9a569e9e43bb0a675aa517fa
         ),
         'W' => 
         array (
@@ -175,6 +188,7 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\Common\\Lexer\\' => 22,
             'DeepCopy\\' => 9,
+            'Da\\QrCode\\' => 10,
         ),
         'C' => 
         array (
@@ -218,6 +232,10 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
+        'wbraganca\\dynamicform\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wbraganca/yii2-dynamicform',
+        ),
         'umanskyi31\\opengraph\\' => 
         array (
             0 => __DIR__ . '/..' . '/umanskyi31/opengraph/src',
@@ -232,9 +250,15 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
         ),
+<<<<<<< HEAD
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
+=======
+        'Zxing\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib',
+>>>>>>> abb48e8b0f6ce7fa9a569e9e43bb0a675aa517fa
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -376,9 +400,15 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+<<<<<<< HEAD
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
+=======
+        'Da\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/qrcode-library/src',
+>>>>>>> abb48e8b0f6ce7fa9a569e9e43bb0a675aa517fa
         ),
         'Codeception\\PHPUnit\\' => 
         array (
@@ -416,6 +446,10 @@ class ComposerStaticInit8c9af860bb3e248efcfecd7468ee0ff1
             'Behat\\Gherkin' => 
             array (
                 0 => __DIR__ . '/..' . '/behat/gherkin/src',
+            ),
+            'BaconQrCode' => 
+            array (
+                0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
             ),
         ),
     );
