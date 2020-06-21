@@ -12,6 +12,7 @@ use yii\bootstrap4\ActiveForm;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use kartik\mpdf\Pdf;
+use frontend\components\validateEmail;
 /**
  * CertificadoController.
  */
@@ -150,10 +151,8 @@ class CertificadoController extends Controller
           ->where(['idEvento' => $id])
           ->all();
       }
-      $isOficial = false;
-      if (strpos($eventData[0]['email'], '@fi.uncoma.edu.ar') ) {
-        $isOficial = true;
-      }
+      $validateEmail= new validateEmail();
+      $isOficial = $validateEmail->validate_by_domain($eventData[0]['email']);
       //Regenera el modelo del pdf con los datos y el estilo deseado.
       $content = $this->renderPartial('model', [
         'event' => $eventData,
