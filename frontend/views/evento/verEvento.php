@@ -219,8 +219,18 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<span class="font-weight-light"><?= $evento->capacidad ?></span>
 									</li>
 									<li class="list-group-item darkish_bg text-white">
-										<p><b>Fecha Pubilcación: </b></p>
+										<p><b>Fecha Publicación: </b></p>
 										<span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
+									</li>
+                                    <li class="list-group-item darkish_bg text-white">
+										<p><b>Descargar lista de Inscriptos: </b></p>
+										<span>
+                                        <?=
+                                            Html::a('listado.xls', ['evento/inscriptos-excel',
+                                            'evento'=>$evento->idEvento,
+                                             'nombreEvento'=>$evento->nombreEvento ]);
+                                        ?>
+                                        </span>
 									</li>
 								</ul>
 							</div>
@@ -442,17 +452,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     <p><b>Estado:</b></p>
                     <p><?= $estadoEvento ?></p>
                     <hr />
-                    <p><b>Descargar lista de Inscriptos:</b></p>
-					<p><?=
-                       Html::a('listado.xls', ['evento/inscriptos-excel',
-                       'evento'=>$evento->idEvento,
-                       'nombreEvento'=>$evento->nombreEvento,
-                       
-                       ]);
-
-					
-					?></p>
-					<hr />
+ 
                 </div>
                 <div>
                     <h4 class="py-2 px-3 mb-2 bg-primary text-white">Pre-inscripcion</h4>
