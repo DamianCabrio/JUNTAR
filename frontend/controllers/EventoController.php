@@ -409,9 +409,17 @@ class EventoController extends Controller {
     public function actionInscriptosExcel()
     {
         $request = Yii::$app->request;
-
         $idEvento  = $request->get('idEvento');
-        $nombreEvento = $request->get('nombreEvento');
+
+        $evento = Evento::findOne($idEvento);
+
+        $arrayEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
+        $arrayEvento['inicio'] = $evento->fechaInicioEvento;
+        $arrayEvento['fin'] =  $evento->fechaFinEvento;
+        $arrayEvento['nombre'] = $evento->nombreEvento;
+        $arrayEvento['capacidad']  = $evento->capacidad ;
+        $arrayEvento['lugar']= $evento->lugar;
+        $arrayEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;;
         
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
@@ -444,7 +452,8 @@ class EventoController extends Controller {
         $listados[]= ['index'=>2, 'titulo'=>'Anulados', 'lista'=> $anulados ];
         $listados[]= ['index'=>3, 'titulo'=>'Acreditados', 'lista'=> $acreditados ];
 
-       return $this->renderPartial('inscriptosExcel', ['listados' => $listados ,'nombreEvento' => $nombreEvento ]);
+       return $this->renderPartial('inscriptosExcel',
+             ['listados' => $listados ,'arrayEvento' => $arrayEvento ]);
     }
 
 

@@ -27,15 +27,32 @@ $bordes = [
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+$nombreEvento= $arrayEvento['nombre'];
+
+
+
+
+
 foreach($listados as $obj){
     
         $templateExcel->setActiveSheetIndex($obj['index']);
         $templateExcel->getActiveSheet()->setTitle($obj['titulo']);
 
-        $fila= $templateExcel->getActiveSheet()->setCellValue('B7', $nombreEvento);
+        $fila= $templateExcel->getActiveSheet()->setCellValue('B9', $nombreEvento);
+
+        $fila= $templateExcel->getActiveSheet();
+        $fila->setCellValue('I2', $arrayEvento['organizador'] );
+        $fila->setCellValue('I3', $arrayEvento['inicio'] );
+        $fila->setCellValue('I4', $arrayEvento['fin'] );
+        $fila->setCellValue('I5', $arrayEvento['capacidad'] );
+        $fila->setCellValue('I6', $arrayEvento['lugar'] );
+        $fila->setCellValue('I7', $arrayEvento['modalidad'] );
 
         // $row: los datos son insertado a partir de la celda 10
-        $row = 10;
+        $row = 12;
 
         // $i: enumera la cantidad las celdas con registros
         $i = 1;
