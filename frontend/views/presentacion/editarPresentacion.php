@@ -17,32 +17,37 @@ use yii\bootstrap4\ActiveForm;
                 <h2 class="text-center">Editar Presentación</h2>
                 <p class="text-center">Complete los siguientes campos</p>
 
-                    <h1><?= Html::encode($this->title) ?></h1>
+                <h1><?= Html::encode($this->title) ?></h1>
 
-                    <div class="presentacion-form">
-                        <?php yii\widgets\Pjax::begin(['id' => 'log-in']) ?>
-                        <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['data-pjax' => true]]); ?>
+                <div class="presentacion-form">
+                    <?php yii\widgets\Pjax::begin(['id' => 'log-in']) ?>
+                    <?php $form = ActiveForm::begin(['id' => 'editarPresentacion', 'options' => ['data-pjax' => true]]); ?>
 
-                        
-                        <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true]) ?>
 
-                        <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8', 'placeholder' => 'Descripción de la presentación [ máximo 800 caracteres ]'])->label('Descripción *')  ?>
+                    <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true]) ?>
 
-                        <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha *') ?>
+                    <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8', 'placeholder' => 'Descripción de la presentación [ máximo 800 caracteres ]'])->label('Descripción *')  ?>
 
-                        <?= $form->field($model, 'horaInicioPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora incio (HH:MM) *') ?>
+                    <input id="fechaIniEvento" type="hidden" value="<?= $evento->fechaInicioEvento ?>">
+                    <input id="fechaFinEvento" type="hidden" value="<?= $evento->fechaFinEvento ?>">
 
-                        <?= $form->field($model, 'horaFinPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora finalización (HH:MM) *') ?>
+                    <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha *') ?>
+                    <div id="invalidFecha" class="invalid-feedback">
+                    </div>
 
-                        <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'Ingrese link a recursos'], ['maxlength' => true]) ?>
+                    <?= $form->field($model, 'horaInicioPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora incio (HH:MM) *') ?>
 
-                        <div class="form-group">
-                            <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
-                        </div>
-                        <?php ActiveForm::end(); ?>
+                    <?= $form->field($model, 'horaFinPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora finalización (HH:MM) *') ?>
+
+                    <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'Ingrese link a recursos'], ['maxlength' => true]) ?>
+
+                    <div class="form-group">
+                        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+                    </div>
+                    <?php ActiveForm::end(); ?>
                     <?php yii\widgets\Pjax::end() ?>
                 </div>
             </div>
         </div>
     </div>
-</div>    
+</div>

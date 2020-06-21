@@ -156,7 +156,44 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         verExpositoresModal($(this).attr('href'));
     });
+    //prueba
+    $('#cargarPresentacion').submit(function(){
+        $('#presentacion-diapresentacion').attr('required',true);
+        $('#presentacion-diapresentacion').addClass('is-invalid');
+        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+        $('#invalidFecha').show();
+    });
+    $('#editarPresentacion').submit(function(){
+        $('#presentacion-diapresentacion').attr('required',true);
+        $('#presentacion-diapresentacion').addClass('is-invalid');
+        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+        $('#invalidFecha').show();
+    });
+    $('#presentacion-diapresentacion').change(function(){
+        var fechaIni = $('#fechaIniEvento').val(); 
+        var fechaFin = $('#fechaFinEvento').val();
+        var fechaPre= $(this).val();
+        
+        //console.log(fechaPre);
+        //console.log(fechaIni);
+        //console.log(fechaFin);
+        
+        if(fechaIni <= fechaPre && fechaFin >= fechaPre){
+            //console.log("bien");
+            $(this).addClass('is-valid');
+            $(this).removeClass('is-invalid');
+            $('#invalidFecha').hide();
+        }else{
+            //console.log("Mal");
+            $(this).removeClass('is-valid');
+            $(this).addClass('is-invalid');
+            $('#invalidFecha').html('El Dia de la Presentacion debe estar entre la fecha inicio y la fecha fin del evento.<br> Fecha Inicio Evento: '+ fechaIni+ '<br>Fecha Fin Evento: '+ fechaFin);
+            $('#invalidFecha').show();
+        }
+        
+    });
 });
+//Prueba
 
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html

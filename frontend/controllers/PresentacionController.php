@@ -118,6 +118,7 @@ class PresentacionController extends Controller {
     public function actionUpdate($presentacion) {
         //busca la presentacion
         $model = $this->findModel($presentacion);
+        $evento = Evento::findOne(["idEvento" => $model->idEvento]);
 
         //si tiene datos cargados los almacena
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -127,6 +128,7 @@ class PresentacionController extends Controller {
 
         return $this->render('editarPresentacion', [
                     'model' => $model,
+                    'evento' => $evento,
         ]);
     }
 

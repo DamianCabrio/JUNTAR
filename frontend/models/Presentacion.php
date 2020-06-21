@@ -34,16 +34,17 @@ class Presentacion extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-    {
+    {   
         return [
-            [['idEvento', 'tituloPresentacion', 'descripcionPresentacion', 'diaPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'required'],
+            [['idEvento', 'tituloPresentacion', 'descripcionPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'required'],
             [['idEvento'], 'integer'],
             [['diaPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'safe'],
             [['tituloPresentacion'], 'string', 'max' => 200],
             [['descripcionPresentacion'], 'string', 'max' => 800],
             [['linkARecursos'], 'string', 'max' => 300],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
-            ['horaFinPresentacion','compare','compareAttribute'=>'horaInicioPresentacion','operator'=>'>']
+            ['horaFinPresentacion','compare','compareAttribute'=>'horaInicioPresentacion','operator'=>'>'],
+            //['diaPresentacion','required']
         ];
     }
 
