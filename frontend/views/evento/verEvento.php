@@ -191,7 +191,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <?= $organizadorEmailEvento ?>
 
 
-<<<<<<< HEAD
 							</div>
 							<div class="col-sm-12 col-md-4 padding_section white-text">
 								<ul class="list-group">
@@ -227,9 +226,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<p><b>Descargar lista de Inscriptos: </b></p>
 										<span>
                                         <?=
-                                            Html::a('listado.xls', ['evento/inscriptos-excel',
-                                            'evento'=>$evento->idEvento,
-                                             'nombreEvento'=>$evento->nombreEvento ]);
+                                        Html::a('listado.xls', ['evento/inscriptos-excel',
+                                        'evento'=>$evento->idEvento,
+                                        'nombreEvento'=>$evento->nombreEvento ]);
                                         ?>
                                         </span>
 									</li>
@@ -238,44 +237,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 						</div>
 						<div class="row padding_section grayish_bg">
 							<div class="col-sm-12">
-=======
-                            </div>
-                            <div class="col-sm-12 col-md-4 padding_section white-text">
-                                <ul class="list-group">
-                                    <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Fecha de Inicio: </b></p>
-                                        <span><?= date("d-m-Y", strtotime( $evento->fechaInicioEvento)) ?></span>
-                                    </li>
-                                    <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Fecha de Finalización: </b></p>
-                                        <span><?= date("d-m-Y", strtotime( $evento->fechaFinEvento)) ?></span>
-                                    </li>
-                                    <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Fecha Límite Pre-Inscripción: </b></p>
-                                        <span><?= date("d-m-Y", strtotime( $evento->fechaLimiteInscripcion)) ?></span>
-                                    </li>
-                                    <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Lugar: </b></p>
-                                        <span class="font-weight-light"><?= $evento->lugar ?></span>
-                                    </li>
-                                    <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Modalidad: </b></p>
-                                        <span class="font-weight-light"><?= $modalidadEvento ?></span>
-                                    </li>
-                                    <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Capacidad: </b></p>
-                                        <span class="font-weight-light"><?= $evento->capacidad ?></span>
-                                    </li>
-                                    <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Fecha Pubilcación: </b></p>
-                                        <span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row padding_section grayish_bg">
-                            <div class="col-sm-12">
->>>>>>> 2b6957e6f84ee1a2b06d15a3472417d785ba0db7
 								<span class="align-middle">
 									<h4 class="text-uppercase align-middle">AGENDA
 										<?PHP
@@ -471,77 +432,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-<<<<<<< HEAD
-            <div class="col-12 col-md-4 p-4" style="background-color:#f2f2f2;">
-                <div>
-                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Detalles</h4>
-                    <p><b>Fecha de Inicio:</b></p>
-                    <p><?= $evento->fechaInicioEvento ?></p>
-                    <hr />
-                    <p><b>Fecha de Fin:</b></p>
-                    <p><?= $evento->fechaFinEvento ?></p>
-                    <hr />
-                    <p><b>Lugar:</b></p>
-                    <p><?= $evento->lugar ?></p>
-                    <hr />
-                    <p><b>Modalidad:</b></p>
-                    <p><?= $modalidadEvento ?></p>
-                    <hr />
-                    <p><b>Estado:</b></p>
-                    <p><?= $estadoEvento ?></p>
-                    <hr />
- 
-                </div>
-                <div>
-                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Pre-inscripcion</h4>
-                    <p><?= $preInscripcion ?></p>
-                    <hr />
-                    <p><b>Fecha limite de Pre-inscripcion:</b></p>
-                    <p><?= $evento->fechaLimiteInscripcion ?></p>
-                    <hr />
-                </div>
-                <div>
-                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Organizador</h4>
-                    <p><?= $organizadorEvento ?></p>
-                    <hr />
-                    <p><b>Contacto:</b></p>
-                    <p><?= $organizadorEmailEvento ?></p>
-                    <hr />
-=======
-        </div>
-
-        <?php if ($estadoEvento == 'Finalizado' and ! Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
-            <h4 class="py-2 px-3 mb-2 bg-primary text-white"> Certificado </h4>
-            <?=
-            $this->render('/certificado/index', [
-                "evento" => $evento,
-                'OrganizadorEmail' => $organizadorEmailEvento,
-                'categoria' => $categoriaEvento,
-                'presentaciones' => $presentacion,
-            ]);
-        endif;
-        ?>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="flyerModalLabel">Flyer</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
->>>>>>> 2b6957e6f84ee1a2b06d15a3472417d785ba0db7
-                </div>
-                <div class="modal-body">
-                    <img class="full_width" src='<?= $flyer ?>'>
-
-                </div>
-                <div class="modal-footer">
-                    <a href="<?= $flyer ?>" class="btn btn-secondary"  download>Bajar</a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
