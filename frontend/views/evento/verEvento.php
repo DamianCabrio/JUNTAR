@@ -12,29 +12,29 @@ $this->title = $evento->nombreCortoEvento . " - Juntar";
 $openGraph = Yii::$app->opengraph;
 
 $openGraph->getBasic()
-        ->setUrl(Yii::$app->request->hostInfo . Yii::$app->request->url)
-        ->setTitle(Html::encode($evento->nombreEvento))
-        ->setDescription(Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"))))
-        ->setSiteName("Juntar")
-        ->setLocale('es_AR')
-        ->render();
+    ->setUrl(Yii::$app->request->hostInfo . Yii::$app->request->url)
+    ->setTitle(Html::encode($evento->nombreEvento))
+    ->setDescription(Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"))))
+    ->setSiteName("Juntar")
+    ->setLocale('es_AR')
+    ->render();
 
 $openGraph->useTwitterCard()
-        ->setCard('summary')
-        ->setSite(Yii::$app->request->hostInfo . Yii::$app->request->url)
-        ->setCreator(Html::encode($evento->idUsuario0->nombre . " " . $evento->idUsuario0->apellido))
-        ->render();
+    ->setCard('summary')
+    ->setSite(Yii::$app->request->hostInfo . Yii::$app->request->url)
+    ->setCreator(Html::encode($evento->idUsuario0->nombre . " " . $evento->idUsuario0->apellido))
+    ->render();
 
 if ($evento->imgLogo != null) {
     $openGraph->getImage()
-            ->setUrl(Html::encode($evento->imgLogo))
-            ->setAttributes([
-                'secure_url' => Html::encode($evento->imgLogo),
-                'width' => 100,
-                'height' => 100,
-                'alt' => "Logo Evento",
-            ])
-            ->render();
+        ->setUrl(Html::encode($evento->imgLogo))
+        ->setAttributes([
+            'secure_url' => Html::encode($evento->imgLogo),
+            'width' => 100,
+            'height' => 100,
+            'alt' => "Logo Evento",
+        ])
+        ->render();
 }
 
 if ($evento->imgFlyer != null) {
@@ -82,25 +82,25 @@ $organizadorEvento = $evento->idUsuario0->nombre . " " . $evento->idUsuario0->ap
 $organizadorEmailEvento = $evento->idUsuario0->email;
 ?>
 <div class="evento-view ">
-	<header class="hero gradient-hero">
-		<div class="container-fluid center-content text-center padding_hero text-white">
-			<h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
-			<div class="row padding_section">
-				<div class="col text-center">
-					<h4 class="text-white"><i class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
-					<h4><i class="material-icons large align-middle">location_on</i> <?= $evento->lugar ?></h4>
-					<?php if (!$esFai) : ?>
-						<h5 class="text-white">Evento no organizado por la FAI</h5>
-					<?php else : ?>
-						<h5 class="text-white">Evento organizado por la FAI</h5>
-					<?php endif; ?>
-				</div>
-			</div>
-		</div>
-	</header>
+    <header class="hero gradient-hero">
+        <div class="container-fluid center-content text-center padding_hero text-white">
+            <h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
+            <div class="row padding_section">
+                <div class="col text-center">
+                    <h4 class="text-white"><i class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
+                    <h4><i class="material-icons large align-middle">location_on</i> <?= $evento->lugar ?></h4>
+                    <?php if (!$esFai) : ?>
+                        <h5 class="text-white">Evento no organizado por la FAI</h5>
+                    <?php else : ?>
+                        <h5 class="text-white">Evento organizado por la FAI</h5>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <div class="container-fluid dark_light_bg">
-        <div id="evento" class=" padding_hero">
+    <div class="container-fluid darkish_bg">
+        <div id="evento" class="dark_light_bg padding_hero">
             <div class="container">
                 <div class="card bg-white">
                     <?PHP
@@ -109,72 +109,72 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     }
                     ?>
 
-					<div class="card-body">
-						<div class="row padding_section">
-							<div class="col-sm-12 col-md-8">
-								<div class="padding_section">
-									<i class="material-icons align-middle">today</i><span class=" align-middle"> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></span>
-									<br>
-									<br>
-									<h2><strong><?= $evento->nombreEvento ?></strong>
-									</h2>
-									<br>
-									<p>Organizado por <?= $organizadorEvento ?></p>
-									<br>
-									<?PHP if ($evento->imgFlyer != null) {
-										echo Html::a('<a data-toggle="modal" data-target="#flyerModal"><i class="material-icons align-middle">file_download</i><span class=" align-middle">Flyer </span></a>', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento]);
-									}
-									?>
-								</div>
-							</div>
-							<div class="col-sm-12 col-md-4">
-								<?= $logo ?>
-							</div>
-						</div>
-						<div class="row padding_section greyish_bg">
-							<div class="col-sm-12 col-md-8">
-								<div class="">
-									<p class="align-middle">CUPOS DISPONIBLES: <?= $cupos ?> <?= $preInscripcion ?></p>
-								</div>
-							</div>
-							<div class="col-sm-12 col-md-4">
-								<div class="align-middle">
-									<?php
-									switch ($estadoEventoInscripcion) {
-										case "puedeInscripcion":
-											echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-											break;
-										case "puedePreinscripcion":
-											echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-											break;
-										case "sinCupos":
-											echo Html::label('Sin cupos');
-											break;
-										case "yaAcreditado":
-											echo Html::label("Usted ya se acreditó en este evento");
-											break;
-										case "inscriptoYEventoIniciado":
-											echo Html::label("El evento ya inició, pasela bien");
-											break;
-										case "yaPreinscripto":
-											echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-											break;
-										case "yaInscripto":
-											echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-											break;
-										case "noInscriptoYFechaLimiteInscripcionPasada":
-											echo Html::label('No se puede inscribir, el evento ya inició');
-											break;
-										case "puedeAcreditarse":
-											echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-											break;
-									}
-									Modal::begin([
-										'id' => 'modalEvento',
-										'size' => 'modal-lg'
-									]);
-									Modal::end();
-									?>
+                    <div class="card-body">
+                        <div class="row padding_section">
+                            <div class="col-sm-12 col-md-8">
+                                <div class="padding_section">
+                                    <i class="material-icons align-middle">today</i><span class=" align-middle"> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></span>
+                                    <br>
+                                    <br>
+                                    <h2><strong><?= $evento->nombreEvento ?></strong>
+                                    </h2>
+                                    <br>
+                                    <p>Organizado por <?= $organizadorEvento ?></p>
+                                    <br>
+                                    <?PHP if ($evento->imgFlyer != null) {
+                                        echo Html::a('<a data-toggle="modal" data-target="#flyerModal"><i class="material-icons align-middle">file_download</i><span class=" align-middle">Flyer </span></a>', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento]);
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <?= $logo ?>
+                            </div>
+                        </div>
+                        <div class="row padding_section greyish_bg">
+                            <div class="col-sm-12 col-md-8">
+                                <div class="">
+                                    <p class="align-middle">CUPOS DISPONIBLES: <?= $cupos ?> <?= $preInscripcion ?></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="align-middle">
+                                    <?php
+                                    switch ($estadoEventoInscripcion) {
+                                        case "puedeInscripcion":
+                                            echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            break;
+                                        case "puedePreinscripcion":
+                                            echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            break;
+                                        case "sinCupos":
+                                            echo Html::label('Sin cupos');
+                                            break;
+                                        case "yaAcreditado":
+                                            echo Html::label("Usted ya se acreditó en este evento");
+                                            break;
+                                        case "inscriptoYEventoIniciado":
+                                            echo Html::label("El evento ya inició, pasela bien");
+                                            break;
+                                        case "yaPreinscripto":
+                                            echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            break;
+                                        case "yaInscripto":
+                                            echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            break;
+                                        case "noInscriptoYFechaLimiteInscripcionPasada":
+                                            echo Html::label('No se puede inscribir, el evento ya inició');
+                                            break;
+                                        case "puedeAcreditarse":
+                                            echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            break;
+                                    }
+                                    Modal::begin([
+                                        'id' => 'modalEvento',
+                                        'size' => 'modal-lg'
+                                    ]);
+                                    Modal::end();
+                                    ?>
 
                                 </div>
 
@@ -191,51 +191,51 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <?= $organizadorEmailEvento ?>
 
 
-							</div>
-							<div class="col-sm-12 col-md-4 padding_section white-text">
-								<ul class="list-group">
-									<li class="list-group-item darkish_bg text-white">
-										<p><b>Fecha de Inicio: </b></p>
-										<span><?= date("d-m-Y", strtotime( $evento->fechaInicioEvento)) ?></span>
-									</li>
-									<li class="list-group-item darkish_bg text-white">
-										<p><b>Fecha de Finalización: </b></p>
-										<span><?= date("d-m-Y", strtotime( $evento->fechaFinEvento)) ?></span>
-									</li>
-									<li class="list-group-item darkish_bg text-white">
-										<p><b>Fecha Límite Pre-Inscripción: </b></p>
-										<span><?= date("d-m-Y", strtotime( $evento->fechaLimiteInscripcion)) ?></span>
-									</li>
-									<li class="list-group-item darkish_bg text-white">
-										<p><b>Lugar: </b></p>
-										<span class="font-weight-light"><?= $evento->lugar ?></span>
-									</li>
-									<li class="list-group-item darkish_bg text-white">
-										<p><b>Modalidad: </b></p>
-										<span class="font-weight-light"><?= $modalidadEvento ?></span>
-									</li>
-									<li class="list-group-item darkish_bg text-white">
-										<p><b>Capacidad: </b></p>
-										<span class="font-weight-light"><?= $evento->capacidad ?></span>
-									</li>
-									<li class="list-group-item darkish_bg text-white">
-										<p><b>Fecha Pubilcación: </b></p>
-										<span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="row padding_section grayish_bg">
-							<div class="col-sm-12">
+                            </div>
+                            <div class="col-sm-12 col-md-4 padding_section white-text">
+                                <ul class="list-group">
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Fecha de Inicio: </b></p>
+                                        <span><?= date("d-m-Y", strtotime( $evento->fechaInicioEvento)) ?></span>
+                                    </li>
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Fecha de Finalización: </b></p>
+                                        <span><?= date("d-m-Y", strtotime( $evento->fechaFinEvento)) ?></span>
+                                    </li>
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Fecha Límite Pre-Inscripción: </b></p>
+                                        <span><?= date("d-m-Y", strtotime( $evento->fechaLimiteInscripcion)) ?></span>
+                                    </li>
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Lugar: </b></p>
+                                        <span class="font-weight-light"><?= $evento->lugar ?></span>
+                                    </li>
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Modalidad: </b></p>
+                                        <span class="font-weight-light"><?= $modalidadEvento ?></span>
+                                    </li>
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Capacidad: </b></p>
+                                        <span class="font-weight-light"><?= $evento->capacidad ?></span>
+                                    </li>
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Fecha Pubilcación: </b></p>
+                                        <span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row padding_section grayish_bg">
+                            <div class="col-sm-12">
 								<span class="align-middle">
 									<h4 class="text-uppercase align-middle">AGENDA
 										<?PHP
-										if ($esDueño) {
-											echo Html::a('								<div class="btn-group" role="group" aria-label="">
+                                        if ($esDueño) {
+                                            echo Html::a('								<div class="btn-group" role="group" aria-label="">
 											<button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
 										</div><i class="material-icons large align-middle">add</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => '']);
-										}
-										?></h4>
+                                        }
+                                        ?></h4>
 
                                 </span>
 
@@ -372,50 +372,50 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         }
                                         ?>
 
-										</thead>
-										<tbody>
-											<?php
-											$cont = 0;
-											foreach ($presentacion as $objPresentacion) :
-												$cont++;
-											?>
-												<tr>
-													<th class="align-middle"><?= $cont ?></th>
-													<td class="align-middle w-25"><?= $objPresentacion->tituloPresentacion ?><br /><?= Html::a('(Más información)', ['presentacion/view', 'presentacion' => $objPresentacion->idPresentacion]) ?></td>
-													<!--<td class="align-middle"><?= $objPresentacion->descripcionPresentacion ?></td>-->
-													<td class="align-middle"><?= date("d-m-Y", strtotime( $objPresentacion->diaPresentacion )) ?></td>
-													<td class="align-middle"><?= $objPresentacion->horaInicioPresentacion ?></td>
-													<td class="align-middle"><?= $objPresentacion->horaFinPresentacion ?></td>
-													<?php
-													if ($objPresentacion->linkARecursos == null || $objPresentacion->linkARecursos == "") {
-													?>
-														<td class="align-middle">No hay links para mostrar.</td>
-													<?php } else { ?>
-														<td class="align-middle"><a href="<?= $objPresentacion->linkARecursos ?>">Link</a></td>
-													<?php } ?>
-													<td class="align-middle">
-														<?php
-														foreach ($objPresentacion->presentacionExpositors as $objExpoPre) {
-															$objUsuario = $objExpoPre->idExpositor0 ?>
-															<ul class="my-2">
-																<li>Nombre: <?= Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido) ?></li>
-																<li>Contacto: <?= Html::encode($objUsuario->email) ?></li>
-															</ul>
-														<?php } ?>
-													</td>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $cont = 0;
+                                        foreach ($presentacion as $objPresentacion) :
+                                        $cont++;
+                                        ?>
+                                        <tr>
+                                            <th class="align-middle"><?= $cont ?></th>
+                                            <td class="align-middle w-25"><?= $objPresentacion->tituloPresentacion ?><br /><?= Html::a('(Más información)', ['presentacion/view', 'presentacion' => $objPresentacion->idPresentacion]) ?></td>
+                                            <!--<td class="align-middle"><?= $objPresentacion->descripcionPresentacion ?></td>-->
+                                            <td class="align-middle"><?= date("d-m-Y", strtotime( $objPresentacion->diaPresentacion )) ?></td>
+                                            <td class="align-middle"><?= $objPresentacion->horaInicioPresentacion ?></td>
+                                            <td class="align-middle"><?= $objPresentacion->horaFinPresentacion ?></td>
+                                            <?php
+                                            if ($objPresentacion->linkARecursos == null || $objPresentacion->linkARecursos == "") {
+                                                ?>
+                                                <td class="align-middle">No hay links para mostrar.</td>
+                                            <?php } else { ?>
+                                                <td class="align-middle"><a href="<?= $objPresentacion->linkARecursos ?>">Link</a></td>
+                                            <?php } ?>
+                                            <td class="align-middle">
+                                                <?php
+                                                foreach ($objPresentacion->presentacionExpositors as $objExpoPre) {
+                                                    $objUsuario = $objExpoPre->idExpositor0 ?>
+                                                    <ul class="my-2">
+                                                        <li>Nombre: <?= Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido) ?></li>
+                                                        <li>Contacto: <?= Html::encode($objUsuario->email) ?></li>
+                                                    </ul>
+                                                <?php } ?>
+                                            </td>
 
-                                                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) { ?>
-                                                        <td class="align-middle">
-                                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                                <?= Html::a('<i class="material-icons">edit</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
-                                                                <?= Html::a('<i class="material-icons">add</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
-                                                                <?= Html::a('<i class="material-icons">remove_circle_outline</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
-                                                            </div>
+                                            <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) { ?>
+                                                <td class="align-middle">
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <?= Html::a('<i class="material-icons">edit</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
+                                                        <?= Html::a('<i class="material-icons">add</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
+                                                        <?= Html::a('<i class="material-icons">remove_circle_outline</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
+                                                    </div>
 
-                                                        </td>
-                                                    <?php } ?>
-                                                <?php endforeach; ?>
-                                            </tr>
+                                                </td>
+                                            <?php } ?>
+                                            <?php endforeach; ?>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -424,51 +424,29 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 p-4" style="background-color:#f2f2f2;">
-                <div>
-                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Detalles</h4>
-                    <p><b>Fecha de Inicio:</b></p>
-                    <p><?= $evento->fechaInicioEvento ?></p>
-                    <hr />
-                    <p><b>Fecha de Fin:</b></p>
-                    <p><?= $evento->fechaFinEvento ?></p>
-                    <hr />
-                    <p><b>Lugar:</b></p>
-                    <p><?= $evento->lugar ?></p>
-                    <hr />
-                    <p><b>Modalidad:</b></p>
-                    <p><?= $modalidadEvento ?></p>
-                    <hr />
-                    <p><b>Estado:</b></p>
-                    <p><?= $estadoEvento ?></p>
-                    <hr />
-                    <p><b>Descargar lista de Inscriptos:</b></p>
-					<p><?=
-                       Html::a('listado.xls', ['evento/inscriptos-excel',
-                       'evento'=>$evento->idEvento,
-                       'nombreEvento'=>$evento->nombreEvento,
-                       
-                       ]);
+        </div>
 
-					
-					?></p>
-					<hr />
-                </div>
-                <div>
-                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Pre-inscripcion</h4>
-                    <p><?= $preInscripcion ?></p>
-                    <hr />
-                    <p><b>Fecha limite de Pre-inscripcion:</b></p>
-                    <p><?= $evento->fechaLimiteInscripcion ?></p>
-                    <hr />
-                </div>
-                <div>
-                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Organizador</h4>
-                    <p><?= $organizadorEvento ?></p>
-                    <hr />
-                    <p><b>Contacto:</b></p>
-                    <p><?= $organizadorEmailEvento ?></p>
-                    <hr />
+        <?php if ($estadoEvento == 'Finalizado' and ! Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
+            <h4 class="py-2 px-3 mb-2 bg-primary text-white"> Certificado </h4>
+            <?=
+            $this->render('/certificado/index', [
+                "evento" => $evento,
+                'OrganizadorEmail' => $organizadorEmailEvento,
+                'categoria' => $categoriaEvento,
+                'presentaciones' => $presentacion,
+            ]);
+        endif;
+        ?>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="flyerModalLabel">Flyer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <img class="full_width" src='<?= $flyer ?>'>
