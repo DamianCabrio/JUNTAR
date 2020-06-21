@@ -222,16 +222,19 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<p><b>Fecha Publicación: </b></p>
 										<span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
 									</li>
+                                    <?php if($esDueño) { ?>
                                     <li class="list-group-item darkish_bg text-white">
 										<p><b>Lista de Inscriptos: </b></p>
 										<span>
-                                        <?=
-                                       Html::a('<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
-                                              <span class=" align-middle"  style="color:#00ff00">  listadeInscriptos.xls </span>',
-                                             ['evento/inscriptos-excel', 'idEvento'=>$evento->idEvento ]);
+                                        <?
+                                          Html::a('<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
+                                                   <span class=" align-middle"  style="color:#00ff00">  listadeInscriptos.xls </span>',
+                                                   ['evento/inscriptos-excel', 'idEvento'=>$evento->idEvento ]);
+                                         }
                                         ?>
                                         </span>
 									</li>
+                                     <?php } ?>
 								</ul>
 							</div>
 						</div>
