@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\EventoSearch;
 use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
+use frontend\models\Usuario;
 use frontend\models\PresentacionSearch;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
@@ -536,9 +537,15 @@ class EventoController extends Controller
             return $this->redirect(['eventos/ver-evento/'. $objEvento->nombreCortoEvento]);
         }
 
+        $usuarios = Usuario::find()
+                            ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
+                            ->asArray()
+                            ->all();
+         
         return $this->render('cargarExpositor', [
             'model' => $model,
             'objetoEvento' => $objEvento,
+            'usuarios' => $usuarios,
         ]);
     }
 

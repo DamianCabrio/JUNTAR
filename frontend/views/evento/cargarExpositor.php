@@ -26,18 +26,11 @@ if(!Yii::$app->user->isGuest && $objetoEvento->idUsuario0->idUsuario == Yii::$ap
                     <div class="expositor-form">
 
                         <?php $form = ActiveForm::begin(); ?>
-
-                        <?php $data = Usuario::find()
-                            ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
-                            ->asArray()
-                            ->all();
-                        ?>
-
                         <?=
                             'Expositor ' . '<br>' .
                                 AutoComplete::widget([
                                     'clientOptions' => [
-                                        'source' => $data,
+                                        'source' => $usuarios,
                                         'autoFill' => true,
                                         'minLength' => '3',
                                         'select' => new JsExpression("function( event, ui ) { $('#inputIdExpositor').val(ui.item.idUsuario);}")
@@ -51,7 +44,6 @@ if(!Yii::$app->user->isGuest && $objetoEvento->idUsuario0->idUsuario == Yii::$ap
                         <div class="form-group">
                             <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
                         </div>
-
                         <?php ActiveForm::end(); ?>
                 </div>                           
             </div>                          
