@@ -45,13 +45,20 @@ foreach($listados as $obj){
 
         $fila= $templateExcel->getActiveSheet()->setCellValue('B9', $nombreEvento);
 
-        $fila= $templateExcel->getActiveSheet();
-        $fila->setCellValue('I2', $arrayEvento['organizador'] );
-        $fila->setCellValue('I3', $arrayEvento['inicio'] );
-        $fila->setCellValue('I4', $arrayEvento['fin'] );
-        $fila->setCellValue('I5', $arrayEvento['capacidad'] );
-        $fila->setCellValue('I6', $arrayEvento['lugar'] );
-        $fila->setCellValue('I7', $arrayEvento['modalidad'] );
+    
+        $fila= "k";
+
+        if($obj['titulo']=='Inscriptos' || $obj['titulo']=='Preinscriptos' ){
+            $fila= "j";
+        }
+
+        // Datos del Evento 
+        $fila->setCellValue($fila.'2', $arrayEvento['organizador'] );
+        $fila->setCellValue($fila.'3', $arrayEvento['inicio'] );
+        $fila->setCellValue($fila.'4', $arrayEvento['fin'] );
+        $fila->setCellValue($fila.'5', $arrayEvento['capacidad'] );
+        $fila->setCellValue($fila.'6', $arrayEvento['lugar'] );
+        $fila->setCellValue($fila.'7', $arrayEvento['modalidad'] );
 
         // $row: los datos son insertado a partir de la celda 10
         $row = 12;
