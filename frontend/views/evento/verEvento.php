@@ -224,13 +224,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 									</li>
                                     <?php if($esDueño) { ?>
                                     <li class="list-group-item darkish_bg text-white">
-										<p><b>Lista de Inscriptos: </b></p>
+										<p><b> Lista de participantes: </b></p>
 										<span>
-                                        <?
-                                          Html::a('<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
-                                                   <span class=" align-middle"  style="color:#00ff00">  listadeInscriptos.xls </span>',
-                                                   ['evento/inscriptos-excel', 'idEvento'=>$evento->idEvento ]);
-                                         }
+                                        <?php
+                                          echo Html::a('<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
+                                                   <span class=" align-middle"  style="color:#00ff00"> ListaDeParticipantes  </span>',
+                                                   ['evento/inscriptos-excel', 'idEvento'=>$evento->idEvento ]);           
                                         ?>
                                         </span>
 									</li>

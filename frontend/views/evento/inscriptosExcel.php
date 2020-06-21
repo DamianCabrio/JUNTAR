@@ -9,7 +9,6 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 
 use frontend\models\Inscripcion;
 
-$filename = "inscriptos.xls";
 $fileType = 'Xls';
 $file =  '../../template/inscriptos.xlsx';
 $templateExcel  = IOFactory::load($file);
@@ -30,8 +29,11 @@ $bordes = [
 
 
 
-$nombreEvento= $arrayEvento['nombre'];
+$nombreEvento = $arrayEvento['nombre'];
+$idEvento = $arrayEvento['idEvento'];
 
+
+$nombreDelLibro = $idEvento."_".$nombreEvento.".xls";
 
 
 
@@ -77,7 +79,7 @@ foreach($listados as $obj){
 /// guarda el archivo
 $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter( $templateExcel, $fileType );
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="'.$filename.'"');
+header('Content-Disposition: attachment;filename="'.$nombreDelLibro .'"');
 ob_end_clean();
 
 $writer->save("php://output");

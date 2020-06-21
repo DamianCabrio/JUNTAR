@@ -422,6 +422,7 @@ class EventoController extends Controller {
 
         $evento = Evento::findOne($idEvento);
 
+        $arrayEvento['idEvento'] =   $idEvento;
         $arrayEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
         $arrayEvento['inicio'] = $evento->fechaInicioEvento;
         $arrayEvento['fin'] =  $evento->fechaFinEvento;
