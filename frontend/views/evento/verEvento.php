@@ -424,6 +424,53 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
+            <div class="col-12 col-md-4 p-4" style="background-color:#f2f2f2;">
+                <div>
+                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Detalles</h4>
+                    <p><b>Fecha de Inicio:</b></p>
+                    <p><?= $evento->fechaInicioEvento ?></p>
+                    <hr />
+                    <p><b>Fecha de Fin:</b></p>
+                    <p><?= $evento->fechaFinEvento ?></p>
+                    <hr />
+                    <p><b>Lugar:</b></p>
+                    <p><?= $evento->lugar ?></p>
+                    <hr />
+                    <p><b>Modalidad:</b></p>
+                    <p><?= $modalidadEvento ?></p>
+                    <hr />
+                    <p><b>Estado:</b></p>
+                    <p><?= $estadoEvento ?></p>
+                    <hr />
+                    <p><b>Descargar lista de Inscriptos:</b></p>
+					<p><?=
+                       Html::a('listado.xls', ['evento/inscriptos-excel',
+                       'evento'=>$evento->idEvento,
+                       'nombreEvento'=>$evento->nombreEvento,
+                       
+                       ]);
+
+					
+					?></p>
+					<hr />
+                </div>
+                <div>
+                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Pre-inscripcion</h4>
+                    <p><?= $preInscripcion ?></p>
+                    <hr />
+                    <p><b>Fecha limite de Pre-inscripcion:</b></p>
+                    <p><?= $evento->fechaLimiteInscripcion ?></p>
+                    <hr />
+                </div>
+                <div>
+                    <h4 class="py-2 px-3 mb-2 bg-primary text-white">Organizador</h4>
+                    <p><?= $organizadorEvento ?></p>
+                    <hr />
+                    <p><b>Contacto:</b></p>
+                    <p><?= $organizadorEmailEvento ?></p>
+                    <hr />
+=======
         </div>
 
         <?php if ($estadoEvento == 'Finalizado' and ! Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
@@ -447,6 +494,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+>>>>>>> abb48e8b0f6ce7fa9a569e9e43bb0a675aa517fa
                 </div>
                 <div class="modal-body">
                     <img class="full_width" src='<?= $flyer ?>'>
