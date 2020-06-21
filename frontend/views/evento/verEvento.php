@@ -257,7 +257,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             //'idPresentacion',
                             //'tituloPresentacion',
                             [
-                                'attribute' => 'Titulo',
+                                'attribute' => 'Título',
                                 'format' => 'raw',
                                 'value' => function ($dataProvider) {
                                     return $dataProvider->tituloPresentacion . ' <br/><small>'.Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']).'</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>
@@ -266,7 +266,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             ],
                             //'diaPresentacion',
                             [
-                                'attribute' => 'Dia',
+                                'attribute' => 'Día',
                                 'value' => function ($dataProvider) {
                                     $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
                                     return $fechaConBarras;
@@ -276,7 +276,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             ],
                             //'horaInicioPresentacion',
                             [
-                                'attribute' => 'Hora de Inicio',
+                                'attribute' => 'Hora Inicio',
                                 'value' => function ($dataProvider) {
                                     $horaSinSegundos = date('H:i', strtotime($dataProvider->horaInicioPresentacion));
                                     return $horaSinSegundos;

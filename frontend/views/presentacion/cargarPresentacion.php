@@ -38,21 +38,6 @@ use yii\bootstrap4\ActiveForm;
 
                 <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'Ingrese link a recursos'] , ['maxlength' => true]) ?>
 
-                <?=
-                    'Expositor ' .'<br>'.
-                    AutoComplete::widget([
-                        'clientOptions' => [
-                            'source' => $arrUsuario,
-                            'autoFill' => true,
-                            'minLength' => '3',
-                            'select' => new JsExpression("function( event, ui ) { $('#inputIdExpositor').val(ui.item.idUsuario);}")
-                        ],
-                        'options' => [
-                            'class' => 'form-control'
-                        ]
-                    ]);
-                ?>
-                <?= Html::activeHiddenInput($preExpositor, 'idExpositor',['id'=>'inputIdExpositor']).'<br>' ?>
                 <p class="font-italic">
                     * Campos obligatorios.
                 <p>            
