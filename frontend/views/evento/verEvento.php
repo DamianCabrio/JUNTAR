@@ -173,8 +173,15 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										'size' => 'modal-lg'
 									]);
 									Modal::end();
+									Modal::begin([
+										'id' => 'modalCertificado',
+										'size' => 'modal-sm'
+									]);
+									Modal::end();
 									?>
-
+									<?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
+									<?=  Html::a('Certificado', ['certificado/index', 'id' => $evento->idEvento], ['class' => 'btn btn-primary btn-lg full_width viewCertification']);?>
+									<?php endif; ?>
 								</div>
 
 							</div>
@@ -308,17 +315,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 				</div>
 			</div>
 		</div>
-
-		<?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
-			<h4 class="py-2 px-3 mb-2 bg-primary text-white">Certificado</h4>
-		<?= $this->render('/certificado/index', [
-				"evento" => $evento,
-				'OrganizadorEmail' => $organizadorEmailEvento,
-				'categoria' => $categoriaEvento,
-				'presentaciones' => $presentacion,
-			]);
-		endif;
-		?>
 	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
