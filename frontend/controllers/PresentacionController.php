@@ -83,7 +83,8 @@ class PresentacionController extends Controller {
         ]);
     }
     public function actionBorrar($presentacion) { //Ventana de confirmacion modal
-        $evento =  Evento::findOne($presentacion);
+        $idPresentacion = Presentacion::findOne($presentacion);
+        $evento =  Evento::findOne($idPresentacion->idEvento);
         return $this->render('borrar', [
                     'model' => $this->findModel($presentacion),
                     'evento' => $evento,
