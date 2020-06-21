@@ -245,6 +245,10 @@ class EventoController extends Controller {
         $qrCode->writeFile('../web/eventos/images/qrcodes/' . $slug . '.png');
     }
 
+    public function actionCrearFormularioDinamico(){
+        return $this->render('crearFormularioDinamico');
+    }
+
     /**
      * Recibe por parámetro un id, se busca esa instancia del event y se obtienen todos las presentaciones que pertenecen a ese evento.
      * Se envia la instancia del evento junto con todas la presentaciones sobre un arreglo.
