@@ -22,7 +22,8 @@
         "fortawesome/font-awesome": "^5.13.0",
         "umanskyi31/opengraph": "^2.0",
         "phpoffice/phpspreadsheet": "~1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "wbraganca/yii2-dynamicform": "*"
   
     },
     "require-dev": {

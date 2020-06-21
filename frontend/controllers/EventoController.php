@@ -20,6 +20,7 @@ use frontend\models\UploadFormFlyer;    //Para contener la instacion de la image
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
 use UI\Controls\Label;
+use frontend\models\FormularioForm;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -246,7 +247,15 @@ class EventoController extends Controller {
     }
 
     public function actionCrearFormularioDinamico(){
-        return $this->render('crearFormularioDinamico');
+        $model = new FormularioForm;
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return $this->render('crearFormularioDinamico',
+                ["model" => $model]);
+        }
+
+        return $this->render('crearFormularioDinamico',
+        ["model" => $model]);
     }
 
     /**
