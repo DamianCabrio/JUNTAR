@@ -444,10 +444,6 @@ class EventoController extends Controller {
         $listados[]= ['index'=>2, 'titulo'=>'Anulados', 'lista'=> $anulados ];
         $listados[]= ['index'=>3, 'titulo'=>'Acreditados', 'lista'=> $acreditados ];
 
-
-
-                           
-
        return $this->renderPartial('inscriptosExcel', ['listados' => $listados ,'nombreEvento' => $nombreEvento ]);
     }
 

@@ -227,7 +227,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<span>
                                         <?=
                                         Html::a('listado.xls', ['evento/inscriptos-excel',
-                                        'evento'=>$evento->idEvento,
+                                        'idEvento'=>$evento->idEvento,
                                         'nombreEvento'=>$evento->nombreEvento ]);
                                         ?>
                                         </span>
