@@ -119,6 +119,12 @@ class PresentacionController extends Controller {
         //busca la presentacion
         $model = $this->findModel($presentacion);
 
+        $horaInicioSinSeg =  date('H:i', strtotime($model->horaInicioPresentacion));
+        $horaFinSinSeg = date('H:i', strtotime($model->horaFinPresentacion));
+
+        $model->horaInicioPresentacion = $horaInicioSinSeg;
+        $model->horaFinPresentacion = $horaFinSinSeg;
+        
         //si tiene datos cargados los almacena
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //volvemos a la pagina de la que vinimos
