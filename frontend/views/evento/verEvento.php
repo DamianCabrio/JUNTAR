@@ -223,7 +223,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
 									</li>
                                     <li class="list-group-item darkish_bg text-white">
-										<p><b>Descargar lista de Inscriptos: </b></p>
+										<p><b>Lista de Inscriptos: </b></p>
 										<span>
                                         <?=
                                        Html::a('<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
