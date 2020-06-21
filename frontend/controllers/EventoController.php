@@ -545,10 +545,8 @@ class EventoController extends Controller
     {
         $request = Yii::$app->request;
 
-        $evento  = $request->get('model');
-
-        $idEvento  = $evento->idEvento;
-        $nombreEvento = $evento->nombreEvento;
+        $idEvento  = $request->get('idEvento');
+        $nombreEvento = $request->get('nombreEvento');
         
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');

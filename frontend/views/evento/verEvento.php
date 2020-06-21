@@ -242,7 +242,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     <p><b>Descargar lista de Inscriptos:</b></p>
 					<p><?=
                        Html::a('listado.xls', ['evento/inscriptos-excel',
-                       'model'=>$evento
+                       'evento'=>$evento->idEvento,
+                       'nombreEvento'=>$evento->nombreEvento,
                        
                        ]);
 
