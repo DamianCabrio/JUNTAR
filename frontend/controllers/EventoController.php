@@ -439,8 +439,11 @@ class EventoController extends Controller {
                       'user_pais'=>'usuario.pais',
                       'user_provincia'=>'usuario.provincia',
                       'user_localidad'=>'usuario.localidad',
-                      'user_email'=>'usuario.email'
-                      ]);
+                      'user_email'=>'usuario.email',
+                      'user_idInscripcion'=>'inscripcion.idInscripcion',
+                      'user_fechaPreInscripcion'=>'inscripcion.fechaPreInscripcion',
+                      'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
+
         /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
         $preinscriptos = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 1 ])
