@@ -6,7 +6,7 @@ use yii\bootstrap4\Modal;
 
 $this->title = "Perfil";
 $this->params['breadcrumbs'][] = $this->title;
-$dataUser = array_shift($data);
+//$dataUser = array_shift($data);
 //print_r($dataUser);
 ?>
 <div class="container">
@@ -18,9 +18,9 @@ $dataUser = array_shift($data);
                 <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link active" href="profile"> Información de la Cuenta </a>
                 </li>
-<!--                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" href=""> Cambiar Contraseña </a>
-                </li>-->
+                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link bg-gray" href="/cuenta/cambiar-password"> Cambiar Contraseña </a>
+                </li>
                 <!-- a futuro -->
 <!--                <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link" href=""> Preferencias de Email </a>

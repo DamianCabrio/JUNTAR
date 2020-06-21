@@ -13,6 +13,7 @@ use frontend\models\Usuario;
 use frontend\models\UploadProfileImage;
 use frontend\models\EventoSearch;
 use frontend\models\InscripcionSearch;
+use frontend\models\CambiarPasswordForm;
 
 /**
  * Site controller
@@ -77,9 +78,10 @@ class CuentaController extends Controller {
             $profileImageRoute = $rutaImagenPerfil;
         }
 //        $model = new Usuario();
-        $queryUser = (new \yii\db\Query())
+        $model = Usuario::find()
+//        $queryUser = (new \yii\db\Query())
                 //campos buscados
-                ->select(['nombre, apellido, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
+                ->select(['nombre, apellido, password_hash, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
                 //distintos en
                 //->distinct('jugador.posicion')
                 //tabla
@@ -91,10 +93,12 @@ class CuentaController extends Controller {
         //Agrupamiento
         //->groupBy(['jugador.posicion']);
         //obtenemos el array asociativo a partir de la query
-        $userData = $queryUser->all();
+//        $userData = $queryUser->all();
+//        $userData = $model->all();
+        $userData = $model->one();
 
         return $this->render('profile', [
-                    'data' => $userData,
+                    'dataUser' => $userData,
                     'profileImage' => $profileImageRoute,
                     'route' => $rutaImagenPerfil
 //                    'data' => $queryUser,
@@ -279,6 +283,32 @@ class CuentaController extends Controller {
             Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
         }
         return $this->redirect(['profile']);
+    }
+
+    /**
+     * Resets password.
+     *
+     * @param string $token
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionCambiarPassword() {
+
+        $model = new CambiarPasswordForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->cambiarPassword()) {
+            Yii::$app->session->setFlash('success', '<h2> Contraseña actualizada </h2>'
+                    . '<p> La nueva contraseña fue guardada. </p>');
+
+            return $this->redirect(['/cuenta/profile']);
+        }else{
+            Yii::$app->session->setFlash('error', '<h2> Algo salió mal </h2>'
+                    . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
+        }
+
+        return $this->render('cambiarPassword', [
+                    'model' => $model,
+        ]);
     }
 
 }
