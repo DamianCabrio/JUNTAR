@@ -58,7 +58,7 @@ class AssetManager extends Component
      *
      * ```php
      * [
-     *     'yii\bootstrap4\BootstrapAsset' => [
+     *     'yii\bootstrap\BootstrapAsset' => [
      *         'css' => [],
      *     ],
      * ]
