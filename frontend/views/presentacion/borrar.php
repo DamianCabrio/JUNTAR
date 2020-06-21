@@ -21,7 +21,7 @@ $this->title = "Eliminar presentación";
 		<?= Html::a('Si', ['delete', 'presentacion' => $model->idPresentacion], [
             'class' => 'btn btn-danger',
         ]) ?>
-        <?= Html::a('No', ['', 'id' => $model->idPresentacion], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('No', ['eventos/ver-evento/'.$evento->nombreCortoEvento], ['class' => 'btn btn-primary']) ?>
 	<?php } else{ ?>
 		 <div class="row">
 			<div class="col-12 text-center">
