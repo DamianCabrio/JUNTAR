@@ -426,16 +426,16 @@ class EventoController extends Controller {
         /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
         $preinscriptos = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 1 ])
-                            ->orderBy('usuario.apellido ASC')->asArray()->all();
+                               ->orderBy('usuario.apellido ASC')->asArray()->all();
 
         $inscriptos  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 2 ])
-                               ->orderBy('usuario.apellido ASC')->asArray()->all();
+                             ->orderBy('usuario.apellido ASC')->asArray()->all();
     
         $anulados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 3 ])
-                               ->orderBy('usuario.apellido ASC')->asArray()->all();
+                           ->orderBy('usuario.apellido ASC')->asArray()->all();
     
         $acreditados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 4 ])
-                               ->orderBy('usuario.apellido ASC')->asArray()->all();
+                              ->orderBy('usuario.apellido ASC')->asArray()->all();
 
 
 
