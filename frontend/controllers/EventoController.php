@@ -435,16 +435,16 @@ class EventoController extends Controller {
         /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
         $preinscriptos = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 1 ])
-                            ->orderBy('usuario.apellido ASC')->asArray()->all();
+                               ->orderBy('usuario.apellido ASC')->asArray()->all();
 
         $inscriptos  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 2 ])
-                               ->orderBy('usuario.apellido ASC')->asArray()->all();
+                             ->orderBy('usuario.apellido ASC')->asArray()->all();
     
         $anulados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 3 ])
-                               ->orderBy('usuario.apellido ASC')->asArray()->all();
+                           ->orderBy('usuario.apellido ASC')->asArray()->all();
     
         $acreditados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 4 ])
-                               ->orderBy('usuario.apellido ASC')->asArray()->all();
+                              ->orderBy('usuario.apellido ASC')->asArray()->all();
 
 
 
@@ -452,10 +452,6 @@ class EventoController extends Controller {
         $listados[]= ['index'=>1, 'titulo'=>'Inscriptos', 'lista'=>$inscriptos];
         $listados[]= ['index'=>2, 'titulo'=>'Anulados', 'lista'=> $anulados ];
         $listados[]= ['index'=>3, 'titulo'=>'Acreditados', 'lista'=> $acreditados ];
-
-
-
-                           
 
        return $this->renderPartial('inscriptosExcel', ['listados' => $listados ,'nombreEvento' => $nombreEvento ]);
     }

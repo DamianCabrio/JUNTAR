@@ -189,6 +189,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <hr>
                                 <h5>Contacto del Organizador</h5>
                                 <?= $organizadorEmailEvento ?>
+
+
 							</div>
 							<div class="col-sm-12 col-md-4 padding_section white-text">
 								<ul class="list-group">
@@ -224,9 +226,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<p><b>Descargar lista de Inscriptos: </b></p>
 										<span>
                                         <?=
-                                            Html::a('listado.xls', ['evento/inscriptos-excel',
-                                            'evento'=>$evento->idEvento,
-                                             'nombreEvento'=>$evento->nombreEvento ]);
+                                        Html::a('listado.xls', ['evento/inscriptos-excel',
+                                        'idEvento'=>$evento->idEvento,
+                                        'nombreEvento'=>$evento->nombreEvento ]);
                                         ?>
                                         </span>
 									</li>
@@ -366,39 +368,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <?php if ($estadoEvento == 'Finalizado' and ! Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
-            <h4 class="py-2 px-3 mb-2 bg-primary text-white"> Certificado </h4>
-            <?=
-            $this->render('/certificado/index', [
-                "evento" => $evento,
-                'OrganizadorEmail' => $organizadorEmailEvento,
-                'categoria' => $categoriaEvento,
-                'presentaciones' => $presentacion,
-            ]);
-        endif;
-        ?>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="flyerModalLabel">Flyer</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <img class="full_width" src='<?= $flyer ?>'>
-
-                </div>
-                <div class="modal-footer">
-                    <a href="<?= $flyer ?>" class="btn btn-secondary"  download>Bajar</a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
