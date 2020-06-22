@@ -189,13 +189,13 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         agregarPresentacionModal($(this).attr('href'));
     });
-    /* $('.agregarExpositor').click(function (link) {
+     $('.agregarExpositor').click(function (link) {
      //impedimos que el cambio de pestaña se active
      link.preventDefault();
      //alert($(this).attr('href'));
      //llamamos a la funcion que se encargue de mostrar el formulario
      agregarExpositorModal($(this).attr('href'));
-     }); */
+     }); 
 
     $('.verPresentacion').click(function (link) {
 //impedimos que el cambio de pestaña se active
@@ -285,7 +285,7 @@ function verExpositoresModal(link) {
     });
 }
 
-function editPresentacionModal(link) {
+/* function editPresentacionModal(link) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
@@ -304,7 +304,22 @@ function editPresentacionModal(link) {
             $('.modal-body').html($(this).html());
         });
     });
-}
+} */
+
+ function editPresentacionModal(link) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: link
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+                //.html("<h3> Cargar presentación </h3>");
+    });
+} 
 
 function deletePresentacionModal(link) {
 //hace la petición a la url
@@ -326,7 +341,7 @@ function deletePresentacionModal(link) {
         });
     });
 }
-
+/* 
 function agregarPresentacionModal(link) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se envia.
@@ -347,6 +362,21 @@ function agregarPresentacionModal(link) {
         });
     });
 }
+ */
+function agregarPresentacionModal(link) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: link
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+                //.html("<h3> Cargar presentación </h3>");
+    });
+} 
 
 function verPresentacionModal(link) {
 //hace la petición a la url
@@ -390,6 +420,20 @@ function verPresentacionModal(link) {
  });
  });
  } */
+ function agregarExpositorModal(link) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: link
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+                //.html("<h3> Cargar presentación </h3>");
+    });
+} 
 
 //funcion utilizada para eliminar caracteres criticos en un texto
 function eliminarDiacriticos(texto) {
