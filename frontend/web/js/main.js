@@ -127,6 +127,13 @@ $(document).ready(function () {
         }else{
             $('#evento-nombrecortoevento').prop('readonly', false);
         }
+	
+	//funcionalidad mostrar certificdos
+    $('.viewCertification').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        viewCertificationModal($(this).attr('href'));
     });
 });
 
@@ -297,7 +304,31 @@ function editProfileModal(url) {
         });
     });
 }
-
+/**
+ * Metodo viewCertificationModal --> Permite visualizar el panel de los certificados
+ * para acceder a la previsualización del mismo.
+ * @returns none
+ */
+function viewCertificationModal(url) {
+      //hace la petición a la url
+      //si para cargar el formulario necesita enviarle data, se envia.
+      $.ajax({
+          url: url
+  //        data: {data: data}
+      }).done(function (data) {
+          //data recibe la vista que deberia renderizarse al visitar la url
+          //hacemos visible el modal
+          console.log(data);
+          $('#modalCertificado').modal('show');
+          //convertimos a html la vista recibida
+          var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+          //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+          $(dataHTML).find('div.certificates-buttons').each(function () {
+              $('.modal-header').html("<h3>Certificdo de</h3>");
+              $('.modal-body').html($(this).html());
+          });
+      });
+  }
 /**
  * Metodo autocompleteProvincia --> Busca los datos de las provincias pertenecientes al pais seleccionado
  * para ofrecer una lista de opciones de autocompletado.
