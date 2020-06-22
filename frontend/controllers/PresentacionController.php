@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
+use yii\data\ActiveDataProvider;
+use backend\models\Usuario;
 
 /**
  * PresentacionController implements the CRUD actions for Presentacion model.
