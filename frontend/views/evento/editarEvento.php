@@ -12,6 +12,10 @@ use frontend\models\ModalidadEvento;
 /* @var $form yii\widgets\ActiveForm */
 $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 ?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-12 m-auto">
+
             <div class="evento-form">
                
                     <h2 class="text-center">Editar evento</h2>
@@ -23,7 +27,23 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 
                     <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
 
-                    <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label('Nombre corto del evento *') ?>
+                   
+                <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
+                <div class="row">
+                    <div class="col-4 form-advice">
+                        <span class="m-auto"> Opciones automaticas: </span>
+                    </div>
+                    <div class="nombresCortos" id="automaticSlug">
+                    </div>
+                    <br>
+                    <div class="col-12 mt-2 nombresCortos">
+                        <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
+                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
+                            'data-title' => 'Requisitos',
+                            'data-toggle' => 'popover',
+                            'data-content' => 'El nombre corto solo puede tener numeros y letras sin acentos ni ñ, y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
+                    </div>
+                </div>
 
                     <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
 
