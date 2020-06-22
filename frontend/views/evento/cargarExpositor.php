@@ -67,3 +67,4 @@ if(!Yii::$app->user->isGuest && $objetoEvento->idUsuario0->idUsuario == Yii::$ap
     </div>
 	<?php } ?>
 </div>
+</div>
