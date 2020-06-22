@@ -452,11 +452,20 @@ class EventoController extends Controller {
                             ->asArray()
                             ->all();
          
-        return $this->render('cargarExpositor', [
+        If(Yii::$app->request->isAjax){
+			//retorna renderizado para llamado en ajax
+			return $this->renderAjax('cargarExpositor', [
             'model' => $model,
             'objetoEvento' => $objEvento,
             'usuarios' => $usuarios,
         ]);
+			}else{
+				 return $this->render('cargarExpositor', [
+				'model' => $model,
+				'objetoEvento' => $objEvento,
+				'usuarios' => $usuarios,
+			]);
+		}
     }
 
 
