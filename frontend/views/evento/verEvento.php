@@ -343,7 +343,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                     }
                                                 }
                                                 else{
-                                                    $string = '<a class="material-icons" href="/presentacion-expositor/ver-expositores?idPresentacion='.$dataProvider->idPresentacion.'">remove_red_eye</a>';
+                                                    $string = '<a class="material-icons verExpositores" href="/presentacion-expositor/ver-expositores?idPresentacion='.$dataProvider->idPresentacion.'">remove_red_eye</a>';
                                                         
                                                 }
                                                 return $string;
