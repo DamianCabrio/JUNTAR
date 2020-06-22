@@ -86,7 +86,7 @@ class PresentacionExpositorController extends Controller
             'query' => PresentacionExpositor::find()->where(['idPresentacion' => $idPresentacion]),
         ]);
         $model = Presentacion::find()->where(['idPresentacion' => $idPresentacion])->one();
-        $evento = Evento::find()->where(['idEvento' => $model->$idEvento])->one();
+        $evento = Evento::find()->where(['idEvento' => $model->idEvento])->one();
         
         return $this->render('verExpositores', [
             'dataProvider' => $dataProvider,
