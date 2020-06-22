@@ -146,6 +146,7 @@ $(document).ready(function () {
         editEventoModal(slug);
     });
 
+
     //generar opciones de nombres cortos automaticamente
     $('#evento-nombreevento').change(function () {
         $('#automaticSlug').html("");
@@ -253,6 +254,15 @@ $(document).ready(function () {
             $('#invalidFecha').show();
         }
         
+    });
+
+	
+	//funcionalidad mostrar certificdos
+    $('.viewCertification').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        viewCertificationModal($(this).attr('href'));
     });
 });
 //Prueba
