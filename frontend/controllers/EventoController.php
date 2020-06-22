@@ -442,9 +442,18 @@ class EventoController extends Controller {
     public function actionInscriptosExcel()
     {
         $request = Yii::$app->request;
-
         $idEvento  = $request->get('idEvento');
-        $nombreEvento = $request->get('nombreEvento');
+
+        $evento = Evento::findOne($idEvento);
+
+        $arrayEvento['idEvento'] =   $idEvento;
+        $arrayEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
+        $arrayEvento['inicio'] = $evento->fechaInicioEvento;
+        $arrayEvento['fin'] =  $evento->fechaFinEvento;
+        $arrayEvento['nombre'] = $evento->nombreEvento;
+        $arrayEvento['capacidad']  = $evento->capacidad ;
+        $arrayEvento['lugar']= $evento->lugar;
+        $arrayEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;;
         
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
@@ -454,8 +463,11 @@ class EventoController extends Controller {
                       'user_pais'=>'usuario.pais',
                       'user_provincia'=>'usuario.provincia',
                       'user_localidad'=>'usuario.localidad',
-                      'user_email'=>'usuario.email'
-                      ]);
+                      'user_email'=>'usuario.email',
+                      'user_idInscripcion'=>'inscripcion.idInscripcion',
+                      'user_fechaPreInscripcion'=>'inscripcion.fechaPreInscripcion',
+                      'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
+
         /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
         $preinscriptos = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 1 ])
@@ -477,7 +489,8 @@ class EventoController extends Controller {
         $listados[]= ['index'=>2, 'titulo'=>'Anulados', 'lista'=> $anulados ];
         $listados[]= ['index'=>3, 'titulo'=>'Acreditados', 'lista'=> $acreditados ];
 
-       return $this->renderPartial('inscriptosExcel', ['listados' => $listados ,'nombreEvento' => $nombreEvento ]);
+       return $this->renderPartial('inscriptosExcel',
+             ['listados' => $listados ,'arrayEvento' => $arrayEvento ]);
     }
 
 
