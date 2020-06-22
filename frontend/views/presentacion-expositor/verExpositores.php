@@ -17,7 +17,7 @@ use yii\helpers\Url;
 			$cadenaAgregar = "";
 			if (!Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
 				if($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 ){
-					$cadenaAgregar = Html::a('<b class="material-icons large align-middle">+Añadir</b>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $model->idPresentacion])], ['class' => 'btn agregarExpositor']);
+					$cadenaAgregar = Html::a('<b class="material-icons large align-middle">person_add</b><i> Cargar Expositor</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $model->idPresentacion])], ['class' => 'btn agregarExpositor']);
 				}
 			}		
 			?>
@@ -61,7 +61,7 @@ use yii\helpers\Url;
 					//describe los botones de accion
 					'buttons' => [
 						'delete' => function ($url, $model) {
-							return Html::a('<i class="material-icons large align-middle">Borrar</i>', $url, ['class' => 'btn borrarPresentacion','data' => [
+							return Html::a('<i class="material-icons large align-middle">remove_circle_outline</i>', $url, ['class' => 'btn borrarPresentacion','data' => [
 								'confirm' => 'Esta seguro que desea Borrar el Expositor?',
 								'method' => 'post',
 							],]);
