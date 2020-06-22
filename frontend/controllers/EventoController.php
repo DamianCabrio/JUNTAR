@@ -46,7 +46,6 @@ class EventoController extends Controller {
                     'allow' => true,
                     'actions' => [
                         "ver-evento",
-                        "ver-evento2"
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -370,46 +369,46 @@ class EventoController extends Controller {
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-    public function actionEditarEvento($slug) {
+    public function actionEditarEvento($slug)
+    {
 
         $model = $this->findModel("", $slug);
-        $esDueño = $this->verificarDueño($model);
 
-        if ($esDueño) {
+        $modelLogo = new UploadFormLogo();
+        $modelFlyer = new UploadFormFlyer();
 
-            $modelLogo = new UploadFormLogo();
-            $modelFlyer = new UploadFormFlyer();
+        $rutaLogo = (Yii::getAlias("@rutaLogo"));
+        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-            $rutaLogo = (Yii::getAlias("@rutaLogo"));
-            $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
+        if ($model->load(Yii::$app->request->post())) {
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
-                $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
-
-                if ($modelLogo->imageLogo != null) {
-                    if ($modelLogo->upload()) {
-                        $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
-                    }
+            if ($modelLogo->imageLogo != null) {
+                if ($modelLogo->upload()) {
+                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
-                if ($modelFlyer->imageFlyer != null) {
-                    if ($modelFlyer->upload()) {
-                        $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
-                    }
-                }
-                $model->save();
-                return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
             }
-
-            return $this->render('editarEvento', [
-                        'model' => $model,
-                        'modelLogo' => $modelLogo,
-                        'modelFlyer' => $modelFlyer
-            ]);
-        } else {
-            throw new NotFoundHttpException('La página solicitada no existe.');
+            if ($modelFlyer->imageFlyer != null) {
+                if ($modelFlyer->upload()) {
+                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                }
+            }
+            $model->save();
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
-    }
+            $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
+
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+
+         return $this->render('editarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
+        }
 
     /**
      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
@@ -432,7 +431,7 @@ class EventoController extends Controller {
      * Cambia en el atributo fechaCreacionEvento por null, y en el
      * atributo idEstadoEvento por el valor 4.
      */
-    public function actionDespublicarEvento($slug) {
+    public function actionSuspenderEvento($slug) {
         $model = $this->findModel("", $slug);
 
         $model->fechaCreacionEvento = null;

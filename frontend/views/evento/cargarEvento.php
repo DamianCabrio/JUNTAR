@@ -31,17 +31,7 @@ $this->title = "Cargar Evento";
                         <span class="m-auto"> Opciones automaticas: </span>
                     </div>
                     <div class="nombresCortos" id="automaticSlug">
-                        <!--                        <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc1" name="slug" value="">  hola </span>
-                                                </div>
-                                                <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc2" name="slug" value="">  hola </span>
-                                                </div>
-                                                <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc3" name="slug" value="">  hola </span>
-                                                </div>-->
                     </div>
-                    <!--<div class="col-4 d-flex justify-content-center ">-->
                     <br>
                     <div class="col-12 mt-2 nombresCortos">
                         <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
