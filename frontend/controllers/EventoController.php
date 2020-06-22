@@ -163,21 +163,23 @@ class EventoController extends Controller {
 
     public function verificarAdministrador($model) {
 
-        $idUsuario= Yii::$app->user->identity->idUsuario ;
-
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario) {
         $query=new \yii\db\Query(); 
-        $rows= $query->select(['item_name']) 
-            ->from('usuario_rol')
-            ->andWhere(['user_id'=>$idUsuario])
-            ->andWhere(['item_name'=>'Administrador'])->all(); 
+        $rows= $query->from('usuario_rol')
+            ->andWhere(['user_id'=>Yii::$app->user->identity->idUsuario])
+            ->andWhere(['item_name'=>'Administrador'])->asArray()->all(); 
 
 
         if (count($rows)==0) {
             return false ;
          } else {
              return true;
-        }
-    }
+         }
+     }else{
+        return false ;
+     }
+        
+   }
 
     /**
      * Finds the Evento model based on its primary key value.
