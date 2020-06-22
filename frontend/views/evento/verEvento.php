@@ -50,8 +50,10 @@ if ($evento->imgLogo != null) {
 }
 
 if ($evento->preInscripcion == 0) {
+    $tienePreInscripcion = false;
     $preInscripcion = "No requiere preinscipción";
 } else {
+    $tienePreInscripcion = true;
     $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipción*</b>";
 }
 if ($evento->codigoAcreditacion != null) {
@@ -232,6 +234,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ?>
                                         </span>
 									</li>
+                                    <?php if($tienePreInscripcion): ?>
+                                    <li class="list-group-item darkish_bg text-white">
+                                        <p><b>Crear formulario de preinscipcion: </b></p>
+                                        <span>
+                                        <?=
+                                        Html::a('Click aqui', ['eventos/crear-formulario/' . $evento->nombreCortoEvento]);
+                                        ?>
+                                        </span>
+                                    </li>
+                                    <?php endif; ?>
 								</ul>
 							</div>
 						</div>

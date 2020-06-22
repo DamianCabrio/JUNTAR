@@ -69,6 +69,22 @@ $(document).ready(function () {
         autocompleteLocalidades($(this).val());
     });
 
+    //funcionalidad agregar pregunta
+    $('.agregarPregunta').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        agregarPreguntaModal($(this).attr('href'), 'Agregar Pregunta');
+    });
+
+    //funcionalidad agregar pregunta
+    $('.editarPregunta').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        editarPreguntaModal($(this).attr('href'), 'Editar Pregunta');
+    });
+
     //funcionalidad editar perfil
     $('.editProfile').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -195,6 +211,36 @@ function editarPerfilModal(unaUrl, titulo) {
                 .html(data);
         $('#profileModal').find('.modal-header')
                 .html("<h3> " + titulo + " </h3>");
+    });
+}
+
+function agregarPreguntaModal(unaUrl, titulo) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalPregunta').modal('show')
+            .find('.modal-body')
+            .html(data);
+        $('#modalPregunta').find('.modal-header')
+            .html("<h3> " + titulo + " </h3>");
+    });
+}
+
+function editarPreguntaModal(unaUrl, titulo) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalPregunta').modal('show')
+            .find('.modal-body')
+            .html(data);
+        $('#modalPregunta').find('.modal-header')
+            .html("<h3> " + titulo + " </h3>");
     });
 }
 

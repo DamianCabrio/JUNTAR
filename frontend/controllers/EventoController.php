@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use Da\QrCode\QrCode;
 //use BaconQrCode\Common\ErrorCorrectionLevelInter;
+use frontend\models\Pregunta;
+use frontend\models\PreguntaSearch;
 use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -246,16 +248,38 @@ class EventoController extends Controller {
         $qrCode->writeFile('../web/eventos/images/qrcodes/' . $slug . '.png');
     }
 
-    public function actionCrearFormularioDinamico(){
-        $model = new FormularioForm;
+    public function actionCrearFormularioDinamico($slug){
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        $evento = $this->findModel("", $slug);
+
+        $esDueño = $this->verificarDueño($evento);
+
+        if ($esDueño) {
+            $preguntasSearchModel = new PreguntaSearch();
+            $preguntasDataProvider = new ActiveDataProvider([
+                'query' => $preguntasSearchModel::find()->where(['idEvento' => $evento->idEvento]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+
             return $this->render('crearFormularioDinamico',
-                ["model" => $model]);
-        }
+                ["preguntas" => $preguntasDataProvider,
+                    "evento" => $evento]);
+        }else {
+                throw new NotFoundHttpException('La página solicitada no existe.');
+            }
+    }
 
-        return $this->render('crearFormularioDinamico',
-        ["model" => $model]);
+    public function actionResponderFormulario($slug){
+
+        $evento = $this->findModel("", $slug);
+        $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])->one();
+        if($inscripcion ==null){
+            $preguntas = Pregunta::find()->where(["idevento" => $evento->idEvento])->all();
+            return $this->render('responderFormulario',
+                ["preguntas" => $preguntas,
+                    "eventos" => $evento]);
+        }
     }
 
     /**

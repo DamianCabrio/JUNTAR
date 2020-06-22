@@ -7,7 +7,6 @@ use yii\bootstrap4\Modal;
 $this->title = "Perfil";
 $this->params['breadcrumbs'][] = $this->title;
 $dataUser = array_shift($data);
-//print_r($dataUser);
 ?>
 <div class="dark_light_bg" style="min-height: 100vh;">
 <div class="container padding_section">
@@ -136,11 +135,9 @@ $dataUser = array_shift($data);
                 </div>
                 <?php
                 Modal::begin([
-                    //                'header' => '<h2> algo </h2>',
                     'id' => 'modalProfile',
                     'size' => 'modal-lg'
                 ]);
-                //            echo "<div id='modalContent'></div>";
                 Modal::end();
                 ?>
             </div>
