@@ -266,7 +266,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 									<h4 class="text-uppercase align-middle">AGENDA
 										<?PHP
                                         if ($esDueño) {
-                                            if($evento->idEstadoEvento == 1 || $evento->idEstadoEvento ==2){
+                                            if($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4){
                                                  echo Html::a('								<div class="btn-group" role="group" aria-label="">
 											    <button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
 										        </div><i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => '']);
