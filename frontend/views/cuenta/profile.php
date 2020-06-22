@@ -136,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <?php
                 Modal::begin([
-                    'id' => 'modalProfile',
+                    'id' => 'profileModal',
                     'size' => 'modal-lg'
                 ]);
                 Modal::end();
