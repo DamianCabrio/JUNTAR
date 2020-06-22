@@ -262,8 +262,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         if ($esDueño) {
                                             echo Html::a('								<div class="btn-group" role="group" aria-label="">
 											<button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
-										</div><i class="material-icons large align-middle">add</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => '']);
-                                        }
+										</div><i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => '']);
+                                        } //url /presentacion/cargar-presentacion/
                                         ?></h4>
 
                                 </span>
@@ -332,17 +332,21 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                                         ],
                                         [
-                                            'attribute' => 'expositores',
+                                            'attribute' => 'Expositores',
                                             'format' => 'raw',
                                             'value' => function ($dataProvider) {
                                                 //HACER IF
-                                                if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
-                                                    $retorno = '-';
-                                                } else {
-                                                    $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
+                                                if(count($dataProvider->presentacionExpositors) == 0){
+                                                    $string = "No hay expositores";
+                                                    if(!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
+                                                        $string .= ' '.Html::a('<i class="material-icons">add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => 'agregarExpositor']);
+                                                    }
                                                 }
-                                                $retorno .= "  ". Html::a('<i class="material-icons">add</i>', ['cargar-expositor'], ['class' => 'btn btn_icon btn-outline-success']);
-                                                return $retorno;
+                                                else{
+                                                    $string = '<a class="material-icons" href="/presentacion-expositor/ver-expositores?idPresentacion='.$dataProvider->idPresentacion.'">remove_red_eye</a>';
+                                                        
+                                                }
+                                                return $string;
                                             },
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
@@ -356,7 +360,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                     return Url::to(['/presentacion/update', 'presentacion' => $key]);
                                                 }
                                                 if ($action == "delete") {
-                                                    return Url::to(['/presentacion/delete', 'presentacion' => $key]);
+                                                    return Url::to(['presentacion/borrar', 'presentacion' => $key]);
                                                 }
                                             },
                                             //describe los botones de accion
