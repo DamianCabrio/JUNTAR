@@ -225,8 +225,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 					<h4 class="text-uppercase align-middle">AGENDA
 						<?php
 						if (!Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario) {
-							echo Html::a('<i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'agregarPresentacion']);
-						}
+                            if($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 ){ 
+							    echo Html::a('<i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'agregarPresentacion']);
+                            }  
+                         }
 						?></h4>
 
 								</span>
@@ -332,7 +334,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     },
 									
                                 ],
-				            'visible' => !Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario,
+				            'visible' => !Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
                                 'header' => 'Acciones',
                                 'headerOptions' => ['style' => 'text-align:center;'],
                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],

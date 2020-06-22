@@ -16,8 +16,10 @@ use yii\helpers\Url;
 			<?php
 			$cadenaAgregar = "";
 			if (!Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
-				$cadenaAgregar = Html::a('<b class="material-icons large align-middle">+Añadir</b>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $model->idPresentacion])], ['class' => 'btn agregarExpositor']);
-			}
+				if($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 ){
+					$cadenaAgregar = Html::a('<b class="material-icons large align-middle">+Añadir</b>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $model->idPresentacion])], ['class' => 'btn agregarExpositor']);
+				}
+			}		
 			?>
 			<?= $model->tituloPresentacion . '<br> ' . $cadenaAgregar; ?>
 		</h1>
@@ -66,7 +68,7 @@ use yii\helpers\Url;
 						},
 					
 					],
-					'visible' => !Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario,
+					'visible' => !Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario  && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
 					'header' => 'Acciones',
 					'headerOptions' => ['style' => 'text-align:center;'],
 					'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
