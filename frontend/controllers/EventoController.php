@@ -18,7 +18,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use frontend\components\validateEmail;
-use yii\filters\VerbFilter;
 use yii\data\Pagination;
 use frontend\models\ModalidadEvento;
 use frontend\models\CategoriaEvento;

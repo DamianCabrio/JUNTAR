@@ -50,8 +50,10 @@ if ($evento->imgLogo != null) {
 }
 
 if ($evento->preInscripcion == 0) {
+    $tienePreInscripcion = false;
     $preInscripcion = "No requiere preinscipción";
 } else {
+    $tienePreInscripcion = true;
     $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipción*</b>";
 }
 if ($evento->codigoAcreditacion != null) {
