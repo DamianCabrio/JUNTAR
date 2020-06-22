@@ -278,7 +278,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         //'idPresentacion',
                                         //'tituloPresentacion',
                                         [
-                                            'attribute' => 'Titulo',
+                                            'attribute' => 'Título',
                                             'format' => 'raw',
                                             'value' => function ($dataProvider) {
                                                 return $dataProvider->tituloPresentacion . ' <br/><small><a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion]) . '">(Más información)</a></small>';
@@ -287,7 +287,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ],
                                         //'diaPresentacion',
                                         [
-                                            'attribute' => 'Dia',
+                                            'attribute' => 'Día',
                                             'value' => function ($dataProvider) {
                                                 $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
                                                 return $fechaConBarras;
@@ -297,7 +297,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ],
                                         //'horaInicioPresentacion',
                                         [
-                                            'attribute' => 'Hora de Inicio',
+                                            'attribute' => 'Inicio',
                                             'value' => function ($dataProvider) {
                                                 $horaSinSegundos = date('H:i', strtotime($dataProvider->horaInicioPresentacion));
                                                 return $horaSinSegundos;
@@ -305,16 +305,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                                         ],
-                                        //'horaFinPresentacion',
-                                        [
-                                            'attribute' => 'Hora de Fin',
-                                            'value' => function ($dataProvider) {
-                                                $horaSinSegundos = date('H:i', strtotime($dataProvider->horaFinPresentacion));
-                                                return $horaSinSegundos;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
+    
                                         //'linkARecursos',
                                         [
                                             'attribute' => 'Recursos',
@@ -381,74 +372,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ],
                                 ]);
                                 ?>
-                                <br>
-                                <br>
-                                <br>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" style="font-size: 0.8rem;">
-                                        <thead>
-                                        <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center w-25">Título</th>
-                                        <!--<th scope="col" class="text-center">Descripción</th>-->
-                                        <th scope="col" class="text-center">Día</th>
-                                        <th scope="col" class="text-center">Hora Inicio </th>
-                                        <th scope="col" class="text-center">Hora Fin </th>
-                                        <th scope="col" class="text-center">Links a recursos </th>
-                                        <th scope="col" class="text-center">Expositores</th>
-                                        <?PHP
-                                        if ($esDueño) {
-                                            echo '<th scope="col" class="text-center">Acciones</th>';
-                                        }
-                                        ?>
 
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $cont = 0;
-                                            foreach ($presentacion as $objPresentacion) :
-                                                $cont++;
-                                                ?>
-                                                <tr>
-                                                    <th class="align-middle"><?= $cont ?></th>
-                                                    <td class="align-middle w-25"><?= $objPresentacion->tituloPresentacion ?><br /><?= Html::a('(Más información)', ['presentacion/view', 'presentacion' => $objPresentacion->idPresentacion]) ?></td>
-                                                    <!--<td class="align-middle"><?= $objPresentacion->descripcionPresentacion ?></td>-->
-                                                    <td class="align-middle"><?= $objPresentacion->diaPresentacion ?></td>
-                                                    <td class="align-middle"><?= $objPresentacion->horaInicioPresentacion ?></td>
-                                                    <td class="align-middle"><?= $objPresentacion->horaFinPresentacion ?></td>
-                                                    <?php
-                                                    if ($objPresentacion->linkARecursos == null || $objPresentacion->linkARecursos == "") {
-                                                        ?>
-                                                        <td class="align-middle">No hay links para mostrar.</td>
-                                                    <?php } else { ?>
-                                                        <td class="align-middle"><a href="<?= $objPresentacion->linkARecursos ?>">Link</a></td>
-                                                    <?php } ?>
-                                                    <td class="align-middle">
-                                                        <?php
-                                                        foreach ($objPresentacion->presentacionExpositors as $objExpoPre) {
-                                                            $objUsuario = $objExpoPre->idExpositor0
-                                                            ?>
-                                                            <ul class="my-2">
-                                                                <li>Nombre: <?= Html::encode($objUsuario->nombre . ", " . $objUsuario->apellido) ?></li>
-                                                                <li>Contacto: <?= Html::encode($objUsuario->email) ?></li>
-                                                            </ul>
-                                                        <?php } ?>
-                                                    </td>
-
-                                                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) { ?>
-                                                        <td class="align-middle">
-                                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                                <?= Html::a('<i class="material-icons">edit</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
-                                                                <?= Html::a('<i class="material-icons">add</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
-                                                                <?= Html::a('<i class="material-icons">remove_circle_outline</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
-                                                            </div>
-
-
-                                                        </td>
-                                                    <?php } ?>
-                                                <?php endforeach; ?>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            
                                 </div>
                             </div>
                         </div>
