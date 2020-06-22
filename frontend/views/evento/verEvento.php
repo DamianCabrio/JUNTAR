@@ -260,9 +260,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 									<h4 class="text-uppercase align-middle">AGENDA
 										<?PHP
                                         if ($esDueño) {
-                                            echo Html::a('								<div class="btn-group" role="group" aria-label="">
-											<button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
-										</div><i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => '']);
+                                            if($evento->idEstadoEvento == 1 || $evento->idEstadoEvento ==2){
+                                                 echo Html::a('								<div class="btn-group" role="group" aria-label="">
+											    <button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
+										        </div><i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => '']);
+                                            }
                                         } //url /presentacion/cargar-presentacion/
                                         ?></h4>
 
@@ -367,7 +369,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'header' => 'Acciones',
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                            'visible' => $esDueño,
+                                            'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento ==2),
                                         ],
                                     ],
                                 ]);
