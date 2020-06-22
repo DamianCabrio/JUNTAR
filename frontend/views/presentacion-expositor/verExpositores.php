@@ -64,9 +64,7 @@ use yii\helpers\Url;
 								'method' => 'post',
 							],]);
 						},
-						// 'view' => function ($url, $model) {
-						// return Html::a('<img src="' . Yii::getAlias('@web/icons/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn agregarExpositor']);
-						// },
+					
 					],
 					'header' => 'Acciones',
 					'headerOptions' => ['style' => 'text-align:center;'],

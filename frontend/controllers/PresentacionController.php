@@ -208,16 +208,5 @@ class PresentacionController extends Controller {
         ]);
     }
 
-    public function actionMostrarPresentacion($idPresentacion,  $idEvento)
-    {
-
-        $objEvento = Evento::findOne($idEvento);
-        $preExpositor = PresentacionExpositor::findOne($idPresentacion);
-
-        return $this->render('mostrarPresentacion', [
-                    'model' => $this->findModel($idPresentacion),
-                    'preExpositor' => $preExpositor,
-                    'evento' => $objEvento
-        ]);
-    }
+   
 }
