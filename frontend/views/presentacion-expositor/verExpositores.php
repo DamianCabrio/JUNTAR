@@ -66,6 +66,7 @@ use yii\helpers\Url;
 						},
 					
 					],
+					'visible' => !Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario,
 					'header' => 'Acciones',
 					'headerOptions' => ['style' => 'text-align:center;'],
 					'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
