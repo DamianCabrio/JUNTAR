@@ -125,6 +125,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <br>
                                     <a href="" data-toggle="modal" data-target="#exampleModal"><i class="material-icons align-middle">file_download</i><span class=" align-middle">Flyer </span></a>
 
+
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -177,7 +178,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ?>
 
                                 </div>
-
                             </div>
                         </div>
                         <div class="row">
@@ -411,6 +411,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                                 <?= Html::a('<i class="material-icons">remove_circle_outline</i>', ['cargar-expositor', 'idPresentacion' => $objPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success']) ?>
                                                             </div>
 
+
                                                         </td>
                                                     <?php } ?>
                                                 <?php endforeach; ?>
@@ -449,7 +450,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 </div>
                 <div class="modal-body">
                     <img class="full_width" src='<?= $flyer ?>'>
-
                 </div>
                 <div class="modal-footer">
                     <a href="<?= $flyer ?>" class="btn btn-secondary"  download>Bajar</a>
