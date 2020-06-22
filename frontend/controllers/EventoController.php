@@ -196,7 +196,7 @@ class EventoController extends Controller {
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
 
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
@@ -219,7 +219,7 @@ class EventoController extends Controller {
                 $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
             }
             $model->save();
-            return $this->redirect(['eventos/evento-cargado/' . $nombreCortoEvento]);
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
         $categoriasEventos = CategoriaEvento::find()
             ->select(['descripcionCategoria'])
@@ -233,11 +233,6 @@ class EventoController extends Controller {
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
     }
     
-    public function actionEventoCargado($slug) {
-        return $this->render('eventoCargado', [
-                    'model' => $this->findModel("", $slug),
-        ]);
-    }
 
     private function actionGenerarQRAcreditacion($codigoAcreditacion, $slug) {
 //        $label = (new Label($slug))
@@ -415,32 +410,31 @@ class EventoController extends Controller {
      * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
      * atributo idEstadoEvento por el valor 1.
      */
-    public function actionPublicarEvento($slug) {
+    public function actionPublicarEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = date('Y-m-d');
+       
+        $model->fechaCreacionEvento = date('Y-m-d');    
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
         $model->save();
-        return $this->render('eventoPublicado', [
-                    'model' => $model,
-        ]);
-    }
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     }   
 
     /**
      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
      * Cambia en el atributo fechaCreacionEvento por null, y en el
      * atributo idEstadoEvento por el valor 4.
      */
-    public function actionSuspenderEvento($slug) {
+    public function actionSuspenderEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = null;
+        
+        $model->fechaCreacionEvento = null;   
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
         $model->save();
-        return $this->render('eventoDespublicado', [
-                    'model' => $model,
-        ]);
-    }
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     } 
+
 
     public function actionCargarExpositor($idPresentacion) {
         $model = new PresentacionExpositor();
