@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 
 
 $fileType = 'Xls';
-$file =  '../../template/inscriptos.xlsx';
+$file =  '../../template/inscriptos.ods';
 $templateExcel  = IOFactory::load($file);
 
 // este estilo de Border::BORDER_THICK  tiene un espesor mas grosor que BORDER_THICK,
@@ -31,7 +31,7 @@ $nombreEvento = $arrayEvento['nombre'];
 $idEvento = $arrayEvento['idEvento'];
 
 
-$nombreDelLibro = $idEvento."_Participantes_".$nombreEvento.".xls";
+$nombreDelLibro = $idEvento."_Participantes_".$nombreEvento.".ods";
 
 foreach($listados as $obj){
     
