@@ -6,12 +6,12 @@
 $(document).ready(function () {
 
 
-    //Permite quitar la imagen logo cargada en el formulario de carga
+    //Permite quitar la imagen logo cargada en el input file del formulario de carga y edicion
     $("#quitarLogo").click(function () {
      $("#uploadformlogo-imagelogo").val(null);
     });
 
-    //Permite quitar la imagen flyer cargada en el formulario de carga
+    //Permite quitar la imagen flyer cargada en el input file del formulario de carga y edicion
     $("#quitarFlyer").click(function () {
         $("#uploadformflyer-imageflyer").val(null);
     });
