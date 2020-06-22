@@ -22,6 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <a class="nav-link bg-gray" href="/cuenta/cambiar-password"> Cambiar Contraseña </a>
                 </li>
                 <!-- a futuro -->
+                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link" href="/cuenta/cambiar-email-request"> Cambiar dirección de correo </a>
+                </li>
+                <!-- a futuro -->
 <!--                <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link" href=""> Preferencias de Email </a>
                 </li>-->
