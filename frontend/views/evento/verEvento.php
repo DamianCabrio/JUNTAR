@@ -82,6 +82,7 @@ $organizadorEvento = $evento->idUsuario0->nombre . " " . $evento->idUsuario0->ap
 $organizadorEmailEvento = $evento->idUsuario0->email;
 ?>
 <div class="evento-view ">
+    Hola felipe. Soy tu peor pesadilla
     <header class="hero gradient-hero">
         <div class="container-fluid center-content text-center padding_hero text-white">
             <h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
