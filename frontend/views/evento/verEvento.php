@@ -4,6 +4,7 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\grid\GridView;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
 

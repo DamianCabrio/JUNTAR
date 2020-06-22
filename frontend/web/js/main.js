@@ -5,16 +5,52 @@
  */
 $(document).ready(function () {
 
-    //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite 
-    $("#evento-preinscripcion").change(function () {
-        respuesta = $("#evento-preinscripcion").val();
-        if (respuesta == 0) {
-            $("#fechaLimite").hide();
-            $("#evento-fechalimiteinscripcion").attr("required", false);
-        }
+    //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite
+    if ($("#evento-fechalimiteinscripcion").val() != 0) {
+        $("#fechaLimite").show();
+        $("#evento-fechalimiteinscripcion").attr("required", true);
+        $("#i1").attr('checked', true);
+    } else {
+        $("#fechaLimite").hide();
+        $("#evento-fechalimiteinscripcion").attr("required", false);
+        $("#evento-fechalimiteinscripcion").val(null);
+        $("#i0").attr('checked', true);
+    }
+    $("#evento-preinscripcion input").change(function () {
+        respuesta = $(this).val();
         if (respuesta == 1) {
             $("#fechaLimite").show();
             $("#evento-fechalimiteinscripcion").attr("required", true);
+            $("#evento-fechalimiteinscripcion").addClass("is-invalid");
+        }
+        if (respuesta == 0) {
+            $("#fechaLimite").hide();
+            $("#evento-fechalimiteinscripcion").attr("required", false);
+            $("#evento-fechalimiteinscripcion").val(null);
+        }
+    });
+
+    //Verifica si en evento posee capacidad de espectadores
+    if ($("#evento-capacidad").val() != 0) {
+        $("#mostrarCapacidad").show();
+        $("#evento-capacidad").attr("required", true);
+        $("#espectadores-si").attr('checked', true);
+    } else {
+        $("#mostrarCapacidad").hide();
+        $("#evento-capacidad").attr("required", false);
+        $("#evento-capacidad").val(null);
+        $("#espectadores-no").attr('checked', true);
+    }
+    $("#w0 input[name=posee-espectadores]").change(function () {
+        capacidad = $(this).val();
+        if (capacidad == 2) {
+            $("#mostrarCapacidad").show();
+            $("#evento-capacidad").attr("required", true);
+        }
+        if (capacidad == -1) {
+            $("#mostrarCapacidad").hide();
+            $("#evento-capacidad").attr("required", false);
+            $("#evento-capacidad").val(null);
         }
     });
 
@@ -135,7 +171,224 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         viewCertificationModal($(this).attr('href'));
     });
+
+    //funcionalidad editar perfil
+    $('.editarPresentacion').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        editPresentacionModal($(this).attr('href'));
+    });
+	
+	$('.borrarPresentacion').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        deletePresentacionModal($(this).attr('href'));
+    });
+	
+	$('.agregarPresentacion').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        agregarPresentacionModal($(this).attr('href'));
+    });
+	
+	/* $('.agregarExpositor').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        agregarExpositorModal($(this).attr('href'));
+    }); */
+	
+	$('.verPresentacion').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        verPresentacionModal($(this).attr('href'));
+    });
+	
+	$('.verExpositores').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+		//alert($(this).attr('href'));
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        verExpositoresModal($(this).attr('href'));
+    });
+    //prueba
+    $('#cargarPresentacion').submit(function(){
+        $('#presentacion-diapresentacion').attr('required',true);
+        $('#presentacion-diapresentacion').addClass('is-invalid');
+        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+        $('#invalidFecha').show();
+    });
+    $('#editarPresentacion').submit(function(){
+        $('#presentacion-diapresentacion').attr('required',true);
+        $('#presentacion-diapresentacion').addClass('is-invalid');
+        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+        $('#invalidFecha').show();
+    });
+    $('#presentacion-diapresentacion').change(function(){
+        var fechaIni = $('#fechaIniEvento').val(); 
+        var fechaFin = $('#fechaFinEvento').val();
+        var fechaPre= $(this).val();
+        
+        //console.log(fechaPre);
+        //console.log(fechaIni);
+        //console.log(fechaFin);
+        
+        if(fechaIni <= fechaPre && fechaFin >= fechaPre){
+            //console.log("bien");
+            $(this).addClass('is-valid');
+            $(this).removeClass('is-invalid');
+            $('#invalidFecha').hide();
+        }else{
+            //console.log("Mal");
+            $(this).removeClass('is-valid');
+            $(this).addClass('is-invalid');
+            $('#invalidFecha').html('El Dia de la Presentacion debe estar entre la fecha inicio y la fecha fin del evento.<br> Fecha Inicio Evento: '+ fechaIni+ '<br>Fecha Fin Evento: '+ fechaFin);
+            $('#invalidFecha').show();
+        }
+        
+    });
 });
+//Prueba
+
+/**
+ * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
+ * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
+ * 
+ * @returns none
+ */
+ function verExpositoresModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.expositores-lista').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Lista de expositores </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+ 
+function editPresentacionModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.presentacion-form').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Editar presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+function deletePresentacionModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.presentacion-delete').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Borrar presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+function agregarPresentacionModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.presentacion-form').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Agregar presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+
+function verPresentacionModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+		//alert(dataHTML);
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.presentacion-view').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Presentacion </h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+}
+/* 
+function agregarExpositorModal(link) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se envia.
+    $.ajax({
+        url: link,
+        //        data: {data: data}
+    }).done(function (data) {
+        //data recibe la vista que deberia renderizarse al visitar la url
+        //hacemos visible el modal
+        $('#modalEvento').modal('show');
+        //convertimos a html la vista recibida
+        var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
+        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
+        $(dataHTML).find('div.expositor-form').each(function () {
+            console.log($(this).html());
+            $('.modal-header').html("<h3> Agregar expositor</h3>");
+            $('.modal-body').html($(this).html());
+        });
+    });
+} */
 
 //funcion utilizada para eliminar caracteres criticos en un texto
 function eliminarDiacriticos(texto) {
@@ -343,21 +596,21 @@ function autocompleteProvincias(nombrePais) {
         type: "POST",
         dataType: "json"
     })
-            .done(function (data) {
-                console.log(data);
-                if (data !== null) {
-                    if ($("#signupform-provincia").autocomplete !== undefined) {
-                        $("#signupform-provincia").autocomplete({
-                            autoFill: true,
-                            minLength: "2",
-                            source: data,
-                            select: function (event, ui) {
-                                $("#signupform-provincia").val(ui.item.id);
-                            }
-                        });
-                    }
+        .done(function (data) {
+            console.log(data);
+            if (data !== null) {
+                if ($("#signupform-provincia").autocomplete !== undefined) {
+                    $("#signupform-provincia").autocomplete({
+                        autoFill: true,
+                        minLength: "2",
+                        source: data,
+                        select: function (event, ui) {
+                            $("#signupform-provincia").val(ui.item.id);
+                        }
+                    });
                 }
-            });
+            }
+        });
 }
 
 /**
@@ -374,20 +627,20 @@ function autocompleteLocalidades(nombreProvincia) {
         type: "POST",
         dataType: "json"
     })
-            .done(function (data) {
-                console.log(data);
-                if (data !== null) {
-//                        dataLocalidades = data;
-                    if ($("#signupform-localidad").autocomplete !== undefined) {
-                        $("#signupform-localidad").autocomplete({
-                            autoFill: true,
-                            minLength: "2",
-                            source: data,
-                            select: function (event, ui) {
-                                $("#signupform-localidad").val(ui.item.id);
-                            }
-                        });
-                    }
+        .done(function (data) {
+            console.log(data);
+            if (data !== null) {
+                //                        dataLocalidades = data;
+                if ($("#signupform-localidad").autocomplete !== undefined) {
+                    $("#signupform-localidad").autocomplete({
+                        autoFill: true,
+                        minLength: "2",
+                        source: data,
+                        select: function (event, ui) {
+                            $("#signupform-localidad").val(ui.item.id);
+                        }
+                    });
                 }
-            });
+            }
+        });
 }
