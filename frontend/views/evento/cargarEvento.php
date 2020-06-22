@@ -8,6 +8,8 @@ use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Evento */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->title = "Cargar Evento";
 ?>
 <div class="container">
     <div class="row">
@@ -23,9 +25,35 @@ use yii\bootstrap4\ActiveForm;
 
                 <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
 
-                <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto'])->label('Nombre corto del evento *') ?>
+                <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
+                <div class="row">
+                    <div class="col-4 form-advice">
+                        <span class="m-auto"> Opciones automaticas: </span>
+                    </div>
+                    <div class="nombresCortos" id="automaticSlug">
+                        <!--                        <div class="col-2 d-flex justify-content-center ">
+                                                    <span class="m-auto"> <input type="radio" id="opc1" name="slug" value="">  hola </span>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center ">
+                                                    <span class="m-auto"> <input type="radio" id="opc2" name="slug" value="">  hola </span>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center ">
+                                                    <span class="m-auto"> <input type="radio" id="opc3" name="slug" value="">  hola </span>
+                                                </div>-->
+                    </div>
+                    <!--<div class="col-4 d-flex justify-content-center ">-->
+                    <br>
+                    <div class="col-12 mt-2 nombresCortos">
+                        <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
+                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
+                            'data-title' => 'Requisitos',
+                            'data-toggle' => 'popover',
+                            'data-content' => 'El nombre corto solo puede tener numeros y letras sin acentos ni ñ, y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
+                    </div>
+                </div>
 
-                <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
+
+                <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8', 'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
 
                 <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 

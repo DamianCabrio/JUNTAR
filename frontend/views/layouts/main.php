@@ -5,11 +5,11 @@
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\rbac\Permission;
-
 
 AppAsset::register($this);
 ?>
@@ -22,6 +22,7 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#050714" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -34,75 +35,75 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg',  ['style' => 'width:30px']),
+            'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg', ['style' => 'width:30px']),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
             ],
         ]);
-            $menuItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
-                
-            ];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
-                $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
-            } else {
-               // Opciones solo para usuario con rol organizador 
-               if (Yii::$app->user->can('Organizador')) {
+        $menuItems = [
+            ['label' => 'Inicio', 'url' => ['/site/index']],
+        ];
+        if (Yii::$app->user->isGuest) {
+            $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
+        } else {
+            // Opciones solo para usuario con rol organizador 
+            if (Yii::$app->user->can('Organizador')) {
 
                 $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
-                
-            }  
+            }
             $menuItems[] = [
-
                 'label' => 'Mis Eventos',
-
                 'items' => [
                     ['label' => 'Inscripciones', 'url' => ['/evento/listar-eventos']],
                     ['label' => 'Certificados', 'url' => ['/evento/listar-eventos']],
-                    ['label' => 'Organizar Eventos', 'url' => ['/evento/organizar-eventos']],
+                    ['label' => 'Organizar Eventos', 'url' => ['/cuenta/mis-eventos-gestionados']],
                 ],
             ];
-                    //Logout
-                    $menuItems[] = [
-                        'label' => '<img class="ml-1" src="icons/person-circle-w.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
-                        'items' => [
-                            ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
-                            ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
-                            
-                            [
-                                "label" => "Cerrar Sesión",
-                                "url" => ["/site/logout"],
-                                "linkOptions" => [
-                                    "data-method" => "post",
-                                ]
-                            ],
-                        ],
-                    ];
-               
+            //Logout
+
+            /** @var TYPE_NAME $urlImagenPerfil */
+            $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre . ".jpg";
+            if (@GetImageSize($urlImagenPerfil)) {
+                $imgPerfil = $urlImagenPerfil;
+            } else {
+                $imgPerfil = '@web/iconos/person-circle-w.svg';
             }
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
-                'items' => $menuItems,
-                'encodeLabels' => false,
-            ]);
-            NavBar::end();
-            ?>
-                <?= Breadcrumbs::widget([
-                    'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
-                    'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-            ?>
+            $menuItems[] = [
+                'label' => Html::img($imgPerfil, ['class' => 'ml-1', "alt" => "Cuenta", "width" => "35", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
+                'items' => [
+                    ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
+                    ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
+                    ['label' => 'Mis Eventos', 'url' => ['/cuenta/mis-eventos-gestionados']],
+                    ['label' => 'Mis Inscripciones', 'url' => ['/cuenta/mis-inscripciones-a-eventos']],
+                    [
+                        "label" => "Cerrar Sesión",
+                        "url" => ["/site/logout"],
+                        "linkOptions" => [
+                            "data-method" => "post",
+                        ]
+                    ],
+                ],
+            ];
+        }
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-collapse justify-content-end'],
+            'items' => $menuItems,
+            'encodeLabels' => false,
+        ]);
+        NavBar::end();
+        ?>
 
-            <?php echo Alert::widget() ?>
 
-        </div>
-
+        <?php
+        echo Alert::widget([
+            'options' => ['class' => 'text-center']
+        ])
+        ?>
         <?php echo $content ?>
-      
     </div>
+
     <section class="darkish_bg text-light">
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
@@ -124,6 +125,12 @@ AppAsset::register($this);
                             <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
                         </li>
                     </ul>
+                    <h5 class="white-text">Sobre</h5>
+                <ul>
+                    <li>
+                        <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
+                    </li>
+                </ul>
                 </div>
             </div>
             <hr>

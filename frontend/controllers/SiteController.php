@@ -1,8 +1,6 @@
 <?php
 
 namespace frontend\controllers;
-
-use frontend\models\EventoSearch;
 use common\models\LoginForm;
 use frontend\models\Evento;
 use frontend\models\PasswordResetRequestForm;
@@ -16,7 +14,6 @@ use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use yii\captcha\CaptchaAction;
 use \yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\data\Pagination;
@@ -77,12 +74,11 @@ class SiteController extends Controller
 
         return $behaviors;
     }
-
+    
     /**
      * {@inheritdoc}
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -162,7 +158,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login() && $model->validate()) {
             return $this->goBack(Url::previous());
         } else {
             $model->password = '';
@@ -261,7 +257,7 @@ class SiteController extends Controller
         $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
         $paises = $this->conversionAutocomplete($paises);
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+        if ($model->load(Yii::$app->request->post()) && $model->signup() && $model->validate()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
                     . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
             return $this->goBack(Url::previous());
@@ -270,31 +266,9 @@ class SiteController extends Controller
         return $this->render('signup', [
                     'model' => $model,
                     'paises' => $paises,
-//                    'province' => $province,
         ]);
     }
 
-    /**
-     * Busqueda de Localidades por Provincia
-     *
-     * @return mixed
-     */
-//    public function actionSearchProvincias($name) {
-//        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-//        $dataProvincias = file_get_contents("json/provincias.json");
-//        $provincias = json_decode($dataProvincias, true);
-//        
-//        $indiceProvincia = null;
-//        foreach ($provincias as $index => $unaProvincia) {
-//            if (array_search($name, $unaProvincia)) {
-//                $indiceProvincia = $index;
-//            }
-//        }
-//        // Conversión de datos
-//        $provincias = ArrayHelper::map($provincias[$indiceProvincia]['provincias'], 'id', 'nombre');
-//        $provincias = $this->conversionAutocomplete($provincias);
-//        return $provincias;
-//    }
     public function actionSearchProvincias() {
         $provincias = null;
         if (Yii::$app->request->post('pais') != null) {
@@ -322,26 +296,7 @@ class SiteController extends Controller
         }
         return $provincias;
     }
-    
-    /**
-     * Busqueda de Localidades por Provincia
-     *
-     * @return mixed
-     */
-//    public function actionSearchLocalidades($name) {
-//        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-//        $dataLocalidades = file_get_contents("json/localidades.json");
-//        $localidad = json_decode($dataLocalidades, true);
-//        $indexLocalidad = null;
-//        foreach ($localidad as $index => $unaLocalidad) {
-//            if (array_search($name, $unaLocalidad)) {
-//                $indexLocalidad = $index;
-//            }
-//        }
-//        $localidad = ArrayHelper::map($localidad[$indexLocalidad]['ciudades'], 'id', 'nombre');
-//        $localidad = $this->conversionAutocomplete($localidad);
-//        return $localidad;
-//    }
+
     public function actionSearchLocalidades() {
         $localidades = null;
         if (Yii::$app->request->post('provincia') != null) {

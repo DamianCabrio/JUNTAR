@@ -16,70 +16,82 @@ use frontend\models\Expositor;
  * @property string|null $pais
  * @property string|null $provincia
  * @property string|null $localidad
- * @property string $email
- * @property string $auth_key
- * @property string $password_hash
- * @property string|null $password_reset_token
- * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property string|null $verification_token
  *
  * @property Evento[] $eventos
  * @property Expositor[] $expositors
  * @property Inscripcion[] $inscripcions
  * @property UsuarioRol[] $usuarioRols
  */
-class Usuario extends \yii\db\ActiveRecord
-{
+class Usuario extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'usuario';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['nombre', 'apellido', 'dni', 'pais', 'provincia', 'localidad', 'email'], 'required'],
-//            [['dni', 'telefono', 'status', 'created_at', 'updated_at'], 'integer'],
-//            [['fecha_nacimiento'], 'safe'],
-            [['nombre', 'apellido', 'pais', 'provincia', 'localidad'], 'string', 'max' => 50],
-//            [['email', 'password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
-//            [['auth_key'], 'string', 'max' => 32],
-            [['email'], 'unique'],
-//            [['password_reset_token'], 'unique'],
+            //Obligatorio
+            [['nombre', 'apellido', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
+
+            //Reglas nombre
+            ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['nombre', 'string', 'min' => 2, 'max' => 14,
+                //comentario para minlenght
+                'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
+                //comentario para maxLenght
+                'tooLong' => 'El nombre puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
+
+            //Reglas apellido
+            ['apellido', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['apellido', 'string', 'min' => 2, 'max' => 14,
+                //comentario para minlenght
+                'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
+                //comentario para maxLenght
+                'tooLong' => 'El apellido puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
+
+            //Reglas localidad
+            ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
+            //validamos con la api de localidades argentinas solo si el pais es argentina
+            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
+                return ($model->pais == 'Argentina');
+                }, 'whenClient' => "function (attribute, value) {
+                    return $('#signupform-pais').val() == 'Argentina';
+                }"
+            ],
+
+            //Reglas Provincia
+            ['provincia', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
+            //validamos con la api de provincias argentinas solo si el pais es argentina
+            ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) {
+                return ($model->pais == 'Argentina');
+                }, 'whenClient' => "function (attribute, value) {
+                    return $('#signupform-pais').val() == 'Argentina';
+                }"
+            ],
+
+            //Reglas DNI
+            ['dni', 'integer', 'min' => 10000000, 'max' => 100000000]
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'idUsuario' => 'Id Usuario',
             'nombre' => 'Nombre',
             'apellido' => 'Apellido',
             'dni' => 'Dni',
-//            'fecha_nacimiento' => 'Fecha Nacimiento',
             'pais' => 'País',
             'provincia' => 'Provincia',
             'localidad' => 'Localidad',
-//            'telefono' => 'Telefono',
-            'email' => 'Email',
-//            'auth_key' => 'Auth Key',
-//            'password_hash' => 'Password Hash',
-//            'password_reset_token' => 'Password Reset Token',
-//            'status' => 'Status',
-//            'created_at' => 'Created At',
-//            'updated_at' => 'Updated At',
-//            'verification_token' => 'Verification Token',
         ];
     }
 
@@ -88,8 +100,7 @@ class Usuario extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|EventoQuery
      */
-    public function getEventos()
-    {
+    public function getEventos() {
         return $this->hasMany(Evento::className(), ['idUsuario' => 'idUsuario']);
     }
 
@@ -98,8 +109,7 @@ class Usuario extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|ExpositorQuery
      */
-    public function getExpositors()
-    {
+    public function getExpositors() {
         return $this->hasMany(Expositor::className(), ['idUsuario' => 'idUsuario']);
     }
 
@@ -108,8 +118,7 @@ class Usuario extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|InscripcionQuery
      */
-    public function getInscripcions()
-    {
+    public function getInscripcions() {
         return $this->hasMany(Inscripcion::className(), ['idUsuario' => 'idUsuario']);
     }
 
@@ -118,8 +127,7 @@ class Usuario extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|UsuarioRolQuery
      */
-    public function getUsuarioRols()
-    {
+    public function getUsuarioRols() {
         return $this->hasMany(UsuarioRol::className(), ['user_id' => 'idUsuario']);
     }
 
@@ -127,8 +135,8 @@ class Usuario extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return UsuarioQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new UsuarioQuery(get_called_class());
     }
+
 }

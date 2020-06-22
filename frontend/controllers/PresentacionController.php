@@ -4,13 +4,10 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Presentacion;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use frontend\models\PresentacionExpositor;
-use frontend\models\Usuario;
 use frontend\models\Evento;
 
 /**

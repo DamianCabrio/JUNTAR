@@ -3,12 +3,11 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Usuario;
-use app\models\UsuarioSearch;
+use backend\models\Usuario;
+use backend\models\UsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-//use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
@@ -18,47 +17,17 @@ class UsuarioController extends Controller
     /**
      * {@inheritdoc}
      */
-
     public function behaviors()
     {
-        $behaviors['access'] = [
-            //utilizamos el filtro AccessControl
-            'class' => AccessControl::className(),
-            'rules' => [
-                [
-                    'allow' => true,
-                    'actions' => ['login', 'error'],
-                    'roles' => ['?'], // <----- guest 
-                ],
-                [
-                    'allow' => true,
-                    'actions' => ['logout', 'error'],
-                    'roles' => ['@'], // <----- guest 
-                ],
-                [
-                    'allow' => true,
-                    'roles' => ['@'],
-                    'matchCallback' => function ($rule, $action) {
-//                        $module = Yii::$app->controller->module->id;
-                        $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
-                        $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
-//                        $route = "$module/$controller/$action";
-                        $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-
-                        $post = Yii::$app->request->post();
-                        //preguntamos si el usuario tiene los permisos para visitar el sitio
-                        if (Yii::$app->user->can($route, ['post' => $post])) {
-//                            return $this->goHome();
-                            return true;
-                        }
-                    }
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
             ],
         ];
-
-        return $behaviors;
     }
-
 
     /**
      * Lists all Usuario models.
@@ -83,28 +52,9 @@ class UsuarioController extends Controller
      */
     public function actionView($id)
     {
-      // Se obtiene todos los roles que estan creados y es enviado a la vista de usuario.
-      $roles = yii::$app->authManager->getRoles();
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'roles' => $roles,
         ]);
-    }
-
-    /**
-     * Assign rol to user.
-     * Metodo para asignar un rol a un usuario a partir del ID
-     */
-    public function actionAssign($id, $rol)
-    {
-      $auth = Yii::$app->authManager;
-      $authRol = yii::$app->authManager->getRole($rol);
-      if ($auth->getAssignment($rol, $id)) {
-        $auth->revoke($authRol, $id);
-      } else {
-        $auth->assign($authRol, $id);
-      }
-      return $this->redirect(['usuario/view', 'id' => $id]);
     }
 
     /**
@@ -116,7 +66,7 @@ class UsuarioController extends Controller
     {
         $model = new Usuario();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
             return $this->redirect(['view', 'id' => $model->idUsuario]);
         }
 
@@ -136,7 +86,7 @@ class UsuarioController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
             return $this->redirect(['view', 'id' => $model->idUsuario]);
         }
 

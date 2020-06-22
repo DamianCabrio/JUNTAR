@@ -48,7 +48,7 @@ class SignupForm extends Model {
                 'tooLong' => 'El apellido puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
 
             //Reglas localidad
-            ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de localidades argentinas solo si el pais es argentina
             ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
                 return ($model->pais == 'Argentina');

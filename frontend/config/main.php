@@ -18,8 +18,15 @@ return [
         '@rutaFlyer' => '/eventos/images/flyers/',
     ],
     'components' => [
+        'qr' => [
+            'class' => '\Da\QrCode\Component\QrCodeComponent',
+            // ... you can configure more properties of the component here
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
+        ],
+        'opengraph' => [
+            'class' => 'umanskyi31\opengraph\OpenGraph',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -46,12 +53,19 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
              'rules' => [
+                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                  'eventos/ver-evento/<slug>' => 'evento/ver-evento',
                  'eventos/evento-cargado/<slug>' => 'evento/evento-cargado',
                  'eventos/editar-evento/<slug>' => 'evento/editar-evento',
                  'eventos/publicar-evento/<slug>' => 'evento/publicar-evento',
+                 'eventos/despublicar-evento/<slug>' => 'evento/despublicar-evento',
+                 'eventos/crear-formulario/<slug>' => 'evento/crear-formulario-dinamico',
+                 'eventos/responder-formulario/<slug>' => 'evento/responder-formulario',
                  'eventos/suspender-evento/<slug>' => 'evento/suspender-evento',
                  'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
+                 "acreditacion" => "acreditacion/acreditacion",
                  'defaultRoute' => '/site/index',
               ],
           ],
