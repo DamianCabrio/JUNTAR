@@ -36,14 +36,16 @@ use yii\bootstrap4\ActiveForm;
                 <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Inicio *') ?>
 
                 <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Fin *') ?>
-
+                <div class="form-inline">
                 <!-- input logo -->
-                <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
-
+                <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>   <button type="button" id="quitarLogo" class="btn btn-sm btn-outline">Quitar</button> 
+                 </div>
+                 <br>
+                 <div class="form-inline"> 
                 <!-- input flyer -->
-                <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?>
-
-
+                <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?> <button type="button" id="quitarFlyer" class="btn btn-sm btn-outline">Quitar</button> 
+                </div>
+                <br>
                 <div class="form-group">
                     <label>¿Posee límite de espectadores?</label><br>
 
