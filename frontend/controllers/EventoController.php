@@ -6,6 +6,7 @@ use Da\QrCode\QrCode;
 //use BaconQrCode\Common\ErrorCorrectionLevelInter;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
+use frontend\models\Respuesta;
 use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -274,11 +275,17 @@ class EventoController extends Controller {
 
         $evento = $this->findModel("", $slug);
         $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])->one();
+        $model = new Respuesta();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return ("hola");
+        }
+
         if($inscripcion ==null){
             $preguntas = Pregunta::find()->where(["idevento" => $evento->idEvento])->all();
             return $this->render('responderFormulario',
                 ["preguntas" => $preguntas,
-                    "eventos" => $evento]);
+                    "eventos" => $evento,
+                    "model" => $model]);
         }
     }
 

@@ -93,6 +93,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/umanskyi31/opengraph" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/unclead/yii2-multiple-input" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/wbraganca/yii2-dynamicform" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2" />
