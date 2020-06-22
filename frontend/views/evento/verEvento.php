@@ -106,7 +106,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             <div class="container">
                 <div class="card bg-white">
                     <?PHP
-                    if ($esDueño) {
+                    if ($esDueño && $evento->idEstadoEvento == 3) { //evento finalizado
+                        echo '<div class="card-header pinkish_bg"> '. '<span class="text-white align-middle"> Estado  ' . $estadoEvento . '</span> </div>';
+                    }
+                    elseif ($esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4)) {
                         echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Estado Evento ' . $estadoEvento . '</span> </div>';
                     }
                     ?>
