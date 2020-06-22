@@ -378,6 +378,10 @@ section {
     filter: invert(99%) sepia(6%) saturate(443%) hue-rotate(113deg) brightness(121%) contrast(100%);
 }
 
+#mostrarCapacidad{
+    display: none;
+}
+
 @media only screen and (max-width: 767px) {
     .padding_logo {
         padding-left: 10vw;

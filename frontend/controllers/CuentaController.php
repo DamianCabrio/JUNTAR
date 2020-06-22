@@ -13,6 +13,9 @@ use frontend\models\Usuario;
 use frontend\models\UploadProfileImage;
 use frontend\models\EventoSearch;
 use frontend\models\InscripcionSearch;
+use frontend\models\CambiarPasswordForm;
+use frontend\models\CambiarEmailForm;
+use frontend\models\CambiarEmailRequest;
 
 /**
  * Site controller
@@ -77,9 +80,10 @@ class CuentaController extends Controller {
             $profileImageRoute = $rutaImagenPerfil;
         }
 //        $model = new Usuario();
-        $queryUser = (new \yii\db\Query())
+        $model = Usuario::find()
+//        $queryUser = (new \yii\db\Query())
                 //campos buscados
-                ->select(['nombre, apellido, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
+                ->select(['nombre, apellido, password_hash, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
                 //distintos en
                 //->distinct('jugador.posicion')
                 //tabla
@@ -91,10 +95,12 @@ class CuentaController extends Controller {
         //Agrupamiento
         //->groupBy(['jugador.posicion']);
         //obtenemos el array asociativo a partir de la query
-        $userData = $queryUser->all();
+//        $userData = $queryUser->all();
+//        $userData = $model->all();
+        $userData = $model->one();
 
         return $this->render('profile', [
-                    'data' => $userData,
+                    'dataUser' => $userData,
                     'profileImage' => $profileImageRoute,
                     'route' => $rutaImagenPerfil
 //                    'data' => $queryUser,
@@ -202,8 +208,8 @@ class CuentaController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $model = User::findIdentity(Yii::$app->user->identity->idUsuario);
         if (Yii::$app->request->post()) {
+            $model = User::findIdentity(Yii::$app->user->identity->idUsuario);
             $model->setInactive();
             Yii::$app->user->logout();
             return $this->goHome();
@@ -278,7 +284,87 @@ class CuentaController extends Controller {
             yii::$app->authManager->assign($organizateRol, $id);
             Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
         }
-        return $this->redirect(['profile']);
+        return $this->redirect(['/cuenta/profile']);
+    }
+
+    /**
+     * Resets password.
+     *
+     * @param string $token
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionCambiarPassword() {
+
+        $model = new CambiarPasswordForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->cambiarPassword()) {
+            Yii::$app->session->setFlash('success', '<h2> Contraseña actualizada </h2>'
+                    . '<p> La nueva contraseña fue guardada. </p>');
+
+            return $this->redirect(['/cuenta/profile']);
+        } else {
+            Yii::$app->session->setFlash('error', '<h2> Algo salió mal </h2>'
+                    . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
+        }
+
+        return $this->render('cambiarPassword', [
+                    'model' => $model,
+        ]);
+    }
+
+    /**
+     * Resets password.
+     *
+     * @param string $token
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionCambiarEmailRequest() {
+
+        if (Yii::$app->request->post()) {
+            $model = new CambiarEmailRequest();
+            if ($model->solicitarCambioEmail()) {
+                Yii::$app->session->setFlash('success', '<h2> ¡Ya queda poco! </h2>'
+                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu email. </p>');
+            } else {
+                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2>'
+                        . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
+                        . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
+            }
+            return $this->redirect(['/cuenta/profile']);
+        }
+        return $this->render('cambiarEmailRequest', [
+//                    'model' => $model,
+        ]);
+    }
+
+    /**
+     * Resets password.
+     *
+     * @param string $token
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionCambiarEmail($token) {
+
+        $model = new CambiarEmailForm($token);
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->cambiarEmail()) {
+                Yii::$app->session->setFlash('success', '<h2> Email actualizado </h2>'
+                        . '<p> Su dirección de correo fue actualizada. </p>');
+
+                return $this->redirect(['/cuenta/profile']);
+            } else {
+                Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
+                        . '<p> Es probable que el email ya esté registrado. </p>');
+            }
+        }
+
+        return $this->render('cambiarEmail', [
+                    'model' => $model,
+        ]);
     }
 
 }
