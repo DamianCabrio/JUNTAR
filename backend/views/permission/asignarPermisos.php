@@ -67,6 +67,7 @@ $this->title = 'Asignación de Roles';
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
+                        'summary' => '',
 //                        'filterModel' => $searchModel,
                         'columns' => [
 //                            ['class' => 'yii\grid\SerialColumn'],

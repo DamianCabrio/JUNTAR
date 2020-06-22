@@ -6,7 +6,7 @@ use yii\bootstrap4\Modal;
 
 $this->title = "Perfil";
 $this->params['breadcrumbs'][] = $this->title;
-$dataUser = array_shift($data);
+//$dataUser = array_shift($data);
 //print_r($dataUser);
 ?>
 <div class="container">
@@ -18,9 +18,13 @@ $dataUser = array_shift($data);
                 <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link active" href="profile"> Información de la Cuenta </a>
                 </li>
-<!--                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" href=""> Cambiar Contraseña </a>
-                </li>-->
+                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link bg-gray" href="/cuenta/cambiar-password"> Cambiar Contraseña </a>
+                </li>
+                <!-- a futuro -->
+                <li class="nav-item profile-sidebar col-12">
+                    <a class="nav-link" href="/cuenta/cambiar-email-request"> Cambiar dirección de correo </a>
+                </li>
                 <!-- a futuro -->
 <!--                <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link" href=""> Preferencias de Email </a>
@@ -28,16 +32,16 @@ $dataUser = array_shift($data);
                 <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
                 </li>
-                <li class="nav-item mt-2 profile-sidebar col-12">
-                    <?php $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
-                    <?php if (!$assigned): ?>
-                        <?=
-                        Html::a("Ser un Gestor de Eventos",
-                                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
-                                ['class' => $assigned ? "btn btn-sm btn-outline-info" : "btn btn-sm btn-outline-info"])
+                <!--<li class="nav-item mt-2 profile-sidebar col-12">-->
+                    <?php // $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
+                    <?php // if (!$assigned): ?>
+                        <?php // echo
+//                        Html::a("Ser un Gestor de Eventos",
+//                                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
+//                                ['class' => $assigned ? "btn btn-sm btn-outline-info" : "btn btn-sm btn-outline-info"])
                         ?>
-                    <?php endif; ?>
-                </li>
+                    <?php // endif; ?>
+                <!--</li>-->
             </ul>
         </div>
         <!-- Profile Sidebar Menu-->
@@ -123,11 +127,9 @@ $dataUser = array_shift($data);
             </div>
             <?php
             Modal::begin([
-//                'header' => '<h2> algo </h2>',
-                'id' => 'modalProfile',
+                'id' => 'profileModal',
                 'size' => 'modal-lg'
             ]);
-//            echo "<div id='modalContent'></div>";
             Modal::end();
             ?>
         </div>
