@@ -4,7 +4,6 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Url;
-use yii\grid\GridView;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
 
@@ -225,7 +224,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<p><b>Fecha Publicación: </b></p>
 										<span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
 									</li>
-                                    <?php if($esDueño) { ?>
+                                    <?php if($esDueño): ?>
                                     <li class="list-group-item darkish_bg text-white">
 										<p><b> Lista de participantes: </b></p>
 										<span>
@@ -245,7 +244,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ?>
                                         </span>
                                     </li>
-                                    <?php endif; ?>
+                                    <?php endif;
+                                 endif; ?>
 								</ul>
 							</div>
 						</div>
@@ -262,10 +262,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ?></h4>
 
                                 </span>
-
-                                <!--                                <br>
-                                                                <br>
-                                                                <br>-->
                                 <?=
                                 GridView::widget([
                                     'dataProvider' => $presentacionDataProvider,
