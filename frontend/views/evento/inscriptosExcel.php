@@ -48,10 +48,10 @@ foreach($listados as $obj){
         $fila->setCellValue('k3', date("d-m-Y", strtotime($arrayEvento['inicio']))  );
         $fila->setCellValue('k4', date("d-m-Y", strtotime($arrayEvento['fin'])) );
         $fila->setCellValue('k5', $arrayEvento['capacidad'] );
-        $fila->setCellValue('k6', $arrayEvento['lugar'] );
+        $fila->setCellValue('k6', $arrayEvento['lugar'] );    
         $fila->setCellValue('k7', $arrayEvento['modalidad'] );
 
-        // $row: los datos son insertado a partir de la celda 10
+        // $row: los datos son insertado a partir de la fila 10
         $row = 12;
 
         // $i: enumera la cantidad las celdas con registros
@@ -62,7 +62,7 @@ foreach($listados as $obj){
                 $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
                 $fila->setCellValue('C'.$row, $obj['user_idInscripcion'])->getStyle('C'.$row)->applyFromArray($bordes);
                
-                $fecha= "***";
+                $fecha= "";
 
                 if( $titulo=='Inscriptos'){
                     $fecha = date("d-m-Y", strtotime( $obj['user_fechaInscripcion'] ));
@@ -85,6 +85,9 @@ foreach($listados as $obj){
         }
 
 }
+
+/// Me posiciono en la hoja Inscriptos
+$templateExcel->setActiveSheetIndex(1);
 
 /// guarda el archivo
 $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter( $templateExcel, $fileType );

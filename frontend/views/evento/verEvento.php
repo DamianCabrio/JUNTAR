@@ -177,7 +177,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ?>
 
                                 </div>
-
                             </div>
                         </div>
                         <div class="row">
@@ -222,7 +221,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 										<p><b>Fecha Publicación: </b></p>
 										<span><?= date("d-m-Y", strtotime( $fechaPublicacion)) ?></span>
 									</li>
-                                    <?php if($esDueño) { ?>
+                                    <?php if($esDueño || $esAdministrador) { ?>
                                     <li class="list-group-item darkish_bg text-white">
 										<p><b> Lista de participantes: </b></p>
 										<span>
@@ -374,4 +373,5 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             </div>
         </div>
     </div>
-</div></div>
+  </div>
+</div>

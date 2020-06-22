@@ -156,6 +156,22 @@ class EventoController extends Controller {
         }
     }
 
+    public function verificarAdministrador($model) {
+
+        $idUsuario= $model->idUsuario0->idUsuario;
+
+        $rows= $query->select(['item_name']) 
+            ->from('usuario_rol')
+            ->where(['user_id'=>$idUsuario])->all(); 
+
+
+        if (count($rows)==0) {
+            return true;
+         } else {
+             return false;
+        }
+    }
+
     /**
      * Finds the Evento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -255,6 +271,7 @@ class EventoController extends Controller {
 
         $esDueño = $this->verificarDueño($evento);
 
+
         if ($esDueño) {
             $preguntasSearchModel = new PreguntaSearch();
             $preguntasDataProvider = new ActiveDataProvider([
@@ -336,6 +353,8 @@ class EventoController extends Controller {
         $validarEmail = new validateEmail();
         $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
         $esDueño = $this->verificarDueño($evento);
+        $esAdministrador = $this->verificarAdministrador($evento);
+
 
         return $this->render('verEvento', [
                     "evento" => $evento,
@@ -346,6 +365,7 @@ class EventoController extends Controller {
                     'cupos' => $cupos,
                     "esFai" => $esFai,
                     "esDueño" => $esDueño,
+                    "esAdministrador" => $esAdministrador,
         ]);
     }
 
