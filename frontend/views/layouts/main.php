@@ -58,7 +58,7 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Inscripciones', 'url' => ['/evento/listar-eventos']],
                     ['label' => 'Certificados', 'url' => ['/evento/listar-eventos']],
-                    ['label' => 'Organizar Eventos', 'url' => ['/cuenta/mis-eventos-gestionados']],
+                    ['label' => 'Organizar Eventos', 'url' => ['/evento/organizar-eventos']],
                 ],
             ];
             //Logout
