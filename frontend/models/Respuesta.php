@@ -34,20 +34,12 @@ class Respuesta extends \yii\db\ActiveRecord
     {
         return [
             [['idpregunta', 'idinscripcion'], 'required'],
-            ["respuesta", "validateRespuesta"],
+            ['respuesta', 'each', 'rule' => ['required']],
             [['idpregunta', 'idinscripcion'], 'integer'],
             [['respuesta'], 'string', 'max' => 500],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
-    }
-
-    public function validateRespuesta($attribute){
-        $respuestas = Yii::$app->request->post($this::formName());
-
-        if(is_array($posts)){
-
-        }
     }
 
     /**
