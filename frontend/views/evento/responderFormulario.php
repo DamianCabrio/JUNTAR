@@ -10,7 +10,7 @@ $this->title = "Responder Formulario";
 <div class="responder-formulario container">
 
     <?php $form = ActiveForm::begin([
-        'id' => 'pregunta-form',
+        'id' => 'respuesta-form',
         'enableAjaxValidation' => true,
         'options' => ['enctype' => 'multipart/form-data'],
     ]); ?>
@@ -18,15 +18,15 @@ $this->title = "Responder Formulario";
     <?php foreach ($preguntas as $i => $pregunta): ?>
 
     <?php if($pregunta->tipo == 1): ?>
-        <?= $form->field($model, "[{$i}]respuesta")->textInput(['maxlength' => true])->label("<strong>" . $pregunta->descripcion . "</strong>")  ?>
+        <?= $form->field($model, "respuesta[$i]")->textInput(['maxlength' => true])->label("<strong>" . $pregunta->descripcion . "</strong>")  ?>
     <?php endif; ?>
 
         <?php if($pregunta->tipo == 2): ?>
-            <?= $form->field($model, "[{$i}]respuesta")->textarea(['maxlength' => true], ["style" => "resize: none;"])->label("<strong>" . $pregunta->descripcion . "</strong>")  ?>
+            <?= $form->field($model, "respuesta[$i]")->textarea(['maxlength' => true], ["style" => "resize: none;"])->label("<strong>" . $pregunta->descripcion . "</strong>")  ?>
         <?php endif; ?>
 
         <?php if($pregunta->tipo == 3): ?>
-            <?= $form->field($model, '[{$i}]respuesta')->fileInput()->label("<strong>" . $pregunta->descripcion . "</strong>") ?>
+            <?= $form->field($model, "respuesta[$i]")->fileInput()->label("<strong>" . $pregunta->descripcion . "</strong>") ?>
         <?php endif; ?>
 
     <?php endforeach; ?>

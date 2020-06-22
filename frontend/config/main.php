@@ -63,6 +63,7 @@ return [
                  'eventos/despublicar-evento/<slug>' => 'evento/despublicar-evento',
                  'eventos/crear-formulario/<slug>' => 'evento/crear-formulario-dinamico',
                  'eventos/responder-formulario/<slug>' => 'evento/responder-formulario',
+                 'eventos/suspender-evento/<slug>' => 'evento/suspender-evento',
                  'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
                  "acreditacion" => "acreditacion/acreditacion",
                  'defaultRoute' => '/site/index',
