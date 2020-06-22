@@ -43,10 +43,14 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model-
 
                     <!-- input logo -->
                     <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
-
+                    <button type="button" id="quitarLogo" class="btn btn-sm btn-outline">Quitar</button>
+                    <br>
+                    <br>
                     <!-- input flyer -->
                     <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?>
-
+                    <button type="button" id="quitarFlyer" class="btn btn-sm btn-outline">Quitar</button> 
+                    <br>
+                    <br>
                     <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Inicio *') ?>
 
                     <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Fin *') ?>
