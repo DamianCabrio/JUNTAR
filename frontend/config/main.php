@@ -50,7 +50,7 @@ return [
                  'eventos/evento-cargado/<slug>' => 'evento/evento-cargado',
                  'eventos/editar-evento/<slug>' => 'evento/editar-evento',
                  'eventos/publicar-evento/<slug>' => 'evento/publicar-evento',
-                 'eventos/despublicar-evento/<slug>' => 'evento/despublicar-evento',
+                 'eventos/suspender-evento/<slug>' => 'evento/suspender-evento',
                  'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
                  'defaultRoute' => '/site/index',
               ],

@@ -452,7 +452,7 @@ class EventoController extends Controller
       * Cambia en el atributo fechaCreacionEvento por null, y en el
       * atributo idEstadoEvento por el valor 4.
       */
-      public function actionDespublicarEvento($slug){
+      public function actionSuspenderEvento($slug){
         $model = $this->findModel("", $slug);
         
         $model->fechaCreacionEvento = null;   

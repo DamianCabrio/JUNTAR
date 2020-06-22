@@ -132,7 +132,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <?php
                             if (($evento->idEstadoEvento) == 1) {
                             ?>
-                                <?= Html::a('Suspender', ['eventos/despublicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
+                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger btn-sm']) ?>
                             <?php
                             }
                             ?>
