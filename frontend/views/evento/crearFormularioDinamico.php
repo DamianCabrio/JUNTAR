@@ -1,72 +1,83 @@
 <?php
+
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
+
+$this->title = "Crear Formulario";
 ?>
 
-<div class="crear-formulario container">
-    <div id="form_div">
-        <?php $form = ActiveForm::begin(['method' => "post", "id" => "dinamicForm"]); ?>
-        <?= $form->field($model,"botonAgregar")->input("button", ["onclick" => "add_row();", "value" => "Agregar Pregunta"])->label(false) ?>
-        <?= Html::submitButton("Enviar", ["id" => "submit", "name"=> "submit_row"]) ?>
-            <table id="tabla_preguntas" align=center>
-                <tr id="row1">
-                    <td>
-                        <?php $valores = ["Respuesta corta", "Respuesta larga", "Opciones"] ?>
-                        <?= $form->field($model,"tipo[]")->dropDownList($valores, ["prompt" => "Elige un tipo", "id" => "select1", "onchange" => "checkOptions(this)"])->label(false); ?>
-                    </td>
-                </tr>
-            </table>
-            <?php ActiveForm::end(); ?>
-    </div>
+<div class="formulario-dinamico container">
+
+        <?= Html::a("Agregar Pregunta", Url::toRoute(["pregunta/create?id=" . $evento->idEvento]),
+            ['class' => 'btn btn-primary agregarPregunta mb-4', "data-id" => Url::toRoute(["pregunta/create?id=" . $evento->idEvento])]) ?>
+
+        <?=
+        \yii\grid\GridView::widget([
+                "dataProvider" => $preguntas,
+            'summary' => '',
+            'options' => ['style' => 'width:100%;'],
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                [
+                    'attribute' => 'Tipo de pregunta',
+                    'format' => 'raw',
+                    'value' => function ($dataProvider) {
+                        if($dataProvider->tipo == 1){
+                            $retorno = "Respuesta Corta";
+                        }else if($dataProvider->tipo == 2){
+                            $retorno = "Respuesta Larga";
+                        }else if($dataProvider->tipo == 3){
+                            $retorno = "Subir Archivo";
+                        }
+                        return $retorno;
+                    },
+                    'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+                ],
+                [
+                    'attribute' => 'Respuesta',
+                    'format' => 'raw',
+                    'value' => function ($dataProvider) {
+                        return $dataProvider->descripcion;
+                    },
+                    'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    //genera una url para cada boton de accion
+                    'urlCreator' => function ($action, $model, $key, $index) {
+                        if ($action == "update") {
+                            return Url::to(['/pregunta/update', 'id' => $key]);
+                        }
+                        if ($action == "delete") {
+                            return Url::to(['/pregunta/delete', 'id' => $key]);
+                        }
+                    },
+                    //describe los botones de accion
+                    'buttons' => [
+                        'update' => function ($url, $model) {
+//                                                    return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn editarPresentacion']);
+                            return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPregunta']);
+                        },
+                        'delete' => function ($url, $model) {
+                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta', 'data-method' => 'POST']);
+                        }
+                    ],
+                    'header' => 'Acciones',
+                    'headerOptions' => ['style' => 'text-align:center;'],
+                    'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                ],
+                ]
+        ]);
+        ?>
+
+    <?php
+        Modal::begin([
+            'id' => 'modalPregunta',
+            'size' => 'modal-lg'
+        ]);
+        Modal::end();
+        ?>
+
 </div>
-
-<script type="text/javascript">
-    function add_row()
-    {
-        if (typeof $rowno === 'undefined') {
-            $rowno = 1
-        }
-        $rowno=$("#tabla_preguntas tr").length;
-        $rowno=$rowno+1;
-        if($rowno <= 10){
-
-            $("#tabla_preguntas tr:last").after("<tr id='row"+$rowno+"'>" +
-                "<td> " +
-                '<?= preg_replace( "/\r|\n/", "", $form->field($model,'tipo[]')->dropDownList($valores, ['prompt' => 'Elige un tipo', 'id' => 'select1', 'onchange' => 'checkOptions(this)'])->label(false) ); ?>' +
-                "</td>"+
-                "<td><input type='button' value='Eliminar pregunta' onclick=delete_row('row"+$rowno+"')></td></tr>");
-
-            $("#tabla_preguntas tr:last td div select").attr("id", "select"+$rowno);
-        }
-        else if ($rowno > 10 && $("#formularioform-botonagregar").not(":hidden")){
-            $("#formularioform-botonagregar").hide();
-        }
-        console.log("after:", $rowno);
-    }
-
-    function echoNombrePregunta(id){
-        return "<td id='pregunta"+ id +"'><input type='text' name='pregunta[]' placeholder='Ingrese la pregunta'></td>";
-    }
-
-    function echoNombrePreguntaYOpciones(id){
-        return "<td id='pregunta"+ id +"'><input type='text' name='pregunta[]' placeholder='Ingrese la pregunta'></td>";
-    }
-
-    function checkOptions(element) {
-        if(element.value == 2){
-
-        }else if(element.value != 2 && $("#pregunta"+element.id).length === 0){
-            $("#"+element.id).after(echoNombrePregunta(element.id));
-        }else if (element.value == ""){
-            $('#pregunta' + element.id).remove();
-        }
-    }
-
-    function delete_row(rowno)
-    {
-        $('#'+rowno).remove();
-        if($rowno > 10 && $("#formularioform-botonagregar").is(":hidden")) {
-            $("#formularioform-botonagregar").show();
-        }
-    }
-</script>

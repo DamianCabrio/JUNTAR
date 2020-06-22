@@ -104,6 +104,9 @@ class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
         ),
         'u' => 
         array (
+            'unclead\\multipleinput\\tests\\' => 28,
+            'unclead\\multipleinput\\examples\\' => 31,
+            'unclead\\multipleinput\\' => 22,
             'umanskyi31\\opengraph\\' => 21,
         ),
         'p' => 
@@ -225,6 +228,18 @@ class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
         'wbraganca\\dynamicform\\' => 
         array (
             0 => __DIR__ . '/..' . '/wbraganca/yii2-dynamicform',
+        ),
+        'unclead\\multipleinput\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/unclead/yii2-multiple-input/tests',
+        ),
+        'unclead\\multipleinput\\examples\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/unclead/yii2-multiple-input/examples',
+        ),
+        'unclead\\multipleinput\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/unclead/yii2-multiple-input/src',
         ),
         'umanskyi31\\opengraph\\' => 
         array (

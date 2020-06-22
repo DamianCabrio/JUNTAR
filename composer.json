@@ -23,7 +23,8 @@
         "umanskyi31/opengraph": "^2.0",
         "phpoffice/phpspreadsheet": "~1",
         "ext-json": "*",
-        "wbraganca/yii2-dynamicform": "*"
+        "wbraganca/yii2-dynamicform": "*",
+        "unclead/yii2-multiple-input": "~2.0"
   
     },
     "require-dev": {
