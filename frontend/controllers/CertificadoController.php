@@ -56,9 +56,7 @@ class CertificadoController extends Controller
      * @return mixed
      */
     public function actionIndex($id) {
-        $isAccredited = false;
         $isExhibitor = false;
-        $isOrganizer= false;
 
         $inscription = Inscripcion::find()
           ->where(['idEvento' => $id])
@@ -78,14 +76,10 @@ class CertificadoController extends Controller
           ->andWhere(['idUsuario' => Yii::$app->user->identity->id])
           ->all();
         //Verificación de estados
-        if ($inscription) {
-          $isAccredited = true;
-        }
+		$isAccredited = $this->verifyAccreditation($id, Yii::$app->user->identity->id);
+        $isOrganizer = $this->verifyOrganizer($id, Yii::$app->user->identity->id);
         if ($presentation) {
           $isExhibitor = true;
-        }
-        if ($event) {
-          $isOrganizer = true;
         }
 
         //Modelo y respuesta en el caso de que haya sido expositor de varias presentaciones
@@ -182,6 +176,43 @@ class CertificadoController extends Controller
       return $pdf;
 
     }
+	  /**
+     * Método para validar asistencia
+     *
+     * @return boolean
+     */
+    private function verifyAccreditation($event, $user)
+    {
+      $inscription = Inscripcion::find()
+        ->where(['idEvento' => $event])
+        ->andWhere(['idUsuario' => $user])
+        ->andWhere(['acreditacion' => 1])
+        ->all();
+
+      if ($inscription) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    /**
+     * Método para validar Organizador
+     *
+     * @return boolean
+     */
+    private function verifyOrganizer($event, $user)
+    {
+      $event = Evento::find()
+        ->where(['idEvento' => $event])
+        ->andWhere(['idUsuario' => $user])
+        ->all();
+
+      if ($event) {
+        return true;
+      } else {
+        return false;
+      }
+    }
     /**
      * Método para visualizar un certificado de Asistencia
      *
@@ -189,8 +220,15 @@ class CertificadoController extends Controller
      */
     public function actionPreviewAttendance($id)
     {
-      $filePDF = $this->commonData($id, 'asistencia');
-      return $filePDF->render();
+      if ($this->verifyAccreditation($id, Yii::$app->user->identity->id)) {
+        $filePDF = $this->commonData($id, 'asistencia');
+        return $filePDF->render();
+      } else {
+        return $this->render('/site/error', [
+          'name' => 'Certificado',
+          'message' => 'Se ha provocado un error en la solicitud del certificado.'
+        ]);
+      }
     }
     /**
      * Método para visualizar un certificado de Organizador
@@ -199,8 +237,15 @@ class CertificadoController extends Controller
      */
     public function actionPreviewOrganizer($id)
     {
-      $filePDF = $this->commonData($id, 'organizador');
-      return $filePDF->render();
+      if ($this->verifyOrganizer($id, Yii::$app->user->identity->id)) {
+        $filePDF = $this->commonData($id, 'organizador');
+        return $filePDF->render();
+      } else {
+        return $this->render('/site/error', [
+          'name' => 'Certificado',
+          'message' => 'Se ha provocado un error en la solicitud del certificado.'
+        ]);
+      }
     }
 
 }
