@@ -163,11 +163,11 @@ class EventoController extends Controller {
 
     public function verificarAdministrador($model) {
 
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario) {
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario ) {
         $query=new \yii\db\Query(); 
         $rows= $query->from('usuario_rol')
             ->andWhere(['user_id'=>Yii::$app->user->identity->idUsuario])
-            ->andWhere(['item_name'=>'Administrador'])->asArray()->all(); 
+            ->andWhere(['item_name'=>'Administrador'])->all(); 
 
 
         if (count($rows)==0) {
