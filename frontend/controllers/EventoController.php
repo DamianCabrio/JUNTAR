@@ -163,17 +163,19 @@ class EventoController extends Controller {
 
     public function verificarAdministrador($model) {
 
-        $idUsuario= $model->idUsuario0->idUsuario;
+        $idUsuario= Yii::$app->user->identity->idUsuario ;
 
+        $query=new \yii\db\Query(); 
         $rows= $query->select(['item_name']) 
             ->from('usuario_rol')
-            ->where(['user_id'=>$idUsuario])->all(); 
+            ->andWhere(['user_id'=>$idUsuario])
+            ->andWhere(['item_name'=>'Administrador'])->all(); 
 
 
         if (count($rows)==0) {
-            return true;
+            return false ;
          } else {
-             return false;
+             return true;
         }
     }
 
@@ -381,7 +383,7 @@ class EventoController extends Controller {
                     'cupos' => $cupos,
                     "esFai" => $esFai,
                     "esDueño" => $esDueño,
-                    "esAdministrador" => $esAdministrador,
+                    "esAdministrador" => $esAdministrador
         ]);
     }
 
