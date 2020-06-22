@@ -1,5 +1,6 @@
 <?php
 
+use frontend\models\Inscripcion;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
@@ -7,7 +8,6 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 
-use frontend\models\Inscripcion;
 
 $fileType = 'Xls';
 $file =  '../../template/inscriptos.xlsx';
@@ -27,16 +27,11 @@ $bordes = [
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
 $nombreEvento = $arrayEvento['nombre'];
 $idEvento = $arrayEvento['idEvento'];
 
 
-$nombreDelLibro = $idEvento."_".$nombreEvento.".xls";
-
-
-
+$nombreDelLibro = $idEvento."_Participantes_".$nombreEvento.".xls";
 
 foreach($listados as $obj){
     
@@ -67,13 +62,16 @@ foreach($listados as $obj){
                 $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
                 $fila->setCellValue('C'.$row, $obj['user_idInscripcion'])->getStyle('C'.$row)->applyFromArray($bordes);
                
-                $fecha= $obj['user_fechaPreInscripcion'];
+                $fecha= "***";
 
                 if( $titulo=='Inscriptos'){
-                    $fecha= $obj['user_fechaInscripcion'];
+                    $fecha = date("d-m-Y", strtotime( $obj['user_fechaInscripcion'] ));
+                }
+                if( $titulo=='Preinscriptos'){
+                    $fecha = date("d-m-Y", strtotime($obj['user_fechaPreInscripcion'] ));
                 }
 
-                $fila->setCellValue('D'.$row, date("d-m-Y", strtotime( $fecha)) )->getStyle('D'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('D'.$row, $fecha )->getStyle('D'.$row)->applyFromArray($bordes);
                 $fila->setCellValue('E'.$row, $obj['user_apellido'])->getStyle('E'.$row)->applyFromArray($bordes);
                 $fila->setCellValue('F'.$row, $obj['user_nombre'])->getStyle('F'.$row)->applyFromArray($bordes);
                 $fila->setCellValue('G'.$row, $obj['user_dni'])->getStyle('G'.$row)->applyFromArray($bordes);
