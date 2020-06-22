@@ -66,7 +66,7 @@ class UsuarioController extends Controller
     {
         $model = new Usuario();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
             return $this->redirect(['view', 'id' => $model->idUsuario]);
         }
 
@@ -86,7 +86,7 @@ class UsuarioController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
             return $this->redirect(['view', 'id' => $model->idUsuario]);
         }
 

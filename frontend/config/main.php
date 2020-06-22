@@ -18,6 +18,10 @@ return [
         '@rutaFlyer' => '/eventos/images/flyers/',
     ],
     'components' => [
+        'qr' => [
+            'class' => '\Da\QrCode\Component\QrCodeComponent',
+            // ... you can configure more properties of the component here
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
@@ -57,7 +61,11 @@ return [
                  'eventos/editar-evento/<slug>' => 'evento/editar-evento',
                  'eventos/publicar-evento/<slug>' => 'evento/publicar-evento',
                  'eventos/despublicar-evento/<slug>' => 'evento/despublicar-evento',
+                 'eventos/crear-formulario/<slug>' => 'evento/crear-formulario-dinamico',
+                 'eventos/responder-formulario/<slug>' => 'evento/responder-formulario',
+                 'eventos/suspender-evento/<slug>' => 'evento/suspender-evento',
                  'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
+                 "acreditacion" => "acreditacion/acreditacion",
                  'defaultRoute' => '/site/index',
               ],
           ],

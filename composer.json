@@ -20,10 +20,12 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "yiisoft/yii2-jui": "^2.0",
         "fortawesome/font-awesome": "^5.13.0",
-        "kartik-v/yii2-mpdf": "dev-master",
         "umanskyi31/opengraph": "^2.0",
-      "ext-json": "*",
-        "2amigos/qrcode-library": "~1.1"
+        "phpoffice/phpspreadsheet": "~1",
+        "ext-json": "*",
+        "wbraganca/yii2-dynamicform": "*",
+        "unclead/yii2-multiple-input": "~2.0"
+  
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

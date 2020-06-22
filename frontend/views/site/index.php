@@ -52,7 +52,6 @@ $this->title = 'Juntar';
         <section class="dark_bg">
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>
-                    <h2 class="text-white text-uppercase">Últimos Lanzamientos</h2><br>
                     <div class="card-columns">
                         <?php $validarEmail = new validateEmail(); ?>
                         <?php foreach ($eventos as $evento) : ?>

@@ -332,7 +332,7 @@ class PermissionManagerController extends Controller {
             'description' => 'Descripción del Rol',
         ]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post() && $model->validate()) && $model->validate()) {
             if (yii::$app->authManager->getRole($model->name) == null) {
                 $rol = yii::$app->authManager->createRole($model->name);
                 $rol->description = $model->description;

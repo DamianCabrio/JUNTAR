@@ -117,7 +117,7 @@ class CuentaController extends Controller {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = $this->findModel(Yii::$app->user->identity->id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->validate()) {
                 $viejoNombreUsuario = Yii::$app->user->identity->nombre;
                 $cambioImagen = false;
@@ -167,7 +167,7 @@ class CuentaController extends Controller {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = new UploadProfileImage();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->profileImage = UploadedFile::getInstance($model, 'profileImage');
 
             if ($model->profileImage != null) {
