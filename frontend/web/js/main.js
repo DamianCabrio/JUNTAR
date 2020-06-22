@@ -5,6 +5,17 @@
  */
 $(document).ready(function () {
 
+
+    //Permite quitar la imagen logo cargada en el formulario de carga
+    $("#quitarLogo").click(function () {
+     $("#uploadformlogo-imagelogo").val(null);
+    });
+
+    //Permite quitar la imagen flyer cargada en el formulario de carga
+    $("#quitarFlyer").click(function () {
+        $("#uploadformflyer-imageflyer").val(null);
+    });
+
     //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite
     if ($("#evento-fechalimiteinscripcion").val() != 0) {
         $("#fechaLimite").show();
