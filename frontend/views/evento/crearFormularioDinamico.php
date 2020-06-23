@@ -72,6 +72,8 @@ $this->title = "Crear Formulario";
         ]);
         ?>
 
+        <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
+
     <?php
         Modal::begin([
             'id' => 'modalPregunta',

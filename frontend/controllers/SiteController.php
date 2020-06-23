@@ -103,9 +103,9 @@ class SiteController extends Controller
         $orden = $request->get("orden", "");
 
         if($orden != ""){
-            $ordenSQL = $orden == "0" ? "fechaCreacionEvento ASC" : "fechaInicioEvento ASC";
+            $ordenSQL = $orden == "0" ? "fechaCreacionEvento DESC" : "fechaInicioEvento DESC";
         }else{
-            $ordenSQL = "fechaCreacionEvento ASC";
+            $ordenSQL = "fechaCreacionEvento DESC";
         }
 
         if ($busqueda != "") {

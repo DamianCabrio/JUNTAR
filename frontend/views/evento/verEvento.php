@@ -164,6 +164,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             break;
                                         case "yaPreinscripto":
                                             echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            if($cantidadPreguntas != 0){
+                                                echo Html::a('Responder Formulario', ['eventos/responder-formulario/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            }
                                             break;
                                         case "yaInscripto":
                                             echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);

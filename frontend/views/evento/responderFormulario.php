@@ -10,6 +10,7 @@ $this->title = "Responder Formulario";
 
 <div class="responder-formulario container">
     <h3>Haga click en los en cada boton para responder el formulario de preinscripcion</h3>
+    <h5>Una ves respondidas las preguntas no se pueden modificar, revise sus respuestas antes de enviar <br>Puede responder algunas preguntas y seguir despues</h5>
     <?php $hayPreguntasSinResponder = false; ?>
     <?php foreach ($preguntas as $i => $pregunta): ?>
     <?php if($respuestaYaHechas[$i] == false): ?>
@@ -22,11 +23,9 @@ $this->title = "Responder Formulario";
     <?php endif; ?>
     <?php endforeach; ?>
 
-    <?php
+    <br><br>
 
-    if($hayPreguntasSinResponder == false): ?>
-        <?= Html::a('Finalizar Formulario', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
-    <?php endif; ?>
+        <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
 
 </div>
 

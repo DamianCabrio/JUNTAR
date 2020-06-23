@@ -95,10 +95,14 @@ class EventoController extends Controller {
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if ($cupos !== 0 || is_null($cupos)) {
-            return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-        } else {
-            return "sinCupos";
+        if((strtotime($evento->fechaLimiteInscripcion) >= date("Y-m-d") && $evento->fechaLimiteInscripcion != null) || strtotime($evento->fechaInicioEvento) >= date("Y-m-d")){
+            return "noInscriptoYFechaLimiteInscripcionPasada";
+        }else{
+            if ($cupos !== 0 || is_null($cupos)) {
+                return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
+            } else {
+                return "sinCupos";
+            }
         }
     }
 
@@ -138,20 +142,24 @@ class EventoController extends Controller {
                 // Hay cupos en el evento
             } else {
                 // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
-                if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
                     // ¿El evento tiene pre inscripcion activada? - Si
                     if ($evento->preInscripcion == 1) {
-                        return "puedePreinscripcion";
+                        if(strtotime($evento->fechaLimiteInscripcion) <= date("Y-m-d")){
+                            return "puedePreinscripcion";
+                        }else{
+                            return "noInscriptoYFechaLimiteInscripcionPasada";
+                        }
                         // El evento no tiene pre inscripcion
                     } else {
-                        return "puedeInscripcion";
+                        if(strtotime($evento->fechaInicioEvento) <= date("Y-m-d")){
+                            return "puedeInscripcion";
+                        }else{
+                            return "noInscriptoYFechaLimiteInscripcionPasada";
+                        }
                     }
-                } else {
-                    return "noInscriptoYFechaLimiteInscripcionPasada";
                 }
             }
         }
-    }
 
     public function verificarDueño($model) {
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario) {
@@ -337,6 +345,8 @@ class EventoController extends Controller {
 
         $evento = $this->findModel("", $slug);
 
+        $cantidadPreguntas = Pregunta::find()->where(["idevento" => $evento->idEvento])->count();
+
         $presentacionSearchModel = new PresentacionSearch();
 
         $presentacionDataProvider = new ActiveDataProvider([
@@ -388,7 +398,8 @@ class EventoController extends Controller {
                     'cupos' => $cupos,
                     "esFai" => $esFai,
                     "esDueño" => $esDueño,
-                    "esAdministrador" => $esAdministrador
+                    "esAdministrador" => $esAdministrador,
+                    "cantidadPreguntas" => $cantidadPreguntas,
         ]);
     }
 
