@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idUsuario')->textInput() ?>
+    <?php // echo $form->field($model, 'idUsuario')->textInput() ?>
 
     <?= $form->field($model, 'idCategoriaEvento')->textInput() ?>
 
@@ -24,13 +24,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'descripcionEvento')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'descripcionEvento')->textArea(['rows' => 6, 'maxlength' => true]) ?>
 
     <?= $form->field($model, 'lugar')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fechaInicioEvento')->textInput() ?>
+    <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Inicio') ?>
 
-    <?= $form->field($model, 'fechaFinEvento')->textInput() ?>
+    <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Finalización') ?>
 
     <?= $form->field($model, 'imgFlyer')->textInput(['maxlength' => true]) ?>
 
@@ -40,14 +40,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'preInscripcion')->textInput() ?>
 
-    <?= $form->field($model, 'fechaLimiteInscripcion')->textInput() ?>
+    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width: auto'])->label('Fecha Limite Inscripcion') ?>
 
     <?= $form->field($model, 'codigoAcreditacion')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fechaCreacionEvento')->textInput() ?>
+    <?= $form->field($model, 'fechaCreacionEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Creación') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
