@@ -376,7 +376,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'header' => 'Acciones',
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                            'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento ==2),
+                                            'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
                                         ],
                                     ],
                                 ]);
