@@ -17,6 +17,9 @@ use Yii;
  */
 class RespuestaFile extends \yii\db\ActiveRecord
 {
+
+    public $respuesta;
+
     /**
      * {@inheritdoc}
      */
@@ -33,10 +36,20 @@ class RespuestaFile extends \yii\db\ActiveRecord
         return [
             [['idpregunta', 'idinscripcion', "respuesta"], 'required'],
             [['idpregunta', 'idinscripcion'], 'integer'],
-            [['respuesta'], 'string', 'max' => 500],
+            [['respuesta'], "file",'skipOnEmpty' => true, "maxSize" => 2000000, "tooBig" => "El archivo puede pesar como maximo 2mb"],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->respuesta->saveAs('../web/eventos/formularios/archivos/' . $this->respuesta->baseName . '.' . $this->respuesta->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

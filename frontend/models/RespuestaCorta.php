@@ -15,7 +15,7 @@ use Yii;
  * @property Inscripcion $idinscripcion0
  * @property Pregunta $idpregunta0
  */
-class Respuesta extends \yii\db\ActiveRecord
+class RespuestaCorta extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -31,9 +31,9 @@ class Respuesta extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idpregunta', 'idinscripcion', "respuesta"], 'required'],
+            [['idpregunta', 'idinscripcion', "respuesta"], 'required', "message" => "Esta campo es obligatorio"],
             [['idpregunta', 'idinscripcion'], 'integer'],
-            [['respuesta'], 'string', 'max' => 50],
+            [['respuesta'], 'string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];

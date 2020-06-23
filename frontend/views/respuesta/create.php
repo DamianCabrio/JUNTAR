@@ -13,6 +13,7 @@ $this->title = 'RespuestaFile';
 
     <?= $this->render('_form', [
         'model' => $model,
+        "pregunta" => $pregunta,
     ]) ?>
 
 </div>

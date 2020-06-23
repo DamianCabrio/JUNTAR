@@ -7,9 +7,9 @@ use yii\data\ActiveDataProvider;
 use frontend\models\RespuestaFile;
 
 /**
- * RespuestaFileSearch represents the model behind the search form of `frontend\models\RespuestaFile`.
+ * RespuestaSearch represents the model behind the search form of `frontend\models\RespuestaFile`.
  */
-class RespuestaFileSearch extends RespuestaFile
+class RespuestaSearch extends RespuestaFile
 {
     /**
      * {@inheritdoc}

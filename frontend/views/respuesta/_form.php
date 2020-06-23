@@ -15,7 +15,15 @@ use yii\bootstrap4\ActiveForm;
         'enableAjaxValidation' => true,
     ]); ?>
 
+    <?php if($pregunta->tipo == 1): ?>
     <?= $form->field($model, 'respuesta')->textInput(['maxlength' => true])->label(false) ?>
+    <?php endif; ?>
+    <?php if($pregunta->tipo == 2): ?>
+        <?= $form->field($model, 'respuesta')->textarea(['maxlength' => true])->label(false) ?>
+    <?php endif; ?>
+    <?php if($pregunta->tipo == 3): ?>
+        <?= $form->field($model, 'respuesta')->fileInput(["required"])->label(false) ?>
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

@@ -6,6 +6,7 @@ use Da\QrCode\QrCode;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
 use frontend\models\RespuestaFile;
+use frontend\models\RespuestaSearch;
 use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -307,10 +308,22 @@ class EventoController extends Controller {
 
         if($inscripcion != null){
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
+
+            $respuestaYaHechas = [];
+            foreach ($preguntas as $pregunta){
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
+                if($respuesta == null){
+                    array_push($respuestaYaHechas, false);
+                }else{
+                    array_push($respuestaYaHechas, true);
+                }
+            }
+
             return $this->render('responderFormulario',
                 ["preguntas" => $preguntas,
                     "eventos" => $evento,
-                    "idInscripcion" => $inscripcion->idInscripcion,]);
+                    "idInscripcion" => $inscripcion->idInscripcion,
+                    "respuestaYaHechas" => $respuestaYaHechas]);
         }
     }
 

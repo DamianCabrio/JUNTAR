@@ -5,10 +5,14 @@ namespace frontend\controllers;
 use frontend\models\Pregunta;
 use Yii;
 use frontend\models\RespuestaFile;
-use frontend\models\RespuestaFileSearch;
+use frontend\models\RespuestaCorta;
+use frontend\models\RespuestaLarga;
+use frontend\models\RespuestaSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * RespuestaController implements the CRUD actions for RespuestaFile model.
@@ -20,14 +24,47 @@ class RespuestaController extends Controller
      */
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+        $behaviors['access'] = [
+            //utilizamos el filtro AccessControl
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        "ver-expositores",
+                    ],
+                    'roles' => ['?'], // <----- guest
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        "ver-expositores",
+                        "delete"
+                    ],
+                    'roles' => ['@'], // <----- guest
+                ],
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                    'matchCallback' => function ($rule, $action) {
+                        //                        $module = Yii::$app->controller->module->id;
+                        $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
+                        $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
+                        //                        $route = "$module/$controller/$action";
+                        $route = "$controller/$action";                     //generamos la ruta que se busca acceder
+                        //                        $post = Yii::$app->request->post();
+                        //preguntamos si el usuario tiene los permisos para visitar el sitio
+                        //                        if (Yii::$app->user->can($route, ['post' => $post])) {
+                        if (Yii::$app->user->can($route)) {
+                            //                            return $this->goHome();
+                            return true;
+                        }
+                    }
                 ],
             ],
         ];
+
+        return $behaviors;
     }
 
     /**
@@ -65,13 +102,29 @@ class RespuestaController extends Controller
      */
     public function actionCreate($id, $id2)
     {
-        $model = new RespuestaFile();
         $pregunta = Pregunta::find()->where(["id" => $id])->one();
+
+        if($pregunta->tipo == 1){
+            $model = new RespuestaCorta;
+        }elseif ($pregunta->tipo == 2){
+            $model = new RespuestaLarga();
+        }else{
+            $model = new RespuestaFile();
+        }
 
         $model->idpregunta = $id;
         $model->idinscripcion = $id2;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($pregunta->tipo == 3){
+                $model->respuesta = UploadedFile::getInstance($model, 'profileImage');
+                if ($model->respuesta != null) {
+                    if ($model->upload()) {
+                        $model->respuesta = (Yii::getAlias("../web/eventos/formularios/archivos/")) . $model->respuesta->baseName . '.' . $model->respuesta->extension;
+                    }
+                }
+            }
+
             return $this->redirect(Yii::$app->request->referrer);
         }
 
