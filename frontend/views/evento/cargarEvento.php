@@ -12,8 +12,8 @@ use yii\bootstrap4\ActiveForm;
 $this->title = "Cargar Evento";
 ?>
 <div class="container">
-    <div class = "row">
-        <div class = "col-md-8 col-12 m-auto">
+    <div class="row">
+        <div class="col-md-8 col-12 m-auto">
 
             <div class="evento-form">
                 <h2 class="text-center">Cargar nuevo evento</h2>
@@ -31,17 +31,7 @@ $this->title = "Cargar Evento";
                         <span class="m-auto"> Opciones automaticas: </span>
                     </div>
                     <div class="nombresCortos" id="automaticSlug">
-                        <!--                        <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc1" name="slug" value="">  hola </span>
-                                                </div>
-                                                <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc2" name="slug" value="">  hola </span>
-                                                </div>
-                                                <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc3" name="slug" value="">  hola </span>
-                                                </div>-->
                     </div>
-                    <!--<div class="col-4 d-flex justify-content-center ">-->
                     <br>
                     <div class="col-12 mt-2 nombresCortos">
                         <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
@@ -57,39 +47,45 @@ $this->title = "Cargar Evento";
 
                 <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 
-                <!-- select categoria -->
-                <?php
-                $categoriasEventos = CategoriaEvento::find()
-                        ->select(['descripcionCategoria'])
-                        ->indexBy('idCategoriaEvento')
-                        ->column();
-                ?>
-                <?= $form->field($model, 'idCategoriaEvento')->dropdownList($categoriasEventos, ['prompt' => 'Seleccione una categoria'])->label('Categoria *'); ?>
+                <?= $form->field($model, 'idCategoriaEvento')->dropdownList($categoriasEventos,  ['prompt' => 'Seleccione una categoria'])->label('Categoria *'); ?>
 
-                <!-- select modalidad -->
-                <?php
-                $modalidadEvento = modalidadEvento::find()
-                        ->select(['descripcionModalidad'])
-                        ->indexBy('idModalidadEvento')
-                        ->column();
-                ?>
-                <?= $form->field($model, 'idModalidadEvento')->dropdownList($modalidadEvento, ['prompt' => 'Selecciona una modalidad'])->label('Modalidad *'); ?>
+                <?= $form->field($model, 'idModalidadEvento')->dropdownList($modalidadEvento,  ['prompt' => 'Selecciona una modalidad'])->label('Modalidad *'); ?>
 
                 <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Inicio *') ?>
 
                 <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Fin *') ?>
-
+                
                 <!-- input logo -->
                 <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
-
+                <button type="button" id="quitarLogo" class="btn btn-sm btn-outline">Quitar</button>
+                <br>
+                <br>
                 <!-- input flyer -->
                 <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?>
+                <button type="button" id="quitarFlyer" class="btn btn-sm btn-outline">Quitar</button> 
+                <br>
+                <br>
+                <div class="form-group">
+                    <label>¿Posee límite de espectadores?</label><br>
 
-                <?= $form->field($model, 'capacidad')->input('number', ['placeholder' => 'Ingrese número de espectadores'], ['min' => 1, 'max' => 9999])->label('Capacidad de espectadores *') ?>
+                    <div role="radiogroup" aria-required="true">
+                        <div class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" id="espectadores-no" name="posee-espectadores" value="-1" checked required>
+                            <label class="custom-control-label" for="espectadores-no">No</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" id="espectadores-si" name="posee-espectadores" value="2">
+                            <label class="custom-control-label" for="espectadores-si">Si</label><br>
+                        </div>
+                    </div>
+                </div>
 
+
+                <div id="mostrarCapacidad">
+                    <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                </div>
                 <!-- select requiere preInscripcion -->
-                <?php $requiere = ['0' => 'No', '1' => 'Si']; ?>
-                <?= $form->field($model, 'preInscripcion')->dropDownList($requiere, ['prompt' => '¿Requiere preinscripción? *']) ?>
+                <?= $form->field($model, 'preInscripcion')->radioList([0 => 'No', 1 => 'Si'])->label('¿Requiere preinscripción? *') ?>
 
                 <!-- calendar -->
                 <div id="fechaLimite">
@@ -99,14 +95,14 @@ $this->title = "Cargar Evento";
 
                 <p class="font-italic">
                     * Campos obligatorios.
-                <p>
-                <div class="form-group">
-                    <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
-                </div>
+                    <p>
+                        <div class="form-group">
+                            <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
+                        </div>
 
-                <?php ActiveForm::end(); ?>
+                        <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
-</div>   
+</div>
 </div>

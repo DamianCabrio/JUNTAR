@@ -69,7 +69,7 @@ class AssetBundle extends BaseObject
      * ```php
      * public $depends = [
      *    'yii\web\YiiAsset',
-     *    'yii\bootstrap4\BootstrapAsset',
+     *    'yii\bootstrap\BootstrapAsset',
      * ];
      * ```
      */
