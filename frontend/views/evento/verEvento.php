@@ -104,7 +104,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             <div class="container">
                 <div class="card bg-white">
                     <?PHP
-                    if ($esDueño) {
+                    if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
                         echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Estado Evento ' . $estadoEvento . '</span> </div>';
                     }
                     ?>
@@ -174,8 +174,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         'size' => 'modal-lg'
                                     ]);
                                     Modal::end();
+                                    
+                                    Modal::begin([
+                                        'id' => 'modalCertificado',
+                                        'size' => 'modal-sm'
+                                    ]);
+                                    Modal::end();
                                     ?>
-
+                                    <?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
+                                        <?= Html::a('Certificado', ['certificado/index', 'id' => $evento->idEvento], ['class' => 'btn btn-primary btn-lg full_width viewCertification']); ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +250,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 									<h4 class="text-uppercase align-middle">AGENDA
 										<?PHP
                                         if ($esDueño) {
-                                            echo Html::a('								<div class="btn-group" role="group" aria-label="">
+                                            echo Html::a('<div class="btn-group" role="group" aria-label="">
 											<button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
 										</div><i class="material-icons large align-middle">add</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => '']);
                                         }
@@ -254,114 +262,114 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                                 <br>
                                                                 <br>-->
                                 <?=
-                                GridView::widget([
-                                    'dataProvider' => $presentacionDataProvider,
-                                    'summary' => '',
-                                    //                        'filterModel' => $searchModel,
-                                    'options' => ['style' => 'width:100%;'],
-                                    'columns' => [
-                                        ['class' => 'yii\grid\SerialColumn'],
-                                        //'idPresentacion',
-                                        //'tituloPresentacion',
-                                        [
-                                            'attribute' => 'Titulo',
-                                            'format' => 'raw',
-                                            'value' => function ($dataProvider) {
-                                                return $dataProvider->tituloPresentacion . ' <br/><small><a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion]) . '">(Más información)</a></small>';
-                                            },
-                                            'headerOptions' => ['style' => 'width:30%;text-align:center;'],
-                                        ],
-                                        //'diaPresentacion',
-                                        [
-                                            'attribute' => 'Dia',
-                                            'value' => function ($dataProvider) {
-                                                $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                                                return $fechaConBarras;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
-                                        //'horaInicioPresentacion',
-                                        [
-                                            'attribute' => 'Hora de Inicio',
-                                            'value' => function ($dataProvider) {
-                                                $horaSinSegundos = date('H:i', strtotime($dataProvider->horaInicioPresentacion));
-                                                return $horaSinSegundos;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
-                                        //'horaFinPresentacion',
-                                        [
-                                            'attribute' => 'Hora de Fin',
-                                            'value' => function ($dataProvider) {
-                                                $horaSinSegundos = date('H:i', strtotime($dataProvider->horaFinPresentacion));
-                                                return $horaSinSegundos;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
-                                        //'linkARecursos',
-                                        [
-                                            'attribute' => 'Recursos',
-                                            'format' => 'raw',
-                                            'value' => function ($dataProvider) {
-                                                //HACER IF
-                                                if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
-                                                    $retorno = 'No hay recursos para mostrar';
-                                                } else {
-                                                    $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
-                                                }
-                                                return $retorno;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
-                                        [
-                                            'attribute' => 'expositores',
-                                            'format' => 'raw',
-                                            'value' => function ($dataProvider) {
-                                                //HACER IF
-                                                if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
-                                                    $retorno = '-';
-                                                } else {
-                                                    $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
-                                                }
-                                                $retorno .= "  ". Html::a('<i class="material-icons">add</i>', ['cargar-expositor'], ['class' => 'btn btn_icon btn-outline-success']);
-                                                return $retorno;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
-                                        //'expositores',
-                                        [
-                                            'class' => 'yii\grid\ActionColumn',
-                                            //genera una url para cada boton de accion
-                                            'urlCreator' => function ($action, $model, $key, $index) {
-                                                if ($action == "update") {
-                                                    return Url::to(['/presentacion/update', 'presentacion' => $key]);
-                                                }
-                                                if ($action == "delete") {
-                                                    return Url::to(['/presentacion/delete', 'presentacion' => $key]);
-                                                }
-                                            },
-                                            //describe los botones de accion
-                                            'buttons' => [
-                                                'update' => function ($url, $model) {
-//                                                    return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn editarPresentacion']);
-                                                    return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPresentacion']);
+                                    GridView::widget([
+                                        'dataProvider' => $presentacionDataProvider,
+                                        'summary' => '',
+                                        //                        'filterModel' => $searchModel,
+                                        'options' => ['style' => 'width:100%;'],
+                                        'columns' => [
+                                            ['class' => 'yii\grid\SerialColumn'],
+                                            //'idPresentacion',
+                                            //'tituloPresentacion',
+                                            [
+                                                'attribute' => 'Titulo',
+                                                'format' => 'raw',
+                                                'value' => function ($dataProvider) {
+                                                    return $dataProvider->tituloPresentacion . ' <br/><small><a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion]) . '">(Más información)</a></small>';
                                                 },
-                                                'delete' => function ($url, $model) {
-                                                    return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPresentacion']);
-                                                }
+                                                'headerOptions' => ['style' => 'width:30%;text-align:center;'],
                                             ],
-                                            'header' => 'Acciones',
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                            'visible' => $esDueño,
+                                            //'diaPresentacion',
+                                            [
+                                                'attribute' => 'Dia',
+                                                'value' => function ($dataProvider) {
+                                                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
+                                                    return $fechaConBarras;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            //'horaInicioPresentacion',
+                                            [
+                                                'attribute' => 'Hora de Inicio',
+                                                'value' => function ($dataProvider) {
+                                                    $horaSinSegundos = date('H:i', strtotime($dataProvider->horaInicioPresentacion));
+                                                    return $horaSinSegundos;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            //'horaFinPresentacion',
+                                            [
+                                                'attribute' => 'Hora de Fin',
+                                                'value' => function ($dataProvider) {
+                                                    $horaSinSegundos = date('H:i', strtotime($dataProvider->horaFinPresentacion));
+                                                    return $horaSinSegundos;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            //'linkARecursos',
+                                            [
+                                                'attribute' => 'Recursos',
+                                                'format' => 'raw',
+                                                'value' => function ($dataProvider) {
+                                                    //HACER IF
+                                                    if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
+                                                        $retorno = 'No hay recursos para mostrar';
+                                                    } else {
+                                                        $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
+                                                    }
+                                                    return $retorno;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            [
+                                                'attribute' => 'expositores',
+                                                'format' => 'raw',
+                                                'value' => function ($dataProvider) {
+                                                    //HACER IF
+                                                    if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
+                                                        $retorno = '-';
+                                                    } else {
+                                                        $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
+                                                    }
+                                                    $retorno .= "  " . Html::a('<i class="material-icons">add</i>', ['cargar-expositor'], ['class' => 'btn btn_icon btn-outline-success']);
+                                                    return $retorno;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            //'expositores',
+                                            [
+                                                'class' => 'yii\grid\ActionColumn',
+                                                //genera una url para cada boton de accion
+                                                'urlCreator' => function ($action, $model, $key, $index) {
+                                                    if ($action == "update") {
+                                                        return Url::to(['/presentacion/update', 'presentacion' => $key]);
+                                                    }
+                                                    if ($action == "delete") {
+                                                        return Url::to(['/presentacion/delete', 'presentacion' => $key]);
+                                                    }
+                                                },
+                                                //describe los botones de accion
+                                                'buttons' => [
+                                                    'update' => function ($url, $model) {
+                                                        //                                                    return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn editarPresentacion']);
+                                                        return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPresentacion']);
+                                                    },
+                                                    'delete' => function ($url, $model) {
+                                                        return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPresentacion']);
+                                                    }
+                                                ],
+                                                'header' => 'Acciones',
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                                'visible' => $esDueño,
+                                            ],
                                         ],
-                                    ],
-                                ]);
+                                    ]);
                                 ?>
                                 <br>
                                 <br>
@@ -373,5 +381,24 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             </div>
         </div>
     </div>
-  </div>
+    <!-- Modal -->
+    <div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="flyerModalLabel">Flyer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img class="full_width" src='<?= $flyer ?>'>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= $flyer ?>" class="btn btn-secondary" download>Bajar</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
