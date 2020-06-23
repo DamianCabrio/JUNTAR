@@ -56,7 +56,10 @@ class CertificadoController extends Controller
      * @return mixed
      */
     public function actionIndex($id) {
+
+        $isAccredited = false;
         $isExhibitor = false;
+        $isOrganizer= false;
 
         $inscription = Inscripcion::find()
           ->where(['idEvento' => $id])
@@ -76,10 +79,15 @@ class CertificadoController extends Controller
           ->andWhere(['idUsuario' => Yii::$app->user->identity->id])
           ->all();
         //Verificación de estados
-		$isAccredited = $this->verifyAccreditation($id, Yii::$app->user->identity->id);
-        $isOrganizer = $this->verifyOrganizer($id, Yii::$app->user->identity->id);
+
+        if ($inscription) {
+          $isAccredited = true;
+        }
         if ($presentation) {
           $isExhibitor = true;
+        }
+        if ($event) {
+          $isOrganizer = true;
         }
 
         //Modelo y respuesta en el caso de que haya sido expositor de varias presentaciones
@@ -229,6 +237,7 @@ class CertificadoController extends Controller
           'message' => 'Se ha provocado un error en la solicitud del certificado.'
         ]);
       }
+
     }
     /**
      * Método para visualizar un certificado de Organizador

@@ -54,7 +54,7 @@ final class Context
      *
      * @throws InvalidArgumentException Thrown if $value is not an array or object
      *
-     * @return int|string the ID of the stored value, either as a string or integer
+     * @return bool|int|string the ID of the stored value, either as a string or integer
      */
     public function add(&$value)
     {
@@ -131,10 +131,8 @@ final class Context
 
     /**
      * @param object $object
-     *
-     * @return string
      */
-    private function addObject($object)
+    private function addObject($object): string
     {
         if (!$this->objects->contains($object)) {
             $this->objects->attach($object);

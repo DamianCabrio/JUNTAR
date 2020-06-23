@@ -3,8 +3,10 @@
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
+?>
+<?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Evento */
+/* @var $model frontend\models\Evento */
 
 $this->title = "Acreditación";
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];

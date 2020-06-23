@@ -7,7 +7,9 @@ use frontend\models\Evento;
 use frontend\models\Inscripcion;
 use frontend\models\AcreditacionForm;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * EventoController implements the CRUD actions for Evento model.

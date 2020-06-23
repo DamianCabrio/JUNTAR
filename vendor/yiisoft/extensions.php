@@ -3,6 +3,33 @@
 $vendorDir = dirname(__DIR__);
 
 return array (
+  'yiisoft/yii2-bootstrap4' => 
+  array (
+    'name' => 'yiisoft/yii2-bootstrap4',
+    'version' => '2.0.8.0',
+    'alias' => 
+    array (
+      '@yii/bootstrap4' => $vendorDir . '/yiisoft/yii2-bootstrap4/src',
+    ),
+  ),
+  'umanskyi31/opengraph' => 
+  array (
+    'name' => 'umanskyi31/opengraph',
+    'version' => '2.0.0.0',
+    'alias' => 
+    array (
+      '@umanskyi31/opengraph' => $vendorDir . '/umanskyi31/opengraph/src',
+    ),
+  ),
+  'yiisoft/yii2-gii' => 
+  array (
+    'name' => 'yiisoft/yii2-gii',
+    'version' => '2.2.1.0',
+    'alias' => 
+    array (
+      '@yii/gii' => $vendorDir . '/yiisoft/yii2-gii/src',
+    ),
+  ),
   'yiisoft/yii2-swiftmailer' => 
   array (
     'name' => 'yiisoft/yii2-swiftmailer',
@@ -10,6 +37,15 @@ return array (
     'alias' => 
     array (
       '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer/src',
+    ),
+  ),
+  'yiisoft/yii2-jui' => 
+  array (
+    'name' => 'yiisoft/yii2-jui',
+    'version' => '2.0.7.0',
+    'alias' => 
+    array (
+      '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
   'yiisoft/yii2-debug' => 
@@ -30,49 +66,24 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
-  'yiisoft/yii2-gii' => 
+  'wbraganca/yii2-dynamicform' => 
   array (
-    'name' => 'yiisoft/yii2-gii',
-    'version' => '2.2.1.0',
+    'name' => 'wbraganca/yii2-dynamicform',
+    'version' => '2.0.2.0',
     'alias' => 
     array (
-      '@yii/gii' => $vendorDir . '/yiisoft/yii2-gii/src',
+      '@wbraganca/dynamicform' => $vendorDir . '/wbraganca/yii2-dynamicform',
     ),
   ),
-  'yiisoft/yii2-bootstrap4' => 
+  'unclead/yii2-multiple-input' => 
   array (
-    'name' => 'yiisoft/yii2-bootstrap4',
-    'version' => '2.0.8.0',
+    'name' => 'unclead/yii2-multiple-input',
+    'version' => '2.22.0.0',
     'alias' => 
     array (
-      '@yii/bootstrap4' => $vendorDir . '/yiisoft/yii2-bootstrap4/src',
-    ),
-  ),
-  'yiisoft/yii2-jui' => 
-  array (
-    'name' => 'yiisoft/yii2-jui',
-    'version' => '2.0.7.0',
-    'alias' => 
-    array (
-      '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
-    ),
-  ),
-  'kartik-v/yii2-mpdf' => 
-  array (
-    'name' => 'kartik-v/yii2-mpdf',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@kartik/mpdf' => $vendorDir . '/kartik-v/yii2-mpdf/src',
-    ),
-  ),
-  'umanskyi31/opengraph' => 
-  array (
-    'name' => 'umanskyi31/opengraph',
-    'version' => '2.0.0.0',
-    'alias' => 
-    array (
-      '@umanskyi31/opengraph' => $vendorDir . '/umanskyi31/opengraph/src',
+      '@unclead/multipleinput/examples' => $vendorDir . '/unclead/yii2-multiple-input/examples',
+      '@unclead/multipleinput' => $vendorDir . '/unclead/yii2-multiple-input/src',
+      '@unclead/multipleinput/tests' => $vendorDir . '/unclead/yii2-multiple-input/tests',
     ),
   ),
 );
