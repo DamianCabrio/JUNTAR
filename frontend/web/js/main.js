@@ -5,7 +5,18 @@
  */
 $(document).ready(function () {
 
-//Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite
+
+    //Permite quitar la imagen logo cargada en el input file del formulario de carga y edicion
+    $("#quitarLogo").click(function () {
+     $("#uploadformlogo-imagelogo").val(null);
+    });
+
+    //Permite quitar la imagen flyer cargada en el input file del formulario de carga y edicion
+    $("#quitarFlyer").click(function () {
+        $("#uploadformflyer-imageflyer").val(null);
+    });
+
+    //Verifica si el evento requeire preinscripcion para mostrar el campo fechalimite
     if ($("#evento-fechalimiteinscripcion").val() != 0) {
         $("#fechaLimite").show();
         $("#evento-fechalimiteinscripcion").attr("required", true);
@@ -118,6 +129,15 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editarPerfilModal($(this).attr('href'), 'Datos de la cuenta');
     });
+
+    //funcionalidad editar perfil
+    $('.responderPregunta').click(function (link) {
+//impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        responderRespuestaModal($(this).attr('href'), 'Responder pregunta');
+    });
+
     //funcionalidad editar perfil
     $('.uploadProfileImage').click(function (link) {
 //impedimos que el cambio de pestaña se active
@@ -178,13 +198,13 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         agregarPresentacionModal($(this).attr('href'));
     });
-    /* $('.agregarExpositor').click(function (link) {
+     $('.agregarExpositor').click(function (link) {
      //impedimos que el cambio de pestaña se active
      link.preventDefault();
      //alert($(this).attr('href'));
      //llamamos a la funcion que se encargue de mostrar el formulario
      agregarExpositorModal($(this).attr('href'));
-     }); */
+     }); 
 
     $('.verPresentacion').click(function (link) {
 //impedimos que el cambio de pestaña se active
@@ -274,7 +294,7 @@ function verExpositoresModal(link) {
     });
 }
 
-function editPresentacionModal(link) {
+/* function editPresentacionModal(link) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
@@ -293,7 +313,22 @@ function editPresentacionModal(link) {
             $('.modal-body').html($(this).html());
         });
     });
-}
+} */
+
+ function editPresentacionModal(link) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: link
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+                //.html("<h3> Cargar presentación </h3>");
+    });
+} 
 
 function deletePresentacionModal(link) {
 //hace la petición a la url
@@ -315,7 +350,7 @@ function deletePresentacionModal(link) {
         });
     });
 }
-
+/* 
 function agregarPresentacionModal(link) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se envia.
@@ -336,6 +371,21 @@ function agregarPresentacionModal(link) {
         });
     });
 }
+ */
+function agregarPresentacionModal(link) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: link
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+                //.html("<h3> Cargar presentación </h3>");
+    });
+} 
 
 function verPresentacionModal(link) {
 //hace la petición a la url
@@ -379,6 +429,20 @@ function verPresentacionModal(link) {
  });
  });
  } */
+ function agregarExpositorModal(link) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: link
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+                //.html("<h3> Cargar presentación </h3>");
+    });
+} 
 
 //funcion utilizada para eliminar caracteres criticos en un texto
 function eliminarDiacriticos(texto) {
@@ -491,6 +555,23 @@ function editarPreguntaModal(unaUrl, titulo) {
                 .html("<h3> " + titulo + " </h3>");
     });
 }
+
+function responderRespuestaModal(unaUrl, titulo) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalPregunta').modal('show')
+            .find('.modal-body')
+            .html(data);
+        $('#modalPregunta').find('.modal-header')
+            .html("<h3> " + titulo + " </h3>");
+    });
+}
+
+
 
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html

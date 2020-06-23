@@ -25,16 +25,13 @@ class Respuesta extends \yii\db\ActiveRecord
         return 'respuesta';
     }
 
-    public $respuesta = [];
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['idpregunta', 'idinscripcion'], 'required'],
-            ['respuesta', 'each', 'rule' => ['required']],
+            [['idpregunta', 'idinscripcion', "respuesta"], 'required'],
             [['idpregunta', 'idinscripcion'], 'integer'],
             [['respuesta'], 'string', 'max' => 500],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
@@ -51,7 +48,7 @@ class Respuesta extends \yii\db\ActiveRecord
             'id' => 'ID',
             'idpregunta' => 'Idpregunta',
             'idinscripcion' => 'Idinscripcion',
-            'respuesta' => 'Respuesta',
+            'respuesta' => 'RespuestaFile',
         ];
     }
 

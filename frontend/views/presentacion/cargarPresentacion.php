@@ -9,7 +9,8 @@ use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Presentacion */
 /* @var $form yii\widgets\ActiveForm */
-$this->title = "Cargar Presentación - ". $evento->nombreCortoEvento;
+
+$this->title = "Cargar Presentación - " . $evento->nombreCortoEvento;
 
 ?>
 <div class="container">
@@ -24,7 +25,7 @@ $this->title = "Cargar Presentación - ". $evento->nombreCortoEvento;
                     <p class="text-center">Complete los siguientes campos</p>
 
                     <?php $form = ActiveForm::begin([
-                        'id'=> 'cargarPresentacion',
+                        'id' => 'cargarPresentacion',
                     ]); ?>
 
                     <?= $form->field($model, 'idEvento')->dropdownList($item,  ['value' => $evento->idEvento, 'readonly' => true])->label('Seleccione un evento *');
