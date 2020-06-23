@@ -72,7 +72,7 @@ class Evento extends \yii\db\ActiveRecord
             [['nombreEvento', 'lugar', 'imgFlyer', 'imgLogo'], 'string', 'max' => 200],
             ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
             [['nombreCortoEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
-            ['nombreCortoEvento', 'match', 'pattern' => '/^[a-z0-9]+(?:-[a-z0-9]+)*$/', 'message' => 'El campo contiene caracteres inválidos'],
+            //['nombreCortoEvento', 'match', 'pattern' => '/^[a-z0-9]+(?:-[a-z0-9]+)*$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['nombreCortoEvento', 'unique', 'message' => 'El nombre corto ya fue registrado.'],
             [['descripcionEvento'], 'string', 'max' => 800],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
@@ -81,6 +81,7 @@ class Evento extends \yii\db\ActiveRecord
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
             ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
             ['fechaLimiteInscripcion','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'<'],
+            ['nombreCortoEvento','match','pattern'=> "/^[A-Z|a-z|0-9-_]+$/","message" => "No se permite espacios en blanco"],
         ];
     }
 

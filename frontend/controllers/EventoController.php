@@ -46,7 +46,6 @@ class EventoController extends Controller {
                     'allow' => true,
                     'actions' => [
                         "ver-evento",
-                        "ver-evento2"
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -197,7 +196,7 @@ class EventoController extends Controller {
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
 
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
@@ -220,7 +219,7 @@ class EventoController extends Controller {
                 $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
             }
             $model->save();
-            return $this->redirect(['eventos/evento-cargado/' . $nombreCortoEvento]);
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
         $categoriasEventos = CategoriaEvento::find()
             ->select(['descripcionCategoria'])
@@ -234,11 +233,6 @@ class EventoController extends Controller {
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
     }
     
-    public function actionEventoCargado($slug) {
-        return $this->render('eventoCargado', [
-                    'model' => $this->findModel("", $slug),
-        ]);
-    }
 
     private function actionGenerarQRAcreditacion($codigoAcreditacion, $slug) {
 //        $label = (new Label($slug))
@@ -370,85 +364,84 @@ class EventoController extends Controller {
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-    public function actionEditarEvento($slug) {
+    public function actionEditarEvento($slug)
+    {
 
         $model = $this->findModel("", $slug);
-        $esDueño = $this->verificarDueño($model);
 
-        if ($esDueño) {
+        $modelLogo = new UploadFormLogo();
+        $modelFlyer = new UploadFormFlyer();
 
-            $modelLogo = new UploadFormLogo();
-            $modelFlyer = new UploadFormFlyer();
+        $rutaLogo = (Yii::getAlias("@rutaLogo"));
+        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-            $rutaLogo = (Yii::getAlias("@rutaLogo"));
-            $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
+        if ($model->load(Yii::$app->request->post())) {
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
-                $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
-
-                if ($modelLogo->imageLogo != null) {
-                    if ($modelLogo->upload()) {
-                        $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
-                    }
+            if ($modelLogo->imageLogo != null) {
+                if ($modelLogo->upload()) {
+                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
-                if ($modelFlyer->imageFlyer != null) {
-                    if ($modelFlyer->upload()) {
-                        $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
-                    }
-                }
-                $model->save();
-                return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
             }
-
-            return $this->render('editarEvento', [
-                        'model' => $model,
-                        'modelLogo' => $modelLogo,
-                        'modelFlyer' => $modelFlyer
-            ]);
-        } else {
-            throw new NotFoundHttpException('La página solicitada no existe.');
+            if ($modelFlyer->imageFlyer != null) {
+                if ($modelFlyer->upload()) {
+                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                }
+            }
+            $model->save();
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
-    }
+            $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
+
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+
+         return $this->render('editarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
+        }
 
     /**
      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
      * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
      * atributo idEstadoEvento por el valor 1.
      */
-    public function actionPublicarEvento($slug) {
+    public function actionPublicarEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = date('Y-m-d');
+       
+        $model->fechaCreacionEvento = date('Y-m-d');    
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
         $model->save();
-        return $this->render('eventoPublicado', [
-                    'model' => $model,
-        ]);
-    }
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     }   
 
     /**
      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
      * Cambia en el atributo fechaCreacionEvento por null, y en el
      * atributo idEstadoEvento por el valor 4.
      */
-    public function actionDespublicarEvento($slug) {
+    public function actionSuspenderEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = null;
+        
+        $model->fechaCreacionEvento = null;   
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
         $model->save();
-        return $this->render('eventoDespublicado', [
-                    'model' => $model,
-        ]);
-    }
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     } 
+
 
     public function actionCargarExpositor($idPresentacion) {
         $model = new PresentacionExpositor();
         $objPresentacion = Presentacion::findOne($idPresentacion);
         $objEvento = Evento::findOne($objPresentacion->idEvento);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->idPresentacion = $idPresentacion;
             $model->save();
             return $this->redirect(['eventos/ver-evento/'. $objEvento->nombreCortoEvento]);
@@ -459,11 +452,20 @@ class EventoController extends Controller {
                             ->asArray()
                             ->all();
          
-        return $this->render('cargarExpositor', [
+        If(Yii::$app->request->isAjax){
+			//retorna renderizado para llamado en ajax
+			return $this->renderAjax('cargarExpositor', [
             'model' => $model,
             'objetoEvento' => $objEvento,
             'usuarios' => $usuarios,
         ]);
+			}else{
+				 return $this->render('cargarExpositor', [
+				'model' => $model,
+				'objetoEvento' => $objEvento,
+				'usuarios' => $usuarios,
+			]);
+		}
     }
 
 

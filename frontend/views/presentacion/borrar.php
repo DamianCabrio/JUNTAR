@@ -17,7 +17,7 @@ $this->title = "Eliminar presentación";
 	<?php
 	if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idEvento0->idUsuario0->idUsuario){
 		?>
-    <p>Está seguro de querer eliminar esta presentación?</p>
+    <p>¿Está seguro de querer eliminar esta presentación?</p>
 		<?= Html::a('Si', ['delete', 'presentacion' => $model->idPresentacion], [
             'class' => 'btn btn-danger',
         ]) ?>
@@ -30,7 +30,7 @@ $this->title = "Eliminar presentación";
 						<p class="display-1">403</p>
 					</div>
 				</div>
-				<p><b>Error</b>: usted no tiene permisos para gestionar esta presentacion.</p>
+				<p><b>Error</b>: usted no tiene permisos para gestionar esta presentación.</p>
 				<p>Si cree que esto es un error del servidor, contacte con un administrador del sistema</p>
 			</div>
 		</div>
