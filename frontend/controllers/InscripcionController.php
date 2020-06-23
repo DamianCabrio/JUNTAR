@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Pregunta;
 use yii\filters\AccessControl;
 use \yii\helpers\Url;
 use Yii;
@@ -122,7 +123,13 @@ class InscripcionController extends Controller
                 $texto = $esPreInscripcion ? "Se ha pre-inscripto con éxito" : "Se ha inscripto con éxito";
                 Yii::$app->session->setFlash('success', '<h2>' . $texto . '</h2>'
                     . '<p> Buena suerte </p>');
-                return $this->redirect(['eventos/ver-evento/' . $slug]);
+
+                $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->asArray()->all();
+                if(count($preguntas) != 0){
+                    return $this->redirect(['eventos/responder-formulario/' . $slug]);
+                }else{
+                    return $this->redirect(['eventos/ver-evento/' . $slug]);
+                }
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Ocurrió un error </h2>'
                     . '<p> Por favor vuelva a intentar </p>');
