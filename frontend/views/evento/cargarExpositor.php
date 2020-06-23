@@ -38,7 +38,11 @@ if(!Yii::$app->user->isGuest && $objetoEvento->idUsuario0->idUsuario == Yii::$ap
                                         'select' => new JsExpression("function( event, ui ) { $('#inputIdExpositor').val(ui.item.idUsuario);}")
                                     ],
                                     'options' => [
-                                        'class' => 'form-control'
+                                        'class' => 'form-control',
+                                        'placeholder' => 'Buscar expositor',
+                                        'data-title' => 'Requisitos',
+                                        'data-toggle' => 'popover',
+                                        'data-content' => 'Mínimo tres caracteres para la búsqueda automática',
                                     ]
                                 ]);
                         ?>
