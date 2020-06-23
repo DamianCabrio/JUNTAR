@@ -25,9 +25,9 @@ $this->title = "Crear Formulario";
                     'format' => 'raw',
                     'value' => function ($dataProvider) {
                         if($dataProvider->tipo == 1){
-                            $retorno = "RespuestaFile Corta";
+                            $retorno = "Respuesta Corta";
                         }else if($dataProvider->tipo == 2){
-                            $retorno = "RespuestaFile Larga";
+                            $retorno = "Respuesta Larga";
                         }else if($dataProvider->tipo == 3){
                             $retorno = "Subir Archivo";
                         }
@@ -36,7 +36,7 @@ $this->title = "Crear Formulario";
                     'headerOptions' => ['style' => 'width:30%;text-align:center;'],
                 ],
                 [
-                    'attribute' => 'RespuestaFile',
+                    'attribute' => 'Respuesta',
                     'format' => 'raw',
                     'value' => function ($dataProvider) {
                         return $dataProvider->descripcion;

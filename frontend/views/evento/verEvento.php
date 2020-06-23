@@ -106,7 +106,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     <?PHP
                     if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
                         echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Estado Evento ' . $estadoEvento . '</span> </div>';
-                    } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
+                        if ($evento->preInscripcion == 1) {
+                            echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">question_answer</i>', ['eventos/crear-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Crear formulario de preinscipción </span> </div>';
+                        }
+                        } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
                         echo '<div class="card-header pinkish_bg"> <br> </div>';
                     }
                     ?>

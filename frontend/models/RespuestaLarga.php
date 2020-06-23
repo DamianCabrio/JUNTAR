@@ -48,7 +48,7 @@ class RespuestaLarga extends \yii\db\ActiveRecord
             'id' => 'ID',
             'idpregunta' => 'Idpregunta',
             'idinscripcion' => 'Idinscripcion',
-            'respuesta' => 'RespuestaFile',
+            'respuesta' => 'Respuesta',
         ];
     }
 

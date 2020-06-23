@@ -10,9 +10,8 @@ use yii\bootstrap4\ActiveForm;
 
 <div class="respuesta-form">
 
-    <?php $form = ActiveForm::begin([
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'],
         'id' => 'responder-pregunta-form',
-        'enableAjaxValidation' => true,
     ]); ?>
 
     <?php if($pregunta->tipo == 1): ?>
@@ -22,7 +21,7 @@ use yii\bootstrap4\ActiveForm;
         <?= $form->field($model, 'respuesta')->textarea(['maxlength' => true])->label(false) ?>
     <?php endif; ?>
     <?php if($pregunta->tipo == 3): ?>
-        <?= $form->field($model, 'respuesta')->fileInput()->label(false) ?>
+        <?= $form->field($model, 'file')->fileInput()->label(false) ?>
     <?php endif; ?>
 
     <div class="form-group">

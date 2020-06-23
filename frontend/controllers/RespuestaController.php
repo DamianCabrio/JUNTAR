@@ -3,19 +3,18 @@
 namespace frontend\controllers;
 
 use frontend\models\Pregunta;
-use Yii;
 use frontend\models\RespuestaFile;
 use frontend\models\RespuestaCorta;
 use frontend\models\RespuestaLarga;
-use frontend\models\RespuestaSearch;
+use frontend\models\RespuestaFileSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use Yii;
 
 /**
- * RespuestaController implements the CRUD actions for RespuestaFile model.
+ * RespuestaController implements the CRUD actions for Respuesta model.
  */
 class RespuestaController extends Controller
 {
@@ -68,12 +67,12 @@ class RespuestaController extends Controller
     }
 
     /**
-     * Lists all RespuestaFile models.
+     * Lists all Respuesta models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new RespuestaSearch();
+        $searchModel = new RespuestaFileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -83,7 +82,7 @@ class RespuestaController extends Controller
     }
 
     /**
-     * Displays a single RespuestaFile model.
+     * Displays a single Respuesta model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -96,7 +95,7 @@ class RespuestaController extends Controller
     }
 
     /**
-     * Creates a new RespuestaFile model.
+     * Creates a new Respuesta model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -109,20 +108,24 @@ class RespuestaController extends Controller
         }elseif ($pregunta->tipo == 2){
             $model = new RespuestaLarga();
         }else{
-            $model = new RespuestaFile();
+            $model = new RespuestaFile;
         }
 
-        $model->idpregunta = $id;
-        $model->idinscripcion = $id2;
+            $model->idpregunta = $id;
+            $model->idinscripcion = $id2;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if($pregunta->tipo == 3){
-                $model->respuesta = UploadedFile::getInstance($model, 'profileImage');
-                if ($model->respuesta != null) {
-                    if ($model->upload()) {
-                        $model->respuesta = (Yii::getAlias("../web/eventos/formularios/archivos/")) . $model->respuesta->baseName . '.' . $model->respuesta->extension;
-                    }
+        if($pregunta->tipo == 3){
+            if (Yii::$app->request->isPost) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if ($model->upload()) {
+                    $model->respuesta = "../web/eventos/formularios/archivos/" . $model->file->baseName . '.' . $model->file->extension;
+                    $model->save();
+                    return $this->redirect(Yii::$app->request->referrer);
                 }
+            }
+        }else{
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             }
 
             return $this->redirect(Yii::$app->request->referrer);
@@ -142,7 +145,7 @@ class RespuestaController extends Controller
     }
 
     /**
-     * Updates an existing RespuestaFile model.
+     * Updates an existing Respuesta model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -162,7 +165,7 @@ class RespuestaController extends Controller
     }
 
     /**
-     * Deletes an existing RespuestaFile model.
+     * Deletes an existing Respuesta model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -176,7 +179,7 @@ class RespuestaController extends Controller
     }
 
     /**
-     * Finds the RespuestaFile model based on its primary key value.
+     * Finds the Respuesta model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
      * @return RespuestaFile the loaded model

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\RespuestaSearch */
+/* @var $searchModel frontend\models\RespuestaFileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Respuestas';
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create RespuestaFile', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Respuesta', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
