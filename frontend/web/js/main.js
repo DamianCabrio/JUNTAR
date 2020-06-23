@@ -189,13 +189,13 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         agregarPresentacionModal($(this).attr('href'));
     });
-     $('.agregarExpositor').click(function (link) {
+ //    $('.agregarExpositor').click(function (link) { // no funciona la busqueda de las personas sobre el modal
      //impedimos que el cambio de pestaña se active
-     link.preventDefault();
+//     link.preventDefault();
      //alert($(this).attr('href'));
      //llamamos a la funcion que se encargue de mostrar el formulario
-     agregarExpositorModal($(this).attr('href'));
-     }); 
+ //    agregarExpositorModal($(this).attr('href'));
+//     }); 
 
     $('.verPresentacion').click(function (link) {
 //impedimos que el cambio de pestaña se active
