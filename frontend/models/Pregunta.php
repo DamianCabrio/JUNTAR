@@ -13,7 +13,7 @@ use Yii;
  * @property string $descripcion
  *
  * @property Evento $idevento0
- * @property Respuesta[] $respuestas
+ * @property RespuestaFile[] $respuestas
  */
 class Pregunta extends \yii\db\ActiveRecord
 {
@@ -69,6 +69,6 @@ class Pregunta extends \yii\db\ActiveRecord
      */
     public function getRespuestas()
     {
-        return $this->hasMany(Respuesta::className(), ['idpregunta' => 'id']);
+        return $this->hasMany(RespuestaFile::className(), ['idpregunta' => 'id']);
     }
 }

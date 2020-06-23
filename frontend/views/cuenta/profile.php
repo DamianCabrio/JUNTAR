@@ -9,42 +9,52 @@ $this->params['breadcrumbs'][] = $this->title;
 //$dataUser = array_shift($data);
 //print_r($dataUser);
 ?>
-<div class="container">
-    <h1 class="text-center"> Información de la Cuenta </h1>
-    <div class='row'>
-        <!-- Profile Sidebar Menu-->
-        <div class="col-sm-3 mt-4 bg-profile-sidebar">
-            <ul class="nav nav-tabs mt-2 text-center">
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link active" href="profile"> Información de la Cuenta </a>
-                </li>
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" href="/cuenta/cambiar-password"> Cambiar Contraseña </a>
-                </li>
-                <!-- a futuro -->
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link" href="/cuenta/cambiar-email-request"> Cambiar dirección de correo </a>
-                </li>
-                <!-- a futuro -->
-<!--                <li class="nav-item profile-sidebar col-12">
+
+<div class="container-fluid padding_section dark_light_bg" style="height: 100vh;">
+    <div class="container">
+        <div class="card">
+            <div class="card-header pinkish_bg">
+                <h2 class="text-center text-white">Información de la Cuenta</h2>
+            </div>
+            <div class="card-body">
+            
+        <div class='row'>
+            <!-- Profile Sidebar Menu-->
+            <div class="col-sm-3 mt-4 bg-profile-sidebar">
+                <ul class="nav nav-tabs mt-2 text-center">
+                    <li class="nav-item profile-sidebar col-12">
+                        <a class="nav-link active" href="profile"> Información de la Cuenta </a>
+                    </li>
+                    <li class="nav-item profile-sidebar col-12">
+                        <a class="nav-link bg-gray" href="/cuenta/cambiar-password"> Cambiar Contraseña </a>
+                    </li>
+                    <!-- a futuro -->
+                    <li class="nav-item profile-sidebar col-12">
+                        <a class="nav-link" href="/cuenta/cambiar-email-request"> Cambiar dirección de correo </a>
+                    </li>
+                    <!-- a futuro -->
+                    <!--                <li class="nav-item profile-sidebar col-12">
                     <a class="nav-link" href=""> Preferencias de Email </a>
                 </li>-->
-                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
-                </li>
-                <!--<li class="nav-item mt-2 profile-sidebar col-12">-->
-                    <?php // $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); ?>
-                    <?php // if (!$assigned): ?>
-                        <?php // echo
-//                        Html::a("Ser un Gestor de Eventos",
-//                                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
-//                                ['class' => $assigned ? "btn btn-sm btn-outline-info" : "btn btn-sm btn-outline-info"])
-                        ?>
-                    <?php // endif; ?>
-                <!--</li>-->
-            </ul>
-        </div>
-        <!-- Profile Sidebar Menu-->
+                    <li class="nav-item profile-sidebar col-12">
+                        <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
+                    </li>
+                    <!--<li class="nav-item mt-2 profile-sidebar col-12">-->
+                    <?php // $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id); 
+                    ?>
+                    <?php // if (!$assigned): 
+                    ?>
+                    <?php // echo
+                    //                        Html::a("Ser un Gestor de Eventos",
+                    //                                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
+                    //                                ['class' => $assigned ? "btn btn-sm btn-outline-info" : "btn btn-sm btn-outline-info"])
+                    ?>
+                    <?php // endif; 
+                    ?>
+                    <!--</li>-->
+                </ul>
+            </div>
+            <!-- Profile Sidebar Menu-->
 
             <!-- Profile Card Content -->
             <div class="col-md-9 col-sm-4 mt-4 ">
@@ -136,7 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <?php
                 Modal::begin([
-                    'id' => 'modalProfile',
+                    'id' => 'profileModal',
                     'size' => 'modal-lg'
                 ]);
                 Modal::end();
@@ -144,8 +154,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <!-- Profile Card Content -->
 
-        </div>  
-    </div>
+        </div>
+            </div>
+        </div>
 
-</div>
+    </div>
 </div>

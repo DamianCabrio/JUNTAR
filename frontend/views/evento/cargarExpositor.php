@@ -4,7 +4,8 @@ use frontend\models\Usuario;
 use yii\helpers\Html;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
-use yii\widgets\ActiveForm;
+//use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 
 
@@ -26,7 +27,7 @@ if(!Yii::$app->user->isGuest && $objetoEvento->idUsuario0->idUsuario == Yii::$ap
 
                     <div class="expositor-form">
 
-                        <?php $form = ActiveForm::begin(); ?>
+                        <?php $form = ActiveForm::begin(['id' => 'agregarExpositor']); ?>
                         <?=
                             'Expositor ' . '<br>' .
                                 AutoComplete::widget([
@@ -66,4 +67,5 @@ if(!Yii::$app->user->isGuest && $objetoEvento->idUsuario0->idUsuario == Yii::$ap
         </div>
     </div>
 	<?php } ?>
+</div>
 </div>

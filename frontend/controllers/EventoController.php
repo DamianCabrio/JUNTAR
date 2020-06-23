@@ -3,10 +3,9 @@
 namespace frontend\controllers;
 
 use Da\QrCode\QrCode;
-//use BaconQrCode\Common\ErrorCorrectionLevelInter;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
-use frontend\models\Respuesta;
+use frontend\models\RespuestaFile;
 use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -19,7 +18,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use frontend\components\validateEmail;
-use yii\filters\VerbFilter;
 use yii\data\Pagination;
 use frontend\models\ModalidadEvento;
 use frontend\models\CategoriaEvento;
@@ -48,7 +46,6 @@ class EventoController extends Controller {
                     'allow' => true,
                     'actions' => [
                         "ver-evento",
-                        "ver-evento2"
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -163,6 +160,26 @@ class EventoController extends Controller {
         }
     }
 
+    public function verificarAdministrador($model) {
+
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario ) {
+        $query=new \yii\db\Query(); 
+        $rows= $query->from('usuario_rol')
+            ->andWhere(['user_id'=>Yii::$app->user->identity->idUsuario])
+            ->andWhere(['item_name'=>'Administrador'])->all(); 
+
+
+        if (count($rows)==0) {
+            return false ;
+         } else {
+             return true;
+         }
+     }else{
+        return false ;
+     }
+        
+   }
+
     /**
      * Finds the Evento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -199,7 +216,7 @@ class EventoController extends Controller {
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
 
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
@@ -222,7 +239,7 @@ class EventoController extends Controller {
                 $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
             }
             $model->save();
-            return $this->redirect(['eventos/evento-cargado/' . $nombreCortoEvento]);
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
         $categoriasEventos = CategoriaEvento::find()
             ->select(['descripcionCategoria'])
@@ -236,11 +253,6 @@ class EventoController extends Controller {
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
     }
     
-    public function actionEventoCargado($slug) {
-        return $this->render('eventoCargado', [
-                    'model' => $this->findModel("", $slug),
-        ]);
-    }
 
     private function actionGenerarQRAcreditacion($codigoAcreditacion, $slug) {
 //        $label = (new Label($slug))
@@ -271,6 +283,7 @@ class EventoController extends Controller {
 
         $esDueño = $this->verificarDueño($evento);
 
+
         if ($esDueño) {
             $preguntasSearchModel = new PreguntaSearch();
             $preguntasDataProvider = new ActiveDataProvider([
@@ -291,17 +304,13 @@ class EventoController extends Controller {
 
         $evento = $this->findModel("", $slug);
         $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])->one();
-        $model = new Respuesta();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            return ("hola");
-        }
 
-        if($inscripcion ==null){
-            $preguntas = Pregunta::find()->where(["idevento" => $evento->idEvento])->all();
+        if($inscripcion != null){
+            $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
             return $this->render('responderFormulario',
                 ["preguntas" => $preguntas,
                     "eventos" => $evento,
-                    "model" => $model]);
+                    "idInscripcion" => $inscripcion->idInscripcion,]);
         }
     }
 
@@ -352,6 +361,8 @@ class EventoController extends Controller {
         $validarEmail = new validateEmail();
         $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
         $esDueño = $this->verificarDueño($evento);
+        $esAdministrador = $this->verificarAdministrador($evento);
+
 
         return $this->render('verEvento', [
                     "evento" => $evento,
@@ -362,6 +373,7 @@ class EventoController extends Controller {
                     'cupos' => $cupos,
                     "esFai" => $esFai,
                     "esDueño" => $esDueño,
+                    "esAdministrador" => $esAdministrador
         ]);
     }
 
@@ -370,85 +382,84 @@ class EventoController extends Controller {
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-    public function actionEditarEvento($slug) {
+    public function actionEditarEvento($slug)
+    {
 
         $model = $this->findModel("", $slug);
-        $esDueño = $this->verificarDueño($model);
 
-        if ($esDueño) {
+        $modelLogo = new UploadFormLogo();
+        $modelFlyer = new UploadFormFlyer();
 
-            $modelLogo = new UploadFormLogo();
-            $modelFlyer = new UploadFormFlyer();
+        $rutaLogo = (Yii::getAlias("@rutaLogo"));
+        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-            $rutaLogo = (Yii::getAlias("@rutaLogo"));
-            $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
+        if ($model->load(Yii::$app->request->post())) {
+            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
-                $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
-
-                if ($modelLogo->imageLogo != null) {
-                    if ($modelLogo->upload()) {
-                        $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
-                    }
+            if ($modelLogo->imageLogo != null) {
+                if ($modelLogo->upload()) {
+                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
                 }
-                if ($modelFlyer->imageFlyer != null) {
-                    if ($modelFlyer->upload()) {
-                        $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
-                    }
-                }
-                $model->save();
-                return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
             }
-
-            return $this->render('editarEvento', [
-                        'model' => $model,
-                        'modelLogo' => $modelLogo,
-                        'modelFlyer' => $modelFlyer
-            ]);
-        } else {
-            throw new NotFoundHttpException('La página solicitada no existe.');
+            if ($modelFlyer->imageFlyer != null) {
+                if ($modelFlyer->upload()) {
+                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                }
+            }
+            $model->save();
+            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
         }
-    }
+            $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
+
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+
+         return $this->render('editarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
+        }
 
     /**
      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
      * Cambia en el atributo fechaCreacionEvento y guarda la fecha del dia de hoy, y en el
      * atributo idEstadoEvento por el valor 1.
      */
-    public function actionPublicarEvento($slug) {
+    public function actionPublicarEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = date('Y-m-d');
+       
+        $model->fechaCreacionEvento = date('Y-m-d');    
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
         $model->save();
-        return $this->render('eventoPublicado', [
-                    'model' => $model,
-        ]);
-    }
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     }   
 
     /**
      * Recibe por parametro un id de un evento, buscar ese evento y setea en la instancia $model.
      * Cambia en el atributo fechaCreacionEvento por null, y en el
      * atributo idEstadoEvento por el valor 4.
      */
-    public function actionDespublicarEvento($slug) {
+    public function actionSuspenderEvento($slug){
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = null;
+        
+        $model->fechaCreacionEvento = null;   
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
         $model->save();
-        return $this->render('eventoDespublicado', [
-                    'model' => $model,
-        ]);
-    }
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     } 
+
 
     public function actionCargarExpositor($idPresentacion) {
         $model = new PresentacionExpositor();
         $objPresentacion = Presentacion::findOne($idPresentacion);
         $objEvento = Evento::findOne($objPresentacion->idEvento);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->idPresentacion = $idPresentacion;
             $model->save();
             return $this->redirect(['eventos/ver-evento/'. $objEvento->nombreCortoEvento]);
@@ -459,11 +470,20 @@ class EventoController extends Controller {
                             ->asArray()
                             ->all();
          
-        return $this->render('cargarExpositor', [
+        If(Yii::$app->request->isAjax){
+			//retorna renderizado para llamado en ajax
+			return $this->renderAjax('cargarExpositor', [
             'model' => $model,
             'objetoEvento' => $objEvento,
             'usuarios' => $usuarios,
         ]);
+			}else{
+				 return $this->render('cargarExpositor', [
+				'model' => $model,
+				'objetoEvento' => $objEvento,
+				'usuarios' => $usuarios,
+			]);
+		}
     }
 
 

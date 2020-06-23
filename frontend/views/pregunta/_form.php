@@ -15,7 +15,7 @@ use yii\bootstrap4\ActiveForm;
         'enableAjaxValidation' => true,
     ]); ?>
 
-    <?= $form->field($model, 'tipo')->dropDownList([ 1 => 'Respuesta Corta', 2 => 'Respuesta Larga', 3 => 'Subir Archivo', ], ['prompt' => 'Eliga un tipo de pregunta'])->label("Tipo de pregunta") ?>
+    <?= $form->field($model, 'tipo')->dropDownList([ 1 => 'RespuestaFile Corta', 2 => 'RespuestaFile Larga', 3 => 'Subir Archivo', ], ['prompt' => 'Eliga un tipo de pregunta'])->label("Tipo de pregunta") ?>
 
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true])->label("Pregunta") ?>
 
