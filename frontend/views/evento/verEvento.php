@@ -275,6 +275,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ?></h4>
 
                                 </span>
+                                <div class="table-responsive">
                                 <?=
                                 GridView::widget([
                                     'dataProvider' => $presentacionDataProvider,
@@ -289,8 +290,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'attribute' => 'Título',
                                             'format' => 'raw',
                                             'value' => function ($dataProvider) {
-						return $dataProvider->tituloPresentacion . ' <br/><small>'.Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']).'</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
-                                            'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+						                        return $dataProvider->tituloPresentacion . ' <br/><small>'.Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']).'</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
+                                            },
+                                                'headerOptions' => ['style' => 'width:30%;text-align:center;'],
                                         ],
                                         //'diaPresentacion',
                                         [
@@ -379,7 +381,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ],
                                 ]);
                                 ?>
-
+                                </div>
                             
                                 </div>
                             </div>
