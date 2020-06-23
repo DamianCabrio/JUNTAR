@@ -31,17 +31,7 @@ $this->title = "Cargar Evento";
                         <span class="m-auto"> Opciones automaticas: </span>
                     </div>
                     <div class="nombresCortos" id="automaticSlug">
-                        <!--                        <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc1" name="slug" value="">  hola </span>
-                                                </div>
-                                                <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc2" name="slug" value="">  hola </span>
-                                                </div>
-                                                <div class="col-2 d-flex justify-content-center ">
-                                                    <span class="m-auto"> <input type="radio" id="opc3" name="slug" value="">  hola </span>
-                                                </div>-->
                     </div>
-                    <!--<div class="col-4 d-flex justify-content-center ">-->
                     <br>
                     <div class="col-12 mt-2 nombresCortos">
                         <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
@@ -64,13 +54,17 @@ $this->title = "Cargar Evento";
                 <?= $form->field($model, 'fechaInicioEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Inicio *') ?>
 
                 <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Fin *') ?>
-
+                
                 <!-- input logo -->
                 <?= $form->field($modelLogo, 'imageLogo')->fileInput()->label('Ingrese logo [solo formato png, jpg y jpeg]') ?>
-
+                <button type="button" id="quitarLogo" class="btn btn-sm btn-outline">Quitar</button>
+                <br>
+                <br>
                 <!-- input flyer -->
                 <?= $form->field($modelFlyer, 'imageFlyer')->fileInput()->label('Ingrese flyer [solo formato png,  jpg y jpeg]') ?>
-
+                <button type="button" id="quitarFlyer" class="btn btn-sm btn-outline">Quitar</button> 
+                <br>
+                <br>
                 <div class="form-group">
                     <label>¿Posee límite de espectadores?</label><br>
 

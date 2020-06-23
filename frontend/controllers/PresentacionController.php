@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Evento;
+use yii\data\ActiveDataProvider;
+use backend\models\Usuario;
 
 /**
  * PresentacionController implements the CRUD actions for Presentacion model.
@@ -129,10 +131,18 @@ class PresentacionController extends Controller {
             return $this->redirect(Yii::$app->request->referrer);
         }
 
-        return $this->render('editarPresentacion', [
-                    'model' => $model,
-                    'evento' => $evento,
+        If(Yii::$app->request->isAjax){
+			//retorna renderizado para llamado en ajax
+			return $this->renderAjax('editarPresentacion', [
+				'model' => $model,
+				'evento' => $evento,
         ]);
+			}else{
+				 return $this->render('editarPresentacion', [
+				'model' => $model,
+				'evento' => $evento,
+			]);
+		}
     }
 
     /**
@@ -196,13 +206,24 @@ class PresentacionController extends Controller {
                 ->asArray()
                 ->all();
 
-        return $this->render('cargarPresentacion', [
+        If(Yii::$app->request->isAjax){
+			//retorna renderizado para llamado en ajax
+			return $this->renderAjax('cargarPresentacion', [
             'model' => $model,
             'item' => $item,
             "evento" => $evento,
             'preExpositor' => $preExpositor,
             'arrUsuario' => $data
         ]);
+			}else{
+				 return $this->render('cargarPresentacion', [
+				'model' => $model,
+				'item' => $item,
+				"evento" => $evento,
+				'preExpositor' => $preExpositor,
+				'arrUsuario' => $data
+			]);
+		}
     }
 
    
