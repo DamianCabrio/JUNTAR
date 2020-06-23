@@ -105,7 +105,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <div class="card bg-white">
                     <?PHP
                     if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
-                        echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Estado Evento ' . $estadoEvento . '</span> </div>';
+                        echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span> </div>';
                     } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
                         echo '<div class="card-header pinkish_bg"> <br> </div>';
                     }
