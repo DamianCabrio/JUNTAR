@@ -24,7 +24,7 @@ use yii\helpers\Url;
 			<?= $model->tituloPresentacion . '<br> ' . $cadenaAgregar; ?>
 		</h1>
 
-
+		<div class="table-responsive">	
 		<?= GridView::widget([
 			'dataProvider' => $dataProvider,
 			'columns' => [
@@ -76,6 +76,6 @@ use yii\helpers\Url;
 			],
 		]); ?>
 
-
+			</div>
 	</div>
 </div>
