@@ -125,10 +125,10 @@ AppAsset::register($this);
                             <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
                         </li>
                     </ul>
-                    <h5 class="white-text">Sobre</h5>
+                    <h5 class="white-text">Sobre Nosotros</h5>
                 <ul>
                     <li>
-                        <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
+                        <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'profile-link']) ?>
                     </li>
                 </ul>
                 </div>
@@ -136,10 +136,10 @@ AppAsset::register($this);
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/uncoma.png',  ['class' => 'img-fluid']); ?>
                 </div>
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
         </div>
