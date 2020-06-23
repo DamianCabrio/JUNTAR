@@ -339,7 +339,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 if(count($dataProvider->presentacionExpositors) == 0){
                                                     $string = "No hay expositores";
                                                     if(!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
-                                                        $string .= ' '.Html::a('<i class="material-icons">person_add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => 'agregarExpositor']);
+                                                        $string .= ' '.Html::a('<i class="material-icons">person_add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => '']);
                                                     }
                                                 }
                                                 else{
