@@ -73,7 +73,7 @@ class RespuestaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RespuestaFileSearch();
+        $searchModel = new RespuestaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

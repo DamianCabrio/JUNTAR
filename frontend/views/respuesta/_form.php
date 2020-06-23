@@ -22,7 +22,7 @@ use yii\bootstrap4\ActiveForm;
         <?= $form->field($model, 'respuesta')->textarea(['maxlength' => true])->label(false) ?>
     <?php endif; ?>
     <?php if($pregunta->tipo == 3): ?>
-        <?= $form->field($model, 'respuesta')->fileInput(["required"])->label(false) ?>
+        <?= $form->field($model, 'respuesta')->fileInput()->label(false) ?>
     <?php endif; ?>
 
     <div class="form-group">
