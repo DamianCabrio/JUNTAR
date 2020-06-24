@@ -376,7 +376,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                     return Url::to(['/presentacion/update', 'presentacion' => $key]);
                                                 }
                                                 if ($action == "delete") {
-                                                    return Url::to(['/presentacion/delete', 'presentacion' => $key]);
+                                                    return Url::to(['/presentacion/borrar', 'presentacion' => $key]);
                                                 }
                                             },
                                             //describe los botones de accion
