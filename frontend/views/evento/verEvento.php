@@ -121,8 +121,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
                                     if ($evento->preInscripcion == 1) {
                                         echo '<div class="row mx-0 darkish_bg card-header">';
-                                        echo '<div class="col-sm-12 col-md-6 mx-0" style="border-right: 1px white solid;">' . Html::a('<i class="material-icons large align-middle link">question_answer</i>', ['eventos/crear-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Crear Formulario de Preinscipción </span> </div>';
-                                        echo '<div class="col-sm-12 col-md-6 mx-0" style="border-left: 1px white solid;">' . Html::a('<i class="material-icons large align-middle link">account_circle</i>', ['eventos/respuestas-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Ver Respuestas a Formulario </span> </div>';
+                                        echo '<div class=" col-md-6 mx-0">' . Html::a('<i class="material-icons large align-middle link">question_answer</i>', ['eventos/crear-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Crear Formulario de Preinscipción </span> </div>';
+                                        echo '<div class=" col-md-6 mx-0">' . Html::a('<i class="material-icons large align-middle link">account_circle</i>', ['eventos/respuestas-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Ver Respuestas a Formulario </span> </div>';
                                         echo '</div>';
                                     }
                                 }
