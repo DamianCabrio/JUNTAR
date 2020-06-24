@@ -39,29 +39,29 @@ AppAsset::register($this);
     } else {
         $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
         //MenuItems for ABM
-        $menuItems[] = ['label' => 'ABMUsuarios', 'url' => ['/usuario/index']];
+        
+        //MenuItems ABM Permisos
+//        $menuItems[] = [
+//                       'label' => 'Gestor de Permisos OLD',
+//                       'items' => [
+//                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
+//                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
+//                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
+//                            ],
+//                        ];
         //MenuItems ABM Permisos
         $menuItems[] = [
-                       'label' => 'Gestor de Permisos OLD',
+                       'label' => 'Gestionar Permisos',
                        'items' => [
-                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
-                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
-                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
-                            ],
-                        ];
-        //MenuItems ABM Permisos
-        $menuItems[] = [
-                       'label' => 'Gestor de Permisos',
-                       'items' => [
-                            ['label' => 'Asignar Permisos', 'url' => ['/permission/asignar-permisos']],
                             ['label' => 'Listado Permisos', 'url' => ['/permission/index']],
                             ['label' => 'Crear Permiso', 'url' => ['/permission/create-permiso']],
                             ['label' => 'Actualizar Permiso', 'url' => ['/permission/update-permiso']],
                             ['label' => 'Eliminar Permiso', 'url' => ['/permission/remove-permiso']],
+                            ['label' => 'Asignar Permisos', 'url' => ['/permission/asignar-permisos']],
                             ],
                         ];
         $menuItems[] = [
-                       'label' => 'Gestor de Roles',
+                       'label' => 'Gestionar Roles',
                        'items' => [
                             ['label' => 'Listado Roles', 'url' => ['/rol/index']],
                             ['label' => 'Crear Rol', 'url' => ['/rol/create-rol']],
@@ -69,6 +69,10 @@ AppAsset::register($this);
 //                            ['label' => 'Eliminar Rol', 'url' => ['/rol/remove-rol']],
                             ],
                         ];
+        //ABM Usuario
+        $menuItems[] = ['label' => 'Gestionar Usuarios', 'url' => ['/usuario/index']];
+        //ABM Eventos
+        $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/index']];
         //Logout
         $menuItems[] = [
             "label" => "Salir (" . Yii::$app->user->identity->nombre . ")",
