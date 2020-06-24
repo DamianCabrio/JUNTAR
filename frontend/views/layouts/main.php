@@ -118,20 +118,20 @@ AppAsset::register($this);
                         </li>
                     </ul>
                     <h5 class="white-text">Sobre</h5>
-                <ul>
-                    <li>
-                        <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
-                <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
+                <div class="col-12 col-md-6 py-3 text-center">
+                    <?= Html::img('images/logo-uncoma-w.svg',  ['class' => 'img-fluid', 'style' => 'height:200px']); ?>
                 </div>
-                <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
+                <div class="col-12 col-md-6 py-3 text-center">
+                    <?= Html::img('images/logo-fai-w.png',  ['class' => 'img-fluid', 'style' => 'height:200px']); ?>
                 </div>
             </div>
         </div>
