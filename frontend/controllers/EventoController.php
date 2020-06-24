@@ -96,7 +96,7 @@ class EventoController extends Controller {
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if(strtotime($evento->fechaLimiteInscripcion) >= date("Y-m-d")){
+        if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
             if ($cupos !== 0 || is_null($cupos)) {
                 return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
             } else {
