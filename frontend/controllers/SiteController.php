@@ -257,7 +257,7 @@ class SiteController extends Controller
         $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
         $paises = $this->conversionAutocomplete($paises);
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup() && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->signup() ) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
                     . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
             return $this->goBack(Url::previous());
