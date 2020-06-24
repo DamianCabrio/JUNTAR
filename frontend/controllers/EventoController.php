@@ -96,7 +96,7 @@ class EventoController extends Controller {
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if((strtotime($evento->fechaLimiteInscripcion) >= date("Y-m-d") && $evento->fechaLimiteInscripcion != null) || strtotime($evento->fechaInicioEvento) >= date("Y-m-d")){
+        if((strtotime($evento->fechaLimiteInscripcion) <= date("Y-m-d") && $evento->fechaLimiteInscripcion != null) || strtotime($evento->fechaInicioEvento) <= date("Y-m-d")){
             return "noInscriptoYFechaLimiteInscripcionPasada";
         }else{
             if ($cupos !== 0 || is_null($cupos)) {
@@ -145,14 +145,14 @@ class EventoController extends Controller {
                 // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
                     // ¿El evento tiene pre inscripcion activada? - Si
                     if ($evento->preInscripcion == 1) {
-                        if(strtotime($evento->fechaLimiteInscripcion) <= date("Y-m-d")){
+                        if(strtotime($evento->fechaLimiteInscripcion) >= date("Y-m-d")){
                             return "puedePreinscripcion";
                         }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
                         }
                         // El evento no tiene pre inscripcion
                     } else {
-                        if(strtotime($evento->fechaInicioEvento) <= date("Y-m-d")){
+                        if(strtotime($evento->fechaInicioEvento) >= date("Y-m-d")){
                             return "puedeInscripcion";
                         }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
