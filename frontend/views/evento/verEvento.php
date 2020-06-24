@@ -183,7 +183,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                             break;
                                         case "noInscriptoYFechaLimiteInscripcionPasada":
-                                            echo Html::label('No se puede inscribir, el evento ya inició');
+                                            echo Html::label('No se puede inscribir, período de inscripciones cerrado');
                                             break;
                                         case "puedeAcreditarse":
                                             echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
