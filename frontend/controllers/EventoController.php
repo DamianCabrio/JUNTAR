@@ -3,10 +3,11 @@
 namespace frontend\controllers;
 
 use Da\QrCode\QrCode;
+use frontend\models\InscripcionSearch;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
 use frontend\models\RespuestaFile;
-use frontend\models\RespuestaFileSearch;
+use frontend\models\RespuestaSearch;
 use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -211,6 +212,25 @@ class EventoController extends Controller {
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
+    public function actionRespuestasFormulario($slug){
+        $evento = $this->findModel("", $slug);
+
+        if($this->verificarDueño($evento)){
+        $usuariosInscriptosSearchModel = new InscripcionSearch();
+        $usuariosInscriptosDataProvider = new ActiveDataProvider([
+            'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
+            'pagination' => false,
+            'sort' => ['attributes' => ['name', 'description']]
+        ]);
+            return $this->render('respuestasFormulario',
+                ["inscriptos" => $usuariosInscriptosDataProvider,
+                    "evento" => $evento]);
+        }else {
+            throw new NotFoundHttpException('La página solicitada no existe.');
+}
+
+    }
+
     /**
      * Se visualiza un formulario para la carga de un nuevo evento desde la vista cargarEvento. Una vez cargado el formulario, se determina si
      * estan cargado los atributos de las instancias modelLogo y modelFlyer para setear ruta y nombre de las imagenes sobre el formulario.
@@ -319,7 +339,7 @@ class EventoController extends Controller {
 
             $respuestaYaHechas = [];
             foreach ($preguntas as $pregunta){
-                $respuesta = RespuestaFileSearch::find()->where(["idpregunta" => $pregunta->id])->one();
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
                 if($respuesta == null){
                     array_push($respuestaYaHechas, false);
                 }else{

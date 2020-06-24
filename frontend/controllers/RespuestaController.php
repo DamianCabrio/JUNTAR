@@ -6,7 +6,7 @@ use frontend\models\Pregunta;
 use frontend\models\RespuestaFile;
 use frontend\models\RespuestaCorta;
 use frontend\models\RespuestaLarga;
-use frontend\models\RespuestaFileSearch;
+use frontend\models\RespuestaSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -72,7 +72,7 @@ class RespuestaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RespuestaFileSearch();
+        $searchModel = new RespuestaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -92,6 +92,32 @@ class RespuestaController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    public function actionVer($id, $id2){
+        $preguntas = Pregunta::find()->where(["idEvento" => $id])->all();
+
+        $respuestas = [];
+        foreach ($preguntas as $pregunta){
+            $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
+            if($respuesta == null){
+                array_push($respuestas, null);
+            }else{
+                array_push($respuestas, $respuesta);
+            }
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('ver', [
+                'preguntas' => $preguntas,
+                "respuestas" => $respuestas,
+            ]);
+        } else {
+            return $this->render('ver', [
+                'preguntas' => $preguntas,
+                "respuestas" => $respuestas,
+            ]);
+        }
     }
 
     /**
