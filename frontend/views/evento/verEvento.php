@@ -114,6 +114,22 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         echo '<div class="card-header pinkish_bg"> <br> </div>';
                     }
                     ?>
+                    <?php
+                    if (!Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario) {
+                        if (($evento->idEstadoEvento) == 4) {
+                            ?>
+                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success']) ?>
+                            <?php } ?>
+
+                            <?php
+                            if (($evento->idEstadoEvento) == 1) {
+                            ?>
+                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger']) ?>
+                            <?php
+                            }
+                        }
+                    
+                    ?>
 
                     <div class="card-body">
                         <div class="row padding_section">
@@ -358,23 +374,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                                         ],
                                         //'expositores',
-                                        [
-                                            'attribute' => 'expositores',
-                                            'format' => 'raw',
-                                            'value' => function ($dataProvider) {
-                                                //HACER IF
-                                                if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
-                                                    $retorno = '-';
-                                                } else {
-                                                    $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
-                                                }
-                                                $retorno .= "  " . Html::a('<i class="material-icons">add</i>', ['cargar-expositor'], ['class' => 'btn btn_icon btn-outline-success']);
-                                                return $retorno;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
-                                        //'expositores',
+                    
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             //genera una url para cada boton de accion
