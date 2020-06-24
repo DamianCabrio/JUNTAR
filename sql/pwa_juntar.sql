@@ -209,6 +209,32 @@ CREATE TABLE `usuario_rol` (
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pregunta`
+--
+
+CREATE TABLE `pregunta` (
+  `id` bigint(20) NOT NULL,
+  `idevento` bigint(20) NOT NULL,
+  `tipo` enum('1','2','3') NOT NULL,
+  `descripcion` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuesta`
+--
+
+CREATE TABLE `respuesta` (
+  `id` int(11) NOT NULL,
+  `idpregunta` bigint(20) NOT NULL,
+  `idinscripcion` bigint(20) NOT NULL,
+  `respuesta` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -304,6 +330,21 @@ ALTER TABLE `usuario_rol`
   ADD KEY `usuario_rol_usuario_id_idx` (`user_id`),
   ADD KEY `item_name` (`item_name`);
 
+--
+-- Indices de la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idevento` (`idevento`);
+
+--
+-- Indices de la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idpregunta` (`idpregunta`),
+  ADD KEY `idinscripcion` (`idinscripcion`);
+
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -352,6 +393,18 @@ ALTER TABLE `presentacion`
 --
 ALTER TABLE `usuario`
   MODIFY `idUsuario` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 
 -- #######################################################################################################################
@@ -408,6 +461,19 @@ ALTER TABLE `presentacion_expositor`
 ALTER TABLE `usuario_rol`
   ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `permiso` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+  ADD CONSTRAINT `pregunta_ibfk_1` FOREIGN KEY (`idevento`) REFERENCES `evento` (`idEvento`);
+
+--
+-- Filtros para la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+  ADD CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`idpregunta`) REFERENCES `pregunta` (`id`),
+  ADD CONSTRAINT `respuesta_ibfk_2` FOREIGN KEY (`idinscripcion`) REFERENCES `inscripcion` (`idInscripcion`);
 
 
 -- #######################################################################################################################
@@ -689,6 +755,7 @@ INSERT INTO `presentacion` (`idPresentacion`, `idEvento`, `tituloPresentacion`, 
 (18, 9, 'Panel', 'q', '2020-06-19', '22:00:00', '23:00:00', ''),
 (19, 9, 'Panel', '555', '2020-06-19', '01:00:00', '02:00:00', ''),
 (20, 9, 'Panel', '555', '2020-06-19', '01:00:00', '02:00:00', '');
+
 --
 -- Volcado de datos para la tabla `presentacion_expositor`
 --
@@ -710,6 +777,25 @@ INSERT INTO `presentacion_expositor` (`idExpositor`, `idPresentacion`) VALUES
 (13, 11),
 (14, 15),
 (19, 20);
+
+--
+-- Volcado de datos para la tabla `pregunta`
+--
+
+INSERT INTO `pregunta` (`id`, `idevento`, `tipo`, `descripcion`) VALUES
+(9, 3, '1', 'Hola'),
+(10, 3, '2', 'Test2'),
+(13, 1, '2', '¿Como te llamas?'),
+(14, 3, '3', 'Subi tu cv');
+
+--
+-- Volcado de datos para la tabla `respuesta`
+--
+
+INSERT INTO `respuesta` (`id`, `idpregunta`, `idinscripcion`, `respuesta`) VALUES
+(2, 9, 10, 'a'),
+(3, 10, 10, 'dasdas'),
+(16, 14, 10, '../web/eventos/formularios/archivos/IMG-20170129-WA0005.jpeg');
 
 -- #######################################################################################################################
 -- #######################################################################################################################
