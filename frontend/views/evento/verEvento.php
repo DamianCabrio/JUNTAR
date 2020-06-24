@@ -263,9 +263,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                 </span>
 
+                                <div class="table-responsive">
+
                                 <!--                                <br>
                                                                 <br>
                                                                 <br>-->
+
                                 <?=
                                 GridView::widget([
                                     'dataProvider' => $presentacionDataProvider,
@@ -280,9 +283,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'attribute' => 'Título',
                                             'format' => 'raw',
                                             'value' => function ($dataProvider) {
-                                                return $dataProvider->tituloPresentacion . ' <br/><small>' . Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']) . '</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
+						                        return $dataProvider->tituloPresentacion . ' <br/><small>'.Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']).'</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
                                             },
-                                            'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+                                                'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+
                                         ],
                                         //'diaPresentacion',
                                         [
@@ -327,8 +331,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 //HACER IF
                                                 if (count($dataProvider->presentacionExpositors) == 0) {
                                                     $string = "No hay expositores";
-                                                    if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
-                                                        $string .= ' ' . Html::a('<i class="material-icons">person_add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => 'agregarExpositor']);
+
+                                                    if(!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
+                                                        $string .= ' '.Html::a('<i class="material-icons">person_add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => '']);
+
                                                     }
                                                 } else {
                                                     $string = '<a class="material-icons verExpositores" href="/presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
@@ -380,12 +386,19 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'header' => 'Acciones',
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                            'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 2),
+
+                                            'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
+
                                         ],
 //                                            
                                     ],
                                 ]);
                                 ?>
+
+                                </div>
+                            
+                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -67,7 +67,9 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
                     ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
-                    ['label' => 'Mis Eventos', 'url' => ['/evento/organizar-eventos']],
+
+                    ['label' => 'Organizar Eventos', 'url' => ['/evento/organizar-eventos']],
+
                     ['label' => 'Mis Inscripciones', 'url' => ['/cuenta/mis-inscripciones-a-eventos']],
                     [
                         "label" => "Cerrar Sesión",
