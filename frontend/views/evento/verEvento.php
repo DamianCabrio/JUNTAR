@@ -117,7 +117,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <?php
                             if (($evento->idEstadoEvento) == 1) {
                             ?>
-                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_hide float-right']) ?>
                             <?php
                             }
                         echo ' </div>';
