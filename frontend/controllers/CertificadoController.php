@@ -71,7 +71,6 @@ class CertificadoController extends Controller
         $model->addRule(['idPresentacion'], 'required')
           ->addRule(['idPresentacion'], 'integer');
 
-        $presentations = ArrayHelper::map($certificate->presentations, 'idPresentacion', 'tituloPresentacion');
 
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
           Yii::$app->response->format = Response::FORMAT_JSON;
@@ -85,7 +84,13 @@ class CertificadoController extends Controller
         }
 
         $isAccredited = $certificate->verifyAccreditation();
-        $isExhibitor = $certificate->verifyExhibitor(Yii::$app->user->identity->id);
+        if ($certificate->verifyExhibitor(Yii::$app->user->identity->id) != null) {
+          $presentations = ArrayHelper::map($certificate->verifyExhibitor(Yii::$app->user->identity->id), 'idPresentacion', 'tituloPresentacion');
+          $isExhibitor = true;
+        } else {
+          $presentations = null;
+          $isExhibitor = false;
+        }
         $isOrganizer = $certificate->verifyOrganizer(Yii::$app->user->identity->id);
 
         return $this->render('index', [
@@ -106,10 +111,7 @@ class CertificadoController extends Controller
         ->andWhere(['idUsuario' => $user])
         ->all();
 
-      $presentation = (new \yii\db\Query())
-        ->select('*')
-        ->from('presentacion')
-        ->innerJoin('presentacion_expositor', 'presentacion_expositor.idPresentacion = presentacion.idPresentacion')
+      $presentation = Presentacion::find()
         ->where(['idEvento' => $event])
         ->all();
 
