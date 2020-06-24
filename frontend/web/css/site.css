@@ -262,7 +262,7 @@ a.desc:after {
     background-color: transparent!important;
     color: #e6fff7!important;
     border-color: #e6fff7!important;
-    border: solid 1px;
+    border: solid 2px;
 }
 
 .btn_publish:hover {
@@ -272,9 +272,9 @@ a.desc:after {
 
 .btn_hide {
     background-color: transparent!important;
-    color: #ffc107!important;
-    border-color: #ffc107!important;
-    border: solid 1px;
+    color: #ffd75e!important;
+    border-color: #ffd75e!important;
+    border: solid 2px;
 }
 
 .btn_hide:hover {
