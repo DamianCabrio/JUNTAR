@@ -344,7 +344,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                                     }
                                                 } else {
-                                                    $string = '<a class="material-icons verExpositores" href="/presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
+//                                                    $string = '<a class="material-icons verExpositores" href="presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
+                                                    $string = Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => 'verExpositores']);
+//                                                    $string = '<a class="material-icons verExpositores" href="presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
                                                 }
                                                 return $string;
                                             },
