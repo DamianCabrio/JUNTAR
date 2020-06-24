@@ -26,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a class="nav-link active" href="profile"> Información de la Cuenta </a>
                     </li>
                     <li class="nav-item profile-sidebar col-12">
-                        <a class="nav-link bg-gray" href="/cuenta/cambiar-password"> Cambiar Contraseña </a>
+                        <?= Html::a('Cambiar Contraseña', ['cuenta/cambiar-password'], ['class' => 'nav-link']);?>
                     </li>
                     <!-- a futuro -->
                     <li class="nav-item profile-sidebar col-12">
-                        <a class="nav-link" href="/cuenta/cambiar-email-request"> Cambiar dirección de correo </a>
+                        <?= Html::a('Cambiar dirección de correo', ['cuenta/cambiar-email-request'], ['class' => 'nav-link']);?>
                     </li>
                     <!-- a futuro -->
                     <!--                <li class="nav-item profile-sidebar col-12">
