@@ -30,14 +30,23 @@
       $days = [];
       $hours = new DateTime("0000-00-00 00:00:00");
       $latestDay = null;
-      foreach ($presentations as $objPresentation) {
-        if ($latestDay < $objPresentation->diaPresentacion ) {
-          $latestDay = $objPresentation->diaPresentacion;
-          $dayPresentation = strtotime($objPresentation->diaPresentacion);
-          array_push($days, date("d", $dayPresentation));
+      if (!is_object($presentations)) {
+        foreach ($presentations as $presentation) {
+          if ($latestDay < $presentation['diaPresentacion'] ) {
+            $latestDay = $presentation['diaPresentacion'];
+            $dayPresentation = strtotime($presentation['diaPresentacion']);
+            array_push($days, date("d", $dayPresentation));
+          }
+          $hoursInit = new DateTime($presentation['horaInicioPresentacion']);
+          $hoursEnd = new DateTime($presentation['horaFinPresentacion']);
+          $hoursDiff = $hoursInit->diff($hoursEnd);
+          $hours->add($hoursDiff);
         }
-        $hoursInit = new DateTime($objPresentation->horaInicioPresentacion);
-        $hoursEnd = new DateTime($objPresentation->horaFinPresentacion);
+      } else {
+        $dayPresentation = strtotime($presentations->diaPresentacion);
+        array_push($days, date("d", $dayPresentation));
+        $hoursInit = new DateTime($presentations->horaInicioPresentacion);
+        $hoursEnd = new DateTime($presentations->horaFinPresentacion);
         $hoursDiff = $hoursInit->diff($hoursEnd);
         $hours->add($hoursDiff);
       }
@@ -56,8 +65,8 @@
       } else {
         $daysMessage = "el día ".$days[0];
       }
-      if ($event[0]['descripcionCategoria'] != 'Otra') {
-        $category = $event[0]['descripcionCategoria'] ;
+      if ($category->descripcionCategoria != 'Otra') {
+        $category = $category->descripcionCategoria ;
       } else {
         $category = 'evento';
       }
@@ -66,7 +75,7 @@
           $type = "Participó como Organizador del ";
           break;
         case 'expositor':
-          $type = "Participó como Expositor de <b>\"".$presentations[0]['tituloPresentacion']."\"</b> en el";
+          $type = "Participó como Expositor de <b>\"".$presentations->tituloPresentacion."\"</b> en el";
           break;
         case 'asistencia':
           $type = "Asistió al ";
@@ -79,7 +88,7 @@
           <p class="centring title">Certificado</p>
         </div>
         <div class="body">
-          <p class="centring">Se certifica que <b><?= $user[0]['apellido'].", ".$user[0]['nombre']?></b>, DNI Nº <b><?=$user[0]['dni']?></b></p>
+          <p class="centring">Se certifica que <b><?= $user->apellido.", ".$user->nombre?></b>, DNI Nº <b><?=$user->dni?></b></p>
           <p class="centring">  <?=$type." ".$category?> </p>
           <p class="centring event"><b>"<?= $event[0]['nombreEvento'] ?>"</b></p>
           <p class="centring">  Realizado <?= $daysMessage ?> de <?= $months[date("w", strtotime($event[0]['fechaInicioEvento']))]?> de <?= date("Y", strtotime($event[0]['fechaInicioEvento']))?>
