@@ -77,13 +77,20 @@ class PresentacionController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($presentacion) {
-        return $this->render('view', [
-                    'model' => $this->findModel($presentacion),
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('view', [
+                        'model' => $this->findModel($presentacion),
+            ]);
+        } else {
+            return $this->render('view', [
+                        'model' => $this->findModel($presentacion),
+            ]);
+        }
     }
+
     public function actionBorrar($presentacion) { //Ventana de confirmacion modal
         $idPresentacion = Presentacion::findOne($presentacion);
-        $evento =  Evento::findOne($idPresentacion->idEvento);
+        $evento = Evento::findOne($idPresentacion->idEvento);
         return $this->render('borrar', [
                     'model' => $this->findModel($presentacion),
                     'evento' => $evento,
@@ -119,30 +126,30 @@ class PresentacionController extends Controller {
         $model = $this->findModel($presentacion);
         $evento = Evento::findOne(["idEvento" => $model->idEvento]);
 
-        $horaInicioSinSeg =  date('H:i', strtotime($model->horaInicioPresentacion));
+        $horaInicioSinSeg = date('H:i', strtotime($model->horaInicioPresentacion));
         $horaFinSinSeg = date('H:i', strtotime($model->horaFinPresentacion));
 
         $model->horaInicioPresentacion = $horaInicioSinSeg;
         $model->horaFinPresentacion = $horaFinSinSeg;
-        
+
         //si tiene datos cargados los almacena
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //volvemos a la pagina de la que vinimos
             return $this->redirect(Yii::$app->request->referrer);
         }
 
-        If(Yii::$app->request->isAjax){
-			//retorna renderizado para llamado en ajax
-			return $this->renderAjax('editarPresentacion', [
-				'model' => $model,
-				'evento' => $evento,
-        ]);
-			}else{
-				 return $this->render('editarPresentacion', [
-				'model' => $model,
-				'evento' => $evento,
-			]);
-		}
+        If (Yii::$app->request->isAjax) {
+            //retorna renderizado para llamado en ajax
+            return $this->renderAjax('editarPresentacion', [
+                        'model' => $model,
+                        'evento' => $evento,
+            ]);
+        } else {
+            return $this->render('editarPresentacion', [
+                        'model' => $model,
+                        'evento' => $evento,
+            ]);
+        }
     }
 
     /**
@@ -178,7 +185,7 @@ class PresentacionController extends Controller {
      * Carga una nueva presentacion al evento 
      */
     public function actionCargarPresentacion($slug) {
-        
+
         $idUsuario = Yii::$app->user->identity->idUsuario;
         $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
 
@@ -188,43 +195,42 @@ class PresentacionController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 //$preExpositor->idExpositor = $preExpositor->idExpositor ;  
-               
-                return $this->redirect(['eventos/ver-evento/'. $evento->nombreCortoEvento]);
+
+                return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
             }
         }
         if ($evento == null) {
             throw new NotFoundHttpException('El evento no fue encontrado.');
         }
-            $item = Evento::find()     //buscar los eventos del usuario
+        $item = Evento::find()     //buscar los eventos del usuario
                 ->select(['nombreEvento'])
                 ->indexBy('idEvento')
                 ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
                 ->column();
 
-            $data = Usuario::find() //arreglo de usuarios para autocomplete
+        $data = Usuario::find() //arreglo de usuarios para autocomplete
                 ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
                 ->asArray()
                 ->all();
 
-        If(Yii::$app->request->isAjax){
-			//retorna renderizado para llamado en ajax
-			return $this->renderAjax('cargarPresentacion', [
-            'model' => $model,
-            'item' => $item,
-            "evento" => $evento,
-            'preExpositor' => $preExpositor,
-            'arrUsuario' => $data
-        ]);
-			}else{
-				 return $this->render('cargarPresentacion', [
-				'model' => $model,
-				'item' => $item,
-				"evento" => $evento,
-				'preExpositor' => $preExpositor,
-				'arrUsuario' => $data
-			]);
-		}
+        If (Yii::$app->request->isAjax) {
+            //retorna renderizado para llamado en ajax
+            return $this->renderAjax('cargarPresentacion', [
+                        'model' => $model,
+                        'item' => $item,
+                        "evento" => $evento,
+                        'preExpositor' => $preExpositor,
+                        'arrUsuario' => $data
+            ]);
+        } else {
+            return $this->render('cargarPresentacion', [
+                        'model' => $model,
+                        'item' => $item,
+                        "evento" => $evento,
+                        'preExpositor' => $preExpositor,
+                        'arrUsuario' => $data
+            ]);
+        }
     }
 
-   
 }

@@ -6,33 +6,32 @@ use Yii;
 use frontend\models\PresentacionExpositor;
 use yii\data\ActiveDataProvider;
 use frontend\models\Presentacion;
-
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\Evento;
+
 /**
  * PresentacionExpositorController implements the CRUD actions for PresentacionExpositor model.
  */
-class PresentacionExpositorController extends Controller
-{
+class PresentacionExpositorController extends Controller {
+
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
             'rules' => [
-		    [
-		    'allow' => true,
-		    'actions' => [
-            "ver-expositores",
-		    ],
-		    'roles' => ['?'], // <----- guest
-               		],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        "ver-expositores",
+                    ],
+                    'roles' => ['?'], // <----- guest
+                ],
                 [
                     'allow' => true,
                     'actions' => [
@@ -69,31 +68,38 @@ class PresentacionExpositorController extends Controller
      * Lists all PresentacionExpositor models.
      * @return mixed
      */
-    public function actionIndex($idPresentacion)
-    {
+    public function actionIndex($idPresentacion) {
         $dataProvider = new ActiveDataProvider([
             'query' => PresentacionExpositor::find(),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
-	
-	public function actionVerExpositores($idPresentacion)
-    {
+
+    public function actionVerExpositores($idPresentacion) {
         $dataProvider = new ActiveDataProvider([
             'query' => PresentacionExpositor::find()->where(['idPresentacion' => $idPresentacion]),
         ]);
         $model = Presentacion::find()->where(['idPresentacion' => $idPresentacion])->one();
         $evento = Evento::find()->where(['idEvento' => $model->idEvento])->one();
-        
-        return $this->render('verExpositores', [
-            'dataProvider' => $dataProvider,
-			'idPresentacion' => $idPresentacion,
-            'model' => $model,
-            'evento' => $evento,
-        ]);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('verExpositores', [
+                        'dataProvider' => $dataProvider,
+                        'idPresentacion' => $idPresentacion,
+                        'model' => $model,
+                        'evento' => $evento,
+            ]);
+        } else {
+            return $this->render('verExpositores', [
+                        'dataProvider' => $dataProvider,
+                        'idPresentacion' => $idPresentacion,
+                        'model' => $model,
+                        'evento' => $evento,
+            ]);
+        }
     }
 
     /**
@@ -103,10 +109,9 @@ class PresentacionExpositorController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idExpositor, $idPresentacion)
-    {
+    public function actionView($idExpositor, $idPresentacion) {
         return $this->render('view', [
-            'model' => $this->findModel($idExpositor, $idPresentacion),
+                    'model' => $this->findModel($idExpositor, $idPresentacion),
         ]);
     }
 
@@ -115,8 +120,7 @@ class PresentacionExpositorController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new PresentacionExpositor();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -124,7 +128,7 @@ class PresentacionExpositorController extends Controller
         }
 
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -136,8 +140,7 @@ class PresentacionExpositorController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idExpositor, $idPresentacion)
-    {
+    public function actionUpdate($idExpositor, $idPresentacion) {
         $model = $this->findModel($idExpositor, $idPresentacion);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -145,7 +148,7 @@ class PresentacionExpositorController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -157,13 +160,12 @@ class PresentacionExpositorController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idExpositor, $idPresentacion)
-    {
+    public function actionDelete($idExpositor, $idPresentacion) {
         $this->findModel($idExpositor, $idPresentacion)->delete();
         $objPresentacion = Presentacion::findOne($idPresentacion);
         $objEvento = Evento::findOne($objPresentacion->idEvento);
 
-        return $this->redirect(['eventos/ver-evento/'. $objEvento->nombreCortoEvento]);
+        return $this->redirect(['eventos/ver-evento/' . $objEvento->nombreCortoEvento]);
     }
 
     /**
@@ -174,12 +176,12 @@ class PresentacionExpositorController extends Controller
      * @return PresentacionExpositor the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idExpositor, $idPresentacion)
-    {
+    protected function findModel($idExpositor, $idPresentacion) {
         if (($model = PresentacionExpositor::findOne(['idExpositor' => $idExpositor, 'idPresentacion' => $idPresentacion])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

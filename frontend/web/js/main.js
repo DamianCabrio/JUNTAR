@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     //Permite quitar la imagen logo cargada en el input file del formulario de carga y edicion
     $("#quitarLogo").click(function () {
-     $("#uploadformlogo-imagelogo").val(null);
+        $("#uploadformlogo-imagelogo").val(null);
     });
 
     //Permite quitar la imagen flyer cargada en el input file del formulario de carga y edicion
@@ -203,29 +203,20 @@ $(document).ready(function () {
     $('.agregarPresentacion').click(function (link) {
 //impedimos que el cambio de pestaña se active
         link.preventDefault();
-        //alert($(this).attr('href'));
         //llamamos a la funcion que se encargue de mostrar el formulario
         agregarPresentacionModal($(this).attr('href'));
     });
- //    $('.agregarExpositor').click(function (link) { // no funciona la busqueda de las personas sobre el modal
-     //impedimos que el cambio de pestaña se active
-//     link.preventDefault();
-     //alert($(this).attr('href'));
-     //llamamos a la funcion que se encargue de mostrar el formulario
- //    agregarExpositorModal($(this).attr('href'));
-//     }); 
+
 
     $('.verPresentacion').click(function (link) {
 //impedimos que el cambio de pestaña se active
         link.preventDefault();
-        //alert($(this).attr('href'));
         //llamamos a la funcion que se encargue de mostrar el formulario
         verPresentacionModal($(this).attr('href'));
     });
     $('.verExpositores').click(function (link) {
 //impedimos que el cambio de pestaña se active
         link.preventDefault();
-        //alert($(this).attr('href'));
         //llamamos a la funcion que se encargue de mostrar el formulario
         verExpositoresModal($(this).attr('href'));
     });
@@ -289,40 +280,14 @@ function verExpositoresModal(link) {
         url: link,
         //        data: {data: data}
     }).done(function (data) {
-//data recibe la vista que deberia renderizarse al visitar la url
-//hacemos visible el modal
-        $('#modalEvento').modal('show');
-        //convertimos a html la vista recibida
-        var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
-        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
-        $(dataHTML).find('div.expositores-lista').each(function () {
-            console.log($(this).html());
-            $('.modal-header').html("<h3> Lista de expositores </h3>");
-            $('.modal-body').html($(this).html());
-        });
+        
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+        .html("<h3> Lista de expositores </h3>");
     });
 }
-
-/* function editPresentacionModal(link) {
-//hace la petición a la url
-//si para cargar el formulario necesita enviarle data, se envia.
-    $.ajax({
-        url: link,
-        //        data: {data: data}
-    }).done(function (data) {
-//data recibe la vista que deberia renderizarse al visitar la url
-//hacemos visible el modal
-        $('#modalEvento').modal('show');
-        //convertimos a html la vista recibida
-        var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
-        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
-        $(dataHTML).find('div.presentacion-form').each(function () {
-            console.log($(this).html());
-            $('.modal-header').html("<h3> Editar presentacion </h3>");
-            $('.modal-body').html($(this).html());
-        });
-    });
-} */
 
 function verRespuestasModal(link) {
 //hace la petición a la url
@@ -332,9 +297,9 @@ function verRespuestasModal(link) {
 //        data: {data: data}
     }).done(function (data) {
         $('#modalRespuestas').modal('show')
-            .find('.modal-body')
-            .html(data);
-        $('#modalRespuestas').find('.modal-header')
+                .find('.modal-body')
+                .html(data);
+//        $('#modalRespuestas').find('.modal-header')
         //.html("<h3> Cargar presentación </h3>");
     });
 }
@@ -349,10 +314,10 @@ function editPresentacionModal(link) {
         $('#modalEvento').modal('show')
                 .find('.modal-body')
                 .html(data);
-        $('#modalEvento').find('.modal-header')
-                //.html("<h3> Cargar presentación </h3>");
+//        $('#modalEvento').find('.modal-header')
+        //.html("<h3> Cargar presentación </h3>");
     });
-} 
+}
 
 function deletePresentacionModal(link) {
 //hace la petición a la url
@@ -374,28 +339,7 @@ function deletePresentacionModal(link) {
         });
     });
 }
-/* 
-function agregarPresentacionModal(link) {
-//hace la petición a la url
-//si para cargar el formulario necesita enviarle data, se envia.
-    $.ajax({
-        url: link,
-        //        data: {data: data}
-    }).done(function (data) {
-//data recibe la vista que deberia renderizarse al visitar la url
-//hacemos visible el modal
-        $('#modalEvento').modal('show');
-        //convertimos a html la vista recibida
-        var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
-        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
-        $(dataHTML).find('div.presentacion-form').each(function () {
-            console.log($(this).html());
-            $('.modal-header').html("<h3> Agregar presentacion </h3>");
-            $('.modal-body').html($(this).html());
-        });
-    });
-}
- */
+
 function agregarPresentacionModal(link) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se especifica
@@ -406,10 +350,10 @@ function agregarPresentacionModal(link) {
         $('#modalEvento').modal('show')
                 .find('.modal-body')
                 .html(data);
-        $('#modalEvento').find('.modal-header')
-                //.html("<h3> Cargar presentación </h3>");
+//        $('#modalEvento').find('.modal-header');
+        //.html("<h3> Cargar presentación </h3>");
     });
-} 
+}
 
 function verPresentacionModal(link) {
 //hace la petición a la url
@@ -418,42 +362,15 @@ function verPresentacionModal(link) {
         url: link,
         //        data: {data: data}
     }).done(function (data) {
-//data recibe la vista que deberia renderizarse al visitar la url
-//hacemos visible el modal
-        $('#modalEvento').modal('show');
-        //convertimos a html la vista recibida
-        var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
-        //alert(dataHTML);
-        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
-        $(dataHTML).find('div.presentacion-view').each(function () {
-            console.log($(this).html());
-            $('.modal-header').html("<h3> Presentacion </h3>");
-            $('.modal-body').html($(this).html());
-        });
+        $('#modalEvento').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalEvento').find('.modal-header')
+        .html("<h3>  presentación </h3>");
     });
 }
-/* 
- function agregarExpositorModal(link) {
- //hace la petición a la url
- //si para cargar el formulario necesita enviarle data, se envia.
- $.ajax({
- url: link,
- //        data: {data: data}
- }).done(function (data) {
- //data recibe la vista que deberia renderizarse al visitar la url
- //hacemos visible el modal
- $('#modalEvento').modal('show');
- //convertimos a html la vista recibida
- var dataHTML = $.parseHTML(data);  //<----try with $.parseHTML().
- //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
- $(dataHTML).find('div.expositor-form').each(function () {
- console.log($(this).html());
- $('.modal-header').html("<h3> Agregar expositor</h3>");
- $('.modal-body').html($(this).html());
- });
- });
- } */
- function agregarExpositorModal(link) {
+
+function agregarExpositorModal(link) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
@@ -464,9 +381,9 @@ function verPresentacionModal(link) {
                 .find('.modal-body')
                 .html(data);
         $('#modalEvento').find('.modal-header')
-                //.html("<h3> Cargar presentación </h3>");
+        //.html("<h3> Cargar presentación </h3>");
     });
-} 
+}
 
 //funcion utilizada para eliminar caracteres criticos en un texto
 function eliminarDiacriticos(texto) {
@@ -588,68 +505,13 @@ function responderRespuestaModal(unaUrl, titulo) {
 //        data: {data: data}
     }).done(function (data) {
         $('#modalPregunta').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalPregunta').find('.modal-header')
-            .html("<h3> " + titulo + " </h3>");
+                .html("<h3> " + titulo + " </h3>");
     });
 }
 
-
-
-/**
- * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
- * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
- * 
- * @returns none
- */
-function uploadNewProfileImage(url) {
-//hace la petición a la url
-//si para cargar el formulario necesita enviarle data, se envia.
-    $.ajax({
-        url: url,
-//        data: {data: data}
-    }).done(function (data) {
-//data recibe la vista que deberia renderizarse al visitar la url
-//hacemos visible el modal
-        $('#modalProfile').modal('show');
-        //convertimos a html la vista recibida
-        var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
-        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
-        $(dataHTML).find('div.uploadProfileImageForm').each(function () {
-//            $('.modal-header').append("Nueva imagen de perfil");
-            $('.modal-header').html("<h3> Nueva imagen de perfil </h3>");
-            $('.modal-body').html($(this).html());
-        });
-    });
-}
-
-/**
- * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
- * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
- * 
- * @returns none
- */
-function editProfileModal(url) {
-//hace la petición a la url
-//si para cargar el formulario necesita enviarle data, se envia.
-    $.ajax({
-        url: url
-//        data: {data: data}
-    }).done(function (data) {
-//data recibe la vista que deberia renderizarse al visitar la url
-//hacemos visible el modal
-        console.log(data);
-        $('#modalProfile').modal('show');
-        //convertimos a html la vista recibida
-        var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
-        //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
-        $(dataHTML).find('div.profileForm').each(function () {
-            $('.modal-header').html("<h3> Editar Perfil </h3>");
-            $('.modal-body').html($(this).html());
-        });
-    });
-}
 /**
  * Metodo viewCertificationModal --> Permite visualizar el panel de los certificados
  * para acceder a la previsualización del mismo.
