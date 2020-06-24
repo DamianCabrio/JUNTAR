@@ -116,13 +116,13 @@ AppAsset::register($this);
                     <h5 class="white-text">Contacto</h5>
                     <ul>
                         <li>
-                            <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
+                        <?= Html::a('Escribinos un mensaje', ['site/contact'], ['class' => 'link']) ?>
                         </li>
                     </ul>
                     <h5 class="white-text">Sobre Nosotros</h5>
                 <ul>
                     <li>
-                        <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'profile-link']) ?>
+                        <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'link']) ?>
                     </li>
                 </ul>
                 </div>
