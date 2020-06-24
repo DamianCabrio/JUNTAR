@@ -96,7 +96,7 @@ class EventoController extends Controller {
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if((strtotime($evento->fechaLimiteInscripcion) >= date("Y-m-d") && $evento->fechaLimiteInscripcion != null) || strtotime($evento->fechaInicioEvento) >= date("Y-m-d")){
+        if((strtotime($evento->fechaLimiteInscripcion) <= date("Y-m-d") && $evento->fechaLimiteInscripcion != null) || strtotime($evento->fechaInicioEvento) <= date("Y-m-d")){
             return "noInscriptoYFechaLimiteInscripcionPasada";
         }else{
             if ($cupos !== 0 || is_null($cupos)) {
@@ -112,7 +112,7 @@ class EventoController extends Controller {
         // ¿Ya esta inscripto o no? - Si
         if ($yaInscripto) {
             // ¿El evento ya inicio? - Si
-            if ($evento->fechaInicioEvento <= date("Y-m-d")) {
+            if ($evento->fechaInicioEvento >= date("Y-m-d")) {
                 // ¿El evento tiene codigo de acreditacion? - Si
                 if ($evento->codigoAcreditacion != null) {
                     // ¿El usuario ya se acredito en el evento? - Si
@@ -145,14 +145,22 @@ class EventoController extends Controller {
                 // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
                     // ¿El evento tiene pre inscripcion activada? - Si
                     if ($evento->preInscripcion == 1) {
-                        if($evento->fechaLimiteInscripcion <= date("Y-m-d")){
-                            return "puedePreinscripcion";
-                        }else{
-                            return "noInscriptoYFechaLimiteInscripcionPasada";
+                        if($evento->fechaLimiteInscripcion== null || $evento->fechaLimiteInscripcion== '1969-12-31'){
+                            if($evento->fechaInicioEvento >= date("Y-m-d")){
+                                return "puedeInscripcion";
+                            }else{
+                                return "noInscriptoYFechaLimiteInscripcionPasada";
+                            }
+                        }else {
+                            if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
+                                return "puedePreinscripcion";
+                            }else{
+                                return "noInscriptoYFechaLimiteInscripcionPasada";
+                            }
                         }
                         // El evento no tiene pre inscripcion
                     } else {
-                        if($evento->fechaInicioEvento <= date("Y-m-d")){
+                        if($evento->fechaInicioEvento >= date("Y-m-d")){
                             return "puedeInscripcion";
                         }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
