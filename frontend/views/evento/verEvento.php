@@ -125,22 +125,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         echo '<div class="card-header pinkish_bg"> <br> </div>';
                     }
                     ?>
-                    <?php
-                    if (!Yii::$app->user->isGuest && $evento->idUsuario == Yii::$app->user->identity->idUsuario) {
-                        if (($evento->idEstadoEvento) == 4) {
-                            ?>
-                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-success']) ?>
-                            <?php } ?>
-
-                            <?php
-                            if (($evento->idEstadoEvento) == 1) {
-                            ?>
-                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-outline-danger']) ?>
-                            <?php
-                            }
-                        }
-                    
-                    ?>
 
                     <div class="card-body">
                         <div class="row padding_section">
