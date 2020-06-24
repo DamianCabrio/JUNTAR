@@ -102,7 +102,7 @@ class EventoController extends Controller {
             } else {
                 return "sinCupos";
             }
-        }elseif ($evento->fechaInicioEvento >= date("Y-m-d")){
+        }elseif ($evento->fechaInicioEvento >= date("Y-m-d") && $evento->fechaLimiteInscripcion == null){
             return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
         }
         else{
