@@ -41,14 +41,14 @@ AppAsset::register($this);
         //MenuItems for ABM
         
         //MenuItems ABM Permisos
-        $menuItems[] = [
-                       'label' => 'Gestor de Permisos OLD',
-                       'items' => [
-                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
-                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
-                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
-                            ],
-                        ];
+//        $menuItems[] = [
+//                       'label' => 'Gestor de Permisos OLD',
+//                       'items' => [
+//                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
+//                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
+//                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
+//                            ],
+//                        ];
         //MenuItems ABM Permisos
         $menuItems[] = [
                        'label' => 'Gestionar Permisos',
