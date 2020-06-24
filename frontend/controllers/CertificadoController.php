@@ -111,7 +111,6 @@ class CertificadoController extends Controller
         ->from('presentacion')
         ->innerJoin('presentacion_expositor', 'presentacion_expositor.idPresentacion = presentacion.idPresentacion')
         ->where(['idEvento' => $event])
-        ->andWhere(['idExpositor' => $user])
         ->all();
 
       $event = Evento::find()
