@@ -183,7 +183,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                             break;
                                         case "noInscriptoYFechaLimiteInscripcionPasada":
-                                            echo Html::label('No se puede inscribir, caducó la fecha');
+                                            echo Html::label('No se puede inscribir, el evento ya inició');
                                             break;
                                         case "puedeAcreditarse":
                                             echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
@@ -230,11 +230,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         <span><?= date("d-m-Y", strtotime($evento->fechaFinEvento)) ?></span>
                                     </li>
                                     <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Fecha Límite de Inscripción: </b></p>
+                                        <p><b>Fecha Límite Pre-Inscripción: </b></p>
                                         <span><?php
-                                         
-                                         if($evento->fechaLimiteInscripcion== null || $evento->fechaLimiteInscripcion== '1969-12-31'){
-                                          echo   "Sin fecha límite";
+                                        if($evento->fechaLimiteInscripcion== null || $evento->fechaLimiteInscripcion== '1969-12-31'){
+                                          echo   "sin fecha limite";////
                                         }else{
                                            echo  date("d-m-Y", strtotime($evento->fechaLimiteInscripcion));
                                         }?></span>
@@ -283,12 +282,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ?>
                                 </div>
 
-                                <div class="table-responsive estoEsUnaPrueba">
-
                                 <!--                                <br>
                                                                 <br>
                                                                 <br>-->
-
                                 <?=
                                 GridView::widget([
                                     'dataProvider' => $presentacionDataProvider,
@@ -303,10 +299,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'attribute' => 'Título',
                                             'format' => 'raw',
                                             'value' => function ($dataProvider) {
-						                        return $dataProvider->tituloPresentacion . ' <br/><small>'.Html::a('(Más información)', ['/presentacion/view', 'presentacion' => $dataProvider->idPresentacion], ['class' => 'verPresentacion']).'</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
+                                                return $dataProvider->tituloPresentacion . ' <br/><small>' . Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']) . '</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
                                             },
-                                                'headerOptions' => ['style' => 'width:30%;text-align:center;'],
-
+                                            'headerOptions' => ['style' => 'width:30%;text-align:center;'],
                                         ],
                                         //'diaPresentacion',
                                         [
@@ -351,22 +346,34 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 //HACER IF
                                                 if (count($dataProvider->presentacionExpositors) == 0) {
                                                     $string = "No hay expositores";
-
-                                                    if(!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
-                                                        $string .= ' '.Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => '']);
-
+                                                    if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
+                                                        $string .= ' ' . Html::a('<i class="material-icons">person_add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => 'agregarExpositor']);
                                                     }
                                                 } else {
-//                                                    $string = '<a class="material-icons verExpositores" href="presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
-                                                    $string = Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => 'verExpositores']);
-//                                                    $string = '<a class="material-icons verExpositores" href="presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
+                                                    $string = '<a class="material-icons verExpositores" href="/presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
                                                 }
                                                 return $string;
                                             },
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                                         ],
-    
+                                        //'expositores',
+                                        [
+                                            'attribute' => 'expositores',
+                                            'format' => 'raw',
+                                            'value' => function ($dataProvider) {
+                                                //HACER IF
+                                                if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
+                                                    $retorno = '-';
+                                                } else {
+                                                    $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
+                                                }
+                                                $retorno .= "  " . Html::a('<i class="material-icons">add</i>', ['cargar-expositor'], ['class' => 'btn btn_icon btn-outline-success']);
+                                                return $retorno;
+                                            },
+                                            'headerOptions' => ['style' => 'text-align:center;'],
+                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                        ],
                                         //'expositores',
                                         [
                                             'class' => 'yii\grid\ActionColumn',
@@ -376,7 +383,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                     return Url::to(['/presentacion/update', 'presentacion' => $key]);
                                                 }
                                                 if ($action == "delete") {
-                                                    return Url::to(['/presentacion/borrar', 'presentacion' => $key]);
+                                                    return Url::to(['/presentacion/delete', 'presentacion' => $key]);
                                                 }
                                             },
                                             //describe los botones de accion
@@ -392,19 +399,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'header' => 'Acciones',
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-
-                                            'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
-
+                                            'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 2),
                                         ],
 //                                            
                                     ],
                                 ]);
                                 ?>
-
-                                </div>
-                            
-                                </div>
-
                             </div>
                         </div>
                     </div>
