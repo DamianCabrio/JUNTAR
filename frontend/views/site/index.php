@@ -60,7 +60,7 @@ $this->title = 'Juntar';
                                     <?= Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
                                     <div class='card-body'>
                                         <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
-                                        <h5 class='card-title'><?= date("d-m-Y", strtotime($evento["fechaInicioEvento"])) ?>
+                                        <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
                                         <?php
                                             $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
                                             if(!$esFai):

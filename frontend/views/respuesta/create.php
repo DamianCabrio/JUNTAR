@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\RespuestaFile */
 
-$this->title = 'RespuestaFile';
+$this->title = 'Respuesta';
 ?>
 <div class="respuesta-create">
 
@@ -13,6 +13,7 @@ $this->title = 'RespuestaFile';
 
     <?= $this->render('_form', [
         'model' => $model,
+        "pregunta" => $pregunta,
     ]) ?>
 
 </div>

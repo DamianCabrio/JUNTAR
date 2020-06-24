@@ -115,6 +115,15 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         agregarPreguntaModal($(this).attr('href'), 'Agregar Pregunta');
     });
+
+    //funcionalidad agregar pregunta
+    $('.verRespuesta').click(function (link) {
+//impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        verRespuestasModal($(this).attr('href'), 'Ver respuestas');
+    });
+
     //funcionalidad agregar pregunta
     $('.editarPregunta').click(function (link) {
 //impedimos que el cambio de pestaña se active
@@ -315,7 +324,22 @@ function verExpositoresModal(link) {
     });
 } */
 
- function editPresentacionModal(link) {
+function verRespuestasModal(link) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: link
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalRespuestas').modal('show')
+            .find('.modal-body')
+            .html(data);
+        $('#modalRespuestas').find('.modal-header')
+        //.html("<h3> Cargar presentación </h3>");
+    });
+}
+
+function editPresentacionModal(link) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({

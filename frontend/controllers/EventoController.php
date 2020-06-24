@@ -3,9 +3,11 @@
 namespace frontend\controllers;
 
 use Da\QrCode\QrCode;
+use frontend\models\InscripcionSearch;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
 use frontend\models\RespuestaFile;
+use frontend\models\RespuestaSearch;
 use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -94,10 +96,14 @@ class EventoController extends Controller {
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if ($cupos !== 0 || is_null($cupos)) {
-            return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-        } else {
-            return "sinCupos";
+        if((strtotime($evento->fechaLimiteInscripcion) >= date("Y-m-d") && $evento->fechaLimiteInscripcion != null) || strtotime($evento->fechaInicioEvento) >= date("Y-m-d")){
+            return "noInscriptoYFechaLimiteInscripcionPasada";
+        }else{
+            if ($cupos !== 0 || is_null($cupos)) {
+                return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
+            } else {
+                return "sinCupos";
+            }
         }
     }
 
@@ -137,20 +143,24 @@ class EventoController extends Controller {
                 // Hay cupos en el evento
             } else {
                 // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
-                if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
                     // ¿El evento tiene pre inscripcion activada? - Si
                     if ($evento->preInscripcion == 1) {
-                        return "puedePreinscripcion";
+                        if(strtotime($evento->fechaLimiteInscripcion) <= date("Y-m-d")){
+                            return "puedePreinscripcion";
+                        }else{
+                            return "noInscriptoYFechaLimiteInscripcionPasada";
+                        }
                         // El evento no tiene pre inscripcion
                     } else {
-                        return "puedeInscripcion";
+                        if(strtotime($evento->fechaInicioEvento) <= date("Y-m-d")){
+                            return "puedeInscripcion";
+                        }else{
+                            return "noInscriptoYFechaLimiteInscripcionPasada";
+                        }
                     }
-                } else {
-                    return "noInscriptoYFechaLimiteInscripcionPasada";
                 }
             }
         }
-    }
 
     public function verificarDueño($model) {
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario) {
@@ -200,6 +210,25 @@ class EventoController extends Controller {
         }
 
         throw new NotFoundHttpException('La página solicitada no existe.');
+    }
+
+    public function actionRespuestasFormulario($slug){
+        $evento = $this->findModel("", $slug);
+
+        if($this->verificarDueño($evento)){
+        $usuariosInscriptosSearchModel = new InscripcionSearch();
+        $usuariosInscriptosDataProvider = new ActiveDataProvider([
+            'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
+            'pagination' => false,
+            'sort' => ['attributes' => ['name', 'description']]
+        ]);
+            return $this->render('respuestasFormulario',
+                ["inscriptos" => $usuariosInscriptosDataProvider,
+                    "evento" => $evento]);
+        }else {
+            throw new NotFoundHttpException('La página solicitada no existe.');
+}
+
     }
 
     /**
@@ -307,10 +336,24 @@ class EventoController extends Controller {
 
         if($inscripcion != null){
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
+
+            $respuestaYaHechas = [];
+            foreach ($preguntas as $pregunta){
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
+                if($respuesta == null){
+                    array_push($respuestaYaHechas, false);
+                }else{
+                    array_push($respuestaYaHechas, true);
+                }
+            }
+
             return $this->render('responderFormulario',
                 ["preguntas" => $preguntas,
-                    "eventos" => $evento,
-                    "idInscripcion" => $inscripcion->idInscripcion,]);
+                    "evento" => $evento,
+                    "idInscripcion" => $inscripcion->idInscripcion,
+                    "respuestaYaHechas" => $respuestaYaHechas]);
+        }else{
+            return $this->goHome();
         }
     }
 
@@ -321,6 +364,8 @@ class EventoController extends Controller {
     public function actionVerEvento($slug) {
 
         $evento = $this->findModel("", $slug);
+
+        $cantidadPreguntas = Pregunta::find()->where(["idevento" => $evento->idEvento])->count();
 
         $presentacionSearchModel = new PresentacionSearch();
 
@@ -373,7 +418,8 @@ class EventoController extends Controller {
                     'cupos' => $cupos,
                     "esFai" => $esFai,
                     "esDueño" => $esDueño,
-                    "esAdministrador" => $esAdministrador
+                    "esAdministrador" => $esAdministrador,
+                    "cantidadPreguntas" => $cantidadPreguntas,
         ]);
     }
 
