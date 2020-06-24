@@ -108,12 +108,23 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
                         echo '<div class="card-header pinkish_bg"> ' . 
                         Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) 
-                        . '<span class="text-white align-middle"> Estado Evento ' . $estadoEvento . '</span> </div>';
+                        . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span>';
+                        if (($evento->idEstadoEvento) == 4) {
+                            ?>
+                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                            <?php } ?>
+
+                            <?php
+                            if (($evento->idEstadoEvento) == 1) {
+                            ?>
+                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                            <?php
+                            }
+                        echo ' </div>';
                     } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
                         echo '<div class="card-header pinkish_bg"> <br> </div>';
                     }
                     ?>
-
                     <div class="card-body">
                         <div class="row padding_section">
                             <div class="col-sm-12 col-md-8">
@@ -292,6 +303,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         }
                                     } //url /presentacion/cargar-presentacion/
                                     ?>
+
                                 </div>
 
                                 <!--                                <br>

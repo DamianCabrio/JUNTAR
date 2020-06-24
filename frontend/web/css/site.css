@@ -259,11 +259,9 @@ a.desc:after {
 }
 
 .btn_publish {
-    width: 100%;
-    background-color: #0F3282;
-    color: aliceblue!important;
+    background-color: #4713fe;
+    color: aliceblue;
     border: none;
-    text-transform: capitalize;
 }
 
 .btn_publish:hover {
@@ -271,15 +269,14 @@ a.desc:after {
 }
 
 .btn_hide {
-    width: 100%;
-    background-color: #EF9620;
-    color: aliceblue!important;
+    background-color: #cafe13;
+    color: #0F3282!important;
     border: none;
-    text-transform: capitalize;
 }
 
 .btn_hide:hover {
     background-color: #050714;
+    color: #f1f1f1;
 }
 
 .btn_edit {
