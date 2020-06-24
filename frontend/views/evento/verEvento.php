@@ -129,7 +129,17 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <br>
                                     <?PHP
                                     if ($evento->imgFlyer != null) {
-                                        echo Html::a('<a data-toggle="modal" data-target="#flyerModal"><i class="material-icons align-middle">file_download</i><span class=" align-middle">Flyer </span></a>', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento]);
+                                        echo Html::button('<i class="material-icons align-middle">file_download</i> Flyer', [
+
+                                            'class' => 'btn text-muted',
+
+                                            'id' => 'BtnModalId',
+
+                                            'data-toggle' => 'modal',
+
+                                            'data-target' => '#flyerModal',
+
+                                        ]);
                                     }
                                     ?>
                                 </div>
@@ -256,19 +266,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         </div>
                         <div class="row padding_section grayish_bg">
                             <div class="col-sm-12">
-                                <span class="align-middle">
-                                    <h4 class="text-uppercase align-middle">AGENDA
-                                        <?PHP
-                                        if ($esDueño) {
-                                            if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4) {
-                                                echo Html::a('								<div class="btn-group" role="group" aria-label="">
-											    <button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
-										        </div><i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'agregarPresentacion']);
-                                            }
-                                        } //url /presentacion/cargar-presentacion/
-                                        ?></h4>
-
-                                </span>
+                            <div class="d-flex">
+                                    <h4 class="text-uppercase">AGENDA</h4>
+                                    <?PHP
+                                    if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
+                                        if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4) {
+                                            echo Html::a('<i class="material-icons large">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'agregarPresentacion link']);
+                                        }
+                                    } //url /presentacion/cargar-presentacion/
+                                    ?>
+                                </div>
 
                                 <!--                                <br>
                                                                 <br>
