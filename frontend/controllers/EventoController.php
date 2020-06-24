@@ -146,10 +146,12 @@ class EventoController extends Controller {
                     // ¿El evento tiene pre inscripcion activada? - Si
                     if ($evento->preInscripcion == 1) {
                         if($evento->fechaLimiteInscripcion== null || $evento->fechaLimiteInscripcion== '1969-12-31'){
-                            if($evento->fechaInicioEvento >= date("Y-m-d")){
+                            if($evento->fechaInicioEvento <= date("Y-m-d")){
                                 return "puedeInscripcion";
+
                             }else{
                                 return "noInscriptoYFechaLimiteInscripcionPasada";
+
                             }
                         }else {
                             if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
