@@ -366,7 +366,7 @@ function verPresentacionModal(link) {
                 .find('.modal-body')
                 .html(data);
         $('#modalEvento').find('.modal-header')
-        .html("<h3>  presentación </h3>");
+        .html("<h3> Información de la Presentación </h3>");
     });
 }
 
