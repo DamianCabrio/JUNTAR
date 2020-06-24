@@ -108,8 +108,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Estado Evento ' . $estadoEvento . '</span> </div>';
                         if ($evento->preInscripcion == 1) {
                             echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">question_answer</i>', ['eventos/crear-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Crear formulario de preinscipción </span> </div>';
+                            echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">account_circle</i>', ['eventos/respuestas-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Ver respuestas a formulario </span> </div>';
                         }
-                        echo '<div class="card-header pinkish_bg"> ' . Html::a('<i class="material-icons large align-middle">account_circle</i>', ['eventos/respuestas-formulario/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) . '<span class="text-white align-middle"> Ver respuestas a formulario </span> </div>';
                         } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
                         echo '<div class="card-header pinkish_bg"> <br> </div>';
                     }
@@ -129,7 +129,17 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <br>
                                     <?PHP
                                     if ($evento->imgFlyer != null) {
-                                        echo Html::a('<a data-toggle="modal" data-target="#flyerModal"><i class="material-icons align-middle">file_download</i><span class=" align-middle">Flyer </span></a>', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento]);
+                                        echo Html::button('<i class="material-icons align-middle">file_download</i> Flyer', [
+
+                                            'class' => 'btn text-muted',
+
+                                            'id' => 'BtnModalId',
+
+                                            'data-toggle' => 'modal',
+
+                                            'data-target' => '#flyerModal',
+
+                                        ]);
                                     }
                                     ?>
                                 </div>
@@ -256,19 +266,16 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         </div>
                         <div class="row padding_section grayish_bg">
                             <div class="col-sm-12">
-                                <span class="align-middle">
-                                    <h4 class="text-uppercase align-middle">AGENDA
-                                        <?PHP
-                                        if ($esDueño) {
-                                            if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4) {
-                                                echo Html::a('								<div class="btn-group" role="group" aria-label="">
-											    <button type="button" class="btn btn_edit"><i class="material-icons large align-middle">edit</i></button>
-										        </div><i class="material-icons large align-middle">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'agregarPresentacion']);
-                                            }
-                                        } //url /presentacion/cargar-presentacion/
-                                        ?></h4>
-
-                                </span>
+                            <div class="d-flex">
+                                    <h4 class="text-uppercase">AGENDA</h4>
+                                    <?PHP
+                                    if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
+                                        if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4) {
+                                            echo Html::a('<i class="material-icons large">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'agregarPresentacion link']);
+                                        }
+                                    } //url /presentacion/cargar-presentacion/
+                                    ?>
+                                </div>
 
                                 <div class="table-responsive estoEsUnaPrueba">
 
