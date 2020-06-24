@@ -290,7 +290,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'attribute' => 'Título',
                                             'format' => 'raw',
                                             'value' => function ($dataProvider) {
-						                        return $dataProvider->tituloPresentacion . ' <br/><small>'.Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']).'</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
+						                        return $dataProvider->tituloPresentacion . ' <br/><small>'.Html::a('(Más información)', [Url::to(['/presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']).'</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
                                             },
                                                 'headerOptions' => ['style' => 'width:30%;text-align:center;'],
 
@@ -340,7 +340,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                     $string = "No hay expositores";
 
                                                     if(!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
-                                                        $string .= ' '.Html::a('<i class="material-icons">person_add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => '']);
+                                                        $string .= ' '.Html::a('<i class="material-icons">person_add</i>', [Url::to(['/evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => 'verExpositores']);
 
                                                     }
                                                 } else {
