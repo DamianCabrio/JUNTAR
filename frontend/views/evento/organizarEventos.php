@@ -70,7 +70,6 @@ $this->title = 'Proyecto Juntar';
                         </div>
                     <?php endforeach; ?>
                 </div>
-
                     <div class="row py-5 pagination-lg pagination_center">
                         <?= // display pagination
                             LinkPager::widget([
