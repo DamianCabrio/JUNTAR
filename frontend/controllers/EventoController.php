@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use Da\QrCode\QrCode;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
-use frontend\models\Respuesta;
+use frontend\models\RespuestaFile;
 use yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
@@ -160,6 +160,26 @@ class EventoController extends Controller {
         }
     }
 
+    public function verificarAdministrador($model) {
+
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario ) {
+        $query=new \yii\db\Query(); 
+        $rows= $query->from('usuario_rol')
+            ->andWhere(['user_id'=>Yii::$app->user->identity->idUsuario])
+            ->andWhere(['item_name'=>'Administrador'])->all(); 
+
+
+        if (count($rows)==0) {
+            return false ;
+         } else {
+             return true;
+         }
+     }else{
+        return false ;
+     }
+        
+   }
+
     /**
      * Finds the Evento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -263,6 +283,7 @@ class EventoController extends Controller {
 
         $esDueño = $this->verificarDueño($evento);
 
+
         if ($esDueño) {
             $preguntasSearchModel = new PreguntaSearch();
             $preguntasDataProvider = new ActiveDataProvider([
@@ -283,19 +304,13 @@ class EventoController extends Controller {
 
         $evento = $this->findModel("", $slug);
         $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])->one();
-        $preguntas = Pregunta::find()->where(["idevento" => $evento->idEvento])->all();
 
-        $model = new Respuesta();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            return ("hola");
-        }
-
-        if($inscripcion ==null){
-            $preguntas = Pregunta::find()->where(["idevento" => $evento->idEvento])->all();
+        if($inscripcion != null){
+            $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
             return $this->render('responderFormulario',
                 ["preguntas" => $preguntas,
                     "eventos" => $evento,
-                    "model" => $model]);
+                    "idInscripcion" => $inscripcion->idInscripcion,]);
         }
     }
 
@@ -346,6 +361,8 @@ class EventoController extends Controller {
         $validarEmail = new validateEmail();
         $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
         $esDueño = $this->verificarDueño($evento);
+        $esAdministrador = $this->verificarAdministrador($evento);
+
 
         return $this->render('verEvento', [
                     "evento" => $evento,
@@ -356,6 +373,7 @@ class EventoController extends Controller {
                     'cupos' => $cupos,
                     "esFai" => $esFai,
                     "esDueño" => $esDueño,
+                    "esAdministrador" => $esAdministrador
         ]);
     }
 

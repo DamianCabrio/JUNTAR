@@ -129,6 +129,15 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editarPerfilModal($(this).attr('href'), 'Datos de la cuenta');
     });
+
+    //funcionalidad editar perfil
+    $('.responderPregunta').click(function (link) {
+//impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        responderRespuestaModal($(this).attr('href'), 'Responder pregunta');
+    });
+
     //funcionalidad editar perfil
     $('.uploadProfileImage').click(function (link) {
 //impedimos que el cambio de pestaña se active
@@ -546,6 +555,23 @@ function editarPreguntaModal(unaUrl, titulo) {
                 .html("<h3> " + titulo + " </h3>");
     });
 }
+
+function responderRespuestaModal(unaUrl, titulo) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+//        data: {data: data}
+    }).done(function (data) {
+        $('#modalPregunta').modal('show')
+            .find('.modal-body')
+            .html(data);
+        $('#modalPregunta').find('.modal-header')
+            .html("<h3> " + titulo + " </h3>");
+    });
+}
+
+
 
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
