@@ -119,7 +119,7 @@ class EventoController extends Controller {
         // ¿Ya esta inscripto o no? - Si
         if ($yaInscripto) {
             // ¿El evento ya inicio? - Si
-            if ($evento->fechaInicioEvento >= date("Y-m-d")) {
+            if ($evento->fechaInicioEvento <= date("Y-m-d")) {
                 // ¿El evento tiene codigo de acreditacion? - Si
                 if ($evento->codigoAcreditacion != null) {
                     // ¿El usuario ya se acredito en el evento? - Si
