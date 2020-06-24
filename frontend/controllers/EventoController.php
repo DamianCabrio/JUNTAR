@@ -152,7 +152,7 @@ class EventoController extends Controller {
                         }
                         // El evento no tiene pre inscripcion
                     } else {
-                        if(strtotime($evento->fechaInicioEvento) <= date("Y-m-d")){
+                        if($evento->fechaInicioEvento <= date("Y-m-d")){
                             return "puedeInscripcion";
                         }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
