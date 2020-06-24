@@ -23,8 +23,18 @@ class Certificado extends Model
         return false;
       }
     }
-    public function verifyAccreditation()
-	{
+	
+	public function verifyAccreditation()
+    {
+
+      if ($this->inscription[0]->acreditacion == 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    public function verifyExhibitor($id)
+    {
       $presentationsExhibitor = [];
       $status = false;
       if ($this->presentations > 0) {
