@@ -230,10 +230,14 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         <span><?= date("d-m-Y", strtotime($evento->fechaFinEvento)) ?></span>
                                     </li>
                                     <li class="list-group-item darkish_bg text-white">
-                                        <p><b>Fecha Límite Pre-Inscripción: </b></p>
+                                        <p><b>Fecha Límite de Inscripción: </b></p>
                                         <span><?php
                                         if($evento->fechaLimiteInscripcion== null || $evento->fechaLimiteInscripcion== '1969-12-31'){
+<<<<<<< HEAD
                                           echo   "sin fecha limite";
+=======
+                                          echo   "Sin fecha límite";////
+>>>>>>> b6f383de96e9444ab1d5e66836efb744bfa0fbdd
                                         }else{
                                            echo  date("d-m-Y", strtotime($evento->fechaLimiteInscripcion));
                                         }?></span>
