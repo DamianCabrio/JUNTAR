@@ -145,7 +145,7 @@ class EventoController extends Controller {
                 // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
                     // ¿El evento tiene pre inscripcion activada? - Si
                     if ($evento->preInscripcion == 1) {
-                        if(strtotime($evento->fechaLimiteInscripcion) <= date("Y-m-d")){
+                        if($evento->fechaLimiteInscripcion <= date("Y-m-d")){
                             return "puedePreinscripcion";
                         }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
