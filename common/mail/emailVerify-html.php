@@ -7,7 +7,6 @@ use yii\helpers\Html;
 
 $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'token' => $user->verification_token]);
 ?>
-        border-color: #2e6da4;
 
 <!DOCTYPE html>
 <html lang="en">
