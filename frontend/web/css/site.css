@@ -259,23 +259,26 @@ a.desc:after {
 }
 
 .btn_publish {
-    background-color: #4713fe;
-    color: aliceblue;
-    border: none;
+    background-color: transparent!important;
+    color: #e6fff7!important;
+    border-color: #e6fff7!important;
+    border: solid 1px;
 }
 
 .btn_publish:hover {
-    background-color: #050714;
+    border-color: #cccccc!important;
+    color: #cccccc!important;
 }
 
 .btn_hide {
-    background-color: #cafe13;
-    color: #0F3282!important;
-    border: none;
+    background-color: transparent!important;
+    color: #ffc107!important;
+    border-color: #ffc107!important;
+    border: solid 1px;
 }
 
 .btn_hide:hover {
-    background-color: #050714;
+    border-color: #f1f1f1!important;
     color: #f1f1f1;
 }
 
@@ -375,7 +378,7 @@ section {
     filter: invert(99%) sepia(6%) saturate(443%) hue-rotate(113deg) brightness(121%) contrast(100%);
 }
 
-#mostrarCapacidad{
+#mostrarCapacidad {
     display: none;
 }
 
