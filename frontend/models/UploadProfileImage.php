@@ -16,7 +16,6 @@ class UploadProfileImage extends Model
     public function rules()
     {
         return [
-            ['profileImage', 'required'],
             [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
