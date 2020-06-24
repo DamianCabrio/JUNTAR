@@ -351,23 +351,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             'headerOptions' => ['style' => 'text-align:center;'],
                                             'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                                         ],
-                                        //'expositores',
-                                        [
-                                            'attribute' => 'expositores',
-                                            'format' => 'raw',
-                                            'value' => function ($dataProvider) {
-                                                //HACER IF
-                                                if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
-                                                    $retorno = '-';
-                                                } else {
-                                                    $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
-                                                }
-                                                $retorno .= "  " . Html::a('<i class="material-icons">add</i>', ['cargar-expositor'], ['class' => 'btn btn_icon btn-outline-success']);
-                                                return $retorno;
-                                            },
-                                            'headerOptions' => ['style' => 'text-align:center;'],
-                                            'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                        ],
+    
                                         //'expositores',
                                         [
                                             'class' => 'yii\grid\ActionColumn',
