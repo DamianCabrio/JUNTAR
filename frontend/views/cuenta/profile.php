@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //print_r($dataUser);
 ?>
 
-<div class="container-fluid padding_section dark_light_bg" style="height: 100vh;">
+<div class="container-fluid padding_section dark_light_bg" style="min-height: 100vh;">
     <div class="container">
         <div class="card">
             <div class="card-header pinkish_bg">
