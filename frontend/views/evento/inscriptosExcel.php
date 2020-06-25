@@ -94,10 +94,10 @@ foreach($lista1 as $obj){
 
 
 
-$lista1[]= $listados[2];
-$lista1[]= $listados[3];
+$lista2[]= $listados[2];
+$lista2[]= $listados[3];
 
-foreach($lista1 as $obj){
+foreach($lista2 as $obj){
     
     $fila= $templateExcel->setActiveSheetIndex($obj['index']);
 
@@ -108,15 +108,15 @@ foreach($lista1 as $obj){
 
 
         
-        $fila->getStyle('B11:J11')->applyFromArray($bordes);
+        $fila->getStyle('B11:I11')->applyFromArray($bordes);
 
         // Datos del Evento 
-        $fila->setCellValue('J2', $arrayEvento['organizador'] );
-        $fila->setCellValue('J3', date("d-m-Y", strtotime($arrayEvento['inicio']))  );
-        $fila->setCellValue('J4', date("d-m-Y", strtotime($arrayEvento['fin'])) );
-        $fila->setCellValue('J5', $arrayEvento['capacidad'] );
-        $fila->setCellValue('J6', $arrayEvento['lugar'] );
-        $fila->setCellValue('J7', $arrayEvento['modalidad'] );
+        $fila->setCellValue('I2', $arrayEvento['organizador'] );
+        $fila->setCellValue('I3', date("d-m-Y", strtotime($arrayEvento['inicio']))  );
+        $fila->setCellValue('I4', date("d-m-Y", strtotime($arrayEvento['fin'])) );
+        $fila->setCellValue('I5', $arrayEvento['capacidad'] );
+        $fila->setCellValue('I6', $arrayEvento['lugar'] );
+        $fila->setCellValue('I7', $arrayEvento['modalidad'] );
 
         // $row: los datos son insertado a partir de la fila 10
         $row = 12;
@@ -126,25 +126,14 @@ foreach($lista1 as $obj){
 
         foreach( $obj['lista'] as  $obj ) {
                 $fila= $templateExcel->getActiveSheet();
-                $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
-               
-                $fecha= "";
-
-                if( $titulo=='Inscriptos'){
-                    $fecha = date("d-m-Y", strtotime( $obj['user_fechaInscripcion'] ));
-                }
-                if( $titulo=='Preinscriptos'){
-                    $fecha = date("d-m-Y", strtotime($obj['user_fechaPreInscripcion'] ));
-                }
-
-                $fila->setCellValue('C'.$row, $fecha )->getStyle('C'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('D'.$row, $obj['user_apellido'])->getStyle('D'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('E'.$row, $obj['user_nombre'])->getStyle('E'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('F'.$row, $obj['user_dni'])->getStyle('F'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('G'.$row, $obj['user_pais'])->getStyle('G'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('H'.$row, $obj['user_provincia'])->getStyle('H'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('I'.$row, $obj['user_localidad'])->getStyle('I'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('J'.$row, $obj['user_email'])->getStyle('J'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes); 
+                $fila->setCellValue('C'.$row, $obj['user_apellido'])->getStyle('C'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('D'.$row, $obj['user_nombre'])->getStyle('D'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('E'.$row, $obj['user_dni'])->getStyle('E'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('F'.$row, $obj['user_pais'])->getStyle('F'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('G'.$row, $obj['user_provincia'])->getStyle('G'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('H'.$row, $obj['user_localidad'])->getStyle('H'.$row)->applyFromArray($bordes);
+                $fila->setCellValue('I'.$row, $obj['user_email'])->getStyle('I'.$row)->applyFromArray($bordes);
                 
                 $i =$i +1;
                 $row = $row + 1;
