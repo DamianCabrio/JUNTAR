@@ -159,11 +159,13 @@ class RespuestaController extends Controller
             return $this->renderAjax('create', [
                 'model' => $model,
                 "pregunta" => $pregunta,
+                "volverAtras" => false,
             ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 "pregunta" => $pregunta,
+                "volverAtras" => true,
             ]);
         }
     }

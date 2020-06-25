@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Respuesta';
 ?>
-<div class="respuesta-create">
+<div class="respuesta-create  container">
 
     <h3><?= $pregunta->descripcion; ?></h3>
 
@@ -15,5 +15,4 @@ $this->title = 'Respuesta';
         'model' => $model,
         "pregunta" => $pregunta,
     ]) ?>
-
 </div>
