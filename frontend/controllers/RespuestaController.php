@@ -151,10 +151,8 @@ class RespuestaController extends Controller
             }
         }else{
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
+                return $this->redirect(Yii::$app->request->referrer);
             }
-
-            return $this->redirect(Yii::$app->request->referrer);
         }
 
         if (Yii::$app->request->isAjax) {
