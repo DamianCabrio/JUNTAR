@@ -102,7 +102,7 @@ AppAsset::register($this);
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?> 
                 </div>
             </div>
             <div class="row">
