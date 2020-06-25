@@ -9,7 +9,7 @@ $this->title = "Responder Formulario";
 ?>
 
 <div class="responder-formulario container">
-    <h3>Haga click en los en cada botón para responder el formulario de preinscripcion</h3>
+    <h3>Haga click en los en cada botón para completar su Preinscripción</h3>
     <h5>Responda con cuidado, no se puede editar las respuestas</h5>
     <?php foreach ($preguntas as $i => $pregunta): ?>
     <?php if($respuestaYaHechas[$i] == false): ?>
