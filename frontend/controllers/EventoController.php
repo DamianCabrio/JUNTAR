@@ -356,7 +356,7 @@ class EventoController extends Controller {
 
             $respuestaYaHechas = [];
             foreach ($preguntas as $pregunta){
-                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $inscripcion->idInscripcion])->one();
                 if($respuesta == null){
                     array_push($respuestaYaHechas, false);
                 }else{
