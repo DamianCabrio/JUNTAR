@@ -96,18 +96,14 @@ class EventoController extends Controller {
     }
 
     public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
+        if(($evento->fechaLimiteInscripcion != null && strtotime($evento->fechaLimiteInscripcion) > date("Y-m-d"))){
             if ($cupos !== 0 || is_null($cupos)) {
                 return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
             } else {
                 return "sinCupos";
             }
-        }elseif ($evento->fechaInicioEvento >= date("Y-m-d") && $evento->fechaLimiteInscripcion == null){
-            if ($cupos !== 0 || is_null($cupos)) {
-                return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-            } else {
-                return "sinCupos";
-            }
+        }elseif ($evento->fechaLimiteInscripcion == null && strtotime($evento->fechaInicioEvento) > date("Y-m-d")){
+            return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
         }
         else{
             return "noInscriptoYFechaLimiteInscripcionPasada";
@@ -119,7 +115,7 @@ class EventoController extends Controller {
         // ¿Ya esta inscripto o no? - Si
         if ($yaInscripto) {
             // ¿El evento ya inicio? - Si
-            if ($evento->fechaInicioEvento <= date("Y-m-d")) {
+            if ($evento->fechaInicioEvento >= date("Y-m-d")) {
                 // ¿El evento tiene codigo de acreditacion? - Si
                 if ($evento->codigoAcreditacion != null) {
                     // ¿El usuario ya se acredito en el evento? - Si
@@ -153,12 +149,10 @@ class EventoController extends Controller {
                     // ¿El evento tiene pre inscripcion activada? - Si
                     if ($evento->preInscripcion == 1) {
                         if($evento->fechaLimiteInscripcion== null || $evento->fechaLimiteInscripcion== '1969-12-31'){
-                            if($evento->fechaInicioEvento <= date("Y-m-d")){
+                            if($evento->fechaInicioEvento >= date("Y-m-d")){
                                 return "puedeInscripcion";
-
                             }else{
                                 return "noInscriptoYFechaLimiteInscripcionPasada";
-
                             }
                         }else {
                             if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
@@ -356,7 +350,7 @@ class EventoController extends Controller {
 
             $respuestaYaHechas = [];
             foreach ($preguntas as $pregunta){
-                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $inscripcion->idInscripcion])->one();
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
                 if($respuesta == null){
                     array_push($respuestaYaHechas, false);
                 }else{
@@ -568,40 +562,23 @@ class EventoController extends Controller {
         
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
-        $base->select(['user_apellido'=>'usuario.apellido',
-                      'user_nombre'=> 'usuario.nombre',
-                      'user_dni'=>'usuario.dni',
-                      'user_pais'=>'usuario.pais',
-                      'user_provincia'=>'usuario.provincia',
-                      'user_localidad'=>'usuario.localidad',
-                      'user_email'=>'usuario.email',
-                      'user_idInscripcion'=>'inscripcion.idInscripcion',
-                      'user_fechaPreInscripcion'=>'inscripcion.fechaPreInscripcion',
-                      'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
-
+        $base->select(['user_estado'=>'inscripcion.estado',
+                       'user_apellido'=>'usuario.apellido',
+                       'user_nombre'=> 'usuario.nombre',
+                       'user_dni'=>'usuario.dni',
+                       'user_pais'=>'usuario.pais',
+                       'user_provincia'=>'usuario.provincia',
+                       'user_localidad'=>'usuario.localidad',
+                       'user_email'=>'usuario.email',
+                       'user_fechaPreInscripcion'=>'inscripcion.fechaPreInscripcion',
+                       'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
+ 
         /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
-        $preinscriptos = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 1 ])
-                               ->orderBy('usuario.apellido ASC')->asArray()->all();
-
-        $inscriptos  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 2 ])
-                             ->orderBy('usuario.apellido ASC')->asArray()->all();
-    
-        $anulados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 3 ])
-                           ->orderBy('usuario.apellido ASC')->asArray()->all();
-    
-        $acreditados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 4 ])
-                              ->orderBy('usuario.apellido ASC')->asArray()->all();
+        $participantes = $base ->where(['inscripcion.idEvento' => $idEvento ])->orderBy('usuario.apellido ASC')->asArray()->all();
 
 
-
-        $listados[]= ['index'=>0, 'titulo'=>'Preinscriptos', 'lista'=>$preinscriptos ];
-        $listados[]= ['index'=>1, 'titulo'=>'Inscriptos', 'lista'=>$inscriptos];
-        $listados[]= ['index'=>2, 'titulo'=>'Anulados', 'lista'=> $anulados ];
-        $listados[]= ['index'=>3, 'titulo'=>'Acreditados', 'lista'=> $acreditados ];
-
-       return $this->renderPartial('inscriptosExcel',
-             ['listados' => $listados ,'arrayEvento' => $arrayEvento ]);
+       return $this->renderPartial('inscriptosExcel', ['participantes' => $participantes ,'arrayEvento' => $arrayEvento ]);
     }
     
     public function actionOrganizarEventos()
