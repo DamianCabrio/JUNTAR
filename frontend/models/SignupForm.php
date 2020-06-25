@@ -74,7 +74,7 @@ class SignupForm extends Model {
             ['email', 'trim'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'La dirección de correo electrónico que ha ingresado ya está registrada.'],
 
             //Reglas password
             ['password', 'match', 'pattern' => '/\d/', 'message' => 'La contraseña debe tener al menos un número.'],

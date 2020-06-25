@@ -69,6 +69,14 @@ class InscripcionController extends Controller
         }
     }
 
+    public function actionInscribirAUsuario($idUsuario, $idEvento){
+        $inscripcion = Inscripcion::find()->where(["idEvento" => $idEvento, "idUsuario" => $idUsuario])->one();
+        $inscripcion->estado = 1;
+        $inscripcion->save();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     public function actionPreinscripcion()
     {
         if (Yii::$app->user->isGuest) {

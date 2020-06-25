@@ -173,10 +173,17 @@ class CuentaController extends Controller {
             if ($model->profileImage != null) {
                 if ($model->upload()) {
                     $model->profileImage = (Yii::getAlias("@web/profile/images/")) . $model->profileImage->baseName . '.' . $model->profileImage->extension;
+                    Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
+                            . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+                } else {
+                    Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
+                            . '<p> No pudimos actualizar tu imagen de perfil. </p>');
                 }
+            }else{
+                Yii::$app->session->setFlash('error', '<h2> Campo vacío </h2>'
+                            . '<p> No ingresó ninguna imagen. </p>');
             }
-            Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
-                    . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+
             return $this->redirect(['profile']);
         }
 
@@ -298,14 +305,16 @@ class CuentaController extends Controller {
 
         $model = new CambiarPasswordForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->cambiarPassword()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() ) {
+            if($model->cambiarPassword()){
             Yii::$app->session->setFlash('success', '<h2> Contraseña actualizada </h2>'
                     . '<p> La nueva contraseña fue guardada. </p>');
+            }else{
+                Yii::$app->session->setFlash('error', '<h2> Algo salió mal </h2>'
+                    . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
+            }
 
             return $this->redirect(['/cuenta/profile']);
-        } else {
-            Yii::$app->session->setFlash('error', '<h2> Algo salió mal </h2>'
-                    . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
         }
 
         return $this->render('cambiarPassword', [
