@@ -41,7 +41,7 @@ $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'to
         }
     </style>
 
-    <div class="verify-email" style="color: white;
+    <div class="verify-email" style="
             text-align: center;
             padding-top: 30px;
             padding-bottom: 30px;
