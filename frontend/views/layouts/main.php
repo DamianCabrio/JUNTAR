@@ -67,7 +67,9 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
                     ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
-                    ['label' => 'Mis Eventos', 'url' => ['/evento/organizar-eventos']],
+
+                    ['label' => 'Organizar Eventos', 'url' => ['/evento/organizar-eventos']],
+
                     ['label' => 'Mis Inscripciones', 'url' => ['/cuenta/mis-inscripciones-a-eventos']],
                     [
                         "label" => "Cerrar Sesión",
@@ -100,7 +102,7 @@ AppAsset::register($this);
         <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?> 
                 </div>
             </div>
             <div class="row">
@@ -114,13 +116,13 @@ AppAsset::register($this);
                     <h5 class="white-text">Contacto</h5>
                     <ul>
                         <li>
-                            <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
+                        <?= Html::a('Escribinos un mensaje', ['site/contact'], ['class' => 'link']) ?>
                         </li>
                     </ul>
-                    <h5 class="white-text">Sobre</h5>
+                    <h5 class="white-text">Sobre Nosotros</h5>
                 <ul>
                     <li>
-                        <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
+                        <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'link']) ?>
                     </li>
                 </ul>
                 </div>
@@ -128,10 +130,10 @@ AppAsset::register($this);
             <hr>
             <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/uncoma.png',  ['class' => 'img-fluid']); ?>
                 </div>
                 <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
         </div>

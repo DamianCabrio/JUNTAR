@@ -37,7 +37,7 @@ class Usuario extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             //Obligatorio
-            [['nombre', 'apellido', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
+            [['nombre', 'apellido', 'pais', 'provincia', 'localidad', 'dni'], 'required'],
 
             //Reglas nombre
             ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],

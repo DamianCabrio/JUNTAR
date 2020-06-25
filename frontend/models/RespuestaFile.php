@@ -20,6 +20,9 @@ class RespuestaFile extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    public $file;
+
     public static function tableName()
     {
         return 'respuesta';
@@ -31,12 +34,23 @@ class RespuestaFile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idpregunta', 'idinscripcion', "respuesta"], 'required'],
+            [['idpregunta', 'idinscripcion'], 'required'],
             [['idpregunta', 'idinscripcion'], 'integer'],
             [['respuesta'], 'string', 'max' => 500],
+            [['file'], "file", 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->file->saveAs("../web/eventos/formularios/archivos/" . $this->file->baseName . '.' . $this->file->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -48,7 +62,7 @@ class RespuestaFile extends \yii\db\ActiveRecord
             'id' => 'ID',
             'idpregunta' => 'Idpregunta',
             'idinscripcion' => 'Idinscripcion',
-            'respuesta' => 'RespuestaFile',
+            'respuesta' => 'Respuesta',
         ];
     }
 

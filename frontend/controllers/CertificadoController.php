@@ -5,14 +5,19 @@ use Yii;
 use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
+use frontend\models\CategoriaEvento;
+use frontend\models\ModalidadEvento;
 use frontend\models\Evento;
+use frontend\models\Certificado;
+use frontend\models\Usuario;
+use frontend\components\validateEmail;
 use yii\web\Controller;
 use yii\web\response;
 use yii\bootstrap4\ActiveForm;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use kartik\mpdf\Pdf;
-use frontend\components\validateEmail;
+
 /**
  * CertificadoController.
  */
@@ -57,38 +62,7 @@ class CertificadoController extends Controller
      */
     public function actionIndex($id) {
 
-        $isAccredited = false;
-        $isExhibitor = false;
-        $isOrganizer= false;
-
-        $inscription = Inscripcion::find()
-          ->where(['idEvento' => $id])
-          ->andWhere(['idUsuario' => Yii::$app->user->identity->id])
-          ->andWhere(['acreditacion' => 1])
-          ->all();
-
-        $presentation = (new \yii\db\Query())
-          ->select(['*'])
-          ->from('presentacion')
-          ->innerJoin('presentacion_expositor', 'presentacion_expositor.idPresentacion = presentacion.idPresentacion')
-          ->where(['idEvento' => $id])
-          ->andWhere(['idExpositor' => Yii::$app->user->identity->id])
-          ->all();
-        $event = Evento::find()
-          ->where(['idEvento' => $id])
-          ->andWhere(['idUsuario' => Yii::$app->user->identity->id])
-          ->all();
-        //Verificación de estados
-
-        if ($inscription) {
-          $isAccredited = true;
-        }
-        if ($presentation) {
-          $isExhibitor = true;
-        }
-        if ($event) {
-          $isOrganizer = true;
-        }
+        $certificate = $this->loadCertificateData($id, Yii::$app->user->identity->id );
 
         //Modelo y respuesta en el caso de que haya sido expositor de varias presentaciones
         $model = new \yii\base\DynamicModel([
@@ -97,7 +71,6 @@ class CertificadoController extends Controller
         $model->addRule(['idPresentacion'], 'required')
           ->addRule(['idPresentacion'], 'integer');
 
-        $presentations = ArrayHelper::map($presentation, 'idPresentacion', 'tituloPresentacion');
 
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
           Yii::$app->response->format = Response::FORMAT_JSON;
@@ -105,10 +78,21 @@ class CertificadoController extends Controller
         }
         if (Yii::$app->request->post()) {
           if ($model->validate()) {
-            $filePDF = $this->commonData($id, 'expositor', $model['idPresentacion']);
+            $filePDF = $this->commonData($id, 'expositor', $certificate, $model['idPresentacion']);
             return $filePDF->render();
           }
         }
+
+        $isAccredited = $certificate->verifyAccreditation();
+        if ($certificate->verifyExhibitor(Yii::$app->user->identity->id) != null) {
+          $presentations = ArrayHelper::map($certificate->verifyExhibitor(Yii::$app->user->identity->id), 'idPresentacion', 'tituloPresentacion');
+          $isExhibitor = true;
+        } else {
+          $presentations = null;
+          $isExhibitor = false;
+        }
+        $isOrganizer = $certificate->verifyOrganizer(Yii::$app->user->identity->id);
+
         return $this->render('index', [
             'idEvent' => $id,
             'model' => $model,
@@ -118,47 +102,59 @@ class CertificadoController extends Controller
             'presentations' => $presentations,
           ]);
     }
+
+    private function loadCertificateData($event, $user)
+    {
+
+      $inscription = Inscripcion::find()
+        ->where(['idEvento' => $event])
+        ->andWhere(['idUsuario' => $user])
+        ->all();
+
+      $presentation = Presentacion::find()
+        ->where(['idEvento' => $event])
+        ->all();
+
+      $event = Evento::find()
+        ->where(['idEvento' => $event])
+        ->all();
+
+      $certificate = New Certificado();
+      $certificate->event = $event;
+      $certificate->presentations = $presentation;
+      $certificate->inscription = $inscription;
+
+      return $certificate;
+    }
     /**
      * Método que devuelve un objeto mpdf con los datos y estilo del certificado
      * para ser visualizado en el navegador
      *
      * @return object
      */
-    private function commonData($id, $type, $idPresentation = null)
+    private function commonData($id, $type, $certificate, $idPresentation = null)
     {
-      //Datos del evento.
-      $eventQuery = (new \yii\db\Query())
-              ->select(['email','nombreEvento', 'descripcionCategoria', 'lugar','fechaInicioEvento', 'imgLogo'])
-              ->from('evento')
-              ->innerJoin('categoria_evento', 'categoria_evento.idCategoriaEvento = evento.idCategoriaEvento')
-              ->innerJoin('usuario', 'usuario.idUsuario = evento.idUsuario')
-              ->where(['idEvento' => $id]);
-      $eventData = $eventQuery->all();
-      //Datos del usuario de la sesion
-      $userQuery= (new \yii\db\Query())
-              ->select(['nombre', 'apellido', 'dni'])
-              ->from('usuario')
-              ->where(['idUsuario' => Yii::$app->user->identity->id]);
-      $userData = $userQuery->all();
-      //Datos de las Presentaciones
-      if ($idPresentation != null) {
-        $presentationData = Presentacion::find()
-          ->select(['tituloPresentacion','diaPresentacion','horaInicioPresentacion', 'horaFinPresentacion'])
-          ->where(['idEvento' => $id])
-          ->andWhere(['idPresentacion' => $idPresentation])
-          ->all();
-      } else {
-        $presentationData = Presentacion::find()
-          ->select(['diaPresentacion','horaInicioPresentacion', 'horaFinPresentacion'])
-          ->where(['idEvento' => $id])
-          ->all();
-      }
+      $organizer = Usuario::findOne($certificate->event[0]->idUsuario);
+      $userData = Usuario::findOne(Yii::$app->user->identity->id);
+      $eventData = $certificate->event;
+
       $validateEmail= new validateEmail();
-      $isOficial = $validateEmail->validate_by_domain($eventData[0]['email']);
+      $isOficial = $validateEmail->validate_by_domain($organizer->email);
+
+      if ($idPresentation != null) {
+        $presentationData = Presentacion::findOne($idPresentation);
+      } else {
+        $presentationData = $certificate->presentations;
+      }
+
+      $category = CategoriaEvento::findOne($certificate->event[0]->idCategoriaEvento);
+      $modality = ModalidadEvento::findOne($certificate->event[0]->idModalidadEvento);
       //Regenera el modelo del pdf con los datos y el estilo deseado.
       $content = $this->renderPartial('model', [
         'event' => $eventData,
         'user' => $userData,
+        'modality' => $modality,
+        'category' => $category,
         'certificateType' => $type,
         'isOficial' => $isOficial,
         'presentations' => $presentationData,
@@ -184,43 +180,6 @@ class CertificadoController extends Controller
       return $pdf;
 
     }
-	  /**
-     * Método para validar asistencia
-     *
-     * @return boolean
-     */
-    private function verifyAccreditation($event, $user)
-    {
-      $inscription = Inscripcion::find()
-        ->where(['idEvento' => $event])
-        ->andWhere(['idUsuario' => $user])
-        ->andWhere(['acreditacion' => 1])
-        ->all();
-
-      if ($inscription) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    /**
-     * Método para validar Organizador
-     *
-     * @return boolean
-     */
-    private function verifyOrganizer($event, $user)
-    {
-      $event = Evento::find()
-        ->where(['idEvento' => $event])
-        ->andWhere(['idUsuario' => $user])
-        ->all();
-
-      if ($event) {
-        return true;
-      } else {
-        return false;
-      }
-    }
     /**
      * Método para visualizar un certificado de Asistencia
      *
@@ -228,8 +187,9 @@ class CertificadoController extends Controller
      */
     public function actionPreviewAttendance($id)
     {
-      if ($this->verifyAccreditation($id, Yii::$app->user->identity->id)) {
-        $filePDF = $this->commonData($id, 'asistencia');
+      $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
+      if ($dataPdf->verifyAccreditation()) {
+        $filePDF = $this->commonData($id, 'asistencia', $dataPdf);
         return $filePDF->render();
       } else {
         return $this->render('/site/error', [
@@ -246,8 +206,9 @@ class CertificadoController extends Controller
      */
     public function actionPreviewOrganizer($id)
     {
-      if ($this->verifyOrganizer($id, Yii::$app->user->identity->id)) {
-        $filePDF = $this->commonData($id, 'organizador');
+      $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
+      if ($dataPdf->verifyOrganizer(Yii::$app->user->identity->id)) {
+        $filePDF = $this->commonData($id, 'organizador', $dataPdf);
         return $filePDF->render();
       } else {
         return $this->render('/site/error', [
