@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
-use yii\models\PresentacionExpositor;
+use frontend\models\PresentacionExpositor;
 
 class Certificado extends Model
 {
@@ -23,7 +23,8 @@ class Certificado extends Model
         return false;
       }
     }
-    public function verifyAccreditation()
+	
+	public function verifyAccreditation()
     {
 
       if ($this->inscription[0]->acreditacion == 1) {
@@ -34,17 +35,24 @@ class Certificado extends Model
     }
     public function verifyExhibitor($id)
     {
-
-      if (count($this->presentations)>0) {
+      $presentationsExhibitor = [];
+      $status = false;
+      if ($this->presentations > 0) {
         foreach ($this->presentations as $presentation) {
-          if ($presentation['idExpositor'] == $id) {
-            return true;
+          if (PresentacionExpositor::findOne([
+            'idPresentacion' => $presentation->idPresentacion,
+            'idExpositor' => $id,
+            ])) {
+            array_push($presentationsExhibitor, $presentation);
+            $status = true;
           }
         }
+      }
+      if ($status) {
+        return $presentationsExhibitor;
       } else {
         return false;
       }
-
     }
 
 }

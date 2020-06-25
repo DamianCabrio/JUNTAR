@@ -92,7 +92,7 @@
           <p class="centring">  <?=$type." ".$category?> </p>
           <p class="centring event"><b>"<?= $event[0]['nombreEvento'] ?>"</b></p>
           <p class="centring">  Realizado <?= $daysMessage ?> de <?= $months[$numberMonth]?> de <?= date("Y", strtotime($event[0]['fechaInicioEvento']))?>
-            con una duración de <?= $hours->format("h:i")?> Hs, dictado en: <b><?= $event[0]['lugar'] ?></b>.</p>
+            con una duración de <?= $hours->format("H:i")?> Hs, dictado en: <b><?= $event[0]['lugar'] ?></b>.</p>
           <p class="centring">Neuquén, <?= date('d/m/Y')?>.</p>
         </div>
       </div>
