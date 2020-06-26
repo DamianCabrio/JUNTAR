@@ -107,8 +107,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                     <?PHP
                     if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
                         echo '<div class="card-header pinkish_bg"> ' . 
-                        Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) 
-                        . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span>';
+                        Html::a('<i class="material-icons large align-middle">edit</i> Evento '.$estadoEvento.'', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_edit float-left']);
                         if (($evento->idEstadoEvento) == 4) {
                             ?>
                                 <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
@@ -149,7 +148,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <p>Organizado por <?= $organizadorEvento ?></p>
                                     <br>
                                     <?PHP
-                                    if ($evento->imgFlyer != null) {
+                                    if ($evento->imgFlyer) {
                                         echo Html::button('<i class="material-icons align-middle">file_download</i> Flyer', [
 
                                             'class' => 'btn text-muted',
@@ -308,7 +307,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                 <!--                                <br>
                                                                 <br>
-                                                                <br>-->
+                                                               <br>-->
+                                                               <div class="table-responsive"> 
                                     <?=
                                     GridView::widget([
                                         'dataProvider' => $presentacionDataProvider,
@@ -417,6 +417,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ],
                                     ]);
                                     ?>
+                                    </div>
                             </div>
                         </div>
                     </div>
