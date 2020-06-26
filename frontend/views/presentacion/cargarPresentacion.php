@@ -6,6 +6,7 @@ use frontend\models\Evento;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use yii\bootstrap4\ActiveForm;
+use dosamigos\ckeditor\CKEditor;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Presentacion */
 /* @var $form yii\widgets\ActiveForm */
@@ -33,7 +34,29 @@ $this->title = "Cargar Presentación - " . $evento->nombreCortoEvento;
 
                     <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true,  'placeholder' => 'Ingrese título de la presentación'])->label('Titulo de la presentación *') ?>
 
-                    <?= $form->field($model, 'descripcionPresentacion')->textarea(['rows' => '8', 'placeholder' => 'Descripción de la presentación [ máximo 800 caracteres ]'])->label('Descripción *')  ?>
+                    <?= $form->field($model, 'descripcionPresentacion')->widget(CKEditor::className(), [
+                    "options" => ['rows' => '8'],
+                    "preset" => "custom",
+                    "clientOptions" => [
+                        'toolbarGroups' => [
+                            ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+                            ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
+                            '/',
+                            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                            ['name' => 'colors'],
+                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+                            ['name' => 'links'],
+                            ['name' => 'styles'],
+                            ['name' => 'colors'],
+                            ['name' => 'tools'],
+                            ['name' => 'others'],
+                            
+                        ],
+                        'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
+                        'removePlugins' => 'elementspath',
+                        'resize_enabled' => false
+                    ],
+                ])->label('Descripción *') ?>
 
                     <input id="fechaIniEvento" type="hidden" value="<?= $evento->fechaInicioEvento ?>">
                     <input id="fechaFinEvento" type="hidden" value="<?= $evento->fechaFinEvento ?>">

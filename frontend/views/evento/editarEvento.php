@@ -1,5 +1,6 @@
 <?php
 
+use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
@@ -45,7 +46,29 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                     </div>
                 </div>
 
-                    <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8',  'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
+                <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
+                    "options" => ['rows' => '8'],
+                    "preset" => "custom",
+                    "clientOptions" => [
+                        'toolbarGroups' => [
+                            ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+                            ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
+                            '/',
+                            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                            ['name' => 'colors'],
+                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+                            ['name' => 'links'],
+                            ['name' => 'styles'],
+                            ['name' => 'colors'],
+                            ['name' => 'tools'],
+                            ['name' => 'others'],
+                            
+                        ],
+                        'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
+                        'removePlugins' => 'elementspath',
+                        'resize_enabled' => false
+                    ],
+                ])->label('Descripción *') ?>
 
                     <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 
