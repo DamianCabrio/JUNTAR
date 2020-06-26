@@ -94,13 +94,13 @@ $this->title = "Cargar Evento";
                 <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
 
                 <p class="font-italic">
-                    * Campos obligatorios.
-                    <p>
-                        <div class="form-group">
-                            <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
-                        </div>
+                    Los campos marcados con (*) son obligatorios. 
+                <p>
+                <div class="form-group">
+                    <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
+                </div>
 
-                        <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>

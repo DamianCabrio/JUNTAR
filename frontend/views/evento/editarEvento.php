@@ -98,20 +98,17 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 
 
                     <p class="font-italic">
-                        * Campos obligatorios.
-                        <p>
-                            <div class="form-group">
-                                <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
-                            </div>
-                            <?php ActiveForm::end(); ?>
+                        Los campos marcados con (*) son obligatorios. 
+                    <p>
+                    <div class="form-group">
+                            <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+                    </div>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
-        </div>
-        </div>
-
+         </div>
+      </div>
+     </div>
     </div>
-    </div>
-
-</div>
-
+  </div>
 </div>
