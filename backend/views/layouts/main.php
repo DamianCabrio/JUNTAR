@@ -42,24 +42,23 @@ AppAsset::register($this);
         //MenuItems for ABM
         
         //MenuItems ABM Permisos
-        $menuItems[] = [
-                       'label' => 'Gestor de Permisos OLD',
-                       'items' => [
-                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
-                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
-                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
-                            ['label' => 'Asignar Permisos7', 'url' => ['/permission-manager/index7']],
-                            ],
-                        ];
+//        $menuItems[] = [
+//                       'label' => 'Gestor de Permisos OLD',
+//                       'items' => [
+//                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
+//                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
+//                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
+//                            ['label' => 'Asignar Permisos7', 'url' => ['/permission-manager/index7']],
+//                            ],
+//                        ];
         //MenuItems ABM Permisos
         $menuItems[] = [
                        'label' => 'Gestionar Permisos',
                        'items' => [
-                            ['label' => 'Listado Permisos', 'url' => ['/permission/index']],
                             ['label' => 'Crear Permiso', 'url' => ['/permission/create-permiso']],
-                            ['label' => 'Actualizar Permiso', 'url' => ['/permission/update-permiso']],
-                            ['label' => 'Eliminar Permiso', 'url' => ['/permission/remove-permiso']],
                             ['label' => 'Asignar Permisos', 'url' => ['/permission/asignar-permisos']],
+                            ['label' => 'Listado Permisos', 'url' => ['/permission/index']],
+                            ['label' => 'Eliminar Permiso', 'url' => ['/permission/remove-permiso']],
                             ],
                         ];
         $menuItems[] = [
