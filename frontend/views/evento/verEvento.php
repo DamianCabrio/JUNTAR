@@ -121,7 +121,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_hide float-right']) ?>
                                 <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                             <?php
-                        }    
+                        }
+                        if (($evento->idEstadoEvento) == 3) {
+                            ?>
+                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                            <?php
+                        }       
                         echo ' </div>';
                     } 
                     elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
