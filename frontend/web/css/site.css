@@ -260,14 +260,13 @@ a.desc:after {
 
 .btn_publish {
     background-color: transparent!important;
-    color: #e6fff7!important;
-    border-color: #e6fff7!important;
-    border: solid 2px;
+    color: #FFFFFF!important;
+  
 }
 
 .btn_publish:hover {
-    border-color: #cccccc!important;
-    color: #cccccc!important;
+    background-color: #000000!important;
+    color: #FFFFFF!important;
 }
 
 .btn_hide {
