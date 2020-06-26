@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use frontend\models\PresentacionExpositor;
 use frontend\models\Usuario;
 
-$this->title = $evento->nombreCortoEvento . " - Juntar";
+$this->title = $evento->nombreEvento . " - Juntar";
 
 $openGraph = Yii::$app->opengraph;
 
