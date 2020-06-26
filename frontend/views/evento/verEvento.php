@@ -355,7 +355,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                     if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
                                                         $retorno = 'No hay recursos para mostrar';
                                                     } else {
-                                                        $retorno = '<a href="' . $dataProvider->linkARecursos . '">Link</a>';
+                                                        $retorno = '<a target="_blank" href="' . $dataProvider->linkARecursos . '">Link</a>';
                                                     }
                                                     return $retorno;
                                                 },
