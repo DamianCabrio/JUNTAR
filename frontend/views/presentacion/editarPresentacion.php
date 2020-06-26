@@ -61,7 +61,7 @@ use dosamigos\ckeditor\CKEditor;
 
                     <?= $form->field($model, 'horaFinPresentacion')->input('time', ['style' => 'width: auto'])->label('Hora finalización (HH:MM) *') ?>
 
-                    <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'Ingrese link a recursos'], ['maxlength' => true]) ?>
+                    <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'https//ejemplo.com o http://ejemplo.com'], ['maxlength' => true]) ?>
                     <p class="font-italic">
                         Los campos marcados con (*) son obligatorios. 
                     <p>
