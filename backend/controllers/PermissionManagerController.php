@@ -114,11 +114,67 @@ class PermissionManagerController extends Controller {
             'pagination' => false,
             'sort' => ['attributes' => ['name', 'description']]
         ]);
-        
+
         return $this->render('index5', [
                     'roles' => $dataRoles,
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
+    public function actionIndex7() {
+        $rolSeleccionado = null;
+        if (Yii::$app->request->get('unRol') != null) {
+            $rolSeleccionado = Yii::$app->request->get('unRol');
+        }
+        if (Yii::$app->request->get('asignarRol') != null && $rolSeleccionado != null) {
+            $this->actionAssingItem(Yii::$app->request->get('asignarRol'), $rolSeleccionado);
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $permisosAsignadosRolSeleccionado = [];
+        $rolesAsignadosARolSeleccionado = [];
+        if (Yii::$app->request->get('unRol') != null) {
+            $rolSeleccionado = Yii::$app->request->get('unRol');
+            $permisosAsignadosRolSeleccionado = $this->getPermisosAsignados($rolSeleccionado, $permisosAsignadosRolSeleccionado);
+//            $permisosAsignadosRolSeleccionado = $this->getPermisosAsignados($rolSeleccionado);
+            $rolesAsignadosARolSeleccionado = $this->getRolesAsignados($rolSeleccionado);
+            foreach ($rolesAsignadosARolSeleccionado as $key => $unPermiso) {
+//                print_r($unPermiso);
+                $permisosAsignadosRolSeleccionado = $this->getPermisosAsignados($unPermiso['name'], $permisosAsignadosRolSeleccionado);
+//                array_push($permisosAsignadosRolSeleccionado, $this->getPermisosAsignados($unPermiso['name']));
+            }
+//            foreach ($rolesAsignadosARolSeleccionado as $key => $unPermiso) {
+////                print_r($unPermiso);
+//                $permisosAsignadosRolSeleccionado[$key] = $unPermiso;
+//            }
+            
+        }
+        // Se obtiene todos los roles que estan creados.
+        $dataRoles = $this->actionGetroles();
+        $searchModel = new PermisoSearch();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['type' => 2]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+//            'pagination' => false,
+            'sort' => ['attributes' => ['name']]
+        ]);
+
+        return $this->render('index7', [
+                    'roles' => $dataRoles,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'rolSeleccionado' => $rolSeleccionado,
+                    'permisosAsignados' => $permisosAsignadosRolSeleccionado,
+                    'rolesAsignados' => $rolesAsignadosARolSeleccionado,
         ]);
     }
 
@@ -171,7 +227,7 @@ class PermissionManagerController extends Controller {
 
             $rolesQuery = (new \yii\db\Query())
                     //campos a buscar
-                    ->select(['name'])
+                    ->select(['name', 'description'])
                     //tabla
                     ->from('permiso')
                     //Condicion
@@ -240,6 +296,86 @@ class PermissionManagerController extends Controller {
         }
         return $permissionsRole;
     }
+
+    private function getPermisosAsignados($unRol, $permisosAsignados) {
+//    private function getPermisosAsignados($unRol) {
+//        $permisosAsignados = null;
+        if (Yii::$app->user->can('Administrador')) {
+//            if (Yii::$app->request->post('unRol') != null) {
+            if (Yii::$app->request->post('search') != null) {
+                //define el tipo de respuesta del metodo
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            }
+
+            //captura el rol recibido por post
+//                $unRol = Yii::$app->request->post('unRol');
+            //genera la query para buscar los permisos asignados al rol
+            $permissionsRoleQuery = (new \yii\db\Query())
+                    //campos a buscar
+//                        ->select(['parent', 'name', 'description'])
+                    ->select(['parent', 'name', 'description', 'type'])
+                    //distict
+                    ->distinct('name')
+                    //tabla
+                    ->from('permiso')
+                    //relacion tabla permiso_rol
+                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                    //Condicion permisos asignados
+//                        ->where(['permiso.type' => 2, 'permiso_rol.parent' => $unRol])
+                    ->where(['permiso_rol.parent' => $unRol])
+                    ->andWhere(['type' => 2]);
+            //Condicion roles asignados
+//                        ->andWhere(['permiso.type' => 1]);
+            //Order
+//                    ->orderBy("permiso_rol.parent");
+
+            $permisosAsignados[$unRol] = $permissionsRoleQuery->all();
+//            $permisosAsignados = $permissionsRoleQuery->all();
+//            foreach ($permisosAsignados as $key => $unPermiso) {
+//                $permisosAsignados[$key] = array_shift($unPermiso);
+//            }
+//            }
+        }
+        return $permisosAsignados;
+    }
+
+    private function getRolesAsignados($unRol) {
+        $rolesAsignados = null;
+        if (Yii::$app->user->can('Administrador')) {
+//            if (Yii::$app->request->post('unRol') != null) {
+            if (Yii::$app->request->post('search') != null) {
+                //define el tipo de respuesta del metodo
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            }
+
+            //captura el rol recibido por post
+//                $unRol = Yii::$app->request->post('unRol');
+            //genera la query para buscar los permisos asignados al rol
+            $permissionsRoleQuery = (new \yii\db\Query())
+                    //campos a buscar
+//                        ->select(['parent', 'name', 'description'])
+                    ->select(['parent', 'name', 'description', 'type'])
+                    //distict
+                    ->distinct('name')
+                    //tabla
+                    ->from('permiso')
+                    //relacion tabla permiso_rol
+                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                    //Condicion permisos asignados
+//                        ->where(['permiso.type' => 2, 'permiso_rol.parent' => $unRol])
+                    ->where(['permiso_rol.parent' => $unRol])
+                    ->andWhere(['type' => 1]);
+            //Condicion roles asignados
+//                        ->andWhere(['permiso.type' => 1]);
+            //Order
+//                    ->orderBy("permiso_rol.parent");
+
+            $rolesAsignados = $permissionsRoleQuery->all();
+//            }
+        }
+        return $rolesAsignados;
+    }
+
     public function actionGetPermisosByRol2() {
         $permissionsRole = null;
         if (Yii::$app->user->can('Administrador')) {
@@ -312,6 +448,45 @@ class PermissionManagerController extends Controller {
                     $respuesta['success'] = "Added";
                 }
             }
+        }
+        return $respuesta;
+    }
+
+    private function actionAssingItem($item, $unRol) {
+        $respuesta = false;
+        if (Yii::$app->user->can('Administrador')) {
+//            $rol = $permiso = null;
+//            if (Yii::$app->request->post('unRol') != null) {
+//                $rol = Yii::$app->request->post('unRol');
+            $rol = $unRol;
+//            }
+//            if (Yii::$app->request->post('unPermiso') != null) {
+//                $permiso = Yii::$app->request->post('unPermiso');
+            $permiso = $item;
+//            }
+//            if (Yii::$app->request->post('search') != null) {
+//                //define el tipo de respuesta del metodo
+//                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//            }
+//                    $mensaje = "Se removio con exito";
+//            if ($rol != $permiso && $permiso != null) {
+            $auth = Yii::$app->authManager;
+
+            $unPermiso = $auth->createPermission($permiso);
+            // add "organizador" role and give this role the "createPost" permission
+            $unRol = $auth->createRole($rol);
+            if (!$auth->hasChild($unPermiso, $unRol)) {
+                if ($auth->hasChild($unRol, $unPermiso)) {
+                    $auth->removeChild($unRol, $unPermiso);
+                    $respuesta['success'] = "Removed";
+                } else {
+                    $auth->addChild($unRol, $unPermiso);
+                    $respuesta['success'] = "Added";
+                }
+            }else{
+                $respuesta['error'] = "noAgregado";
+            }
+//            }
         }
         return $respuesta;
     }

@@ -18,6 +18,7 @@ AppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
@@ -41,14 +42,15 @@ AppAsset::register($this);
         //MenuItems for ABM
         
         //MenuItems ABM Permisos
-//        $menuItems[] = [
-//                       'label' => 'Gestor de Permisos OLD',
-//                       'items' => [
-//                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
-//                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
-//                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
-//                            ],
-//                        ];
+        $menuItems[] = [
+                       'label' => 'Gestor de Permisos OLD',
+                       'items' => [
+                            ['label' => 'Asignar Permisos', 'url' => ['/permission-manager/index']],
+                            ['label' => 'Asignar Permisos3', 'url' => ['/permission-manager/index3']],
+                            ['label' => 'Asignar Permisos5', 'url' => ['/permission-manager/index5']],
+                            ['label' => 'Asignar Permisos7', 'url' => ['/permission-manager/index7']],
+                            ],
+                        ];
         //MenuItems ABM Permisos
         $menuItems[] = [
                        'label' => 'Gestionar Permisos',
