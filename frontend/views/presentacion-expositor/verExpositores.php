@@ -28,6 +28,7 @@ use yii\bootstrap4\Modal;
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
+                'summary' => '',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     //'idExpositor',
