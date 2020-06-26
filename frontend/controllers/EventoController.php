@@ -563,6 +563,7 @@ class EventoController extends Controller {
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
         $base->select(['user_estado'=>'inscripcion.estado',
+                       'user_idInscripcion'=>'inscripcion.idInscripcion',
                        'user_apellido'=>'usuario.apellido',
                        'user_nombre'=> 'usuario.nombre',
                        'user_dni'=>'usuario.dni',
@@ -574,11 +575,34 @@ class EventoController extends Controller {
                        'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
  
         /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
-
         $participantes = $base ->where(['inscripcion.idEvento' => $idEvento ])->orderBy('usuario.apellido ASC')->asArray()->all();
+      
+       
+       
+        $preguntas= Pregunta::find()->where(['idevento' => $idEvento ])->asArray()->all();
 
 
-       return $this->renderPartial('inscriptosExcel', ['participantes' => $participantes ,'arrayEvento' => $arrayEvento ]);
+
+        $base = Inscripcion::find();
+        $base->innerJoin('respuesta', 'respuesta.idInscripcion=inscripcion.idInscripcion');
+        $base->innerJoin('pregunta', 'pregunta.id=respuesta.idpregunta');
+        $base->select(['user_pregunta'=>'pregunta.descripcion', 
+                       'user_repuesta'=>'respuesta.respuesta',
+                       'user_idInscripcion'=>'inscripcion.idInscripcion' ]);
+
+        $respuestas= $base->where(['pregunta.idevento' => $idEvento ])->asArray()->all();
+
+
+     //   foreach(){
+
+
+     //       $respuestas[]=['user_idUsuario'=>$dato['user_idUsuario'], 'user_respuestas'=>$user_respuestas];
+
+      //  }
+
+       return $this->renderPartial('inscriptosExcel',
+        ['participantes' => $participantes ,'arrayEvento' => $arrayEvento,
+        'preguntas' => $preguntas, 'respuestas' => $respuestas]);
     }
     
     public function actionOrganizarEventos()
