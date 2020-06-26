@@ -9,28 +9,55 @@ $this->title = "Responder Formulario";
 ?>
 
 <div class="responder-formulario container">
-    <h3>Haga click en los en cada botón para completar su Preinscripción</h3>
-    <h5>Responda con cuidado, no se puede editar las respuestas</h5>
-    <?php foreach ($preguntas as $i => $pregunta): ?>
-    <?php if($respuestaYaHechas[$i] == false): ?>
-        <?php $url = Url::toRoute(["respuesta/create?id=" . $pregunta->id . "&id2=" . $idInscripcion]) ?>
-            <?= Html::a('Pregunta ' . ($i + 1), $url, ['class' => 'btn btn-outline-success responderPregunta',
-                "data-id" => $url]); ?>
-        <?php else: ?>
+    <div class="padding_section">
+        <div class="card-header darkish_bg text-white">
+            <h3>Formulario de Pre-Inscripción</h3>
+            <h5>Responda con cuidado, no se pueden editar las respuestas.</h5>
+        </div>
+    </div>
+
+<!-- acá el foreach -->
+    <div class="card">
+        <div class="card-header darkish_bg text-white">
+            <h5>Pregunta 1</h5>
+        </div>
+        <div class="card-body">
+
+            <p class="card-text">Pregunta completa acá</p>
+            <hr>
+            <a href="#" class="btn btn-lg">Responder</a>
+            <hr>
+            <p class="card-text">Respuesta completa acá sin que se vea el botón</p>
+
+        </div>
+    </div>
+
+    <br> <!-- separa por mientras -->
+
+    <?php foreach ($preguntas as $i => $pregunta) : ?>
+        <?php if ($respuestaYaHechas[$i] == false) : ?>
+            <?php $url = Url::toRoute(["respuesta/create?id=" . $pregunta->id . "&id2=" . $idInscripcion]) ?>
+            <?= Html::a('Pregunta ' . ($i + 1), $url, [
+                'class' => 'btn btn-outline-success responderPregunta',
+                "data-id" => $url
+            ]); ?>
+        <?php else : ?>
             <?= Html::button('Pregunta ' . ($i + 1),  ['class' => 'btn btn-outline-secondary', "disabled" => true, "style" => "background-color: #FE1355;"]); ?>
-    <?php endif; ?>
+        <?php endif; ?>
     <?php endforeach; ?>
 
     <br><br>
 
-        <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
+    <?= Html::a('Volver Atrás', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-lg btn-outline-success']); ?>
 
 </div>
 
 <?php
 Modal::begin([
     'id' => 'modalPregunta',
-    'size' => 'modal-lg'
+    'size' => 'modal-lg',
+    'headerOptions' => ['class' => 'darkish_bg text-white']
+
 ]);
 Modal::end();
 ?>

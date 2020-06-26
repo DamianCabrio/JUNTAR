@@ -50,9 +50,9 @@ if ($evento->imgLogo != null) {
 }
 
 if ($evento->preInscripcion == 0) {
-    $preInscripcion = "No requiere preinscipción";
+    $preInscripcion = " No requiere preinscipción";
 } else {
-    $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipción*</b>";
+    $preInscripcion = " <b style='color:#ff0000;'>*Requiere preinscipción*</b>";
 }
 if ($evento->codigoAcreditacion != null) {
     $codAcreditacion = $evento->codigoAcreditacion;
@@ -170,12 +170,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         </div>
                         <div class="row padding_section greyish_bg">
                             <div class="col-sm-12 col-md-8">
-                                <div class="">
-                                    <p class="align-middle">CUPOS DISPONIBLES: <?= $cupos ?> <?= $preInscripcion ?></p>
+                                <div class="h-100">
+                                    <p class="h-100 d-flex align-items-center">CUPOS DISPONIBLES: <?= $cupos ?> <?= $preInscripcion ?></p>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
-                                <div class="align-middle">
+                                <div class="h-100">
                                     <?php
                                     switch ($estadoEventoInscripcion) {
                                         case "puedeInscripcion":
@@ -196,6 +196,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         case "yaPreinscripto":
                                             echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                             if ($cantidadPreguntas != 0) {
+                                                echo "<br><br>";
                                                 echo Html::a('Responder Formulario', ['eventos/responder-formulario/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                             }
                                             break;
@@ -305,10 +306,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                 </div>
 
-                                <!--                                <br>
-                                                                <br>
-                                                               <br>-->
-                                                               <div class="table-responsive"> 
+                                <div class="table-responsive"> 
                                     <?=
                                     GridView::widget([
                                         'dataProvider' => $presentacionDataProvider,
