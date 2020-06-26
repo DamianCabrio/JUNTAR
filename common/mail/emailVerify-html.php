@@ -15,7 +15,7 @@ $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'to
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
-<body style="background-color: #0b0d19;">
+<body>
     <style>
         .link-button {
             border: 1px solid #ccc;
@@ -41,7 +41,7 @@ $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'to
         }
     </style>
 
-    <div class="verify-email" style="color: white;
+    <div class="verify-email" style="
             text-align: center;
             padding-top: 30px;
             padding-bottom: 30px;

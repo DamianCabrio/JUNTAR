@@ -109,7 +109,7 @@ AppAsset::register($this);
                 <div class="col-12 col-md-8">
                     <h5 class="white-text">Juntar</h5>
 
-                    <p class="grey-text text-lighten-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada vitae erat a lobortis. Donec pretium tortor eros, a auctor massa suscipit vel. Donec augue odio, vulputate et egestas fringilla, varius vel ligula. Aliquam eu sagittis nisi, vitae imperdiet lorem. Vivamus lobortis diam vel sapien aliquet, dictum placerat tellus imperdiet.</p>
+                    <p class="grey-text text-lighten-4">Juntar es una plataforma web para gestión de eventos libre y gratuita. El sitio permite a los usuarios navegar, crear y participar de eventos. Nació como un desafío universitario y podemos asegurar que hemos llegado a la meta que teníamos como objetivo e incluso la hemos superado gracias a un gran equipo de trabajo.</p>
 
                 </div>
                 <div class="col-12 col-md-4">
