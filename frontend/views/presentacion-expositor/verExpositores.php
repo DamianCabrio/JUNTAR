@@ -16,7 +16,7 @@ use yii\bootstrap4\Modal;
             <?php
             $cadenaAgregar = "";
             if (!Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
-                if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4) {
+                if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 || $evento->idEstadoEvento == 3) {
                     $cadenaAgregar = Html::a('<b class="material-icons large align-middle">person_add</b><i> Cargar Expositor</i>', ['/evento/cargar-expositor', 'idPresentacion' => $model->idPresentacion], ['class' => 'btn agregarExpositor']);
                 }
             }
@@ -66,7 +66,7 @@ use yii\bootstrap4\Modal;
                                             ],]);
                             },
                         ],
-                        'visible' => !Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
+                        'visible' => !Yii::$app->user->isGuest && $model->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 || $evento->idEstadoEvento == 3),
                         'header' => 'Acciones',
                         'headerOptions' => ['style' => 'text-align:center;'],
                         'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
