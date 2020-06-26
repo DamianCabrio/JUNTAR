@@ -111,15 +111,15 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span>';
                         if (($evento->idEstadoEvento) == 4) {
                             ?>
-                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                                 <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                                <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?> 
                             <?php } ?>
 
                             <?php
                         if (($evento->idEstadoEvento) == 1) {
                             ?>
-                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_hide float-right']) ?>
                                 <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                                <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                             <?php
                         }
                         if (($evento->idEstadoEvento) == 3) {
@@ -379,16 +379,14 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 'attribute' => 'Expositores',
                                                 'format' => 'raw',
                                                 'value' => function ($dataProvider) {
-                                                    //HACER IF
+                                                   
                                                     if (count($dataProvider->presentacionExpositors) == 0) {
                                                         $string = "No hay expositores";
-                                                        //if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
-                                                        //    $string .= ' ' . Html::a('<i class="material-icons">person_add</i>', [Url::to(['evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion])], ['class' => 'agregarExpositor']);
+                    
                                                         if(!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
                                                             $string .= ' '.Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => '']);
                                                         }
                                                     } else {
-                                                        //$string = '<a class="material-icons verExpositores" href="/presentacion-expositor/ver-expositores?idPresentacion=' . $dataProvider->idPresentacion . '">remove_red_eye</a>';
                                                         $string = Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => 'verExpositores']);
                                                     }
                                                     return $string;
