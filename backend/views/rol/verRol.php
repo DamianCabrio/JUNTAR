@@ -17,10 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php // echo Html::a('Update', ['update-permiso', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['remove-permiso', 'name' => $model->name], [
+        <?= Html::a('Delete', ['/rol/remove-rol', 'name' => $model->name], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Está seguro de querer eliminar este Rol?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,12 +30,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
-            'type',
-            'description:ntext',
-            'rule_name',
-            'data',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'type',
+                'label' => 'Tipo',
+                'value' => ($model->type == 1)? 'Rol':'Permiso', //valor referenciado
+            ],
+            [
+                'attribute' => 'description',
+                'label' => 'Descripcion',
+                'value' => $model->description, //valor referenciado
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Fecha Creación',
+                'value' => date("Y-m-d H:i:s", $model->created_at), //valor referenciado
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Fecha Actualización',
+                'value' => date("Y-m-d H:i:s", $model->updated_at), //valor referenciado
+            ],
         ],
     ]) ?>
 

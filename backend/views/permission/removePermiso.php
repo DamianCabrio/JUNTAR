@@ -5,14 +5,12 @@ use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
+$this->title = 'Eliminar Permiso';
+$this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
     <div class="col-10 col  offset-1">
-        <?php
-        $this->title = 'Eliminar Permiso';
-        $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
-        $this->params['breadcrumbs'][] = $this->title;
-        ?>
         <div class="rol-create">
 
             <h1><?= Html::encode($this->title) ?></h1>

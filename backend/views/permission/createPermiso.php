@@ -6,14 +6,12 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
-?>
-<div class="row">
-    <div class="col-md-7 col-sm-12 m-auto">
-        <?php
         $this->title = 'Crear nuevo Permiso';
         $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
         $this->params['breadcrumbs'][] = $this->title;
-        ?>
+?>
+<div class="row">
+    <div class="col-md-7 col-sm-12 m-auto">
         <div class="crear-permiso">
             <div class="card text-center">
                 <h1 class="card-header text-center pinkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
@@ -48,9 +46,6 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>
