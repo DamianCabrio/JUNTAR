@@ -306,9 +306,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                 </div>
 
-                                <!--                                <br>
-                                                                <br>
-                                                                <br>-->
+                                <div class="table table-responsive">        
                                     <?=
                                     GridView::widget([
                                         'dataProvider' => $presentacionDataProvider,
@@ -417,6 +415,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ],
                                     ]);
                                     ?>
+                                 </div>   
                             </div>
                         </div>
                     </div>
