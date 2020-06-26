@@ -49,13 +49,11 @@ a.asc:after, a.desc:after {
 }
 
 a.asc:after {
-    /*content: "\e113" "\e151";*/
-    content: url(../iconos/arrow-down-circle.svg);
+    content: /*"\e113"*/ "\e151";
 }
 
 a.desc:after {
-    content: url(../iconos/arrow-up-circle.svg);
-    /*content: "\e114" "\e152";*/
+    content: /*"\e114"*/ "\e152";
 }
 
 .sort-numerical a.asc:after {
@@ -148,34 +146,4 @@ a.desc:after {
 }
 .permissionDiv{
     border: 1px solid red;
-}
-
-.pinkish_bg {
-    background-color: #FE1355;
-    /*background-color: #0B0D19;*/
-    /*background-color: rgb(101,23,48);*/
-}
-.darkish_bg {
-    /*background-color: #FE1355;*/
-    background-color: #0B0D19;
-    /*background-color: rgb(101,23,48);*/
-}
-.lightblue_bg {
-    /*background-color: #0B0D19;*/
-    /*background-color: #FE1355;*/
-    /*background-color: #002489;*/
-    background-color: rgb(101,23,48);
-}
-.Agregar{
-    /*filter: invert(20%) sepia(94%) saturate(5910%) hue-rotate(122deg) brightness(97%) contrast(104%);*/
-    filter: invert(17%) sepia(87%) saturate(2367%) hue-rotate(102deg) brightness(98%) contrast(105%);
-}
-
-.Quitar{
-    /*filter: invert(9%) sepia(95%) saturate(6904%) hue-rotate(2deg) brightness(124%) contrast(112%);*/
-    filter: invert(14%) sepia(58%) saturate(6507%) hue-rotate(340deg) brightness(96%) contrast(94%);
-}
-.activePage a{
-    background-color: #FE1355;
-    color:white;
 }
