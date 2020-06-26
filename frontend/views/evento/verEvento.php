@@ -105,26 +105,34 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             <div class="container">
                 <div class="card bg-white">
                     <?PHP
-                    if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
+                    if ($esDueño) {
                         echo '<div class="card-header pinkish_bg"> ' . 
                         Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) 
                         . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span>';
                         if (($evento->idEstadoEvento) == 4) {
                             ?>
                                 <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                                <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                             <?php } ?>
 
                             <?php
-                            if (($evento->idEstadoEvento) == 1) {
+                        if (($evento->idEstadoEvento) == 1) {
                             ?>
                                 <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_hide float-right']) ?>
+                                <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                             <?php
-                            }
+                        }    
                         echo ' </div>';
-                    } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
-                        echo '<div class="card-header pinkish_bg"> <br> </div>';
+                    } 
+                    elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
+                    ?>    
+                        <div class="card-header pinkish_bg">
+                                <br>
+                         </div>
+                    <?php     
                     }
                     ?>
+             
 
                     <div class="card-body">
                         <div class="row padding_section">
@@ -297,8 +305,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <div class="d-flex">
                                     <h4 class="text-uppercase">AGENDA</h4>
                                     <?PHP
-                                    if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
-                                        if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4) {
+                                    if ($esDueño) {
+                                        if ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 || $evento->idEstadoEvento == 3) {
                                             echo Html::a('<i class="material-icons large">add</i>', ['/presentacion/cargar-presentacion/' . $evento->nombreCortoEvento], ['class' => 'agregarPresentacion link']);
                                         }
                                     } //url /presentacion/cargar-presentacion/
@@ -409,7 +417,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 'header' => 'Acciones',
                                                 'headerOptions' => ['style' => 'text-align:center;'],
                                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                                'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
+                                                'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 || $evento->idEstadoEvento == 3),
                                             ],
     //                                            
                                         ],
