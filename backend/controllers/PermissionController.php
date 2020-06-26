@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\PermisoSearch;
 use backend\models\PermisoQuery;
 use backend\models\Permiso;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -68,7 +69,14 @@ class PermissionController extends Controller {
     public function actionIndex() {
         $searchModel = new PermisoSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['type' => 2]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+//            'sort' => ['attributes' => ['name']]
+        ]);
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
@@ -266,6 +274,12 @@ class PermissionController extends Controller {
     public function actionCreatePermiso() {
         $model = new Permiso();
 
+        //captura la seleccion de un rol
+        $entornoSeleccionado = "todos";
+        if (Yii::$app->request->get('entorno') != null) {
+            $entornoSeleccionado = Yii::$app->request->get('entorno');
+        }
+
         //verifica si fue enviada informacion por POST
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             //verifica que el permiso no exista
@@ -287,8 +301,13 @@ class PermissionController extends Controller {
 
         //obtenemos las vistas de todo el sitio
         $permisosSitio = [];
-        $permisosSitio = $this->listarPermisosDeControladores('backend', $permisosSitio);
-        $permisosSitio = $this->listarPermisosDeControladores('frontend', $permisosSitio);
+        if ($entornoSeleccionado == "todos") {
+            $permisosSitio = $this->listarPermisosDeControladores('backend', $permisosSitio);
+            $permisosSitio = $this->listarPermisosDeControladores('frontend', $permisosSitio);
+            //asignar más entornos donde existan controllers a futuro
+        } else {
+            $permisosSitio = $this->listarPermisosDeControladores($entornoSeleccionado, $permisosSitio);
+        }
 
         //obtenemos los permisos registrados
         $permisosRegistrados = ArrayHelper::map(yii::$app->AuthManager->getPermissions(), 'name', 'name');
@@ -299,6 +318,7 @@ class PermissionController extends Controller {
         return $this->render('createPermiso', [
                     'model' => $model,
                     'permisos' => $permisosFaltantes,
+                    'entorno' => $entornoSeleccionado
         ]);
     }
 
@@ -336,17 +356,22 @@ class PermissionController extends Controller {
      *
      * @return string
      */
-    public function actionRemovePermiso($name) {
-        $model = $this->findModel($name);
+    public function actionRemovePermiso() {
+        $model = new Permiso();
+        if (Yii::$app->request->get('name') != null) {
+            $nombrePermiso = Yii::$app->request->get('name');
+            $model = $this->findModel($nombrePermiso);
+        }
 
         //verifica si fue enviada informacion por POST
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
             //consideramos como resultado el peor de los casos
             $result = false;
             //comprobamos si existe el permiso
             if (yii::$app->authManager->getPermission($model->name) != null) {
                 //si existe obtenemos el resultado de remover el registro del permiso
-                $result = yii::$app->authManager->remove($model->name);
+                $permission = Yii::$app->authManager->createPermission($model->name);
+                $result = Yii::$app->authManager->remove($permission);
             }
             //generamos un mensaje en base al resultado
             if ($result) {
@@ -375,7 +400,7 @@ class PermissionController extends Controller {
         if (($model = Permiso::findOne($id)) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException('La página que estás intentando acceder no existe.');
+        throw new NotFoundHttpException('El permiso que estás intentando acceder no existe.');
     }
 
 }

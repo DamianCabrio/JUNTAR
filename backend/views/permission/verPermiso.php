@@ -13,16 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="permiso-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1> Permiso: <?= Html::encode($this->title) ?> </h1>
 
     <p>
         <?php // echo Html::a('Update', ['update-permiso', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['remove-permiso', 'name' => $model->name], [
+        <?= Html::a('Delete', ['/permission/remove-permiso', 'name' => $model->name], [
             'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
+//            'data' => [
+//                'confirm' => '¿Está seguro que desea eliminar este permiso?',
+//            ],
         ]) ?>
     </p>
 
@@ -30,12 +29,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
-            'type',
-            'description:ntext',
-            'rule_name',
-            'data',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'type',
+                'label' => 'Tipo',
+                'value' => ($model->type == 1)? 'Rol':'Permiso', //valor referenciado
+            ],
+            [
+                'attribute' => 'description',
+                'label' => 'Descripcion',
+                'value' => $model->description, //valor referenciado
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Fecha Creación',
+                'value' => date("Y-m-d H:i:s", $model->created_at), //valor referenciado
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Fecha Actualización',
+                'value' => date("Y-m-d H:i:s", $model->updated_at), //valor referenciado
+            ],
+//            'created_at',
+//            'updated_at',
         ],
     ]) ?>
 

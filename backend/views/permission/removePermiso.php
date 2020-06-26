@@ -7,28 +7,30 @@ use yii\bootstrap4\ActiveForm;
 /* @var $model app\models\Usuario */
 ?>
 <div class="row">
-  <div class="col-10 col  offset-1">
-<?php
-$this->title = 'Eliminar Permiso';
-$this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="rol-create">
+    <div class="col-10 col  offset-1">
+        <?php
+        $this->title = 'Eliminar Permiso';
+        $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
+        $this->params['breadcrumbs'][] = $this->title;
+        ?>
+        <div class="rol-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php $form = ActiveForm::begin(); ?>
+            <h1><?= Html::encode($this->title) ?></h1>
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->dropdownlist($item, ['class' => 'form-control', 'prompt'=>'Seleccione un permiso...']); ?>
+            <?= $form->field($model, 'name')->dropdownlist($item, ['class' => 'form-control', 'prompt' => 'Seleccione un permiso...']); ?>
 
-    <div class="form-group">
-      <?= Html::submitButton('Eliminar', [
-        'class' => 'btn btn-danger',
-        'data' => [
-          'confirm' => '¿Está seguro de eliminar es Rol o Permiso?'
-        ],
-        ]) ?>
+            <div class="form-group">
+                <?=
+                Html::submitButton('Eliminar', [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => '¿Está seguro de querer eliminar el Permiso?'
+                    ],
+                ])
+                ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-    <?php ActiveForm::end(); ?>
-</div>
-</div>
 </div>
