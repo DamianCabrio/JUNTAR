@@ -38,7 +38,7 @@ $this->title = "Cargar Evento";
                         <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
                             'data-title' => 'Requisitos',
                             'data-toggle' => 'popover',
-                            'data-content' => 'El nombre corto solo puede tener numeros y letras sin acentos ni ñ, y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
+                            'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
                     </div>
                 </div>
 
