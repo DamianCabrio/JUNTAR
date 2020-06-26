@@ -510,6 +510,14 @@ class EventoController extends Controller {
         return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
      } 
 
+     public function actionFinalizarEvento($slug){
+        $model = $this->findModel("", $slug);
+           
+        $model->idEstadoEvento = 3;  //Flag  - Estado de evento finalizado
+        $model->save();
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     }
 
     public function actionCargarExpositor($idPresentacion) {
         $model = new PresentacionExpositor();
