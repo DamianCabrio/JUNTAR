@@ -1,6 +1,12 @@
 Yii Framework 2 composer extension Change Log
 =============================================
 
+2.0.10 June 24, 2020
+--------------------
+
+- Enh #31: Add Composer 2 parallel unzip compatibility (samdark)
+
+
 2.0.9 April 20, 2020
 --------------------
 
