@@ -9,9 +9,9 @@
     use PhpOffice\PhpSpreadsheet\Style\Border;
 
 
-    $fileType = 'Xls';
+    $fileType = 'Ods';
     $file =  '../../template/inscriptos.ods';
-    $templateExcel  = IOFactory::load($file);
+    $templateExcel  = $spreadsheet = new Spreadsheet();
 
     // este estilo de Border::BORDER_THICK  tiene un espesor mas grosor que BORDER_THICK,
     // el  estilo de "Border::BORDER_XXX" es equivalente en excel a "todos los bordes"
@@ -37,18 +37,18 @@
         
     $fila= $templateExcel->setActiveSheetIndex(0);
     $fila->getStyle('B9:K9')->applyFromArray($bordes);
-    $fila->setCellValue('B9', $nombreEvento)->getStyle('B9')->applyFromArray($bordes);
+    $fila->setCellValue('B9', $nombreEvento);
 
             
-    $fila->getStyle('B11:K11')->applyFromArray($bordes);
+    $fila->getStyle('B11')->applyFromArray($bordes);
 
     // Datos del Evento 
-    $fila->setCellValue('k2', $arrayEvento['organizador'] );
-    $fila->setCellValue('k3', date("d-m-Y", strtotime($arrayEvento['inicio']))  );
-    $fila->setCellValue('k4', date("d-m-Y", strtotime($arrayEvento['fin'])) );
-    $fila->setCellValue('k5', $arrayEvento['capacidad'] );
-    $fila->setCellValue('k6', $arrayEvento['lugar'] );
-    $fila->setCellValue('k7', $arrayEvento['modalidad'] );
+    $fila->setCellValue('k2','Organizador: '. $arrayEvento['organizador'] );
+    $fila->setCellValue('k3','Inicio: '.date("d-m-Y", strtotime($arrayEvento['inicio']))  );
+    $fila->setCellValue('k4','Fin: '. date("d-m-Y", strtotime($arrayEvento['fin'])) );
+    $fila->setCellValue('k5','Capacidad: '. $arrayEvento['capacidad'] );
+    $fila->setCellValue('k6','Lugar: '.$arrayEvento['lugar'] );
+    $fila->setCellValue('k7','Modalidad: '. $arrayEvento['modalidad'] );
 
     // $row: los datos son insertado a partir de la fila 10
     $row = 12;
@@ -60,7 +60,7 @@
 
     // Encabezado  
     // $encabezado= ['#','stado','Fecha','Apellido','Nombre','Dni','Pais','Provincia','Localidad','Email'];
-    $fila->setCellValue('B11', '')->getStyle('B11')->applyFromArray($bordes);
+    $fila->setCellValue('B11', '#')->getStyle('B11')->applyFromArray($bordes);
     $fila->setCellValue('C11', 'Estado' )->getStyle('C11')->applyFromArray($bordes);
     $fila->setCellValue('D11', 'Fecha' )->getStyle('D11')->applyFromArray($bordes);
     $fila->setCellValue('E11','Apellido')->getStyle('E11')->applyFromArray($bordes);
@@ -79,12 +79,13 @@
         $i++;
     }
     ///// listado de los datos de los usuarios inscripto a un evento
+    $i=1;
 
     foreach( $participantes as  $dato ) {
                     
             $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('C'.$row, obtenerEstado( $dato['user_estado'])  )->getStyle('C'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('D'.$row, obtenerFecha($dato))->getStyle('D'.$row)->applyFromArray($bordes);
+            $fila->setCellValue('C'.$row, obtenerEstado( $dato) )->getStyle('C'.$row)->applyFromArray($bordes);
+            $fila->setCellValue('D'.$row, obtenerFecha($dato) )->getStyle('D'.$row)->applyFromArray($bordes);
             $fila->setCellValue('E'.$row, $dato['user_apellido'])->getStyle('E'.$row)->applyFromArray($bordes);
             $fila->setCellValue('F'.$row, $dato['user_nombre'])->getStyle('F'.$row)->applyFromArray($bordes);
             $fila->setCellValue('G'.$row, $dato['user_dni'])->getStyle('G'.$row)->applyFromArray($bordes);
@@ -96,9 +97,13 @@
             $j= 0;
             foreach( $respuestas as  $dato2 ) {
                 if($dato2['user_idInscripcion'] == $dato['user_idInscripcion'] ){
-                    $fila->setCellValue($letra[$j].$row, $dato2['user_repuesta'])->getStyle($letra[$j].$row)->applyFromArray($bordes);
-                
-                
+                        if($dato2['user_repuesta_tipo'] ==3){
+                            $fila->setCellValue($letra[$j].$row,'http://pwa.fi.uncoma.edu.ar/frontend'. $dato2['user_repuesta'])->getStyle($letra[$j].$row)->applyFromArray($bordes);
+
+                        }else{
+                            $fila->setCellValue($letra[$j].$row, $dato2['user_repuesta'])->getStyle($letra[$j].$row)->applyFromArray($bordes);
+
+                        }
                 }else{
                     $fila->setCellValue($letra[$j].$row, "")->getStyle($letra[$j].$row)->applyFromArray($bordes);
 
@@ -110,15 +115,7 @@
             $row = $row + 1;
     }
 
-    $row= 30;
-    foreach( $respuestas as  $dato ) {
-        $fila->setCellValue('J'.$row, $dato['user_pregunta']);
-        $fila->setCellValue('K'.$row, $dato['user_repuesta']);
-        $row = $row + 1;
-    }
-    
-
-
+   
 
 
 
@@ -143,14 +140,21 @@
         return $obtener;
     }
 
-    function obtenerEstado($estado){    
+    function obtenerEstado($dato){    
+           /*
+        (estado == 0) Preinscripto
+        (estado == 1 && acreditacion == 0) inscripto
+        (estado == 1 && acreditacion == 1) acreditado
+        (estado == 2) anulado
+        */
 
         $obtener= "";
 
-        if( $estado==1 ){ $obtener = "preinscripto"; }
-        if( $estado==2 ){ $obtener = "inscripto"; }
-        if( $estado==3 ){ $obtener= "anulado"; }      
-        if( $estado==4 ){ $obtener= "acreditado";}
+        if( $dato['user_estado'] == 0 ){ $obtener = "preinscripto"; }
+        if( $dato['user_estado'] == 1 && $dato['user_acreditacion'] == 0 ){ $obtener = "inscripto"; }
+        if( $dato['user_estado'] == 1 && $dato['user_acreditacion'] == 1 ){ $obtener= "acreditado"; }      
+        if( $dato['user_estado'] == 2 ){ $obtener= "anulado";}
+        http://pwa.fi.uncoma.edu.ar/~leandro.casanova/frontend/web/eventos/formularios/archivos/IMG-20170129-WA0005.jpeg
 
         return $obtener;
     }

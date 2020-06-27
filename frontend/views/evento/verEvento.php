@@ -283,7 +283,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 echo Html::a(
                                                     '<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
                                                    <span class=" align-middle"  style="color:#00ff00"> ListaDeParticipantes  </span>',
-                                                    ['evento/inscriptos-excel', 'idEvento' => $evento->idEvento]
+                                                    ['evento/lista-participantes', 'idEvento' => $evento->idEvento]
                                                 );
                                                 ?>
                                             </span>
