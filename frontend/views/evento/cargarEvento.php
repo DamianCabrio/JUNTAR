@@ -12,9 +12,7 @@ use yii\bootstrap4\ActiveForm;
 $this->title = "Cargar Evento";
 ?>
 <div class="dark_light_bg">
-    
     <div class="container padding_section">
-
         <div class="card shadow">
             <div class="card-header pinkish_bg">
                 <h2 class="text-center text-white">Cargar Nuevo Evento</h2>
@@ -22,7 +20,6 @@ $this->title = "Cargar Evento";
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8 col-12 m-auto">
-
                         <div class="evento-form">
 
                             <p class="text-center">Complete los siguientes campos</p>

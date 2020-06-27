@@ -146,7 +146,9 @@ a.desc:after {
 .full_width {
     width: 100%;
 }
-
+.height_100vh{
+    min-height: 100vh;
+}
 .card {
     border: none;
     color: black;
