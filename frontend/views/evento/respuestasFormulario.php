@@ -39,7 +39,7 @@ $this->title = "Respuesta a el formulario";
     ]);
     ?>
 
-    <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
+    <?= Html::a('Volver Atrás', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
 
     <?php
     Modal::begin([
