@@ -99,10 +99,10 @@ AppAsset::register($this);
     </div>
 
     <section class="darkish_bg text-light">
-        <div class="container" style="padding-bottom: 4vh;">
+        <div class="container">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?> 
+                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
             <div class="row">
@@ -116,18 +116,17 @@ AppAsset::register($this);
                     <h5 class="white-text">Contacto</h5>
                     <ul>
                         <li>
-                        <?= Html::a('Escribinos un mensaje', ['site/contact'], ['class' => 'link']) ?>
+                            <?= Html::a('Escribinos un mensaje', ['site/contact'], ['class' => 'link']) ?>
                         </li>
                     </ul>
                     <h5 class="white-text">Sobre Nosotros</h5>
-                <ul>
-                    <li>
-                        <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'link']) ?>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'link']) ?>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            
             <div class="row padding_section">
                 <div class="col-12 col-md-6 py-3 text-center">
                     <?= Html::img('@web/images/logo-uncoma-w.svg',  ['style' => 'max-height: 200px']); ?>
@@ -139,10 +138,12 @@ AppAsset::register($this);
         </div>
     </section>
     <footer class="footer dark_bg text-light">
-
-        <div class="container">
-            <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+        <div class="container-fluid">
+            <div class="container">
+                <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            </div>
         </div>
+
     </footer>
 
     <?php $this->endBody() ?>

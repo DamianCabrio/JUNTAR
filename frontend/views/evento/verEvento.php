@@ -103,7 +103,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
     <div class="container-fluid darkish_bg">
         <div id="evento" class="dark_light_bg padding_hero">
             <div class="container">
-                <div class="card bg-white">
+                <div class="card shadow bg-white">
                     <?PHP
                     if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
                         echo '<div class="card-header pinkish_bg"> ' . 
