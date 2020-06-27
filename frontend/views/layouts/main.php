@@ -127,13 +127,13 @@ AppAsset::register($this);
                 </ul>
                 </div>
             </div>
-            <hr>
-            <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
-                <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('@web/images/uncoma.png',  ['class' => 'img-fluid']); ?>
+            
+            <div class="row padding_section">
+                <div class="col-12 col-md-6 py-3 text-center">
+                    <?= Html::img('@web/images/logo-uncoma-w.svg',  ['style' => 'max-height: 200px']); ?>
                 </div>
-                <div class="col-12 col-md-6 py-3">
-                    <?= Html::img('@web/images/fai.png',  ['class' => 'img-fluid']); ?>
+                <div class="col-12 col-md-6 py-3 text-center">
+                    <?= Html::img('@web/images/logo-fai-w.png',  ['style' => 'max-height: 200px']); ?>
                 </div>
             </div>
         </div>

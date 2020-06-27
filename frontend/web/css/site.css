@@ -133,7 +133,9 @@ a.desc:after {
 .pinkish_bg {
     background-color: #FE1355;
 }
-
+.pinkish_text{
+    color: #FE1355;
+}
 .dark_light_bg {
     background: -webkit-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
     background: -o-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
@@ -170,7 +172,15 @@ a.desc:after {
     padding-top: 1vh;
     padding-bottom: 4vh;
 }
+.padding_hero {
+    padding-top: 7vh;
+    padding-bottom: 7vh;
+}
 
+.padding_event {
+    padding-top: 15vh;
+    padding-bottom: 15vh;
+}
 .pagination_center {
     justify-content: center;
 }
@@ -220,15 +230,7 @@ a.desc:after {
     z-index: 2;
 }
 
-.padding_hero {
-    padding-top: 7vh;
-    padding-bottom: 7vh;
-}
 
-.padding_event {
-    padding-top: 15vh;
-    padding-bottom: 15vh;
-}
 
 .alert {
     margin-bottom: 0px;

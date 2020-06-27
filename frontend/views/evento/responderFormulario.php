@@ -12,7 +12,7 @@ $this->title = "Responder Formulario";
     <div class="padding_section">
         <div class="card-header darkish_bg text-white">
             <h3>Formulario de Pre-Inscripción</h3>
-            <h5>Responda con cuidado, no se pueden editar las respuestas.</h5>
+            <h5>Responda con <span class="pinkish_text">cuidado</span>, no se pueden editar las respuestas.</h5>
         </div>
     </div>
 
