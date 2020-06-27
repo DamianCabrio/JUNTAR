@@ -38,7 +38,7 @@ use yii\bootstrap4\Modal;
                             'value' => function ($dataProvider) {
                                 return $dataProvider->idExpositor0->nombre . ' ' . $dataProvider->idExpositor0->apellido;
                             },
-                            'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+                            'headerOptions' => ['style' => 'width:40%;text-align:center;'],
                         ],
                         //'idPresentacion',
                         [
@@ -47,7 +47,7 @@ use yii\bootstrap4\Modal;
                             'value' => function ($dataProvider) {
                                 return $dataProvider->idExpositor0->email;
                             },
-                            'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+                            'headerOptions' => ['style' => 'width:40%;text-align:center;'],
                         ],
                         //['class' => 'yii\grid\ActionColumn'],
                         [
