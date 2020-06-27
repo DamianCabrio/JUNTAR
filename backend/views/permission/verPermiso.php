@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => date("Y-m-d H:i:s", $model->created_at), //valor referenciado
             ],
             [
-                'attribute' => 'created_at',
+                'attribute' => 'updated_at',
                 'label' => 'Fecha Actualización',
                 'value' => date("Y-m-d H:i:s", $model->updated_at), //valor referenciado
             ],
