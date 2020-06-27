@@ -44,7 +44,19 @@ $this->title = $model->tituloPresentacion;
 				'attribute'=>'Hora fin',
 				'value'=>date('H:i', strtotime($model->horaFinPresentacion)),
 			],
-            'linkARecursos',
+			//'linkARecursos',
+			[
+				'attribute'=>'Recursos',
+				'format' => 'raw',
+				'value' => function($model){
+					if($model->linkARecursos != NULL){
+						return '<a target="_blank" href="' .$model->linkARecursos. '">Link</a>';
+					}
+					else{
+						return 'No hay recursos';
+					}
+				}	
+			]	
         ],
     ]) ?>
 
