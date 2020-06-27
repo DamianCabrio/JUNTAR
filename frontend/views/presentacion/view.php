@@ -13,11 +13,10 @@ $this->title = $model->tituloPresentacion;
 <div class="presentacion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+	
     <?= DetailView::widget([
-        'model' => $model,
+		'model' => $model,
         'attributes' => [
-            //'idPresentacion',
             //'idEvento',
 			[
 				'attribute'=>'Nombre',
@@ -27,6 +26,7 @@ $this->title = $model->tituloPresentacion;
             //'descripcionPresentacion',
 			[
 				'attribute'=>'Descripción',
+				'format' => 'raw',	
 				'value'=>$model->descripcionPresentacion,
 			],
             //'diaPresentacion',
