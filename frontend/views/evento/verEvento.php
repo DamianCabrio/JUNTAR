@@ -387,7 +387,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                                 $string .= ' ' . Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
                                                             }
                                                         } else {
-                                                            $string = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
+                                                            $string ="";
+                                                            if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario){
+                                                                 $string = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
+                                                            }
                                                             $string .= '&nbsp;&nbsp;&nbsp;&nbsp;' . Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores', 'idPresentacion' => $dataProvider->idPresentacion], ['class' => 'verExpositores']);
                                                             
                                                         }
