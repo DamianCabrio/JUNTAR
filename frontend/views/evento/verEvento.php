@@ -225,7 +225,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     }
                                     Modal::begin([
                                         'id' => 'modalEvento',
-                                        'size' => 'modal-lg'
+                                        'size' => 'modal-lg',
+                                        'options' => ['tabindex' => ''],
                                     ]);
                                     Modal::end();
 
