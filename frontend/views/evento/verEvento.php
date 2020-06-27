@@ -129,7 +129,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         }       
                         echo ' </div>';
                     } 
-                    elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
+                    elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para invitados y no propietarios
                     ?>    
                         <div class="card-header pinkish_bg">
                                 <br>
