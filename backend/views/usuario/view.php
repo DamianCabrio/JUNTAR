@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Usuario */
 
-$this->title = $model->idUsuario;
+$this->title = "Usuario: " . $model->nombre . " " . $model->apellido;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -16,17 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idUsuario], [
+        <?= Html::a('Actualizar', ['/usuario/update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
+        <?=
+        Html::a('Deshabilitar', ['/usuario/delete', 'id' => $model->idUsuario], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Está seguro de querer deshabilitar este usuario?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'idUsuario',
@@ -37,14 +40,43 @@ $this->params['breadcrumbs'][] = $this->title;
             'provincia',
             'localidad',
             'email:email',
+            [
+                'attribute' => 'status',
+                'label' => 'Estado',
+                'value' => function($model) {
+                    $estado = "";
+                    switch ($model->status) {
+                        case 0:
+                            $estado = "Deshabilitado";
+                            break;
+                        case 9:
+                            $estado = "Desactivado";
+                            break;
+                        case 10:
+                            $estado = "Activo";
+                            break;
+                        default:
+                            break;
+                    }
+                    return $estado;
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Fecha Creación',
+                'value' => date("Y-m-d H:i:s", $model->created_at), //valor referenciado
+            ],
+            [
+                'attribute' => 'updated_at',
+                'label' => 'Fecha Actualización',
+                'value' => date("Y-m-d H:i:s", $model->updated_at), //valor referenciado
+            ],
             'auth_key',
             'password_hash',
             'password_reset_token',
-            'status',
-            'created_at',
-            'updated_at',
             'verification_token',
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

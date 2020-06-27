@@ -24,26 +24,50 @@ $this->params['breadcrumbs'][] = $this->title;
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'name',
-            'type',
-            'description:ntext',
-            'rule_name',
-            'data',
-            //'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'name',
+                'label' => 'Permiso',
+                'value' => 'name', //valor referenciado
+            ],
+            [
+                'attribute' => 'type',
+                'label' => 'Tipo',
+                'value' => function($dataProvider) {
+                    return (($dataProvider->type == 2) ? "Permiso" : "Rol");
+                },
+            ],
+            [
+                'attribute' => 'description',
+                'label' => 'Descripción',
+                'value' => 'description', //valor referenciado
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Fecha Creación',
+                'value' => function($dataProvider) {
+                    return date("Y-m-d H:i:s", $dataProvider->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'label' => 'Fecha Updated',
+                'value' => function($dataProvider) {
+                    return date("Y-m-d H:i:s", $dataProvider->updated_at);
+                },
+            ],
             ['class' => 'yii\grid\ActionColumn',
                 'urlCreator' => function($action, $model, $key, $index ) {
                     if ($action == "view") {
-                        return Url::to(['ver-permiso', 'name' => $key]);
+                        return Url::to(['/permission/ver-permiso', 'name' => $key]);
                     }
 //                    if ($action == "update") {
 //                        return Url::to(['update-permiso', 'name' => $key]);
 //                    }
                     if ($action == "delete") {
-                        return Url::to(['remove-permiso', 'name' => $key]);
+                        return Url::to(['/permission/remove-permiso', 'name' => $key]);
                     }
                 },
                 'buttons' => [
@@ -58,6 +82,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ]
             ],
+        ],
+        'pager' => [
+            'class' => '\yii\widgets\LinkPager',
+            // Css for each options. Links
+            'linkOptions' => ['class' => 'btn btn-light pageLink'],
+            'disabledPageCssClass' => 'btn disabled',
+            'options' => ['class' => 'pagination d-flex justify-content-center'],
+            'prevPageLabel' => 'Anterior',
+            'nextPageLabel' => 'Siguiente',
+//                            Current Active option value
+            'activePageCssClass' => 'activePage',
         ],
     ]);
     ?>
