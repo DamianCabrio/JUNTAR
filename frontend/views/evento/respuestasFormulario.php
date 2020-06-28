@@ -29,11 +29,12 @@ $this->title = "Respuesta a el formulario";
                 'attribute' => 'Acciones',
                 'format' => 'raw',
                 'value' => function ($dataProvider) {
-                    $return = Html::a("Ver respuestas", Url::toRoute("respuesta/ver?id=". $dataProvider->idEvento . "&id2=". $dataProvider->idInscripcion), ["class" => "verRespuesta btn btn-outline-success"]);
-                   $return .= Html::a("Inscribir A Evento", Url::toRoute("inscripcion/inscribir-a-usuario?idUsuario=". $dataProvider->idUsuario . "&idEvento=". $dataProvider->idEvento), ['class' => 'ml-2 btn btn-outline-success']);
+                    $return = Html::a("Ver respuestas", Url::toRoute("respuesta/ver?id=". $dataProvider->idEvento . "&id2=". $dataProvider->idInscripcion), ["class" => "verRespuesta ml-2 btn btn-outline-success mb-2"]);
+                   $return .= Html::a("Inscribir A Evento", Url::toRoute("inscripcion/inscribir-a-usuario?idUsuario=". $dataProvider->idUsuario . "&idEvento=". $dataProvider->idEvento), ['class' => 'ml-2 btn btn-outline-success mb-2']);
                     return $return;
                 },
-                'headerOptions' => ['style' => 'width:30%;text-align:center;'],
+                'headerOptions' => ['style' => 'width:65%;text-align:center;', 'class' => 'text-center'],
+                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;']
             ],
         ]
     ]);
