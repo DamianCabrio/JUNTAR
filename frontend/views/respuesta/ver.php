@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\RespuestaFile */
@@ -27,7 +27,7 @@ use yii\bootstrap4\ActiveForm;
         <?php elseif($pregunta->tipo == 2): ?>
         <?= Html::textarea("respuesta".$i, $respuestaAPregunta,["disabled" => true]); ?>
         <?php elseif($pregunta->tipo == 3): ?>
-            <?= Html::a("Descargar archivo",  $respuestaAPregunta, ["download" => true, "target" => "_blank"]); ?>
+            <?= Html::a("Descargar archivo", $respuestaAPregunta, ["download" => true]); ?>
         <?php endif; ?>
         <br><br>
     <?php endforeach; ?>

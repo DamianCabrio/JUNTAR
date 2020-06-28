@@ -3,43 +3,46 @@
 namespace frontend\controllers;
 
 use Da\QrCode\QrCode;
+use frontend\components\validateEmail;
+use frontend\models\CategoriaEvento;
+use frontend\models\Evento;
+use frontend\models\FormularioForm;
+use frontend\models\Inscripcion;
 use frontend\models\InscripcionSearch;
+use frontend\models\ModalidadEvento;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
-use frontend\models\RespuestaFile;
-use frontend\models\RespuestaSearch;
-use yii\helpers\Url;
-use Yii;
-use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
-use frontend\models\Usuario;
-use frontend\models\PresentacionSearch;
 use frontend\models\PresentacionExpositor;
-use frontend\models\Evento;
+use frontend\models\PresentacionSearch;
+use frontend\models\RespuestaSearch;
+use frontend\models\UploadFormFlyer;
+use frontend\models\UploadFormLogo;
+use frontend\models\Usuario;
+use UI\Controls\Label;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use frontend\components\validateEmail;
-use yii\data\Pagination;
-use frontend\models\ModalidadEvento;
-use frontend\models\CategoriaEvento;
-
-use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
-use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
-use yii\data\ActiveDataProvider;
-use UI\Controls\Label;
-use frontend\models\FormularioForm;
+
+//Para contener la instacion de la imagen logo
+//Para contener la instacion de la imagen flyer
 
 /**
  * EventoController implements the CRUD actions for Evento model.
  */
-class EventoController extends Controller {
+class EventoController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -115,7 +118,7 @@ class EventoController extends Controller {
         // ¿Ya esta inscripto o no? - Si
         if ($yaInscripto) {
             // ¿El evento ya inicio? - Si
-            if ($evento->fechaInicioEvento >= date("Y-m-d")) {
+            if ($evento->fechaInicioEvento <= date("Y-m-d")) {
                 // ¿El evento tiene codigo de acreditacion? - Si
                 if ($evento->codigoAcreditacion != null) {
                     // ¿El usuario ya se acredito en el evento? - Si

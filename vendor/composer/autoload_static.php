@@ -90,6 +90,7 @@ class ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30
     public static $prefixLengthsPsr4 = array (
         'y' => 
         array (
+            'ymaker\\social\\share\\' => 20,
             'yii\\swiftmailer\\' => 16,
             'yii\\jui\\' => 8,
             'yii\\gii\\' => 8,
@@ -206,6 +207,10 @@ class ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30
     );
 
     public static $prefixDirsPsr4 = array (
+        'ymaker\\social\\share\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiimaker/yii2-social-share/src',
+        ),
         'yii\\swiftmailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer/src',

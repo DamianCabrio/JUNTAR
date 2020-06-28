@@ -2,13 +2,11 @@
 
 namespace frontend\controllers;
 
-use Yii;
 use frontend\models\Pregunta;
-use frontend\models\PreguntaSearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PreguntaController implements the CRUD actions for Pregunta model.
@@ -141,6 +139,6 @@ class PreguntaController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 }

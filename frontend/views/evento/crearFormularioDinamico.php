@@ -2,7 +2,6 @@
 
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = "Crear Formulario";
@@ -72,14 +71,27 @@ $this->title = "Crear Formulario";
         ]);
         ?>
 
-        <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
+    <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
 
     <?php
-        Modal::begin([
-            'id' => 'modalPregunta',
-            'size' => 'modal-lg'
-        ]);
-        Modal::end();
-        ?>
+    Modal::begin([
+        'id' => 'modalPregunta',
+        'size' => 'modal-lg'
+    ]);
+    Modal::end();
+    ?>
+
+    <?php
+
+    Modal::begin([
+        "header" => "¿Esta seguro que quiere eliminar la respuesta?",
+        "id" => "alertaEliminar",
+        "size" => "model-lg",
+    ]);
+
+    Modal::end();
+    ?>
+
+    ?>
 
 </div>

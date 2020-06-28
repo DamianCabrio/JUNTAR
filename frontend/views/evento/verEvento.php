@@ -4,17 +4,25 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Url;
-use frontend\models\PresentacionExpositor;
-use frontend\models\Usuario;
+use ymaker\social\share\widgets\SocialShare;
 
 $this->title = $evento->nombreEvento . " - Juntar";
+
+// we don't want new lines in our preview
+$text_only_spaces = preg_replace('/\s+/', ' ', Html::encode($evento->descripcionEvento));
+
+// truncates the text
+$text_truncated = mb_substr($text_only_spaces, 0, mb_strpos($text_only_spaces, " ", 175));
+
+// prevents last word truncation
+$preview = trim(mb_substr($text_truncated, 0, mb_strrpos($text_truncated, " ")));
 
 $openGraph = Yii::$app->opengraph;
 
 $openGraph->getBasic()
     ->setUrl(Yii::$app->request->hostInfo . Yii::$app->request->url)
     ->setTitle(Html::encode($evento->nombreEvento))
-    ->setDescription(Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"))))
+    ->setDescription($preview . "...")
     ->setSiteName("Juntar")
     ->setLocale('es_AR')
     ->render();
@@ -237,7 +245,17 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <hr>
                                 <h5>Contacto del Organizador</h5>
                                 <?= $organizadorEmailEvento ?>
+                                <br><br>
 
+                                <p>Comparte el evento</p>
+                                <?= SocialShare::widget([
+                                    "configurator" => "socialShare",
+                                    "url" => Url::to(Yii::$app->request->hostInfo . Yii::$app->request->url),
+                                    "title" => $evento->nombreEvento,
+                                    "description" => $preview . "...",
+                                    "imageUrl" => Html::encode($evento->imgLogo)
+                                ]);
+                                ?>
 
                             </div>
                             <div class="col-sm-12 col-md-4 padding_section white-text">

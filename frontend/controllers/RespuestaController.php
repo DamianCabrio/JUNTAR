@@ -3,15 +3,15 @@
 namespace frontend\controllers;
 
 use frontend\models\Pregunta;
-use frontend\models\RespuestaFile;
 use frontend\models\RespuestaCorta;
+use frontend\models\RespuestaFile;
 use frontend\models\RespuestaLarga;
 use frontend\models\RespuestaSearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
-use Yii;
 
 /**
  * RespuestaController implements the CRUD actions for Respuesta model.
@@ -66,40 +66,12 @@ class RespuestaController extends Controller
         return $behaviors;
     }
 
-    /**
-     * Lists all Respuesta models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new RespuestaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Respuesta model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
     public function actionVer($id, $id2){
         $preguntas = Pregunta::find()->where(["idEvento" => $id])->all();
 
         $respuestas = [];
         foreach ($preguntas as $pregunta){
-            $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
+            $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $id2])->one();
             if($respuesta == null){
                 array_push($respuestas, null);
             }else{
@@ -129,23 +101,27 @@ class RespuestaController extends Controller
     {
         $pregunta = Pregunta::find()->where(["id" => $id])->one();
 
-        if($pregunta->tipo == 1){
+        if ($pregunta == null) {
+            throw new NotFoundHttpException('La página solicitada no existe.');
+        }
+
+        if ($pregunta->tipo == 1) {
             $model = new RespuestaCorta;
-        }elseif ($pregunta->tipo == 2){
+        } elseif ($pregunta->tipo == 2) {
             $model = new RespuestaLarga();
-        }else{
+        } else {
             $model = new RespuestaFile;
         }
 
-            $model->idpregunta = $id;
-            $model->idinscripcion = $id2;
+        $model->idpregunta = $id;
+        $model->idinscripcion = $id2;
 
         if($pregunta->tipo == 3){
             if (Yii::$app->request->isPost) {
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if ($model->upload()) {
-                    $model->respuesta = "../web/eventos/formularios/archivos/" . $model->file->baseName . '.' . $model->file->extension;
-                    $model->save();
+                    $model->respuesta = "../../../eventos/formularios/archivos/" . $model->file->baseName . '.' . $model->file->extension;
+                    $model->save(false);
                     return $this->redirect(Yii::$app->request->referrer);
                 }
             }
@@ -171,40 +147,6 @@ class RespuestaController extends Controller
     }
 
     /**
-     * Updates an existing Respuesta model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Respuesta model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
      * Finds the Respuesta model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -217,6 +159,6 @@ class RespuestaController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 }
