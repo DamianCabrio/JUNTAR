@@ -22,7 +22,7 @@ $this->title = "Cargar Presentación - " . $evento->nombreCortoEvento;
                 <?php
                 if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) {
                 ?>
-                    <h2 class="text-center">Cargar Presentacion a evento</h2>
+                    <h2 class="text-center">Cargar Presentación a evento</h2>
                     <p class="text-center">Complete los siguientes campos</p>
 
                     <?php $form = ActiveForm::begin([
