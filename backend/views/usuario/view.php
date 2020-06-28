@@ -13,8 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
+        </div>
+    </div>
     <p>
         <?= Html::a('Actualizar', ['/usuario/update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
         <?=
@@ -27,8 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ])
         ?>
     </p>
-
-    <?=
+    <div class="card">
+        <div class="card-body">
+        <?=
     DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -78,5 +83,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ])
     ?>
+        </div>
+    </div>
+
 
 </div>

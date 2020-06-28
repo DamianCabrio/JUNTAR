@@ -29,10 +29,10 @@ AppAsset::register($this);
         <div class="wrap">
             <?php
             NavBar::begin([
-                'brandLabel' => Yii::$app->name,
+                'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg', ['style' => 'width:30px']),
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar navbar-expand-md navbar-dark bg-dark',
+                    'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
                 ],
             ]);
             if (Yii::$app->user->isGuest) {
