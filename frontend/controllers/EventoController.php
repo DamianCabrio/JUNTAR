@@ -328,6 +328,7 @@ class EventoController extends Controller
 
 
         if ($esDueño) {
+            Url::remember(Url::current(), "slugEvento");
             $preguntasSearchModel = new PreguntaSearch();
             $preguntasDataProvider = new ActiveDataProvider([
                 'query' => $preguntasSearchModel::find()->where(['idEvento' => $evento->idEvento]),
