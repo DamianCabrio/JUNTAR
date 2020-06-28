@@ -60,7 +60,7 @@ $this->title = "Crear Formulario";
                             return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPregunta']);
                         },
                         'delete' => function ($url, $model) {
-                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta', 'data-method' => 'POST']);
+                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta',  'data-method' => 'POST']);
                         }
                     ],
                     'header' => 'Acciones',
@@ -79,19 +79,6 @@ $this->title = "Crear Formulario";
         'size' => 'modal-lg'
     ]);
     Modal::end();
-    ?>
-
-    <?php
-
-    Modal::begin([
-        "header" => "¿Esta seguro que quiere eliminar la respuesta?",
-        "id" => "alertaEliminar",
-        "size" => "model-lg",
-    ]);
-
-    Modal::end();
-    ?>
-
     ?>
 
 </div>

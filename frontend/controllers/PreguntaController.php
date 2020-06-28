@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\Pregunta;
+use frontend\models\RespuestaSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -71,7 +72,8 @@ class PreguntaController extends Controller
         $model = new Pregunta();
 
         $model->idevento = $id;
-        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->save();
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -121,7 +123,22 @@ class PreguntaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+
+        $pregunta = $this->findModel($id);
+        $respuestasAPregunta = RespuestaSearch::find()->where(["idpregunta" => $id])->all();
+
+        if(count($respuestasAPregunta) != 0){
+            foreach ($respuestasAPregunta as $respuestaAPregunta){
+                if($pregunta->tipo == 3){
+                    $respuestaAPregunta->respuesta
+                    unlink($respuestaAPregunta->respuesta);
+                }
+
+                $respuestaAPregunta->delete();
+            }
+        }
+
+        $pregunta->delete();
 
         return $this->redirect(Yii::$app->request->referrer);
     }
