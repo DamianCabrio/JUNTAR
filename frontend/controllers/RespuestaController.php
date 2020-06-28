@@ -69,13 +69,15 @@ class RespuestaController extends Controller
     public function actionVer($id, $id2){
         $preguntas = Pregunta::find()->where(["idEvento" => $id])->all();
 
-        $respuestas = [];
-        foreach ($preguntas as $pregunta){
-            $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $id2])->one();
-            if($respuesta == null){
-                array_push($respuestas, null);
-            }else{
-                array_push($respuestas, $respuesta);
+        if($preguntas != null){
+            $respuestas = [];
+            foreach ($preguntas as $pregunta){
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $id2])->one();
+                if($respuesta == null){
+                    array_push($respuestas, null);
+                }else{
+                    array_push($respuestas, $respuesta);
+                }
             }
         }
 
@@ -83,11 +85,13 @@ class RespuestaController extends Controller
             return $this->renderAjax('ver', [
                 'preguntas' => $preguntas,
                 "respuestas" => $respuestas,
+                "esAjax" => true,
             ]);
         } else {
             return $this->render('ver', [
                 'preguntas' => $preguntas,
                 "respuestas" => $respuestas,
+                "esAjax" => false,
             ]);
         }
     }
