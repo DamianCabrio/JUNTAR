@@ -133,8 +133,20 @@ class UsuarioController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
+    public function actionDeshabilitar($id) {
+        $this->findModel($id)->deshabilitar();
+
+        return $this->redirect(['index']);
+    }
+    /**
+     * Deletes an existing Usuario model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionHabilitar($id) {
+        $this->findModel($id)->habilitar();
 
         return $this->redirect(['index']);
     }
