@@ -21,8 +21,10 @@ $this->title = "Respuestas";
     <h5><?=$pregunta->descripcion?></h5>
 
         <?php if($respuestas[$i] != null){
+            $tieneRespuesta = true;
             $respuestaAPregunta = $respuestas[$i]->respuesta;
         }else{
+            $tieneRespuesta = false;
             $respuestaAPregunta = "No se contesto";
         }?>
         <?php if($pregunta->tipo == 1): ?>
@@ -30,7 +32,11 @@ $this->title = "Respuestas";
         <?php elseif($pregunta->tipo == 2): ?>
         <?= Html::textarea("respuesta".$i, $respuestaAPregunta,["disabled" => true]); ?>
         <?php elseif($pregunta->tipo == 3): ?>
+            <?php if(!$tieneRespuesta): ?>
             <?= Html::a($respuestaAPregunta, "#", ["download" => true]); ?>
+            <?php else: ?>
+                <?= Html::a("Descargar", $respuestaAPregunta, ["download" => true]); ?>
+            <?php endif; ?>
         <?php endif; ?>
         <br><br>
     <?php endforeach; ?>
