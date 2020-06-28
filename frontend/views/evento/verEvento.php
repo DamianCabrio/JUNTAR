@@ -106,37 +106,37 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <div class="card bg-white">
                     <?php
                     if ($esDueño) {
-                        echo '<div class="card-header pinkish_bg"> ' .
-                            Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase'])
-                            . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span>';
+                    ?>    
+                       <div class="card-header pinkish_bg">
+                       <?= Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) ?>
+                        <span class="text-white align-middle"> Evento <?php echo $estadoEvento ?> </span>
+                        <?php    
                         if (($evento->idEstadoEvento) == 4) {
                         ?>
                             <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                             <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
-                        <?php } ?>
-
-                        <?php
-                        if (($evento->idEstadoEvento) == 1) {
+                        <?php 
+                        } 
+                        elseif (($evento->idEstadoEvento) == 1) {
                         ?>
                             <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                             <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                         <?php
                         }
-                        if (($evento->idEstadoEvento) == 3) {
+                        elseif (($evento->idEstadoEvento) == 3) {
                         ?>
                             <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                         <?php
                         }
                         ?>
+                        <!-- Solicitar Aval-->
                         <?php
                         if(($evento->avalado) == 0){
                         ?>    
                             <?= Html::a('Solicitar aval', ['eventos/solicitar-aval/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
                         <?php    
-                        } 
-                        ?>
-                        <?php       
-                        if(($evento->avalado) == 1){
+                        }      
+                        elseif(($evento->avalado) == 1){
                         ?>
                     
                         <button type="button" class="btn float-right disabled" data-toggle="modal" data-target="#aval-solicitado">Solicitar aval</button> 
@@ -161,8 +161,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>    
                         <?php    
                         }
-                       
-                    echo ' </div>';
+                    ?>   
+                     </div>
+                    <?php
                     } elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para invitados y no propietarios
                         ?>
                         <div class="card-header pinkish_bg">
