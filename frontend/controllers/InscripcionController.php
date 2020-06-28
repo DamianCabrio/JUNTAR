@@ -49,6 +49,19 @@ class InscripcionController extends Controller
         return $behaviors;
     }
 
+    public function verificarDueño($idEvento) {
+
+        $evento = Evento::find()->where(["idEvento" => $idEvento])->one();
+
+        if($evento != null){
+            if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public function calcularCupos($evento){
         if(!is_null($evento->capacidad)){
             //Cantidad de inscriptos al evento
@@ -69,12 +82,32 @@ class InscripcionController extends Controller
         }
     }
 
-    public function actionInscribirAUsuario($idUsuario, $idEvento){
-        $inscripcion = Inscripcion::find()->where(["idEvento" => $idEvento, "idUsuario" => $idUsuario])->one();
-        $inscripcion->estado = 1;
-        $inscripcion->save();
+    public function actionAnularInscripcion($idUsuario, $idEvento){
+        $esDueño = $this->verificarDueño($idEvento);
 
-        return $this->redirect(Yii::$app->request->referrer);
+        if($esDueño){
+            $inscripcion = Inscripcion::find()->where(["idEvento" => $idEvento, "idUsuario" => $idUsuario])->one();
+            $inscripcion->estado = 0;
+            $inscripcion->save();
+
+            return $this->redirect(Yii::$app->request->referrer);
+        }else{
+            return $this->goHome();
+        }
+    }
+
+    public function actionInscribirAUsuario($idUsuario, $idEvento){
+
+        $esDueño = $this->verificarDueño($idEvento);
+
+        if($esDueño) {
+            $inscripcion = Inscripcion::find()->where(["idEvento" => $idEvento, "idUsuario" => $idUsuario])->one();
+            $inscripcion->estado = 1;
+            $inscripcion->save();
+            return $this->redirect(Yii::$app->request->referrer);
+        }else{
+                return $this->goHome();
+            }
     }
 
     public function actionPreinscripcion()

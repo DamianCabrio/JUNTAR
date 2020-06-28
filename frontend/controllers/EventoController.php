@@ -229,16 +229,30 @@ class EventoController extends Controller
     public function actionRespuestasFormulario($slug){
         $evento = $this->findModel("", $slug);
 
-        if($this->verificarDueño($evento)){
-        $usuariosInscriptosSearchModel = new InscripcionSearch();
-        $usuariosInscriptosDataProvider = new ActiveDataProvider([
-            'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
-            'pagination' => false,
-            'sort' => ['attributes' => ['name', 'description']]
-        ]);
+        $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
+
+        if ($this->verificarDueño($evento)) {
+            $hayPreguntas = false;
+            if ($cantidadPreguntas != 0) {
+                $hayPreguntas = true;
+            }
+            $usuariosSearchModel = new InscripcionSearch();
+            $usuariosPreinscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 0])->andWhere(["<>","acreditacion", 1]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+            $usuariosInscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 1])->andWhere(["<>","acreditacion", 1]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+            Url::remember(Url::current(), 'verRespuestas');
             return $this->render('respuestasFormulario',
-                ["inscriptos" => $usuariosInscriptosDataProvider,
-                    "evento" => $evento]);
+                ["preinscriptos" => $usuariosPreinscriptosDataProvider,
+                    "inscriptos" => $usuariosInscriptosDataProvider,
+                    "evento" => $evento,
+                    "hayPreguntas" => $hayPreguntas]);
         }else {
             throw new NotFoundHttpException('La página solicitada no existe.');
 }
@@ -605,7 +619,7 @@ class EventoController extends Controller
 
 
 
-       return $this->renderPartial('inscriptosExcel',
+       return $this->renderPartial('listaParticipantes',
         ['participantes' => $participantes ,'arrayEvento' => $arrayEvento,
         'preguntas' => $preguntas, 'respuestas' => $respuestas]);
     }

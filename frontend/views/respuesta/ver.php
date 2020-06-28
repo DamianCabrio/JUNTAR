@@ -2,13 +2,16 @@
 
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\RespuestaFile */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->title = "Respuestas";
 ?>
 
-<div class="respuesta-form text-center">
+<div class="respuesta-form text-center container">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'],
         'id' => 'respuestas-form',
@@ -27,12 +30,16 @@ use yii\helpers\Html;
         <?php elseif($pregunta->tipo == 2): ?>
         <?= Html::textarea("respuesta".$i, $respuestaAPregunta,["disabled" => true]); ?>
         <?php elseif($pregunta->tipo == 3): ?>
-            <?= Html::a("Descargar archivo", $respuestaAPregunta, ["download" => true]); ?>
+            <?= Html::a($respuestaAPregunta, "#", ["download" => true]); ?>
         <?php endif; ?>
         <br><br>
     <?php endforeach; ?>
     <div class="form-group">
+        <?php if($esAjax): ?>
         <?= \yii\bootstrap4\Html::button("Cerrar", ["data-dismiss" => "modal", 'class' => 'btn btn-outline-success'])?>
+        <?php else: ?>
+            <?= \yii\bootstrap4\Html::a("Volver Atras", Url::previous("verRespuestas") , ['class' => 'btn btn-outline-success'])?>
+        <?php endif; ?>
     </div>
 
     <?php ActiveForm::end(); ?>
