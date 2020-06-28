@@ -138,8 +138,13 @@ class CertificadoController extends Controller
       $userData = Usuario::findOne(Yii::$app->user->identity->id);
       $eventData = $certificate->event;
 
-      $validateEmail= new validateEmail();
-      $isOficial = $validateEmail->validate_by_domain($organizer->email);
+      if ($eventData->avalado == 1) {
+        $footer = 'Facultad de Informática - UNComa';
+        $isOficial = true;
+      } else {
+        $footer = null;
+        $isOficial = false;
+      }
 
       if ($idPresentation != null) {
         $presentationData = Presentacion::findOne($idPresentation);
@@ -171,7 +176,7 @@ class CertificadoController extends Controller
           'options' => ['title' => 'Certificado'],
           'methods' => [
               'SetHeader' => ['Certificado Digital <img src=images/juntar-logo/png/juntar-logo-k.png style=width:65px;>'],
-              'SetFooter' => ['Facultad de Informática - UNComa'],
+              'SetFooter' => [$footer],
               'SetTitle' => ['Certificado Juntar'],
               'SetAuthor' => ['Facultad de Informática - UNComa'],
            ]
