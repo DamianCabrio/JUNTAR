@@ -13,7 +13,7 @@ $this->title = $model->tituloPresentacion;
 <div class="presentacion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-	
+	<div class="table table-responsive">
     <?= DetailView::widget([
 		'model' => $model,
         'attributes' => [
@@ -58,7 +58,8 @@ $this->title = $model->tituloPresentacion;
 				}	
 			]	
         ],
-    ]) ?>
+	]) ?>
+	</div>
 
 </div>
 </div>
