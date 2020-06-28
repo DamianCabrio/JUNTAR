@@ -58,9 +58,9 @@ if ($evento->imgLogo != null) {
 }
 
 if ($evento->preInscripcion == 0) {
-    $preInscripcion = "No requiere preinscipción";
+    $preInscripcion = " No requiere preinscipción";
 } else {
-    $preInscripcion = "<b style='color:#ff0000;'>*Requiere preinscipción*</b>";
+    $preInscripcion = " <b style='color:#ff0000;'>*Requiere preinscipción*</b>";
 }
 if ($evento->codigoAcreditacion != null) {
     $codAcreditacion = $evento->codigoAcreditacion;
@@ -111,12 +111,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
     <div class="container-fluid darkish_bg">
         <div id="evento" class="dark_light_bg padding_hero">
             <div class="container">
-                <div class="card bg-white">
+                <div class="card shadow bg-white">
                     <?PHP
                     if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
                         echo '<div class="card-header pinkish_bg"> ' . 
-                        Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) 
-                        . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span>';
+                        Html::a('<i class="material-icons large align-middle">edit</i> Evento '.$estadoEvento.'', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_edit float-left']);
                         if (($evento->idEstadoEvento) == 4) {
                             ?>
                                 <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
@@ -157,7 +156,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <p>Organizado por <?= $organizadorEvento ?></p>
                                     <br>
                                     <?PHP
-                                    if ($evento->imgFlyer != null) {
+                                    if ($evento->imgFlyer) {
                                         echo Html::button('<i class="material-icons align-middle">file_download</i> Flyer', [
 
                                             'class' => 'btn text-muted',
@@ -179,12 +178,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         </div>
                         <div class="row padding_section greyish_bg">
                             <div class="col-sm-12 col-md-8">
-                                <div class="">
-                                    <p class="align-middle">CUPOS DISPONIBLES: <?= $cupos ?> <?= $preInscripcion ?></p>
+                                <div class="h-100">
+                                    <p class="h-100 d-flex align-items-center">CUPOS DISPONIBLES: <?= $cupos ?> <?= $preInscripcion ?></p>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
-                                <div class="align-middle">
+                                <div class="h-100">
                                     <?php
                                     switch ($estadoEventoInscripcion) {
                                         case "puedeInscripcion":
@@ -205,6 +204,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         case "yaPreinscripto":
                                             echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                             if ($cantidadPreguntas != 0) {
+                                                echo "<br><br>";
                                                 echo Html::a('Responder Formulario', ['eventos/responder-formulario/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                             }
                                             break;
@@ -301,7 +301,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 echo Html::a(
                                                     '<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
                                                    <span class=" align-middle"  style="color:#00ff00"> ListaDeParticipantes  </span>',
-                                                    ['evento/inscriptos-excel', 'idEvento' => $evento->idEvento]
+                                                    ['evento/lista-participantes', 'idEvento' => $evento->idEvento]
                                                 );
                                                 ?>
                                             </span>
@@ -324,9 +324,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                 </div>
 
-                                <!--                                <br>
-                                                                <br>
-                                                                <br>-->
+                                <div class="table-responsive"> 
                                     <?=
                                     GridView::widget([
                                         'dataProvider' => $presentacionDataProvider,
@@ -435,6 +433,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ],
                                     ]);
                                     ?>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -447,9 +446,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 <div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header darkish_bg text-white">
                 <h5 class="modal-title" id="flyerModalLabel">Flyer</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

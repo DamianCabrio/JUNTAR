@@ -25,7 +25,7 @@ use yii\bootstrap4\ActiveForm;
     <?php endif; ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-lg']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
