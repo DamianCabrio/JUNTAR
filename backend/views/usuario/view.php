@@ -19,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <?= Html::a('Actualizar', ['/usuario/update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
             <?php
-            if ($model->state == 10) {
+            if ($model->status == 10) {
                 echo Html::a('Deshabilitar', ['/usuario/deshabilitar', 'id' => $model->idUsuario], [
                     'class' => 'btn btn-danger',
                     'data' => ['confirm' => '¿Está seguro de querer deshabilitar este usuario?',],]);
             } else {
-                if ($model->state == 0) {
+                if ($model->status == 0) {
                     echo Html::a('Habilitar', ['/usuario/habilitar', 'id' => $model->idUsuario], [
                         'class' => 'btn btn-danger',
                         'data' => ['confirm' => '¿Está seguro de querer habilitar este usuario?',],]);
