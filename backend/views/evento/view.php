@@ -17,23 +17,51 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Eliminar', ['delete', 'id' => $model->idEvento], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php
+        if ($model->idEstadoEvento0->descripcionEstado == "Activo") {
+            echo Html::a('Deshabilitar', ['deshabilitar', 'id' => $model->idEvento], [
+                'class' => 'btn btn-danger',
+                'data' => ['confirm' => '¿Está seguro de querer deshabilitar este evento?'],]);
+        } else {
+            if ($model->idEstadoEvento0->descripcionEstado == "Inhabilitado") {
+                echo Html::a('Habilitar', ['habilitar', 'id' => $model->idEvento], [
+                    'class' => 'btn btn-success',
+                    'data' => ['confirm' => '¿Está seguro de querer habilitar este evento?'],]);
+            }
+        }
+        ?>
+        <?php
+        if ($model->avalado != 1) {
+            echo Html::a('Conceder aval FAI', ['conceder-aval', 'id' => $model->idEvento], [
+                'class' => 'btn btn-warning',
+                'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
+            ]);
+        } else {
+            echo Html::a('Quitar aval FAI', ['quitar-aval', 'id' => $model->idEvento], [
+                'class' => 'btn btn-danger',
+                'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
+            ]);
+        }
+        ?>
+
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
 //            'idEvento',
             [
+                'attribute' => 'avalado',
+                'label' => 'Avalado FAI',
+                'value' => function ($dataProvider) {
+                    return ($dataProvider->avalado == 1 ? "Avalado" : "No");
+                },
+            ],
+            [
                 'attribute' => 'idUsuario',
                 'label' => 'Organizador',
-                'value' => $model->idUsuario0->nombre, //valor referenciado
+                'value' => $model->idUsuario0->nombre . " " . $model->idUsuario0->apellido, //valor referenciado
             ],
             [
                 'attribute' => 'idCategoriaEvento',
@@ -63,15 +91,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'preInscripcion',
                 'label' => 'Pre-Inscripcion',
                 'value' => function ($dataProvider) {
-//                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
                     return ($dataProvider->preInscripcion == 0 ? 'No' : 'Si');
-                }, //valor referenciado por ActiveQuery en el metodo idClub0
+                },
             ],
 //            'preInscripcion',
             'fechaLimiteInscripcion',
             'codigoAcreditacion',
             'fechaCreacionEvento',
+            'avalRequest',
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

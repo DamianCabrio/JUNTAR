@@ -70,7 +70,14 @@ AppAsset::register($this);
                 //ABM Usuario
                 $menuItems[] = ['label' => 'Gestionar Usuarios', 'url' => ['/usuario/index']];
                 //ABM Eventos
-                $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/index']];
+                $menuItems[] = [
+                    'label' => 'Gestionar Eventos',
+                    'items' => [
+                        ['label' => 'Listado Eventos', 'url' => ['/evento/index']],
+                        ['label' => 'Solicitudes de Aval', 'url' => ['/evento/solicitudes-de-aval']],
+                    ],
+                ];
+//                $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/index']];
                 //Logout
                 $menuItems[] = [
                     "label" => "Salir (" . Yii::$app->user->identity->nombre . ")",

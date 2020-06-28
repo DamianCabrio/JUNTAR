@@ -7,30 +7,32 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\EventoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Eventos';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Solicitudes de aval FAI';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="evento-index container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+<!--    <p>
         <?= Html::a('Crear Evento', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </p>-->
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'options' => ['style' => 'width:100%;'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'idUsuario',
                 'label' => 'Organizador',
-                'value' => 'idUsuario0.nombre', //valor referenciado
+                'value' => function($dataProvider) {
+                    return $dataProvider->idUsuario0->nombre . " " . $dataProvider->idUsuario0->apellido;
+                }, //valor referenciado
             ],
 //            [
 //                'attribute' => 'idCategoriaEvento',
@@ -82,14 +84,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Capacidad',
                 'value' => 'capacidad', //valor referenciado por ActiveQuery en el metodo idClub0
             ],
-            [
-                'attribute' => 'preInscripcion',
-                'label' => 'Pre-Inscripcion',
-                'value' => function ($dataProvider) {
-//                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                    return ($dataProvider->preInscripcion == 0 ? 'No' : 'Si');
-                }, //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
+//            [
+//                'attribute' => 'preInscripcion',
+//                'label' => 'Pre-Inscripcion',
+//                'value' => function ($dataProvider) {
+////                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
+//                    return ($dataProvider->preInscripcion == 0 ? 'No' : 'Si');
+//                }, //valor referenciado por ActiveQuery en el metodo idClub0
+//            ],
 //            [
 //                'attribute' => 'fechaLimiteInscripcion',
 //                'label' => 'Fecha Limite Inscripcion',
@@ -100,19 +102,11 @@ $this->params['breadcrumbs'][] = $this->title;
 //                'label' => 'Código Acreditación',
 //                'value' => 'codigoAcreditacion', //valor referenciado por ActiveQuery en el metodo idClub0
 //            ],
-            [
-                'attribute' => 'fechaCreacionEvento',
-                'label' => 'Fecha Creación',
-                'value' => 'fechaCreacionEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
-            [
-                'attribute' => 'avalado',
-                'label' => 'Avalado FAI',
-                'value' => function ($dataProvider) {
-//                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                    return ($dataProvider->avalado == 1 ? "Avalado": "No");
-                }, //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
+//            [
+//                'attribute' => 'fechaCreacionEvento',
+//                'label' => 'Fecha Creación',
+//                'value' => 'fechaCreacionEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+//            ],
             //'imgLogo',
             //'capacidad',
             //'preInscripcion',
@@ -124,12 +118,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'view' => function($url, $model) {
                         return Html::a('<img src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn']);
                     },
-                    'update' => function($url, $model) {
-                        return Html::a('<img src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn']);
-                    },
-                    'delete' => function($url, $model) {
-                        return Html::a('<img src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn']);
-                    }
                 ]
             ],
         ],
