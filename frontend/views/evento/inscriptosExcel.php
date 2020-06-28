@@ -98,15 +98,14 @@
             foreach( $respuestas as  $dato2 ) {
                 if($dato2['user_idInscripcion'] == $dato['user_idInscripcion'] ){
                         if($dato2['user_repuesta_tipo'] ==3){
-
+                            /// ../../../eventos/formularios/archivos/ 
                             $url_archivo = str_replace("../../../", "", $dato2['user_repuesta']);
-                            $url_descarga= 'http://juntar.test/eventos/'.$url_archivo;
+                            $url_descarga= 'http://juntar.test/'.$url_archivo;
 
-                            $fila->setCellValue($letra[$j].$row, $url_descarga)->getStyle($letra[$j].$row)->applyFromArray($bordes);
-                          //ej:  http://juntar.test/eventos/formularios/archivos/IMG-20170129-WA0005.jpeg
+                            $fila->setCellValue($letra[$j].$row, trim($url_descarga) )->getStyle($letra[$j].$row)->applyFromArray($bordes);
+                          // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
                         }else{
                             $fila->setCellValue($letra[$j].$row, $dato2['user_repuesta'])->getStyle($letra[$j].$row)->applyFromArray($bordes);
-
                         }
                 }else{
                     $fila->setCellValue($letra[$j].$row, "")->getStyle($letra[$j].$row)->applyFromArray($bordes);
