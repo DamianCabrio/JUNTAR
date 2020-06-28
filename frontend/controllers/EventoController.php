@@ -605,7 +605,7 @@ class EventoController extends Controller
 
 
 
-       return $this->renderPartial('inscriptosExcel',
+       return $this->renderPartial('listaParticipantes',
         ['participantes' => $participantes ,'arrayEvento' => $arrayEvento,
         'preguntas' => $preguntas, 'respuestas' => $respuestas]);
     }
