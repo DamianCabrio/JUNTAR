@@ -258,7 +258,7 @@ class EventoController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
-
+            $model->avalado = 0; // Flag - Por defecto
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
@@ -634,4 +634,18 @@ class EventoController extends Controller {
 
         return $this->render('organizarEventos', ["eventos" =>  $models, 'pages' => $pages,]);
     }
+
+
+    public function actionSolicitarAval($slug){
+        $model = $this->findModel("", $slug);
+        $model->avalado = 1; // Flag - Solicitado
+        $model->save();
+
+
+        // FALTA LA PARTE DE ENVIAR EL EVENTO POR MAIL
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+
+    }
+
+
 }
