@@ -2,6 +2,18 @@
 
 All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [1.0.5] - 2020-06-26
+
+### Fixed
+
+* [#3](https://github.com/sebastianbergmann/code-unit/issues/3): Regression in 1.0.4
+
+## [1.0.4] - 2020-06-26
+
+### Added
+
+* This component is now supported on PHP 8
+
 ## [1.0.3] - 2020-06-15
 
 ### Changed
@@ -24,6 +36,8 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 * Initial release
 
+[1.0.5]: https://github.com/sebastianbergmann/code-unit/compare/1.0.4...1.0.5
+[1.0.4]: https://github.com/sebastianbergmann/code-unit/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/sebastianbergmann/code-unit/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/sebastianbergmann/code-unit/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/sebastianbergmann/code-unit/compare/1.0.0...1.0.1
