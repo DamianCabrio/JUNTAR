@@ -261,6 +261,7 @@ a.desc:after {
 .btn_publish {
     background-color: transparent!important;
     color: #FFFFFF!important;
+    font-weight: bold;
   
 }
 
