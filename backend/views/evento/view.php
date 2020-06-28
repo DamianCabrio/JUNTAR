@@ -54,14 +54,18 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'avalado',
                 'label' => 'Avalado FAI',
-                'value' => function ($dataProvider) {
-                    return ($dataProvider->avalado == 1 ? "Avalado" : "No");
+                'value' => function ($model) {
+                    return ($model->avalado == 1 ? "Avalado" : "No");
                 },
             ],
             [
                 'attribute' => 'idUsuario',
                 'label' => 'Organizador',
-                'value' => $model->idUsuario0->nombre . " " . $model->idUsuario0->apellido, //valor referenciado
+                //formato raw para poder crear un enlace al organizador
+                'format' => 'raw',
+                'value' => function($model) {
+                        return Html::a($model->idUsuario0->nombre.' '.$model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => '']);
+                    },
             ],
             [
                 'attribute' => 'idCategoriaEvento',
