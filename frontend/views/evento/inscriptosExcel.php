@@ -98,8 +98,12 @@
             foreach( $respuestas as  $dato2 ) {
                 if($dato2['user_idInscripcion'] == $dato['user_idInscripcion'] ){
                         if($dato2['user_repuesta_tipo'] ==3){
-                            $fila->setCellValue($letra[$j].$row,'http://pwa.fi.uncoma.edu.ar/frontend'. $dato2['user_repuesta'])->getStyle($letra[$j].$row)->applyFromArray($bordes);
 
+                            $url_archivo = str_replace("../../../", "", $dato2['user_repuesta']);
+                            $url_descarga= 'http://juntar.test/eventos/'.$url_archivo;
+
+                            $fila->setCellValue($letra[$j].$row, $url_descarga)->getStyle($letra[$j].$row)->applyFromArray($bordes);
+                          //ej:  http://juntar.test/eventos/formularios/archivos/IMG-20170129-WA0005.jpeg
                         }else{
                             $fila->setCellValue($letra[$j].$row, $dato2['user_repuesta'])->getStyle($letra[$j].$row)->applyFromArray($bordes);
 
@@ -154,7 +158,8 @@
         if( $dato['user_estado'] == 1 && $dato['user_acreditacion'] == 0 ){ $obtener = "inscripto"; }
         if( $dato['user_estado'] == 1 && $dato['user_acreditacion'] == 1 ){ $obtener= "acreditado"; }      
         if( $dato['user_estado'] == 2 ){ $obtener= "anulado";}
-        http://pwa.fi.uncoma.edu.ar/~leandro.casanova/frontend/web/eventos/formularios/archivos/IMG-20170129-WA0005.jpeg
 
         return $obtener;
     }
+
+    ///        http://pwa.fi.uncoma.edu.ar/~leandro.casanova/frontend/web/eventos/formularios/archivos/IMG-20170129-WA0005.jpeg
