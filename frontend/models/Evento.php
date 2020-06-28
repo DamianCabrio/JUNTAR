@@ -28,6 +28,7 @@ use yii\behaviors\SluggableBehavior;
  * @property string $fechaLimiteInscripcion
  * @property string|null $codigoAcreditacion
  * @property string $fechaCreacionEvento
+ * @property int $avalado
  *
  * @property CategoriaEvento $idCategoriaEvento0
  * @property EstadoEvento $idEstadoEvento0
