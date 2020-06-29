@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php echo $form->field($model, 'name')->textInput(['class' => 'form-control rolName'])->Label("Rol: ") ?>
                         <?= $form->field($model, 'description')->textarea(['rows' => 6])->Label("Descripción: ") ?>
                         <div class="form-group">
-                            <?= Html::submitButton('Registrar Rol', ['class' => 'assignValueFirst btn btn-primary']) ?>
+                            <?= Html::submitButton('Registrar Rol', ['class' => 'assignValueFirst btn btn-pink col-md-2 col-sm-12']) ?>
                         </div>
 
                         <?php ActiveForm::end(); ?>

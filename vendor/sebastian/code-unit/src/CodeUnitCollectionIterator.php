@@ -9,10 +9,12 @@
  */
 namespace SebastianBergmann\CodeUnit;
 
-final class CodeUnitCollectionIterator implements \Iterator
+use Iterator;
+
+final class CodeUnitCollectionIterator implements Iterator
 {
     /**
-     * @var CodeUnit[]
+     * @psalm-var list<CodeUnit>
      */
     private $codeUnits;
 
@@ -33,7 +35,7 @@ final class CodeUnitCollectionIterator implements \Iterator
 
     public function valid(): bool
     {
-        return $this->position < \count($this->codeUnits);
+        return isset($this->codeUnits[$this->position]);
     }
 
     public function key(): int

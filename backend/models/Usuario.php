@@ -83,8 +83,13 @@ class Usuario extends \yii\db\ActiveRecord
         ];
     }
     
-    public function delete(){
+    public function deshabilitar(){
         $this->status = 0;
+        $this->save();
+    }
+    
+    public function habilitar(){
+        $this->status = 10;
         $this->save();
     }
 

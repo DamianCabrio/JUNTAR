@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
 
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
@@ -53,7 +54,12 @@ class UsuarioController extends Controller {
      */
     public function actionIndex() {
         $searchModel = new UsuarioSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find(),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
@@ -68,9 +74,26 @@ class UsuarioController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id) {
+        $roles = yii::$app->authManager->getRoles();
         return $this->render('view', [
                     'model' => $this->findModel($id),
+                    'roles' => $roles,
         ]);
+    }
+
+    /**
+     * Assign rol to user.
+     * Metodo para asignar un rol a un usuario a partir del ID
+     */
+    public function actionAssign($id, $rol) {
+        $auth = Yii::$app->authManager;
+        $authRol = yii::$app->authManager->getRole($rol);
+        if ($auth->getAssignment($rol, $id)) {
+            $auth->revoke($authRol, $id);
+        } else {
+            $auth->assign($authRol, $id);
+        }
+        return $this->redirect(['usuario/view', 'id' => $id]);
     }
 
     /**
@@ -116,8 +139,20 @@ class UsuarioController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
+    public function actionDeshabilitar($id) {
+        $this->findModel($id)->deshabilitar();
+
+        return $this->redirect(['index']);
+    }
+    /**
+     * Deletes an existing Usuario model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionHabilitar($id) {
+        $this->findModel($id)->habilitar();
 
         return $this->redirect(['index']);
     }
