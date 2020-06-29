@@ -32,6 +32,7 @@ $this->title = "Responder Formulario";
             ]); ?>
         <?php else : ?>
             <?= Html::button('Pregunta ' . ($i + 1),  ['class' => 'btn btn-lg', "disabled" => true, "style" => "background-color: #FE1355;"]); ?>
+            <p><?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></p>
         <?php endif; ?>
            <?php echo "</div>" ?>
            <?php echo "</div>" ?>
