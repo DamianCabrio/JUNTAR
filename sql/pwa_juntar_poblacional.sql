@@ -41,6 +41,8 @@ INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `crea
 ('evento/publicar-evento', 2, 'Permite publicar un evento en la plataforma', NULL, NULL, 1592267609, 1592267609),
 ('evento/ver-evento', 2, 'Permite ver eventos', NULL, NULL, 1592266904, 1592266904),
 ('evento/ver-evento2', 2, 'permite ver eventos version 2', NULL, NULL, 1592343374, 1592343374),
+('evento/confirmar-solicitud', 2, 'Confirmar Solicitud', NULL, NULL, NULL, NULL),
+('evento/enviar-solicitud-evento', 2, 'Solicitud Evento', NULL, NULL, NULL, NULL),
 ('inscripcion/eliminar-inscripcion', 2, 'Permite a un usuario anular la inscripcion a un evento', NULL, NULL, 1592267073, 1592267073),
 ('inscripcion/preinscripcion', 2, 'Permite a un usuario preinscribirse a un evento', NULL, NULL, 1592267029, 1592267029),
 ('Organizador', 1, 'Usuario gestor de eventos', NULL, NULL, 1590382997, 1590382997),
@@ -87,7 +89,8 @@ INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `crea
 ('usuario/delete', 2, 'Permite borrar usuarios', NULL, NULL, 1591577571, 1591577571),
 ('usuario/index', 2, 'Permite visualizar todos los usuarios registrados en la plataforma', NULL, NULL, 1591336269, 1591336269),
 ('usuario/update', 2, 'Permite editar los datos de un usuario especifico', NULL, NULL, 1591336346, 1591336346),
-('usuario/view', 2, 'Permite visualizar un usuario especifico', NULL, NULL, 1591336327, 1591336327);
+('usuario/view', 2, 'Permite visualizar un usuario especifico', NULL, NULL, 1591336327, 1591336327),
+('Validador', 1, 'Gestor de las solicitudes de Eventos FAI', NULL, NULL, NULL, NULL);
 
 --
 -- Volcado de datos para la tabla `permiso_rol`
@@ -158,7 +161,8 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 ('Registrado', 'site/index'),
 ('Registrado', 'site/login'),
 ('Registrado', 'site/logout'),
-('Registrado', 'site/profile');
+('Registrado', 'site/profile'),
+('Validador', 'evento/confirmar-solicitud');
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -208,7 +212,9 @@ INSERT INTO `usuario_rol` (`item_name`, `user_id`, `created_at`) VALUES
 ('Registrado', 12, NULL),
 ('Registrado', 13, NULL),
 ('Registrado', 14, NULL),
-('Registrado', 15, NULL);
+('Registrado', 15, NULL),
+('Validador', 13, NULL),
+('Validador', 14, NULL);
 
 --
 -- Volcado de datos para la tabla `categoria_evento`
