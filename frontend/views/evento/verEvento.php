@@ -128,7 +128,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                             <div class="modal-body">
                                 <p>¿Está seguro de querer finalizar su evento?</p>
-                                <p>Dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
+                                <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
                                 <span class="float-right font-weight-bold">Juntar</span> 
                             </div>
                             <div class="modal-footer">
@@ -153,7 +153,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                             <div class="modal-body">
                                 <p>¿Está seguro de querer publicar su evento?</p>
-                                <p>Pasará a estar disponible para las inscripciones y será visible en la plataforma</p>
+                                <p>Será visible en los lanzamientos de la plataforma y pasará a estar disponible para las inscripciones</p>
                                 <span class="float-right font-weight-bold">Juntar</span> 
                             </div>
                             <div class="modal-footer">
@@ -182,7 +182,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                             <div class="modal-body">
                                 <p>¿Está seguro de querer finalizar su evento?</p>
-                                <p>Dejará de estar disponible para las inscripciones y no será visible en la plataforma</p>
+                                <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
                                 <span class="float-right font-weight-bold">Juntar</span> 
                             </div>
                             <div class="modal-footer">
@@ -207,7 +207,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                             <div class="modal-body">
                                 <p>¿Está seguro de querer suspender su evento?</p>
-                                <p>Dejará de estar disponible para las inscripciones, podrá seguir editandolo</p>
+                                <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y podrá seguir editando</p>
                                 <span class="float-right font-weight-bold">Juntar</span> 
                             </div>
                             <div class="modal-footer">
