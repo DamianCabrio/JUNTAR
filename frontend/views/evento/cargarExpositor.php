@@ -16,7 +16,7 @@ $this->title = "Cargar Expositor";
 ?>
 <div class="dark_light_bg padding_section" style="min-height: 100vh;">
     <div class="container">
-        <div class="card">
+        <div class="card expositor-center">
             <div class="card-header pinkish_bg text-light">
                 <h2 class="text-center">Cargar expositor</h2>
             </div>
