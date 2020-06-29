@@ -1,6 +1,10 @@
-html,
-body {
+html, body {
     height: 100%;
+    background-color: rgb(216, 216, 216);
+}
+
+.navbar-dark {
+    background-color: #050714
 }
 
 .wrap {
@@ -10,7 +14,7 @@ body {
     padding: 0 0 60px;
 }
 
-.wrap > .container {
+.wrap>.container {
     padding: 70px 15px 20px;
 }
 
@@ -20,7 +24,9 @@ body {
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
-
+.height100vh{
+    min-height: 100vh;
+}
 .jumbotron {
     text-align: center;
     background-color: transparent;
@@ -37,6 +43,7 @@ body {
 }
 
 /* add sorting icons to gridview sort links */
+
 a.asc:after, a.desc:after {
     position: relative;
     top: 1px;
@@ -74,13 +81,11 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view th,
-.grid-view td:last-child {
+.grid-view th, .grid-view td:last-child {
     white-space: nowrap;
 }
 
-.grid-view .filters input,
-.grid-view .filters select {
+.grid-view .filters input, .grid-view .filters select {
     min-width: 50px;
 }
 
@@ -99,54 +104,55 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
+
+.nav li>form>button.logout {
     padding: 15px;
     border: none;
 }
 
 @media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
+    .nav li>form>button.logout {
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
     }
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav>li>form>button.logout:focus, .nav>li>form>button.logout:hover {
     text-decoration: none;
 }
 
-.nav > li > form > button.logout:focus {
+.nav>li>form>button.logout:focus {
     outline: none;
 }
 
-.filter-red{
+.filter-red {
     filter: invert(9%) sepia(95%) saturate(6904%) hue-rotate(2deg) brightness(124%) contrast(112%);
 }
 
-.filter-green{
+.filter-green {
     filter: invert(20%) sepia(94%) saturate(5910%) hue-rotate(122deg) brightness(97%) contrast(104%);
 }
 
-.filter-blue{
+.filter-blue {
     filter: invert(49%) sepia(98%) saturate(324%) hue-rotate(159deg) brightness(88%) contrast(97%);
 }
 
-.filter-white{
+.filter-white {
     filter: invert(99%) sepia(6%) saturate(443%) hue-rotate(113deg) brightness(121%) contrast(100%);
 }
 
-.buttonRol:hover{
+.buttonRol:hover {
     background-color: lightblue;
     /*border: 1px solid red;*/
 }
 
-.roleDiv{
+.roleDiv {
     border: 1px solid blue;
 }
-.permissionDiv{
+
+.permissionDiv {
     border: 1px solid red;
 }
 
@@ -155,27 +161,31 @@ a.desc:after {
     /*background-color: #0B0D19;*/
     /*background-color: rgb(101,23,48);*/
 }
+
 .darkish_bg {
     /*background-color: #FE1355;*/
     background-color: #0B0D19;
     /*background-color: rgb(101,23,48);*/
 }
+
 .lightblue_bg {
     /*background-color: #0B0D19;*/
     /*background-color: #FE1355;*/
     /*background-color: #002489;*/
-    background-color: rgb(101,23,48);
+    background-color: #2b2e3d;
 }
-.Agregar{
+
+.Agregar {
     /*filter: invert(20%) sepia(94%) saturate(5910%) hue-rotate(122deg) brightness(97%) contrast(104%);*/
     filter: invert(17%) sepia(87%) saturate(2367%) hue-rotate(102deg) brightness(98%) contrast(105%);
 }
 
-.Quitar{
+.Quitar {
     /*filter: invert(9%) sepia(95%) saturate(6904%) hue-rotate(2deg) brightness(124%) contrast(112%);*/
     filter: invert(14%) sepia(58%) saturate(6507%) hue-rotate(340deg) brightness(96%) contrast(94%);
 }
-.activePage a{
+
+.activePage a {
     background-color: #FE1355;
-    color:white;
+    color: white;
 }

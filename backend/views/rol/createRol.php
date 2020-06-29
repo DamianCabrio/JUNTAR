@@ -10,10 +10,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-md-7 col-sm-12 m-auto">
+    <div class="col-sm-12 m-auto">
         <div class="crear-rol">
             <div class="card text-center">
-                <h1 class="card-header pinkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
+                <h1 class="card-header darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
                 <div class="card-body">
                     <div class="rol-form">
                         <?php $form = ActiveForm::begin(); ?>

@@ -12,13 +12,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
+        </div>
+    </div>
     <p>
         <?= Html::a('Crear Usuario', ['/usuario/create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?=
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
 //        'options' => ['style' => 'width:100%;'],
@@ -96,6 +102,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-
-
+            </div>
+        </div>
+    </div>
 </div>
+

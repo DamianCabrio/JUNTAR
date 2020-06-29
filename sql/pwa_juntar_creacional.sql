@@ -73,6 +73,8 @@ CREATE TABLE evento (
   idCategoriaEvento tinyint(4) NOT NULL,
   idEstadoEvento tinyint(4) NOT NULL,
   idModalidadEvento tinyint(4) NOT NULL,
+  avalado int(11) NOT NULL DEFAULT 0,
+  eventoToken varchar(255) DEFAULT NULL,
   nombreEvento varchar(200) NOT NULL,
   nombreCortoEvento varchar(100) NOT NULL,
   descripcionEvento varchar(800) NOT NULL,

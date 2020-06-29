@@ -23,7 +23,10 @@ use frontend\components\validateEmail;
 use yii\data\Pagination;
 use frontend\models\ModalidadEvento;
 use frontend\models\CategoriaEvento;
-use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
+
+use frontend\models\SolicitudAvalEvento;
+use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo
+
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
@@ -186,22 +189,24 @@ class EventoController extends Controller {
 
     public function verificarAdministrador($model) {
 
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario) {
-            $query = new \yii\db\Query();
-            $rows = $query->from('usuario_rol')
-                            ->andWhere(['user_id' => Yii::$app->user->identity->idUsuario])
-                            ->andWhere(['item_name' => 'Administrador'])->all();
+
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario ) {
+        $query=new \yii\db\Query();
+        $rows= $query->from('usuario_rol')
+            ->andWhere(['user_id'=>Yii::$app->user->identity->idUsuario])
+            ->andWhere(['item_name'=>'Administrador'])->all();
 
 
-            if (count($rows) == 0) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
+        if (count($rows)==0) {
+            return false ;
+         } else {
+             return true;
+         }
+     }else{
+        return false ;
+     }
+
+   }
 
     /**
      * Finds the Evento model based on its primary key value.
@@ -385,7 +390,7 @@ class EventoController extends Controller {
      * Recibe por parámetro un id, se busca esa instancia del event y se obtienen todos las presentaciones que pertenecen a ese evento.
      * Se envia la instancia del evento junto con todas la presentaciones sobre un arreglo.
      */
-    public function actionVerEvento($slug) {
+    public function actionVerEvento($slug, $token = null) {
 
         $evento = $this->findModel("", $slug);
 
@@ -427,11 +432,18 @@ class EventoController extends Controller {
             $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
         }
 
-        $validarEmail = new validateEmail();
-        $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
+        //$validarEmail = new validateEmail();
+        $esFai = $evento->avalado;
         $esDueño = $this->verificarDueño($evento);
         $esAdministrador = $this->verificarAdministrador($evento);
 
+        if ($token != null) {
+          if ( SolicitudAvalEvento::findByEventToken($token) != null) {
+            $solicitud = true;
+          }
+        } else {
+          $solicitud = false;
+        }
 
         return $this->render('verEvento', [
                     "evento" => $evento,
@@ -444,11 +456,12 @@ class EventoController extends Controller {
                     "esDueño" => $esDueño,
                     "esAdministrador" => $esAdministrador,
                     "cantidadPreguntas" => $cantidadPreguntas,
+                    'verificacionSolicitud' => $solicitud,
         ]);
     }
 
     /**
-     * Recibe por parámetro un id de evento, se buscar y se obtiene la instancia del evento, se visualiza un formulario 
+     * Recibe por parámetro un id de evento, se buscar y se obtiene la instancia del evento, se visualiza un formulario
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
@@ -509,6 +522,7 @@ class EventoController extends Controller {
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
         $model->save();
 
+
         return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
     }
 
@@ -524,8 +538,10 @@ class EventoController extends Controller {
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
         $model->save();
 
+
         return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
     }
+
 
     public function actionCargarExpositor($idPresentacion) {
         $model = new PresentacionExpositor();
@@ -539,24 +555,24 @@ class EventoController extends Controller {
         }
 
         $usuarios = Usuario::find()
-                ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
-                ->asArray()
-                ->all();
+                            ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
+                            ->asArray()
+                            ->all();
 
-        If (Yii::$app->request->isAjax) {
-            //retorna renderizado para llamado en ajax
-            return $this->renderAjax('cargarExpositor', [
-                        'model' => $model,
-                        'objetoEvento' => $objEvento,
-                        'usuarios' => $usuarios,
-            ]);
-        } else {
-            return $this->render('cargarExpositor', [
-                        'model' => $model,
-                        'objetoEvento' => $objEvento,
-                        'usuarios' => $usuarios,
-            ]);
-        }
+        If(Yii::$app->request->isAjax){
+			//retorna renderizado para llamado en ajax
+			return $this->renderAjax('cargarExpositor', [
+            'model' => $model,
+            'objetoEvento' => $objEvento,
+            'usuarios' => $usuarios,
+        ]);
+			}else{
+				 return $this->render('cargarExpositor', [
+				'model' => $model,
+				'objetoEvento' => $objEvento,
+				'usuarios' => $usuarios,
+			]);
+		  }
     }
 
     public function actionInscriptosExcel() {
@@ -570,10 +586,10 @@ class EventoController extends Controller {
         $arrayEvento['inicio'] = $evento->fechaInicioEvento;
         $arrayEvento['fin'] = $evento->fechaFinEvento;
         $arrayEvento['nombre'] = $evento->nombreEvento;
+
         $arrayEvento['capacidad'] = $evento->capacidad;
         $arrayEvento['lugar'] = $evento->lugar;
         $arrayEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
-        ;
 
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
@@ -593,14 +609,15 @@ class EventoController extends Controller {
         $preinscriptos = $base->where(['inscripcion.idEvento' => $idEvento, 'inscripcion.estado' => 1])
                         ->orderBy('usuario.apellido ASC')->asArray()->all();
 
-        $inscriptos = $base->where(['inscripcion.idEvento' => $idEvento, 'inscripcion.estado' => 2])
-                        ->orderBy('usuario.apellido ASC')->asArray()->all();
+        $inscriptos  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 2 ])
+                             ->orderBy('usuario.apellido ASC')->asArray()->all();
 
-        $anulados = $base->where(['inscripcion.idEvento' => $idEvento, 'inscripcion.estado' => 3])
-                        ->orderBy('usuario.apellido ASC')->asArray()->all();
+        $anulados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 3 ])
+                           ->orderBy('usuario.apellido ASC')->asArray()->all();
 
-        $acreditados = $base->where(['inscripcion.idEvento' => $idEvento, 'inscripcion.estado' => 4])
-                        ->orderBy('usuario.apellido ASC')->asArray()->all();
+        $acreditados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 4 ])
+                              ->orderBy('usuario.apellido ASC')->asArray()->all();
+
 
 
 
@@ -613,12 +630,15 @@ class EventoController extends Controller {
                         ['listados' => $listados, 'arrayEvento' => $arrayEvento]);
     }
 
+
     public function actionOrganizarEventos() {
+
         $idUsuario = Yii::$app->user->identity->idUsuario;
 
         $request = Yii::$app->request;
         $busqueda = $request->get("s", "");
         $estadoEvento = $request->get("estadoEvento", "");
+
 
         if ($estadoEvento != "") {
             if ($estadoEvento == 0) {
@@ -630,6 +650,7 @@ class EventoController extends Controller {
             if ($estadoEvento == 2) {
                 $estado = 3; // finalizado
             }
+
         }
 
         if ($estadoEvento != "") {
@@ -656,4 +677,50 @@ class EventoController extends Controller {
         return $this->render('organizarEventos', ["eventos" => $models, 'pages' => $pages,]);
     }
 
+    /**
+     * Recibe por parámetro un token, carga el Evento buscando el token y verificar sin necesidad
+     * loguearse el usuario.
+     */
+    public function actionVerificarSolicitud($token)
+    {
+      $solicitud = SolicitudAvalEvento::findByEventToken($token);
+      if ($solicitud->verifyByToken($token)) {
+        Yii::$app->session->setFlash('success','<small>Evento Confirmado</small>');
+        return $this->redirect("/eventos/ver-evento/".$solicitud->getEventShortName());
+      } else {
+        Yii::$app->session->setFlash('error','<small>Se ha producido un error a al confirmar</small>');
+        return $this->redirect("/eventos/ver-evento/".$solicitud->getEventShortName());
+      }
+    }
+    /**
+     * Recibe por parametro el nombre corto de un evento, buscar ese evento.
+     * Envio del Correo para la confirmacion.
+     */
+    public function actionEnviarSolicitudEvento($evento)
+    {
+      $evento = $this->findModel(null, $evento);
+      $solicitud = New SolicitudAvalEvento($evento);
+      $solicitud->sendEmail();
+      Yii::$app->session->setFlash('success','<small>Solicitud Enviada</small>');
+      return $this->goBack(Yii::$app->request->referrer);
+    }
+
+    /**
+     * Recibe por parametro el nombre corto de un evento, buscar ese evento y setea en la instancia $evento.
+     * Cambia el estado de avalado a 1 y null al atributo eventoToken.
+     */
+    public function actionConfirmarSolicitud($slug)
+    {
+      $evento = $this->findModel(null , $slug);
+      $evento->avalado = 1;
+      $evento->eventoToken = null;
+      if ($evento->save()) {
+        Yii::$app->session->setFlash('success','<small>Evento Confirmado</small>');
+        return $this->redirect('/eventos/ver-evento/'.$slug);
+      } else {
+        Yii::$app->session->setFlash('error','<small>Se ha producido un error a al confirmar</small>');
+        return $this->redirect('/eventos/ver-evento/'.$slug);
+      }
+
+    }
 }

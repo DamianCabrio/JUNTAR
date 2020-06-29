@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row usuario-view">
 
+
     <div class="col-8">
         <h1><?= Html::encode($this->title) ?></h1>
 
@@ -33,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </p>
 
+        <div class="card">
+        <div class="card-body">
         <?=
         DetailView::widget([
             'model' => $model,
@@ -83,6 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ])
         ?>
+
     </div>
     <div class="col-4">
         <h3>Roles</h3>
@@ -103,6 +107,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </li>
             <?php endforeach; ?>
         </ul>
+    </div>
+    </div>
     </div>
 
 </div>

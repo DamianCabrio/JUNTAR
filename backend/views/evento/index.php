@@ -10,15 +10,19 @@ use yii\grid\GridView;
 $this->title = 'Eventos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="evento-index container">
+<div class="evento-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
+        </div>
+    </div>
     <p>
         <?= Html::a('Crear Evento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+  <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
 
     <?=
     GridView::widget([
@@ -135,6 +139,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-
-
+    
+            </div>
+        </div>
+    </div>
 </div>
