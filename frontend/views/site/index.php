@@ -64,12 +64,12 @@ $this->title = 'Juntar';
                                         <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
                                         <?php
                                             $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
-                                            if(!$esFai):
+                                            if(($esFai == 1)):
                                             ?>
-                                            - Evento no organizado por la FAI
+                                            - Evento organizado por la FAI
                                             <?php
                                             else:?>
-                                                - Evento organizado por la FAI
+                                                - Evento no organizado por la FAI
                                             <?php
                                             endif;
                                             ?>
