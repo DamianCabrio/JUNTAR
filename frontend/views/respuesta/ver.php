@@ -33,7 +33,7 @@ $this->title = "Respuestas";
         <?= Html::textarea("respuesta".$i, $respuestaAPregunta,["disabled" => true]); ?>
         <?php elseif($pregunta->tipo == 3): ?>
             <?php if(!$tieneRespuesta): ?>
-            <?= Html::a($respuestaAPregunta, "#", ["download" => true]); ?>
+            <p><?= $respuestaAPregunta ?></p>
             <?php else: ?>
                 <?= Html::a("Descargar", $respuestaAPregunta, ["download" => true]); ?>
             <?php endif; ?>

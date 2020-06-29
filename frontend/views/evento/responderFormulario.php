@@ -17,7 +17,6 @@ $this->title = "Responder Formulario";
     </div>
 
     <?php foreach ($preguntas as $i => $pregunta) : ?>
-        <?php if ($respuestaYaHechas[$i] == false) : ?>
            <?php echo "<div class='card pb-5'>" ?>
            <?php echo "<div class='card-header darkish_bg text-white'>" ?>
            <?php echo "<h5>Pregunta " . ($i + 1)."</h5>" ?>
@@ -26,18 +25,16 @@ $this->title = "Responder Formulario";
            <?php echo $pregunta->descripcion ?>
            <?php echo "</div>" ?>
            <?php echo "<div class='card-footer'>" ?>
+        <?php if ($respuestaYaHechas[$i] == false) : ?>
            <?php $url = Url::toRoute(["respuesta/create?id=" . $pregunta->id . "&id2=" . $idInscripcion]) ?>
             <?= Html::a('Completar ' . ($i + 1), $url, [
-                'class' => 'btn btn-lg responderPregunta',
-                "data-id" => $url
+                'class' => 'btn btn-lg responderPregunta'
             ]); ?>
-           <?php echo "</div>" ?>
-           <?php echo "</div>" ?>
-
-
         <?php else : ?>
-            <?= Html::button('Pregunta ' . ($i + 1),  ['class' => 'btn btn-outline-secondary', "disabled" => true, "style" => "background-color: #FE1355;"]); ?>
+            <?= Html::button('Pregunta ' . ($i + 1),  ['class' => 'btn btn-lg', "disabled" => true, "style" => "background-color: #FE1355;"]); ?>
         <?php endif; ?>
+           <?php echo "</div>" ?>
+           <?php echo "</div>" ?>
     <?php endforeach; ?>
 
     <br><br>

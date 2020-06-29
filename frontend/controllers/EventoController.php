@@ -361,7 +361,10 @@ class EventoController extends Controller
     public function actionResponderFormulario($slug){
 
         $evento = $this->findModel("", $slug);
-        $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])->one();
+        $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])
+            ->andWhere(["<>", "estado", 1])
+            ->andWhere(["<>", "estado", 2])
+            ->one();
 
         if($inscripcion != null){
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
