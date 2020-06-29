@@ -14,28 +14,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-12 mb-4">
-            <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
-        </div>
-    </div>
-    <p>
-        <?= Html::a('Crear Evento', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-  <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
+            <div class="card">
+                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
-    <?=
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'options' => ['style' => 'width:100%;'],
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute' => 'idUsuario',
-                'label' => 'Organizador',
-                'value' => 'idUsuario0.nombre', //valor referenciado
-            ],
+                <?= Html::a('Crear Evento', ['create'], ['class' => 'btn btn-pink mt-3 ml-3 col-2']) ?>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <?=
+                        GridView::widget([
+                            'dataProvider' => $dataProvider,
+                            'filterModel' => $searchModel,
+                            'options' => ['style' => 'width:100%;'],
+                            'columns' => [
+                                ['class' => 'yii\grid\SerialColumn'],
+                                [
+                                    'attribute' => 'idUsuario',
+                                    'label' => 'Organizador',
+                                    'value' => 'idUsuario0.nombre', //valor referenciado
+                                ],
 //            [
 //                'attribute' => 'idCategoriaEvento',
 //                'label' => 'Categoria',
@@ -51,11 +49,11 @@ $this->params['breadcrumbs'][] = $this->title;
 //                'label' => 'Modalidad',
 //                'value' => 'idModalidadEvento0.descripcionModalidad', //valor referenciado por ActiveQuery en el metodo idClub0
 //            ],
-            [
-                'attribute' => 'nombreEvento',
-                'label' => 'Título',
-                'value' => 'nombreEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
+                                [
+                                    'attribute' => 'nombreEvento',
+                                    'label' => 'Título',
+                                    'value' => 'nombreEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
 //            [
 //                'attribute' => 'nombreCortoEvento',
 //                'label' => 'Slug',
@@ -66,34 +64,34 @@ $this->params['breadcrumbs'][] = $this->title;
 //                'label' => 'Descripción',
 //                'value' => 'descripcionEvento', //valor referenciado por ActiveQuery en el metodo idClub0
 //            ],
-            [
-                'attribute' => 'lugar',
-                'label' => 'Lugar',
-                'value' => 'lugar', //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
-            [
-                'attribute' => 'fechaInicioEvento',
-                'label' => 'Fecha Inicio',
-                'value' => 'fechaInicioEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
-            [
-                'attribute' => 'fechaFinEvento',
-                'label' => 'Fecha Finalizacion',
-                'value' => 'fechaFinEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
-            [
-                'attribute' => 'capacidad',
-                'label' => 'Capacidad',
-                'value' => 'capacidad', //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
-            [
-                'attribute' => 'preInscripcion',
-                'label' => 'Pre-Inscripcion',
-                'value' => function ($dataProvider) {
+                                [
+                                    'attribute' => 'lugar',
+                                    'label' => 'Lugar',
+                                    'value' => 'lugar', //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
+                                [
+                                    'attribute' => 'fechaInicioEvento',
+                                    'label' => 'Fecha Inicio',
+                                    'value' => 'fechaInicioEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
+                                [
+                                    'attribute' => 'fechaFinEvento',
+                                    'label' => 'Fecha Finalizacion',
+                                    'value' => 'fechaFinEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
+                                [
+                                    'attribute' => 'capacidad',
+                                    'label' => 'Capacidad',
+                                    'value' => 'capacidad', //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
+                                [
+                                    'attribute' => 'preInscripcion',
+                                    'label' => 'Pre-Inscripcion',
+                                    'value' => function ($dataProvider) {
 //                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                    return ($dataProvider->preInscripcion == 0 ? 'No' : 'Si');
-                }, //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
+                                        return ($dataProvider->preInscripcion == 0 ? 'No' : 'Si');
+                                    }, //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
 //            [
 //                'attribute' => 'fechaLimiteInscripcion',
 //                'label' => 'Fecha Limite Inscripcion',
@@ -104,42 +102,47 @@ $this->params['breadcrumbs'][] = $this->title;
 //                'label' => 'Código Acreditación',
 //                'value' => 'codigoAcreditacion', //valor referenciado por ActiveQuery en el metodo idClub0
 //            ],
-            [
-                'attribute' => 'fechaCreacionEvento',
-                'label' => 'Fecha Creación',
-                'value' => 'fechaCreacionEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
-            [
-                'attribute' => 'avalado',
-                'label' => 'Avalado FAI',
-                'value' => function ($dataProvider) {
+                                [
+                                    'attribute' => 'fechaCreacionEvento',
+                                    'label' => 'Fecha Creación',
+                                    'value' => 'fechaCreacionEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
+                                [
+                                    'attribute' => 'avalado',
+                                    'label' => 'Avalado FAI',
+                                    'value' => function ($dataProvider) {
 //                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                    return ($dataProvider->avalado == 1 ? "Avalado": "No");
-                }, //valor referenciado por ActiveQuery en el metodo idClub0
-            ],
-            //'imgLogo',
-            //'capacidad',
-            //'preInscripcion',
-            //'fechaLimiteInscripcion',
-            //'codigoAcreditacion',
-            //'fechaCreacionEvento',
-            ['class' => 'yii\grid\ActionColumn',
-                'buttons' => [
-                    'view' => function($url, $model) {
-                        return Html::a('<img src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn']);
-                    },
-                    'update' => function($url, $model) {
-                        return Html::a('<img src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn']);
-                    },
-                    'delete' => function($url, $model) {
-                        return Html::a('<img src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn']);
-                    }
-                ]
-            ],
-        ],
-    ]);
-    ?>
-    
+                                        return ($dataProvider->avalado == 1 ? "Avalado" : "No");
+                                    }, //valor referenciado por ActiveQuery en el metodo idClub0
+                                ],
+                                //'imgLogo',
+                                //'capacidad',
+                                //'preInscripcion',
+                                //'fechaLimiteInscripcion',
+                                //'codigoAcreditacion',
+                                //'fechaCreacionEvento',
+                                ['class' => 'yii\grid\ActionColumn',
+                                    'buttons' => [
+                                        'view' => function($url, $model) {
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
+                                        },
+                                        'update' => function($url, $model) {
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn btn-pink']);
+                                        },
+                                        'delete' => function($url, $model) {
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn btn-pink']);
+                                        }
+                                    ],
+                                    'header' => 'Acciones',
+//                                    'contentOptions' => ['style' => 'border: none; margin-top: 10px;', 'class' => 'd-flex justify-content-center p-0 '],
+//                                    'contentOptions' => ['class' => 'd-block mx-auto'],
+                                ],
+                            ],
+                        ]);
+                        ?>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
