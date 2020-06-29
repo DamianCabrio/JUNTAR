@@ -149,9 +149,9 @@ class CertificadoController extends Controller
       if ($idPresentation != null) {
         $presentationData = Presentacion::findOne($idPresentation);
       } else {
-        $presentationData = $certificate->presentations;
+        $presentation = null;
       }
-
+      $presentationData = $certificate->presentations;
       $category = CategoriaEvento::findOne($certificate->event[0]->idCategoriaEvento);
       $modality = ModalidadEvento::findOne($certificate->event[0]->idModalidadEvento);
       //Regenera el modelo del pdf con los datos y el estilo deseado.
@@ -162,7 +162,10 @@ class CertificadoController extends Controller
         'category' => $category,
         'certificateType' => $type,
         'isOficial' => $isOficial,
-        'presentations' => $presentationData,
+        'presentations' => [
+          'collections' => $presentationData,
+          'presentation' => $presentation,
+        ],
       ]);
 
       $pdf = new Pdf([
