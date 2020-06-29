@@ -43,12 +43,13 @@
     $fila->getStyle('B11')->applyFromArray($bordes);
 
     // Datos del Evento 
-    $fila->setCellValue('k2','Organizador: '. $arrayEvento['organizador'] );
-    $fila->setCellValue('k3','Inicio: '.date("d-m-Y", strtotime($arrayEvento['inicio']))  );
-    $fila->setCellValue('k4','Fin: '. date("d-m-Y", strtotime($arrayEvento['fin'])) );
-    $fila->setCellValue('k5','Capacidad: '. $arrayEvento['capacidad'] );
-    $fila->setCellValue('k6','Lugar: '.$arrayEvento['lugar'] );
-    $fila->setCellValue('k7','Modalidad: '. $arrayEvento['modalidad'] );
+    
+    $fila->setCellValueByColumnAndRow( 10, 2, $arrayEvento['organizador'] );
+    $fila->setCellValueByColumnAndRow( 10, 3, 'Inicio: '.date("d-m-Y", strtotime($arrayEvento['inicio']))  );
+    $fila->setCellValueByColumnAndRow( 10, 4, 'Fin: '. date("d-m-Y", strtotime($arrayEvento['fin'])) );
+    $fila->setCellValueByColumnAndRow( 10, 5, 'Capacidad: '. $arrayEvento['capacidad'] );
+    $fila->setCellValueByColumnAndRow( 10, 6, 'Lugar: '.$arrayEvento['lugar'] );
+    $fila->setCellValueByColumnAndRow( 10, 7, 'Modalidad: '. $arrayEvento['modalidad'] );
 
     // $row: los datos son insertado a partir de la fila 10
     $row = 12;
@@ -58,68 +59,68 @@
     $i = 1;
 
 
-    // Encabezado  
-    // $encabezado= ['#','stado','Fecha','Apellido','Nombre','Dni','Pais','Provincia','Localidad','Email'];
-    $fila->setCellValue('B11', '#')->getStyle('B11')->applyFromArray($bordes);
-    $fila->setCellValue('C11', 'Estado' )->getStyle('C11')->applyFromArray($bordes);
-    $fila->setCellValue('D11', 'Fecha' )->getStyle('D11')->applyFromArray($bordes);
-    $fila->setCellValue('E11','Apellido')->getStyle('E11')->applyFromArray($bordes);
-    $fila->setCellValue('F11', 'Nombre')->getStyle('F11')->applyFromArray($bordes);
-    $fila->setCellValue('G11', 'Dni')->getStyle('G11')->applyFromArray($bordes);
-    $fila->setCellValue('H11', 'Pais')->getStyle('H11')->applyFromArray($bordes);
-    $fila->setCellValue('I11', 'Provincia')->getStyle('I11')->applyFromArray($bordes);
-    $fila->setCellValue('J11', 'Localidad')->getStyle('J11')->applyFromArray($bordes);
-    $fila->setCellValue('K11', 'Email' )->getStyle('K11')->applyFromArray($bordes);
+    // Encabezado  datos del usuario
 
-    $letra=['l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','aa','ab','ac','ad','ae','af','ag'];
-    $i=0;
-    foreach($preguntas as $pregunta){
+    $fila->setCellValueByColumnAndRow( 1, 11,'#');
+    $fila->setCellValueByColumnAndRow( 2, 11,'Estado');
+    $fila->setCellValueByColumnAndRow( 3, 11,'Fecha');
+    $fila->setCellValueByColumnAndRow( 4, 11,'Apellido');
+    $fila->setCellValueByColumnAndRow( 5, 11,'Nombre');
+    $fila->setCellValueByColumnAndRow( 6, 11,'Dni');
+    $fila->setCellValueByColumnAndRow( 7, 11,'Pais');
+    $fila->setCellValueByColumnAndRow( 8, 11,'Provincia');
+    $fila->setCellValueByColumnAndRow( 9, 11,'Localidad');
+    $fila->setCellValueByColumnAndRow( 10, 11,'Email');
 
-        $fila->setCellValue($letra[$i].'11', $pregunta['descripcion'] )->getStyle($letra[$i].'11')->applyFromArray($bordes);
-        $i++;
-    }
-    ///// listado de los datos de los usuarios inscripto a un evento
-    $i=1;
+// Encabezado  preguntas del Usurio
+$i= 11;
+foreach($preguntas as $pregunta){
+    $fila->setCellValueByColumnAndRow( $i, 11, $pregunta['descripcion'] );
+    $i++;
+}
 
-    foreach( $participantes as  $dato ) {
-                    
-            $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('C'.$row, obtenerEstado( $dato) )->getStyle('C'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('D'.$row, obtenerFecha($dato) )->getStyle('D'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('E'.$row, $dato['user_apellido'])->getStyle('E'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('F'.$row, $dato['user_nombre'])->getStyle('F'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('G'.$row, $dato['user_dni'])->getStyle('G'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('H'.$row, $dato['user_pais'])->getStyle('H'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('I'.$row, $dato['user_provincia'])->getStyle('I'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('J'.$row, $dato['user_localidad'])->getStyle('J'.$row)->applyFromArray($bordes);
-            $fila->setCellValue('K'.$row, $dato['user_email'])->getStyle('K'.$row)->applyFromArray($bordes);
-            
-            $j= 0;
-            foreach( $respuestas as  $dato2 ) {
-                if($dato2['user_idInscripcion'] == $dato['user_idInscripcion'] ){
-                        if($dato2['user_repuesta_tipo'] ==3){
-                            /// ../../../eventos/formularios/archivos/ 
-                            $url_archivo = str_replace("../../../", "", $dato2['user_repuesta']);
-                            $url_descarga= 'http://juntar.test/'.$url_archivo;
 
-                            $fila->setCellValue($letra[$j].$row, trim($url_descarga) )->getStyle($letra[$j].$row)->applyFromArray($bordes);
-                          // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
-                        }else{
-                            $fila->setCellValue($letra[$j].$row, $dato2['user_repuesta'])->getStyle($letra[$j].$row)->applyFromArray($bordes);
-                        }
-                }else{
-                    $fila->setCellValue($letra[$j].$row, "")->getStyle($letra[$j].$row)->applyFromArray($bordes);
 
-                }
-                $j++;
+///// listado de los datos de los usuarios inscripto a un evento
+$i=1;
+
+$row = 12;// $row: los datos son insertado a partir de la fila 12
+foreach( $participantes as  $dato ) {
+                
+     $fila->setCellValueByColumnAndRow( 1, $row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 2, $row, obtenerEstado( $dato) )->getStyle('C'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 3, $row, obtenerFecha($dato) )->getStyle('D'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 4, $row, $dato['user_apellido'])->getStyle('E'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 5, $row, $dato['user_nombre'])->getStyle('F'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 6, $row, $dato['user_dni'])->getStyle('G'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 7, $row, $dato['user_pais'])->getStyle('H'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 8, $row, $dato['user_provincia'])->getStyle('I'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 9,$row, $dato['user_localidad'])->getStyle('J'.$row)->applyFromArray($bordes);
+     $fila->setCellValueByColumnAndRow( 10,$row, $dato['user_email'])->getStyle('K'.$row)->applyFromArray($bordes);
+        
+        $j= 11;
+        foreach( $respuestas as  $dato2 ) {
+            if($dato2['user_idInscripcion'] == $dato['user_idInscripcion'] ){
+                    if($dato2['user_repuesta_tipo'] ==3){
+                        /// ../../../eventos/formularios/archivos/ 
+                        $url_archivo = str_replace("../../../", "", $dato2['user_repuesta']);
+                        $url_descarga= 'http://juntar.test/'.$url_archivo;
+
+                        $fila->setCellValueByColumnAndRow($j, $row, trim($url_descarga) );
+                      // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
+                    }else{
+                        $fila->setCellValueByColumnAndRow($j, $row, $dato2['user_repuesta']);
+                    }
+            }else{
+                $fila->setCellValueByColumnAndRow($j, $row, "");
+
             }
-                    
-            $i =$i +1;
-            $row = $row + 1;
-    }
-
-   
-
+            $j++;
+        }
+                
+        $i =$i +1;
+        $row = $row + 1;
+}
 
 
     /// guarda el archivo
