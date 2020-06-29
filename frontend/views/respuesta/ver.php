@@ -1,14 +1,17 @@
 <?php
 
-use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\RespuestaFile */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->title = "Respuestas";
 ?>
 
-<div class="respuesta-form text-center">
+<div class="respuesta-form text-center container">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'],
         'id' => 'respuestas-form',
@@ -18,8 +21,10 @@ use yii\bootstrap4\ActiveForm;
     <h5><?=$pregunta->descripcion?></h5>
 
         <?php if($respuestas[$i] != null){
+            $tieneRespuesta = true;
             $respuestaAPregunta = $respuestas[$i]->respuesta;
         }else{
+            $tieneRespuesta = false;
             $respuestaAPregunta = "No se contesto";
         }?>
         <?php if($pregunta->tipo == 1): ?>
@@ -27,12 +32,20 @@ use yii\bootstrap4\ActiveForm;
         <?php elseif($pregunta->tipo == 2): ?>
         <?= Html::textarea("respuesta".$i, $respuestaAPregunta,["disabled" => true]); ?>
         <?php elseif($pregunta->tipo == 3): ?>
-            <?= Html::a("Descargar archivo",  $respuestaAPregunta, ["download" => true, "target" => "_blank"]); ?>
+            <?php if(!$tieneRespuesta): ?>
+            <p><?= $respuestaAPregunta ?></p>
+            <?php else: ?>
+                <?= Html::a("Descargar", $respuestaAPregunta, ["download" => true]); ?>
+            <?php endif; ?>
         <?php endif; ?>
         <br><br>
     <?php endforeach; ?>
     <div class="form-group">
+        <?php if($esAjax): ?>
         <?= \yii\bootstrap4\Html::button("Cerrar", ["data-dismiss" => "modal", 'class' => 'btn btn-outline-success'])?>
+        <?php else: ?>
+            <?= \yii\bootstrap4\Html::a("Volver Atras", Url::previous("verRespuestas") , ['class' => 'btn btn-outline-success'])?>
+        <?php endif; ?>
     </div>
 
     <?php ActiveForm::end(); ?>

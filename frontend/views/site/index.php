@@ -14,7 +14,7 @@ $this->title = 'Juntar';
 
     <div class="body-content">
         <header class="hero gradient-hero">
-            <div class="center-content">
+            <div class="center-content padding_hero">
                 <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid padding_logo']); ?>
                 <br>
                 <h5 class="text-white text-uppercase">Sistema Gestión de Eventos</h5>
@@ -49,6 +49,7 @@ $this->title = 'Juntar';
                 </form>
             </div>
         </section>
+
         <section class="dark_bg">
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>

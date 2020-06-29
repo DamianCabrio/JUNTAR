@@ -104,4 +104,13 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
+  'yiimaker/yii2-social-share' => 
+  array (
+    'name' => 'yiimaker/yii2-social-share',
+    'version' => '2.3.2.0',
+    'alias' => 
+    array (
+      '@ymaker/social/share' => $vendorDir . '/yiimaker/yii2-social-share/src',
+    ),
+  ),
 );

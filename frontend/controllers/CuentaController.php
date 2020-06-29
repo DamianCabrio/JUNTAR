@@ -2,30 +2,32 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\helpers\Url;
-use yii\web\UploadedFile;
-use yii\web\Controller;
-use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
 use common\models\User;
-use frontend\models\Usuario;
-use frontend\models\UploadProfileImage;
-use frontend\models\EventoSearch;
-use frontend\models\InscripcionSearch;
-use frontend\models\CambiarPasswordForm;
 use frontend\models\CambiarEmailForm;
 use frontend\models\CambiarEmailRequest;
+use frontend\models\CambiarPasswordForm;
+use frontend\models\EventoSearch;
+use frontend\models\InscripcionSearch;
+use frontend\models\UploadProfileImage;
+use frontend\models\Usuario;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\Controller;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
  */
-class CuentaController extends Controller {
+class CuentaController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -203,7 +205,7 @@ class CuentaController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
     /**

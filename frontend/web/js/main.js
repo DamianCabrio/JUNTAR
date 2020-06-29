@@ -289,18 +289,18 @@ function verExpositoresModal(link) {
     });
 }
 
-function verRespuestasModal(link) {
+function verRespuestasModal(unaUrl) {
 //hace la petición a la url
 //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
-        url: link
+        url: unaUrl
 //        data: {data: data}
     }).done(function (data) {
         $('#modalRespuestas').modal('show')
-                .find('.modal-body')
-                .html(data);
-//        $('#modalRespuestas').find('.modal-header')
-        //.html("<h3> Cargar presentación </h3>");
+            .find('.modal-body')
+            .html(data);
+        $('#modalRespuestas').find('.modal-header')
+            .html("<h3>Ver respuestas</h3>");
     });
 }
 

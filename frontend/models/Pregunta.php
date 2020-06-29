@@ -32,6 +32,7 @@ class Pregunta extends \yii\db\ActiveRecord
     {
         return [
             [['idevento', 'tipo', 'descripcion'], 'required'],
+            [['idevento', 'descripcion'], 'unique', 'targetAttribute' => ['idevento', 'descripcion']],
             [['idevento'], 'integer'],
             [['tipo'], 'string'],
             [['descripcion'], 'string', 'max' => 250],

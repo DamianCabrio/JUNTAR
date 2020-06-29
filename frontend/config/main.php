@@ -1,4 +1,9 @@
 <?php
+
+use ymaker\social\share\configurators\Configurator;
+use ymaker\social\share\drivers\Facebook;
+use ymaker\social\share\drivers\Twitter;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -18,6 +23,17 @@ return [
         '@rutaFlyer' => '/eventos/images/flyers/',
     ],
     'components' => [
+        "socialShare" => [
+            'class' => Configurator::class,
+            "socialNetworks" => [
+                "facebook" => [
+                    "class" => Facebook::class,
+                ],
+                "twitter" => [
+                    "class" => Twitter::class,
+                ],
+            ],
+        ],
         'qr' => [
             'class' => '\Da\QrCode\Component\QrCodeComponent',
             // ... you can configure more properties of the component here

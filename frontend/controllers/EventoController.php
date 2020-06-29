@@ -3,43 +3,48 @@
 namespace frontend\controllers;
 
 use Da\QrCode\QrCode;
+use frontend\components\validateEmail;
+use frontend\models\CategoriaEvento;
+use frontend\models\Evento;
+use frontend\models\FormularioForm;
+use frontend\models\Inscripcion;
 use frontend\models\InscripcionSearch;
+use frontend\models\ModalidadEvento;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
 use frontend\models\RespuestaFile;
-use frontend\models\RespuestaSearch;
-use yii\helpers\Url;
-use Yii;
-use frontend\models\Inscripcion;
+
 use frontend\models\Presentacion;
-use frontend\models\Usuario;
-use frontend\models\PresentacionSearch;
 use frontend\models\PresentacionExpositor;
-use frontend\models\Evento;
+use frontend\models\PresentacionSearch;
+use frontend\models\RespuestaSearch;
+use frontend\models\UploadFormFlyer;
+use frontend\models\UploadFormLogo;
+use frontend\models\Usuario;
+use UI\Controls\Label;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use frontend\components\validateEmail;
-use yii\data\Pagination;
-use frontend\models\ModalidadEvento;
-use frontend\models\CategoriaEvento;
-
-use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo 
-use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use yii\web\UploadedFile;
-use yii\data\ActiveDataProvider;
-use UI\Controls\Label;
-use frontend\models\FormularioForm;
+
+//Para contener la instacion de la imagen logo
+//Para contener la instacion de la imagen flyer
 
 /**
  * EventoController implements the CRUD actions for Evento model.
  */
-class EventoController extends Controller {
+class EventoController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -115,7 +120,7 @@ class EventoController extends Controller {
         // ¿Ya esta inscripto o no? - Si
         if ($yaInscripto) {
             // ¿El evento ya inicio? - Si
-            if ($evento->fechaInicioEvento >= date("Y-m-d")) {
+            if ($evento->fechaInicioEvento <= date("Y-m-d")) {
                 // ¿El evento tiene codigo de acreditacion? - Si
                 if ($evento->codigoAcreditacion != null) {
                     // ¿El usuario ya se acredito en el evento? - Si
@@ -226,16 +231,30 @@ class EventoController extends Controller {
     public function actionRespuestasFormulario($slug){
         $evento = $this->findModel("", $slug);
 
-        if($this->verificarDueño($evento)){
-        $usuariosInscriptosSearchModel = new InscripcionSearch();
-        $usuariosInscriptosDataProvider = new ActiveDataProvider([
-            'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
-            'pagination' => false,
-            'sort' => ['attributes' => ['name', 'description']]
-        ]);
+        $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
+
+        if ($this->verificarDueño($evento)) {
+            $hayPreguntas = false;
+            if ($cantidadPreguntas != 0) {
+                $hayPreguntas = true;
+            }
+            $usuariosSearchModel = new InscripcionSearch();
+            $usuariosPreinscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 0])->andWhere(["<>","acreditacion", 1]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+            $usuariosInscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 1])->andWhere(["<>","acreditacion", 1]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+            Url::remember(Url::current(), 'verRespuestas');
             return $this->render('respuestasFormulario',
-                ["inscriptos" => $usuariosInscriptosDataProvider,
-                    "evento" => $evento]);
+                ["preinscriptos" => $usuariosPreinscriptosDataProvider,
+                    "inscriptos" => $usuariosInscriptosDataProvider,
+                    "evento" => $evento,
+                    "hayPreguntas" => $hayPreguntas]);
         }else {
             throw new NotFoundHttpException('La página solicitada no existe.');
 }
@@ -325,6 +344,7 @@ class EventoController extends Controller {
 
 
         if ($esDueño) {
+            Url::remember(Url::current(), "slugEvento");
             $preguntasSearchModel = new PreguntaSearch();
             $preguntasDataProvider = new ActiveDataProvider([
                 'query' => $preguntasSearchModel::find()->where(['idEvento' => $evento->idEvento]),
@@ -343,18 +363,21 @@ class EventoController extends Controller {
     public function actionResponderFormulario($slug){
 
         $evento = $this->findModel("", $slug);
-        $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])->one();
+        $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])
+            ->andWhere(["<>", "estado", 1])
+            ->andWhere(["<>", "estado", 2])
+            ->one();
 
         if($inscripcion != null){
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
 
             $respuestaYaHechas = [];
             foreach ($preguntas as $pregunta){
-                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $inscripcion->idInscripcion])->one();
                 if($respuesta == null){
                     array_push($respuestaYaHechas, false);
                 }else{
-                    array_push($respuestaYaHechas, true);
+                    array_push($respuestaYaHechas, $respuesta);
                 }
             }
 
@@ -578,33 +601,29 @@ class EventoController extends Controller {
 
 
         $participantes = $base ->where(['inscripcion.idEvento' => $idEvento ])->orderBy('usuario.apellido ASC')->asArray()->all();
-      
-       
-       
         $preguntas= Pregunta::find()->where(['idevento' => $idEvento ])->asArray()->all();
 
+        $listaRepuesta="";
 
+        $listaRepuesta= array();
+       foreach($participantes as $unParticipante){
 
-        $base = Inscripcion::find();
-        $base->innerJoin('respuesta', 'respuesta.idInscripcion=inscripcion.idInscripcion');
-        $base->innerJoin('pregunta', 'pregunta.id=respuesta.idpregunta');
-        $base->select(['user_pregunta'=>'pregunta.descripcion', 
-                       'user_repuesta'=>'respuesta.respuesta',
-                       'user_repuesta_tipo'=>'pregunta.tipo',
-                       'user_idInscripcion'=>'inscripcion.idInscripcion' ]);
+        $base = RespuestaFile::find();
+        $base->innerJoin('pregunta', 'respuesta.idpregunta=pregunta.id');
+        $base->select(['pregunta_tipo'=>'pregunta.tipo','respuesta_user'=>'respuesta']);
 
-        $base->where(['pregunta.idevento' => $idEvento ])->asArray()->all();
+        $respuestas= $base->where(['respuesta.idinscripcion' =>$unParticipante['user_idInscripcion'] ])->asArray()->all();
 
+        $listaRepuesta[]= ['unParticipante'=>$unParticipante, 'respuestas'=>$respuestas];
 
-        $respuestas= $base->where(['pregunta.idevento' => $idEvento ])->asArray()->all();
+       }
+       
 
-
-
-
-       return $this->renderPartial('inscriptosExcel',
-        ['participantes' => $participantes ,'arrayEvento' => $arrayEvento,
-        'preguntas' => $preguntas, 'respuestas' => $respuestas]);
+       return $this->renderPartial('listaParticipantes',
+        ['arrayEvento' => $arrayEvento,
+         'preguntas' => $preguntas, 'listaRepuesta' => $listaRepuesta]);
     }
+
     
     public function actionOrganizarEventos()
     {
