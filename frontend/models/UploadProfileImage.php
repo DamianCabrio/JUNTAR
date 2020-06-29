@@ -35,7 +35,8 @@ class UploadProfileImage extends Model {
         //Por ahora, se guarda la imagen con el mismo nombre siempre para evitar saturar el sv
         //si a alguien se le ocurre cambiar muchas veces su foto de perfil. El archivo siempre
         //se sobreescribe.
-        $model['rutaImagenPerfil'] = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+//        $model['rutaImagenPerfil'] = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+        $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
         return $model->save();
     }
 
