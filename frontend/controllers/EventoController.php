@@ -13,31 +13,23 @@ use frontend\models\ModalidadEvento;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
 use frontend\models\RespuestaFile;
-
-use frontend\components\validateEmail;
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\PresentacionSearch;
 use frontend\models\RespuestaSearch;
 use frontend\models\Usuario;
-use frontend\models\ModalidadEvento;
-use frontend\models\CategoriaEvento;
 use frontend\models\SolicitudAvalEvento;
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
-use frontend\models\FormularioForm;
 use UI\Controls\Label;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
-use yii\data\Pagination;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
-use UI\Controls\Label;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -85,12 +77,13 @@ class EventoController extends Controller
         return $behaviors;
     }
 
-    public function calcularCupos($evento) {
+    public function calcularCupos($evento)
+    {
         if (!is_null($evento->capacidad)) {
             //Cantidad de inscriptos al evento
             $cantInscriptos = Inscripcion::find()
-                    ->where(["idEvento" => $evento->idEvento, 'estado' => 1])
-                    ->count();
+                ->where(["idEvento" => $evento->idEvento, 'estado' => 1])
+                ->count();
 
             $cupoMaximo = $evento->capacidad;
 
@@ -105,22 +98,23 @@ class EventoController extends Controller
         }
     }
 
-    public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if(($evento->fechaLimiteInscripcion != null && $evento->fechaLimiteInscripcion >= date("Y-m-d"))){
+    public function obtenerEstadoEventoNoLogin($cupos, $evento)
+    {
+        if (($evento->fechaLimiteInscripcion != null && $evento->fechaLimiteInscripcion >= date("Y-m-d"))) {
             if ($cupos !== 0 || is_null($cupos)) {
                 return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
             } else {
                 return "sinCupos";
             }
-        }elseif ($evento->fechaLimiteInscripcion == null && $evento->fechaInicioEvento >= date("Y-m-d")){
+        } elseif ($evento->fechaLimiteInscripcion == null && $evento->fechaInicioEvento >= date("Y-m-d")) {
             return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-        }
-        else{
+        } else {
             return "noInscriptoYFechaLimiteInscripcionPasada";
         }
     }
 
-    public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion) {
+    public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion)
+    {
 
         // ¿Ya esta inscripto o no? - Si
         if ($yaInscripto) {
@@ -156,26 +150,21 @@ class EventoController extends Controller
                 // Hay cupos en el evento
             } else {
                 // ¿La fecha actual es menor a la fecha limite de inscripcion? - Si
-                    // ¿El evento tiene pre inscripcion activada? - Si
-                    if ($evento->preInscripcion == 1) {
-                        if($evento->fechaLimiteInscripcion== null || $evento->fechaLimiteInscripcion== '1969-12-31'){
-                            if($evento->fechaInicioEvento >= date("Y-m-d")){
-                                return "puedeInscripcion";
-                            }else{
-                                return "noInscriptoYFechaLimiteInscripcionPasada";
-                            }
-                        }else {
-                            if($evento->fechaLimiteInscripcion >= date("Y-m-d")){
-                                return "puedePreinscripcion";
-                            }else{
-                                return "noInscriptoYFechaLimiteInscripcionPasada";
-                            }
-                    // El evento no tiene pre inscripcion
-                } else {
-                    if ($evento->fechaInicioEvento >= date("Y-m-d")) {
-                        return "puedeInscripcion";
+                // ¿El evento tiene pre inscripcion activada? - Si
+                if ($evento->preInscripcion == 1) {
+                    if ($evento->fechaLimiteInscripcion == null || $evento->fechaLimiteInscripcion == '1969-12-31') {
+                        if ($evento->fechaInicioEvento >= date("Y-m-d")) {
+                            return "puedeInscripcion";
+                        } else {
+                            return "noInscriptoYFechaLimiteInscripcionPasada";
+                        }
                     } else {
-                        return "noInscriptoYFechaLimiteInscripcionPasada";
+                        if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
+                            return "puedePreinscripcion";
+                        } else {
+                            return "noInscriptoYFechaLimiteInscripcionPasada";
+                        }
+                        // El evento no tiene pre inscripcion
                     }
                 }
             }
@@ -233,7 +222,8 @@ class EventoController extends Controller
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
-    public function actionRespuestasFormulario($slug) {
+    public function actionRespuestasFormulario($slug)
+    {
         $evento = $this->findModel("", $slug);
 
         $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
@@ -245,12 +235,12 @@ class EventoController extends Controller
             }
             $usuariosSearchModel = new InscripcionSearch();
             $usuariosPreinscriptosDataProvider = new ActiveDataProvider([
-                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 0])->andWhere(["<>","acreditacion", 1]),
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 0])->andWhere(["<>", "acreditacion", 1]),
                 'pagination' => false,
                 'sort' => ['attributes' => ['name', 'description']]
             ]);
             $usuariosInscriptosDataProvider = new ActiveDataProvider([
-                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 1])->andWhere(["<>","acreditacion", 1]),
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 1])->andWhere(["<>", "acreditacion", 1]),
                 'pagination' => false,
                 'sort' => ['attributes' => ['name', 'description']]
             ]);
@@ -260,19 +250,20 @@ class EventoController extends Controller
                     "inscriptos" => $usuariosInscriptosDataProvider,
                     "evento" => $evento,
                     "hayPreguntas" => $hayPreguntas]);
-        }else {
-        if ($this->verificarDueño($evento)) {
-            $usuariosInscriptosSearchModel = new InscripcionSearch();
-            $usuariosInscriptosDataProvider = new ActiveDataProvider([
-                'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
-                'pagination' => false,
-                'sort' => ['attributes' => ['name', 'description']]
-            ]);
-            return $this->render('respuestasFormulario',
-                            ["inscriptos" => $usuariosInscriptosDataProvider,
-                                "evento" => $evento]);
         } else {
-            throw new NotFoundHttpException('La página solicitada no existe.');
+            if ($this->verificarDueño($evento)) {
+                $usuariosInscriptosSearchModel = new InscripcionSearch();
+                $usuariosInscriptosDataProvider = new ActiveDataProvider([
+                    'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
+                    'pagination' => false,
+                    'sort' => ['attributes' => ['name', 'description']]
+                ]);
+                return $this->render('respuestasFormulario',
+                    ["inscriptos" => $usuariosInscriptosDataProvider,
+                        "evento" => $evento]);
+            } else {
+                throw new NotFoundHttpException('La página solicitada no existe.');
+            }
         }
     }
 
