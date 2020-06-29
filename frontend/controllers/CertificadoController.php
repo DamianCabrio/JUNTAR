@@ -147,7 +147,7 @@ class CertificadoController extends Controller
       }
 
       if ($idPresentation != null) {
-        $presentationData = Presentacion::findOne($idPresentation);
+        $presentation = Presentacion::findOne($idPresentation);
       } else {
         $presentation = null;
       }
