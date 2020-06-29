@@ -75,7 +75,7 @@ AppAsset::register($this);
                 if (Yii::$app->user->isGuest) {
                     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
                 } else {
-                    $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+//                    $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
                     //MenuItems for ABM
                     //MenuItems ABM Permisos
 //        $menuItems[] = [
@@ -87,9 +87,21 @@ AppAsset::register($this);
 //                            ['label' => 'Asignar Permisos7', 'url' => ['/permission-manager/index7']],
 //                            ],
 //                        ];
+                    //ABM Usuario
+                    $menuItems[] = ['label' => 'Usuarios', 'url' => ['/usuario/index']];
+                    //ABM Eventos
+                    $menuItems[] = [
+                        'label' => 'Eventos',
+                        'items' => [
+                            ['label' => 'Listado Eventos', 'url' => ['/evento/index']],
+                            ['label' => 'Solicitudes de Aval', 'url' => ['/evento/solicitudes-de-aval']],
+                        ],
+                    ];
+                    //ABM ModalidadEventos
+                    $menuItems[] = ['label' => 'Modalidades', 'url' => ['/modalidad-evento/index']];
                     //MenuItems ABM Permisos
                     $menuItems[] = [
-                        'label' => 'Gestionar Permisos',
+                        'label' => 'Permisos',
                         'items' => [
                             ['label' => 'Crear Permiso', 'url' => ['/permission/create-permiso']],
                             ['label' => 'Asignar Permisos', 'url' => ['/permission/asignar-permisos']],
@@ -98,22 +110,14 @@ AppAsset::register($this);
                         ],
                     ];
                     $menuItems[] = [
-                        'label' => 'Gestionar Roles',
+                        'label' => 'Roles',
                         'items' => [
                             ['label' => 'Crear Rol', 'url' => ['/rol/create-rol']],
                             ['label' => 'Listado Roles', 'url' => ['/rol/index']],
                         ],
                     ];
-                    //ABM Usuario
-                    $menuItems[] = ['label' => 'Gestionar Usuarios', 'url' => ['/usuario/index']];
-                    //ABM Eventos
-                    $menuItems[] = [
-                        'label' => 'Gestionar Eventos',
-                        'items' => [
-                            ['label' => 'Listado Eventos', 'url' => ['/evento/index']],
-                            ['label' => 'Solicitudes de Aval', 'url' => ['/evento/solicitudes-de-aval']],
-                        ],
-                    ];
+
+
 //                $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/index']];
                     //Logout
                     $menuItems[] = [
