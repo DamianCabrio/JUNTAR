@@ -189,3 +189,8 @@ a.desc:after {
     background-color: #FE1355;
     color: white;
 }
+textarea:focus, input:focus, input[type]:focus {
+    border-color: rgb(254, 19, 85);
+    box-shadow: 0 1px 1px rgba(227, 16, 75, 0.075)inset, 0 0 8px rgba(227, 16, 75,0.6);
+    outline: 0 none;
+}
