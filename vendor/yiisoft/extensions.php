@@ -3,130 +3,110 @@
 $vendorDir = dirname(__DIR__);
 
 return array (
-  'yiisoft/yii2-bootstrap4' => 
+  'yiisoft/yii2-bootstrap4' =>
   array (
     'name' => 'yiisoft/yii2-bootstrap4',
     'version' => '2.0.8.0',
-    'alias' => 
+    'alias' =>
     array (
       '@yii/bootstrap4' => $vendorDir . '/yiisoft/yii2-bootstrap4/src',
     ),
   ),
-  'umanskyi31/opengraph' => 
+  'umanskyi31/opengraph' =>
   array (
     'name' => 'umanskyi31/opengraph',
     'version' => '2.0.0.0',
-    'alias' => 
+    'alias' =>
     array (
       '@umanskyi31/opengraph' => $vendorDir . '/umanskyi31/opengraph/src',
     ),
   ),
-  'kartik-v/yii2-mpdf' => 
-  array (
-    'name' => 'kartik-v/yii2-mpdf',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@kartik/mpdf' => $vendorDir . '/kartik-v/yii2-mpdf/src',
-    ),
-  ),
-  'yiisoft/yii2-gii' => 
+  'yiisoft/yii2-gii' =>
   array (
     'name' => 'yiisoft/yii2-gii',
     'version' => '2.2.1.0',
-    'alias' => 
+    'alias' =>
     array (
       '@yii/gii' => $vendorDir . '/yiisoft/yii2-gii/src',
     ),
   ),
-  'yiisoft/yii2-swiftmailer' => 
+  'yiisoft/yii2-swiftmailer' =>
   array (
     'name' => 'yiisoft/yii2-swiftmailer',
     'version' => '2.1.2.0',
-    'alias' => 
+    'alias' =>
     array (
       '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer/src',
     ),
   ),
-  'yiisoft/yii2-jui' => 
+  'yiisoft/yii2-jui' =>
   array (
     'name' => 'yiisoft/yii2-jui',
     'version' => '2.0.7.0',
-    'alias' => 
+    'alias' =>
     array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
-  'wbraganca/yii2-dynamicform' => 
-  array (
-    'name' => 'wbraganca/yii2-dynamicform',
-    'version' => '2.0.2.0',
-    'alias' => 
-    array (
-      '@wbraganca/dynamicform' => $vendorDir . '/wbraganca/yii2-dynamicform',
-    ),
-  ),
-  'unclead/yii2-multiple-input' => 
-  array (
-    'name' => 'unclead/yii2-multiple-input',
-    'version' => '2.22.0.0',
-    'alias' => 
-    array (
-      '@unclead/multipleinput/examples' => $vendorDir . '/unclead/yii2-multiple-input/examples',
-      '@unclead/multipleinput' => $vendorDir . '/unclead/yii2-multiple-input/src',
-      '@unclead/multipleinput/tests' => $vendorDir . '/unclead/yii2-multiple-input/tests',
-    ),
-  ),
-  '2amigos/qrcode-library' => 
-  array (
-    'name' => '2amigos/qrcode-library',
-    'version' => '1.1.2.0',
-    'alias' => 
-    array (
-      '@Da/QrCode' => $vendorDir . '/2amigos/qrcode-library/src',
-    ),
-  ),
-  'yiisoft/yii2-debug' => 
+  'yiisoft/yii2-debug' =>
   array (
     'name' => 'yiisoft/yii2-debug',
     'version' => '2.1.13.0',
-    'alias' => 
+    'alias' =>
     array (
       '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug/src',
     ),
   ),
-  'yiisoft/yii2-faker' => 
+  'yiisoft/yii2-faker' =>
   array (
     'name' => 'yiisoft/yii2-faker',
     'version' => '2.0.4.0',
-    'alias' => 
+    'alias' =>
     array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
-  'yiimaker/yii2-social-share' => 
+  'wbraganca/yii2-dynamicform' =>
   array (
-    'name' => 'yiimaker/yii2-social-share',
-    'version' => '2.3.2.0',
-    'alias' => 
+    'name' => 'wbraganca/yii2-dynamicform',
+    'version' => '2.0.2.0',
+    'alias' =>
+    array (
+      '@wbraganca/dynamicform' => $vendorDir . '/wbraganca/yii2-dynamicform',
+    ),
+  ),
+  'unclead/yii2-multiple-input' =>
+  array (
+    'name' => 'unclead/yii2-multiple-input',
+    'version' => '2.22.0.0',
+    'alias' =>
     array (
       '@ymaker/social/share' => $vendorDir . '/yiimaker/yii2-social-share/src',
     ),
   ),
-  'kartik-v/yii2-mpdf' => 
+  'kartik-v/yii2-mpdf' =>
   array (
     'name' => 'kartik-v/yii2-mpdf',
     'version' => '9999999-dev',
-    'alias' => 
+    'alias' =>
     array (
       '@kartik/mpdf' => $vendorDir . '/kartik-v/yii2-mpdf/src',
     ),
   ),
-  '2amigos/qrcode-library' => 
+  '2amigos/yii2-ckeditor-widget' =>
+  array (
+    'name' => '2amigos/yii2-ckeditor-widget',
+    'version' => '2.1.0.0',
+    'alias' =>
+    array (
+      '@dosamigos/ckeditor' => $vendorDir . '/2amigos/yii2-ckeditor-widget/src',
+    ),
+  ),
+  '2amigos/qrcode-library' =>
   array (
     'name' => '2amigos/qrcode-library',
     'version' => '1.1.2.0',
-    'alias' => 
+    'alias' =>
     array (
       '@Da/QrCode' => $vendorDir . '/2amigos/qrcode-library/src',
     ),

@@ -46,7 +46,11 @@ $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'to
             padding-top: 30px;
             padding-bottom: 30px;
             padding-right: 5px;
-            padding-left:5px;">
+            padding-left:5px;
+            border: 3px;
+            background-color: #050714;
+            color: #fff;
+            border-color: #FE1355">
 
             <!-- <img src="images/juntar-logo/svg/juntar-logo-w.svg" alt="Logo Juntar" height="200px" width="300px"> -->
              <!-- <img src="<?php //Yii::$app->getAlias('@frontend/web/images/juntar-logo/png/juntar-icon-b.png') ?>" alt="Logo Juntar"> -->
@@ -54,17 +58,18 @@ $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'to
             <p><b> Hola <?= Html::encode($user->nombre." ". $user->apellido) ?>.<b><p>  <br>
             
             <p> ¡Gracias por registrarte en la plataforma <?= Html::encode(Yii::$app->name) ?>!</p>
-            <p> Para finalizar el proceso de registro, clickea sobre el botón "Confirmar Email" </p>
+            <p style="margin-bottom: 50px"> Para finalizar el proceso de registro, clickea sobre el botón "Confirmar Email" </p>
 
             <p style="margin-top: 15px;"> <a href="<?= Html::encode($verifyLink) ?>" style="border: 1px solid #ccc;
-            padding: 6px 12px;
+            margin-top: 20px;
+            padding: 12px 12px;
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
             cursor: pointer;
             background-image: none;
             border: 1px solid transparent;
-            border-radius: 4px;
+            border-radius: 0.3rem;
             text-decoration: none;
 
             color: #fff;

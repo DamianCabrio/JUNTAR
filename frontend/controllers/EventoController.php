@@ -50,6 +50,8 @@ class EventoController extends Controller
                     'allow' => true,
                     'actions' => [
                         "ver-evento",
+                        'verificar-solicitud',
+                        'confirmar-solicitud',
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -158,10 +160,11 @@ class EventoController extends Controller
                         } else {
                             return "noInscriptoYFechaLimiteInscripcionPasada";
                         }
+                        // El evento no tiene pre inscripcion
                     } else {
-                        if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
-                            return "puedePreinscripcion";
-                        } else {
+                        if($evento->fechaInicioEvento >= date("Y-m-d")){
+                            return "puedeInscripcion";
+                        }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
                         }
                         // El evento no tiene pre inscripcion
@@ -283,7 +286,7 @@ class EventoController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
-
+            $model->avalado = 0; // Flag - Por defecto
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
@@ -565,6 +568,14 @@ class EventoController extends Controller
         return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
     }
 
+     public function actionFinalizarEvento($slug){
+        $model = $this->findModel("", $slug);
+
+        $model->idEstadoEvento = 3;  //Flag  - Estado de evento finalizado
+        $model->save();
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     }
 
     public function actionCargarExpositor($idPresentacion) {
         $model = new PresentacionExpositor();
@@ -617,7 +628,6 @@ class EventoController extends Controller
 
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
-
         $base->select(['user_estado'=>'inscripcion.estado',
                        'user_acreditacion'=>'inscripcion.acreditacion',
                        'user_idInscripcion'=>'inscripcion.idInscripcion',
@@ -630,6 +640,8 @@ class EventoController extends Controller
                        'user_email'=>'usuario.email',
                        'user_fechaPreInscripcion'=>'inscripcion.fechaPreInscripcion',
                        'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
+
+        /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
         $participantes = $base ->where(['inscripcion.idEvento' => $idEvento ])->orderBy('usuario.apellido ASC')->asArray()->all();
         $preguntas= Pregunta::find()->where(['idevento' => $idEvento ])->asArray()->all();
@@ -668,7 +680,7 @@ class EventoController extends Controller
 
         if ($estadoEvento != "") {
             if ($estadoEvento == 0) {
-                $estado = 1; // activo 
+                $estado = 1; // activo
             }
             if ($estadoEvento == 1) {
                 $estado = 4; // suspendido
@@ -749,4 +761,5 @@ class EventoController extends Controller
       }
 
     }
+
 }

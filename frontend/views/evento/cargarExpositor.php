@@ -32,6 +32,7 @@ if(!Yii::$app->user->isGuest && $objetoEvento->idUsuario0->idUsuario == Yii::$ap
                             'Expositor ' . '<br>' .
                                 AutoComplete::widget([
                                     'clientOptions' => [
+                                        'appendTo'=>'#agregarExpositor',
                                         'source' => $usuarios,
                                         'autoFill' => true,
                                         'minLength' => '3',
