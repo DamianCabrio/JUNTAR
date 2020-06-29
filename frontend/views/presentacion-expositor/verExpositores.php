@@ -64,7 +64,7 @@ use yii\bootstrap4\Modal;
                                 </div>
                                 <div class="container"></div>
                                 <div class="modal-body">
-                                    <p>Está seguro de querer borrar este expositor?</p>
+                                    <p>¿Está seguro de querer borrar este expositor?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <a href="<?= Url::to(['presentacion-expositor/delete', 'idPresentacion' => $key['idPresentacion'], 'idExpositor' => $key['idExpositor']]); ?>" class="btn btn-primary">Si</a>
