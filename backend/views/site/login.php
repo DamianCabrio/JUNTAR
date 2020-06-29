@@ -7,28 +7,30 @@ use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
     <div class="m-auto">
-        <h1 class="text-center mb-2"><?= Html::encode($this->title) ?></h1>
+        <div class="card">
+            <h1 class="card-header text-center darkish_bg text-white"><?= Html::encode($this->title) ?></h1>
 
-        <div class="row">
-            <div class="col-lg-5 m-auto">
-                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+            <div class="row card-body">
+                <div class="col-md-5 col-sm-12 m-auto">
+                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'email')->input('email')->textInput(['autofocus' => true]) ?>
+                    <?= $form->field($model, 'email')->input('email')->textInput(['autofocus' => true]) ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
-                <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label("Mostrar Contraseña") ?>
+                    <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw']])->checkBox()->label("Mostrar Contraseña") ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox()->label("Recordarme") ?>
+                    <?= $form->field($model, 'rememberMe')->checkbox()->label("Recordarme") ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Ingresar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <div class="form-group">
+                        <?= Html::submitButton('Ingresar', ['class' => 'btn btn-pink col-md-4 col-sm-12', 'name' => 'login-button']) ?>
+                    </div>
+
+                    <?php ActiveForm::end(); ?>
                 </div>
-
-                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>

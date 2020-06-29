@@ -72,7 +72,7 @@ class PermissionController extends Controller {
         $dataProvider = new ActiveDataProvider([
             'query' => $searchModel::find()->where(['type' => 2]),
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => 10,
             ],
 //            'sort' => ['attributes' => ['name']]
         ]);

@@ -189,3 +189,68 @@ a.desc:after {
     background-color: #FE1355;
     color: white;
 }
+
+.hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1456428746267-a1756408f782?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: -webkit-box;
+    display: flex;
+    min-height: 50vh;
+}
+
+.gradient-hero {
+    min-height: 50vh;
+    background-position: center center;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.gradient-hero:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    content: " ";
+    background: radial-gradient(ellipse at center, #0B0D19 10%, #FE1355 100%);
+    opacity: 0.8;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+.center-content {
+    width: 700px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: auto;
+    z-index: 2;
+}
+
+.btn-pink {
+    background-color: #FE1355;
+    color: aliceblue!important;
+    border: none;
+    text-transform: capitalize;
+}
+
+.btn-pink:hover {
+    background-color: #050714;
+    color: aliceblue!important;
+}
+
+.btn-pink:focus {
+    outline: 0!important;
+    box-shadow: none;
+}
+
+.tarjetaIndex:hover{
+    background-color: #ddd;
+}
