@@ -1,10 +1,10 @@
 <?php
 
+use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use frontend\models\CategoriaEvento;
 use frontend\models\ModalidadEvento;
 use yii\bootstrap4\ActiveForm;
-
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Evento */
 /* @var $form yii\widgets\ActiveForm */
@@ -38,12 +38,34 @@ $this->title = "Cargar Evento";
                         <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
                             'data-title' => 'Requisitos',
                             'data-toggle' => 'popover',
-                            'data-content' => 'El nombre corto solo puede tener numeros y letras sin acentos ni ñ, y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
+                            'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
                     </div>
                 </div>
 
 
-                <?= $form->field($model, 'descripcionEvento')->textarea(['rows' => '8', 'placeholder' => ' Descripción del evento  [ Máximo 800 caracteres ]'])->label('Descripción *') ?>
+                <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
+                    "options" => ['rows' => '8'],
+                    "preset" => "custom",
+                    "clientOptions" => [
+                        'toolbarGroups' => [
+                            ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+                            ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
+                            '/',
+                            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                            ['name' => 'colors'],
+                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+                            ['name' => 'links'],
+                            ['name' => 'styles'],
+                            ['name' => 'colors'],
+                            ['name' => 'tools'],
+                            ['name' => 'others'],
+                            
+                        ],
+                        'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
+                        'removePlugins' => 'elementspath',
+                        'resize_enabled' => false
+                    ],
+                ])->label('Descripción *') ?>
 
                 <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 
@@ -94,13 +116,13 @@ $this->title = "Cargar Evento";
                 <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
 
                 <p class="font-italic">
-                    * Campos obligatorios.
-                    <p>
-                        <div class="form-group">
-                            <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
-                        </div>
+                    Los campos marcados con (*) son obligatorios. 
+                <p>
+                <div class="form-group">
+                    <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
+                </div>
 
-                        <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
