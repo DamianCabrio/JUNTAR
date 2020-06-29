@@ -112,12 +112,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         <span class="text-white align-middle"> Evento <?php echo $estadoEvento ?> </span>
                         <?php
                         if (($evento->idEstadoEvento) == 4) {
-                        ?>
-                            <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
-                            <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
-                        <?php
-                        }
-                        ?> 
+                       ?>
                         
                         <!-- Button trigger modal -->
                         <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
@@ -221,7 +216,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                             </div>
                         </div>
-                        </div>            
+                        </div>
+                              
+                        <?php
+                        }
+                        ?>
+                                    
                         <!-- Solicitar Aval-->
                         <?php if ($evento->avalado != 1 && $evento->avalado != 3): ?>
                         <?php if ($evento->avalado == 0): ?>
