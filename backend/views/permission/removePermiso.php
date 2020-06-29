@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-group">
                         <?=
                         Html::submitButton('Eliminar Permiso', [
-                            'class' => 'btn btn-danger col-2',
+                            'class' => 'btn btn-danger col-md-2 col-sm-12',
                             'data' => [
                                 'confirm' => '¿Está seguro de querer eliminar el Permiso?'
                             ],

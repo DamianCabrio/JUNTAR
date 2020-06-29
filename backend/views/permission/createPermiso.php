@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
                         <?php echo $form->field($model, 'name')->dropDownList($permisos, ['class' => 'form-control permissionName', 'prompt' => 'Seleccione un permiso... '])->Label("Permiso (Controller/Action):") ?>
                         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
                         <div class="form-group">
-                            <?= Html::submitButton('Registrar Permiso', ['class' => 'assignValueFirst btn btn-primary col-2']) ?>
+                            <?= Html::submitButton('Registrar Permiso', ['class' => 'assignValueFirst btn btn-pink col-md-2 col-sm-12']) ?>
                         </div>
 
                         <?php ActiveForm::end(); ?>

@@ -17,14 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1 class="card-header text-center darkish_bg text-white"> Permiso: <?= Html::encode($this->title) ?> </h1>
 
         <div class="card-body">
-            <p>
+            <p class="m-3">
                 <?php // echo Html::a('Update', ['update-permiso', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
                 <?=
                 Html::a('Eliminar Permiso', ['/permission/remove-permiso', 'name' => $model->name], [
-                    'class' => 'btn btn-danger col-2',
-//            'data' => [
-//                'confirm' => '¿Está seguro que desea eliminar este permiso?',
-//            ],
+                    'class' => 'btn btn-danger col-md-2 col-sm-12',
+                    'data' => [
+                        'confirm' => '¿Está seguro que desea eliminar este permiso?',
+                    ],
                 ])
                 ?>
             </p>
