@@ -10,13 +10,13 @@ $this->title = 'Eliminar Permiso';
 $this->params['breadcrumbs'][] = ['label' => 'Rol', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
-    <div class="col-12 mb-4">
-        <div class="card">
-            <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
+<div class="borrar-permiso">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card">
+                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
-            <div class="card-body col">
-                <div class="rol-create">
+                <div class="card-body">
 
                     <?php $form = ActiveForm::begin(); ?>
 
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="form-group">
                         <?=
-                        Html::submitButton('Eliminar', [
+                        Html::submitButton('Eliminar Permiso', [
                             'class' => 'btn btn-danger col-2',
                             'data' => [
                                 'confirm' => '¿Está seguro de querer eliminar el Permiso?'

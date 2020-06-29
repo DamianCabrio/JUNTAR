@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card">
-            <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
+                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
                 <?php echo Html::a('Nuevo Permiso', ['create-permiso'], ['class' => 'btn btn-primary ml-3 mt-3 col-2']) ?>
                 <?php // echo Html::a('Nuevo Permiso', ['create-permiso'], ['class' => 'btn btn-primary float-right mr-3 mt-3']) ?>
@@ -81,8 +81,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         //                    },
                                         'delete' => function ($url, $model) {
                                             return Html::a('<img src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn']);
-                                        }
-                                    ]
+                                        },
+                                    ],
+                                    'header' => 'Acciones',
                                 ],
                             ],
                             'pager' => [

@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <p>
                 <?php // echo Html::a('Update', ['update-permiso', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
                 <?=
-                Html::a('Delete', ['/permission/remove-permiso', 'name' => $model->name], [
+                Html::a('Eliminar Permiso', ['/permission/remove-permiso', 'name' => $model->name], [
                     'class' => 'btn btn-danger col-2',
 //            'data' => [
 //                'confirm' => '¿Está seguro que desea eliminar este permiso?',
