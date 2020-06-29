@@ -105,30 +105,123 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             <div class="container">
                 <div class="card bg-white">
                     <?php
-                    if ($esDueño) {
+                   if ($esDueño) {
                     ?>    
                        <div class="card-header pinkish_bg">
                        <?= Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) ?>
                         <span class="text-white align-middle"> Evento <?php echo $estadoEvento ?> </span>
                         <?php    
                         if (($evento->idEstadoEvento) == 4) {
-                        ?>
-                            <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
-                            <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                        ?> 
+                        
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Está seguro de querer finalizar su evento?</p>
+                                <p>Dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
+                                <span class="float-right font-weight-bold">Juntar</span> 
+                            </div>
+                            <div class="modal-footer">
+                                <?= Html::a('Si', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn float-right" data-toggle="modal" data-target="#publicar">Publicar</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="publicar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Está seguro de querer publicar su evento?</p>
+                                <p>Pasará a estar disponible para las inscripciones y será visible en la plataforma</p>
+                                <span class="float-right font-weight-bold">Juntar</span> 
+                            </div>
+                            <div class="modal-footer">
+                            <?= Html::a('Si', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>  
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>       
                         <?php 
                         } 
                         elseif (($evento->idEstadoEvento) == 1) {
                         ?>
-                            <?= Html::a('Finalizar', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
-                            <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
+                         <!-- Button trigger modal -->
+                         <button type="button" class="btn float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Está seguro de querer finalizar su evento?</p>
+                                <p>Dejará de estar disponible para las inscripciones y no será visible en la plataforma</p>
+                                <span class="float-right font-weight-bold">Juntar</span> 
+                            </div>
+                            <div class="modal-footer">
+                                <?= Html::a('Si', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div> 
+
+                          <!-- Button trigger modal -->
+                        <button type="button" class="btn float-right" data-toggle="modal" data-target="#publicar">Suspender</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="publicar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Está seguro de querer suspender su evento?</p>
+                                <p>Dejará de estar disponible para las inscripciones, podrá seguir editandolo</p>
+                                <span class="float-right font-weight-bold">Juntar</span> 
+                            </div>
+                            <div class="modal-footer">
+                                 <?= Html::a('Si', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>            
+                           
                         <?php
                         }
-                        elseif (($evento->idEstadoEvento) == 3) {
                         ?>
-                            <?= Html::a('Publicar', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
-                        <?php
-                        }
-                        ?>
+                          
                         <!-- Solicitar Aval-->
                         <?php
                         if(($evento->avalado) == 0){
@@ -158,7 +251,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 </div>
                                 </div>
                             </div>
-                            </div>    
+                            </div> 
+
                         <?php    
                         }
                     ?>   
