@@ -33,61 +33,57 @@ $idEvento = $arrayEvento['idEvento'];
 
 $nombreDelLibro = $idEvento."_Participantes_".$nombreEvento.".ods";
 
-foreach($listados as $obj){
-    
-        $templateExcel->setActiveSheetIndex($obj['index']);
-
-        $titulo= $obj['titulo'];
-        $templateExcel->getActiveSheet()->setTitle( $titulo);
-
-        $fila= $templateExcel->getActiveSheet()->setCellValue('B9', $nombreEvento);
 
     
-        // Datos del Evento 
-        $fila->setCellValue('k2', $arrayEvento['organizador'] );
-        $fila->setCellValue('k3', date("d-m-Y", strtotime($arrayEvento['inicio']))  );
-        $fila->setCellValue('k4', date("d-m-Y", strtotime($arrayEvento['fin'])) );
-        $fila->setCellValue('k5', $arrayEvento['capacidad'] );
-        $fila->setCellValue('k6', $arrayEvento['lugar'] );    
-        $fila->setCellValue('k7', $arrayEvento['modalidad'] );
+$fila= $templateExcel->setActiveSheetIndex(0);
 
-        // $row: los datos son insertado a partir de la fila 10
-        $row = 12;
+$fila->getStyle('B9:K9')->applyFromArray($bordes);
+$fila->setCellValue('B9', $nombreEvento)->getStyle('B9')->applyFromArray($bordes);
 
-        // $i: enumera la cantidad las celdas con registros
-        $i = 1;
+        
+$fila->getStyle('B11:K11')->applyFromArray($bordes);
 
-        foreach( $obj['lista'] as  $obj ) {
-                $fila= $templateExcel->getActiveSheet();
-                $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('C'.$row, $obj['user_idInscripcion'])->getStyle('C'.$row)->applyFromArray($bordes);
-               
-                $fecha= "";
+// Datos del Evento 
+$fila->setCellValue('k2', $arrayEvento['organizador'] );
+$fila->setCellValue('k3', date("d-m-Y", strtotime($arrayEvento['inicio']))  );
+$fila->setCellValue('k4', date("d-m-Y", strtotime($arrayEvento['fin'])) );
+$fila->setCellValue('k5', $arrayEvento['capacidad'] );
+$fila->setCellValue('k6', $arrayEvento['lugar'] );
+$fila->setCellValue('k7', $arrayEvento['modalidad'] );
 
-                if( $titulo=='Inscriptos'){
-                    $fecha = date("d-m-Y", strtotime( $obj['user_fechaInscripcion'] ));
-                }
-                if( $titulo=='Preinscriptos'){
-                    $fecha = date("d-m-Y", strtotime($obj['user_fechaPreInscripcion'] ));
-                }
+// $row: los datos son insertado a partir de la fila 10
+$row = 12;
 
-                $fila->setCellValue('D'.$row, $fecha )->getStyle('D'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('E'.$row, $obj['user_apellido'])->getStyle('E'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('F'.$row, $obj['user_nombre'])->getStyle('F'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('G'.$row, $obj['user_dni'])->getStyle('G'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('H'.$row, $obj['user_pais'])->getStyle('H'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('I'.$row, $obj['user_provincia'])->getStyle('I'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('J'.$row, $obj['user_localidad'])->getStyle('J'.$row)->applyFromArray($bordes);
-                $fila->setCellValue('K'.$row, $obj['user_email'])->getStyle('K'.$row)->applyFromArray($bordes);
+// $i: enumera la cantidad las filas de la tabla
+
+$i = 1;
+
+
+foreach( $participantes as  $dato ) {
+                 
+         $fila->setCellValue('B'.$row, $i )->getStyle('B'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('C'.$row, obtenerEstado( $dato['user_estado'])  )->getStyle('C'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('D'.$row, obtenerFecha($dato))->getStyle('D'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('E'.$row, $dato['user_apellido'])->getStyle('E'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('F'.$row, $dato['user_nombre'])->getStyle('F'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('G'.$row, $dato['user_dni'])->getStyle('G'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('H'.$row, $dato['user_pais'])->getStyle('H'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('I'.$row, $dato['user_provincia'])->getStyle('I'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('J'.$row, $dato['user_localidad'])->getStyle('J'.$row)->applyFromArray($bordes);
+         $fila->setCellValue('K'.$row, $dato['user_email'])->getStyle('K'.$row)->applyFromArray($bordes);
                 
-                $i =$i +1;
-                $row = $row + 1;
-        }
+        $i =$i +1;
+        $row = $row + 1;
+ }
 
-}
 
-/// Me posiciono en la hoja Inscriptos
-$templateExcel->setActiveSheetIndex(1);
+
+
+
+
+
+
+
 
 /// guarda el archivo
 $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter( $templateExcel, $fileType );
@@ -98,3 +94,26 @@ ob_end_clean();
 $writer->save("php://output");
 
 exit;
+
+
+function obtenerFecha($estado){    
+
+    $obtener= "";
+
+    if( $estado['user_estado']==1){ $obtener = date("d-m-Y", strtotime( $estado['user_fechaPreInscripcion'])); }
+    if( $estado['user_estado']==2){ $obtener = date("d-m-Y", strtotime( $estado['user_fechaInscripcion'] )); }
+
+    return $obtener;
+}
+
+function obtenerEstado($estado){    
+
+    $obtener= "";
+
+    if( $estado==1 ){ $obtener = "preinscripto"; }
+    if( $estado==2 ){ $obtener = "inscripto"; }
+    if( $estado==3 ){ $obtener= "anulado"; }      
+    if( $estado==4 ){ $obtener= "acreditado";}
+
+    return $obtener;
+}

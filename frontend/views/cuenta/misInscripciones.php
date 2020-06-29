@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mis-eventos-gestionados container">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
@@ -35,7 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'acreditacion',
+                "value" => function($model){
+                    $acreditacionLabel = [0=> "No acreditado", 1 => "Acreditado"];
+                    return $acreditacionLabel[$model->acreditacion];
+                },
                 'label' => 'Acreditacion',
+                "filter" => [0 => "No acreditado", 1 => "Acreditado"]
             ],
             [
                 'attribute' => 'certificado',
@@ -44,7 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'estado',
                 'label' => 'Estado',
-                'value' => 'estado', //valor referenciado por ActiveQuery en el metodo idClub0
+                'value' => function($model){
+                    $eventoEstadoLabel = [0 => "Preinscrito", 1 => "Inscripto", 2 => "Anulado"];
+                    return $eventoEstadoLabel[$model->estado];
+                }, //valor referenciado por ActiveQuery en el metodo idClub0
+                "filter" => [""]
             ],
 //            [
 //                'attribute' => 'idPais',

@@ -28,6 +28,7 @@ use yii\behaviors\SluggableBehavior;
  * @property string $fechaLimiteInscripcion
  * @property string|null $codigoAcreditacion
  * @property string $fechaCreacionEvento
+ * @property int $avalado
  *
  * @property CategoriaEvento $idCategoriaEvento0
  * @property EstadoEvento $idEstadoEvento0
@@ -81,7 +82,7 @@ class Evento extends \yii\db\ActiveRecord
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
             ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
             ['fechaLimiteInscripcion','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'<'],
-            ['nombreCortoEvento','match','pattern'=> "/^[A-Z|a-z|0-9-_]+$/","message" => "No se permite espacios en blanco"],
+            ['nombreCortoEvento','match','pattern'=> "/^[A-Z|a-z|0-9-_]+$/","message" => "El campo contiene caracteres inválidos"],
         ];
     }
 
