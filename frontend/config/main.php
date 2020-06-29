@@ -21,6 +21,8 @@ return [
     'aliases' =>[
         '@rutaLogo' => '/eventos/images/logos/',
         '@rutaFlyer' => '/eventos/images/flyers/',
+        '@rutaQR' => '/eventos/images/qrcodes/',
+        '@rutaImagenPerfil' => '/profile/images/',
     ],
     'components' => [
         "socialShare" => [

@@ -106,8 +106,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <div class="card bg-white">
                     <?PHP
                     if ($esDueño && ($evento->fechaFinEvento > date("Y-m-d"))) {
-                        echo '<div class="card-header pinkish_bg"> ' . 
-                        Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase']) 
+                        echo '<div class="card-header pinkish_bg"> ' .
+                        Html::a('<i class="material-icons large align-middle">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light text-uppercase'])
                         . '<span class="text-white align-middle"> Evento ' . $estadoEvento . '</span>';
                         if (($evento->idEstadoEvento) == 4) {
                             ?>
@@ -120,10 +120,25 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <?= Html::a('Suspender', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn_hide float-right']) ?>
                             <?php
                             }
+                            if ($evento->avalado != 1) {
+                              if ($evento->avalado == 0) {
+                                echo Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'evento' => $evento->nombreCortoEvento], ['class' => 'btn btn_hide float-right']);
+                              } else {
+                                echo '<span class="badge badge-pill badge-light float-right p-2">Solicitud Aval </br> enviada el día '.Yii::$app->formatter->asDatetime($evento->avalado, 'dd/MM/yyyy' ).'</span>';
+                              }
+                            }
                         echo ' </div>';
-                    } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
-                        echo '<div class="card-header pinkish_bg"> <br> </div>';
-                    }
+                      } elseif (Yii::$app->user->isGuest) { // Para mostrar a los user invitados
+
+                          echo '<div class="card-header pinkish_bg text-center">';
+                          if ($verificacionSolicitud) {
+                            echo Html::a('Confirmar Solicitud', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                              'class' => 'btn',
+                              'style' => ['background' => 'green']
+                            ]);
+                          }
+                          echo '</br></div>';
+                      }
                     ?>
 
                     <div class="card-body">
@@ -224,6 +239,12 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ?>
                                     <?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
                                         <?= Html::a('Certificado', ['certificado/index', 'id' => $evento->idEvento], ['class' => 'btn btn-primary btn-lg full_width viewCertification']); ?>
+                                    <?php endif; ?>
+                                    <?php if (Yii::$app->user->can('Validador') && $evento->avalado != 1): ?>
+                                      <?= Html::a('Avalar Evento', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                                        'class' => 'btn m-2 float-right',
+                                        'style' => ['background' => 'green']
+                                      ]);?>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -386,7 +407,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                                             ],
                                             //'expositores',
-                        
+
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 //genera una url para cada boton de accion
@@ -413,7 +434,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
                                                 'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4),
                                             ],
-    //                                            
+    //
                                         ],
                                     ]);
                                     ?>
