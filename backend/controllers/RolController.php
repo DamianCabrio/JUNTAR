@@ -4,12 +4,12 @@ namespace backend\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\helpers\Inflector;
-use yii\helpers\FileHelper;
 use yii\helpers\ArrayHelper;
 use yii\filters\AccessControl;
 use backend\models\RolSearch;
 use backend\models\Rol;
+use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -73,7 +73,13 @@ class RolController extends Controller {
     public function actionIndex() {
         $searchModel = new RolSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['type' => 1]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+//            'sort' => ['attributes' => ['name']]
+        ]);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
@@ -128,57 +134,18 @@ class RolController extends Controller {
     }
 
     /**
-     * Metodo updatePermiso --> Permite actualizar el nombre de un permiso registrado.
-     *
-     * @return string
-     */
-    public function actionUpdateRol() {
-        //creamos un modelo dinamico para representar los campos del permiso agregando el nuevo nombre
-        $model = new \yii\base\DynamicModel([
-            'name', 'description', 'new_name'
-        ]);
-        //agregamos reglas para los campos del modelo
-        $model->addRule(['name', 'description', 'new_name'], 'required')
-                ->addRule(['name', 'description', 'new_name'], 'string');
-        //seteamos las etiquetas de los campos
-        $model->setAttributeLabels([
-            'name' => 'Nombre del Permiso',
-            'description' => 'Descripción del Rol',
-            'new_name' => 'Nuevo Nombre',
-        ]);
-
-        //verifica si fue enviada informacion por POST
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //genera el modelo del permiso con los nuevos valores
-            $rolActualizado = Yii::$app->authManager->createRole($model->name);
-            $rolActualizado->description = $model->description;
-            //verifica si pudo realizarse la actualizacion
-            if (Yii::$app->authManager->update($model->name, $rolActualizado)) {
-                Yii::$app->session->setFlash('success', '<p> El Rol: ' . $model->name . ' fue actualizado. </p>');
-                return $this->redirect(['update']);
-            } else {
-                Yii::$app->session->setFlash('error', '<p> Ha ocurrido un error ): </p>');
-            }
-        }
-
-        //obtenemos los permisos registrados
-        $roles = ArrayHelper::map(yii::$app->AuthManager->getRoles(), 'name', 'name');
-
-        return $this->render('updateRol', [
-                    'model' => $model,
-                    'roles' => $roles,
-        ]);
-    }
-
-    /**
      * Elimina un Rol|Permiso|Regla
      *
      * @return string
      */
-    public function actionRemoveRol($name) {
-        //creamos un modelo dinamico para representar los campos del permiso
-        $model = $this->findModel($name);
-        
+    public function actionRemoveRol() {
+        $model = new Rol();
+        if (Yii::$app->request->get('name') != null) {
+            $nombreRol = Yii::$app->request->get('name');
+            $model = $this->findModel($nombreRol);
+        }
+//        $model = $this->findModel($name);
+
         //verifica si fue enviada informacion por POST
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             //consideramos como resultado el peor de los casos
@@ -203,7 +170,7 @@ class RolController extends Controller {
                     'item' => $roles,
         ]);
     }
-    
+
     /**
      * Finds the Permiso model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -211,13 +178,12 @@ class RolController extends Controller {
      * @return Permiso the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Rol::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('La página solicitada no existe.');
+        throw new NotFoundHttpException('El rol buscado no existe.');
     }
 
 }
