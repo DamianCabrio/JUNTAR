@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use frontend\models\Pregunta;
+use frontend\models\Respuesta;
+
 use frontend\models\RespuestaCorta;
 use frontend\models\RespuestaFile;
 use frontend\models\RespuestaLarga;

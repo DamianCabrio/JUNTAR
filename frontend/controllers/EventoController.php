@@ -12,6 +12,8 @@ use frontend\models\InscripcionSearch;
 use frontend\models\ModalidadEvento;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
+use frontend\models\RespuestaFile;
+
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\PresentacionSearch;
@@ -596,33 +598,29 @@ class EventoController extends Controller
 
 
         $participantes = $base ->where(['inscripcion.idEvento' => $idEvento ])->orderBy('usuario.apellido ASC')->asArray()->all();
-      
-       
-       
         $preguntas= Pregunta::find()->where(['idevento' => $idEvento ])->asArray()->all();
 
+        $listaRepuesta="";
 
+        $listaRepuesta= array();
+       foreach($participantes as $unParticipante){
 
-        $base = Inscripcion::find();
-        $base->innerJoin('respuesta', 'respuesta.idInscripcion=inscripcion.idInscripcion');
-        $base->innerJoin('pregunta', 'pregunta.id=respuesta.idpregunta');
-        $base->select(['user_pregunta'=>'pregunta.descripcion', 
-                       'user_repuesta'=>'respuesta.respuesta',
-                       'user_repuesta_tipo'=>'pregunta.tipo',
-                       'user_idInscripcion'=>'inscripcion.idInscripcion' ]);
+        $base = RespuestaFile::find();
+        $base->innerJoin('pregunta', 'respuesta.idpregunta=pregunta.id');
+        $base->select(['pregunta_tipo'=>'pregunta.tipo','respuesta_user'=>'respuesta']);
 
-        $base->where(['pregunta.idevento' => $idEvento ])->asArray()->all();
+        $respuestas= $base->where(['respuesta.idinscripcion' =>$unParticipante['user_idInscripcion'] ])->asArray()->all();
 
+        $listaRepuesta[]= ['unParticipante'=>$unParticipante, 'respuestas'=>$respuestas];
 
-        $respuestas= $base->where(['pregunta.idevento' => $idEvento ])->asArray()->all();
-
-
-
+       }
+       
 
        return $this->renderPartial('listaParticipantes',
-        ['participantes' => $participantes ,'arrayEvento' => $arrayEvento,
-        'preguntas' => $preguntas, 'respuestas' => $respuestas]);
+        ['arrayEvento' => $arrayEvento,
+         'preguntas' => $preguntas, 'listaRepuesta' => $listaRepuesta]);
     }
+
     
     public function actionOrganizarEventos()
     {
