@@ -138,7 +138,7 @@ class CertificadoController extends Controller
       $userData = Usuario::findOne(Yii::$app->user->identity->id);
       $eventData = $certificate->event;
 
-      if ($eventData->avalado == 1) {
+      if ($eventData[0]->avalado == 1) {
         $footer = 'Facultad de Informática - UNComa';
         $isOficial = true;
       } else {
