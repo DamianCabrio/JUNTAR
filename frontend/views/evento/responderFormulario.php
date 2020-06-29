@@ -32,7 +32,7 @@ $this->title = "Responder Formulario";
             ]); ?>
         <?php else : ?>
             
-            <p>Respuesta: <?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></p>
+            <span>Respuesta: <?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></span>
         <?php endif; ?>
            <?php echo "</div>" ?>
            <?php echo "</div>" ?>
