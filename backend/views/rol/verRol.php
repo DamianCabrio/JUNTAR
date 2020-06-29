@@ -17,11 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1 class="card-header text-center darkish_bg text-white"><?= Html::encode($this->title) ?></h1>
 
         <div class="card-body">
-            <p>
-                <?php // echo Html::a('Update', ['update-permiso', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
+            <p class="m-3">
                 <?=
                 Html::a('Eliminar Rol', ['/rol/remove-rol', 'name' => $model->name], [
-                    'class' => 'btn btn-danger col-2',
+                    'class' => 'btn btn-danger col-md-2 col-sm-12',
                     'data' => [
                         'confirm' => '¿Está seguro de querer eliminar este Rol?',
                         'method' => 'post',
