@@ -115,13 +115,13 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         ?> 
                         
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
+                        <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
                         <!-- Modal -->
                         <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <h5 class="modal-title">Atención</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                 </button>
@@ -140,13 +140,13 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         </div>
 
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn float-right" data-toggle="modal" data-target="#publicar">Publicar</button>
+                        <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#publicar">Publicar</button>
                         <!-- Modal -->
                         <div class="modal fade" id="publicar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <h5 class="modal-title">Atención</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                 </button>
@@ -168,14 +168,14 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         elseif (($evento->idEstadoEvento) == 1) {
                         ?>
                          <!-- Button trigger modal -->
-                         <button type="button" class="btn float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
+                         <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <h5 class="modal-title">Atención</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                 </button>
@@ -194,13 +194,13 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         </div> 
 
                           <!-- Button trigger modal -->
-                        <button type="button" class="btn float-right" data-toggle="modal" data-target="#publicar">Suspender</button>
+                        <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#publicar">Suspender</button>
                         <!-- Modal -->
                         <div class="modal fade" id="publicar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Atención</h5>
+                                <h5 class="modal-title">Atención</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                 </button>
