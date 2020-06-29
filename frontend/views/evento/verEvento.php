@@ -130,7 +130,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         }
                         ?>
                         <!-- Solicitar Aval-->
-                        <?php if ($evento->avalado != 1): ?>
+                        <?php if ($evento->avalado != 1 && $evento->avalado != 3): ?>
                         <?php if ($evento->avalado == 0): ?>
                             <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'evento' => $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right'])?>
 
@@ -157,15 +157,22 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                           <?php endif; ?>
                         <?php endif; ?>
+                        <?php if ($evento->avalado == 3): ?>
+                        <span class="badge badge-warning float-right p-2">Solicitud de Aval Rechazado</span>
+                      <?php endif; ?>
                      </div>
                     <?php
                     } elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para mostrar a los user invitados
 
                         echo '<div class="card-header pinkish_bg text-center">';
-                        if ($verificacionSolicitud) {
+                        if ($verificacionSolicitud && !Yii::$app->user->can('Validador')) {
                           echo Html::a('Confirmar Solicitud', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
                             'class' => 'btn',
                             'style' => ['background' => 'green']
+                          ]);
+                          echo Html::a('Denegar Solicitud', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                            'class' => 'btn',
+                            'style' => ['background' => '#cc0000']
                           ]);
                         }
                         echo '</br></div>';
@@ -273,10 +280,14 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
                                         <?= Html::a('Certificado', ['certificado/index', 'id' => $evento->idEvento], ['class' => 'btn btn-primary btn-lg full_width viewCertification']); ?>
                                     <?php endif; ?>
-                                    <?php if (Yii::$app->user->can('Validador') && $evento->avalado != 1): ?>
+                                    <?php if (Yii::$app->user->can('Validador') && $evento->avalado != 1 && $evento->avalado != 3): ?>
                                       <?= Html::a('Avalar Evento', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
                                         'class' => 'btn m-2 float-right',
                                         'style' => ['background' => 'green']
+                                      ]);?>
+                                      <?= Html::a('Denegar Aval', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                                        'class' => 'btn m-2 float-right',
+                                        'style' => ['background' => '#cc0000']
                                       ]);?>
                                     <?php endif; ?>
                                 </div>
