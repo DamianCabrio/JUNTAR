@@ -399,6 +399,7 @@ function generarOpcionesNombreCorto(nombreEvento) {
     $('#automaticSlug').append(generarSlug(nombreEvento));
     $('#automaticSlug').append(generarInicialesYear(nombreEvento));
     $('#automaticSlug').append(generarCortoYear(nombreEvento));
+    $('#automaticSlug').append('<div class="col-12"><input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label></div>');
 }
 
 function generarSlug(nombreEvento) {
@@ -406,8 +407,8 @@ function generarSlug(nombreEvento) {
         .replace(/[^\w ]+/g, '') //reemplaza caracteres alfanumericos
         .replace(/ +/g, '-'); //
 
-    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc1" name="shortName" value="' + slug + '"> '
-        + '<label for="opc1"> ' + slug + '</label> </span> </div>';
+    var html = '<div class="col-12"> <input type="radio" id="opc1" name="shortName" value="' + slug + '"> '
+        + '<label for="opc1"> ' + slug + '</label> </div>';
     return html;
 }
 
@@ -416,8 +417,8 @@ function generarInicialesYear(nombreEvento) {
     var inicialesYear = nombreEvento.match(/\b(\w)/g)
         .join('');
     inicialesYear += year;
-    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc2" name="shortName" value="' + inicialesYear + '"> '
-        + '<label for="opc2"> ' + inicialesYear + '</label> </span> </div>';
+    var html = '<div class="col-12"><input type="radio" id="opc2" name="shortName" value="' + inicialesYear + '"> '
+        + '<label for="opc2"> ' + inicialesYear + '</label>  </div>';
     return html;
 }
 
@@ -425,8 +426,8 @@ function generarCortoYear(nombreEvento) {
     var year = new Date().getFullYear();
     var cortoYear = year;
     cortoYear += "-" + nombreEvento.split(' ').slice(0, 2).join('-');
-    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc3" name="shortName" value="' + cortoYear + '"> '
-        + '<label for="opc3"> ' + cortoYear + '</label> </span> </div>';
+    var html = '<div class="col-12">  <input type="radio" id="opc3" name="shortName" value="' + cortoYear + '"> '
+        + '<label for="opc3"> ' + cortoYear + '</label>  </div>';
     return html;
 }
 
