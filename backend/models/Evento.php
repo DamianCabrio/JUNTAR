@@ -86,7 +86,29 @@ class Evento extends \yii\db\ActiveRecord
             'fechaLimiteInscripcion' => 'Fecha Limite Inscripcion',
             'codigoAcreditacion' => 'Codigo Acreditacion',
             'fechaCreacionEvento' => 'Fecha Creacion Evento',
+            'avalRequest' => 'Solicitud Aval FAI',
+            'avalado' => 'Avalado FAI',
         ];
+    }
+    
+    public function deshabilitar(){
+        $this->idEstadoEvento = 2;
+        $this->save();
+    }
+    
+    public function habilitar(){
+        $this->idEstadoEvento = 4;
+        $this->save();
+    }
+    
+    public function avalar(){
+        $this->avalado = 1;
+        $this->save();
+    }
+    
+    public function quitarAval(){
+        $this->avalado = 0;
+        $this->save();
     }
 
     /**
