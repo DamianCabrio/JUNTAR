@@ -404,3 +404,11 @@ section {
     background:#FE1355;
     color:white;
 }
+
+.estado_negrita{
+    font-weight: bold;
+}
+
+.expositor-center{
+    margin-top:12%;
+}
