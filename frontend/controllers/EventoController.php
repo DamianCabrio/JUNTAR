@@ -230,6 +230,8 @@ class EventoController extends Controller
         $evento = $this->findModel("", $slug);
 
         $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
+        $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])->count();
+
 
         if ($this->verificarDueño($evento)) {
             $hayPreguntas = false;
@@ -251,7 +253,7 @@ class EventoController extends Controller
             return $this->render('respuestasFormulario',
                 ["preinscriptos" => $usuariosPreinscriptosDataProvider,
                     "inscriptos" => $usuariosInscriptosDataProvider,
-                    "evento" => $evento,
+                    "evento" => $evento, 'cantidadInscriptos'=>$cantidadInscriptos ,
                     "hayPreguntas" => $hayPreguntas]);
         } else {
             if ($this->verificarDueño($evento)) {
@@ -623,7 +625,7 @@ class EventoController extends Controller
         $datosDelEvento['nombre'] = $evento->nombreEvento;
         $datosDelEvento['capacidad']  = $evento->capacidad ;
         $datosDelEvento['lugar']= $evento->lugar;
-        $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;;
+        $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
         
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
@@ -667,6 +669,31 @@ class EventoController extends Controller
     }
 
     
+    public function actionEnviarEmailParticipantes()
+    {
+        $request = Yii::$app->request;
+        $idEvento  = $request->get('idEvento');
+
+        $evento = Evento::findOne($idEvento);
+
+        $datosDelEvento['idEvento'] =   $idEvento;
+        $datosDelEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
+        $datosDelEvento['inicio'] = $evento->fechaInicioEvento;
+        $datosDelEvento['fin'] =  $evento->fechaFinEvento;
+        $datosDelEvento['nombre'] = $evento->nombreEvento;
+        $datosDelEvento['capacidad']  = $evento->capacidad ;
+        $datosDelEvento['lugar']= $evento->lugar;
+        $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
+
+        return $this->renderPartial('EnviarEmailParticipantes',
+        ['datosDelEvento' => $datosDelEvento,'preguntas' => $preguntas]);
+
+    }
+    
+
+
+
+
     public function actionOrganizarEventos()
     {
         $idUsuario = Yii::$app->user->identity->idUsuario;

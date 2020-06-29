@@ -89,8 +89,17 @@ $this->title = "Respuesta a el formulario";
     </div>
     
 
-
+   
     <?= Html::a('Volver Atrás', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-lg']); ?>
+    
+    <?php 
+      
+      if($cantidadInscriptos>=1){ 
+          echo  $cantidadInscriptos;
+    
+          echo  Html::a('enviar mail a los insriptos', ["eventos/enviar-email-inscriptos", $evento->idEvento], ['class' => 'btn btn-lg']); 
+        } 
+    ?>
 
     <?php
     Modal::begin([
