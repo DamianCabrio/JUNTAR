@@ -13,37 +13,37 @@ use frontend\models\ModalidadEvento;
 
 $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 ?>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-12 m-auto">
-
-            <div class="evento-form">
-                <h2 class="text-center">Cargar nuevo evento</h2>
-                <p class="text-center">Complete los siguientes campos</p>
-
-                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-                <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
-                <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
-
-                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
-
-                <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
+<div class="dark_light_bg">
+    <div class="container padding_section">
+        <div class="card shadow">
+            <div class="card-header pinkish_bg">
+                <h2 class="text-center text-white">Editar Evento</h2>
+            </div>
+            <div class="card-body">
                 <div class="row">
-                    <div class="col-4 form-advice">
-                        <span class="m-auto"> Opciones automaticas: </span>
+					<div class="col-12">
+					<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                    <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
+                    <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
+
+                    <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
+					<label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
+					</div>
+                    <div class="col-4 d-flex align-items-center form-advice">
+                        <span class=""> Opciones automaticas: </span>
                     </div>
-                    <div class="nombresCortos" id="automaticSlug">
+                    <div class="nombresCortos col-8" id="automaticSlug">
                     </div>
                     <br>
+					 
                     <div class="col-12 mt-2 nombresCortos">
-                        <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
-                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
+                        <!--<input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>-->
+                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'readonly' => true, 'placeholder' => 'Ingrese  nombre corto',
                             'data-title' => 'Requisitos',
                             'data-toggle' => 'popover',
                             'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
                     </div>
                 </div>
-
 
                 <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
                     "options" => ['rows' => '8'],
