@@ -14,5 +14,7 @@ $this->title = 'Respuesta';
     <?= $this->render('_form', [
         'model' => $model,
         "pregunta" => $pregunta,
+        "inscripcion" => $inscripcion,
+        "volverAtras" => $volverAtras,
     ]) ?>
 </div>

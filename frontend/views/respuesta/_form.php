@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\RespuestaFile */
@@ -26,6 +27,9 @@ use yii\bootstrap4\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-lg']) ?>
+        <?php if($volverAtras): ?>
+        <?= Html::a("Volver Atras", Url::toRoute(["eventos/responder-formulario/" . $inscripcion->idEvento0->nombreCortoEvento]) ,['class' => 'btn btn-lg']) ?>
+        <?php endif; ?>
     </div>
 
     <?php ActiveForm::end(); ?>
