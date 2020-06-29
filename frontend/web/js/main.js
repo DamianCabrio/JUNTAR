@@ -299,8 +299,8 @@ function verRespuestasModal(link) {
         $('#modalRespuestas').modal('show')
             .find('.modal-body')
             .html(data);
-        //        $('#modalRespuestas').find('.modal-header')
-        //.html("<h3> Cargar presentación </h3>");
+        $('#modalRespuestas').find('.modal-header')
+        .html("<h3> Respuestas </h3>");
     });
 }
 
@@ -314,8 +314,8 @@ function editPresentacionModal(link) {
         $('#modalEvento').modal('show')
             .find('.modal-body')
             .html(data);
-        //        $('#modalEvento').find('.modal-header')
-        //.html("<h3> Cargar presentación </h3>");
+        $('#modalEvento').find('.modal-header')
+        .html("<h3> Editar presentación </h3>");
     });
 }
 
@@ -350,8 +350,8 @@ function agregarPresentacionModal(link) {
         $('#modalEvento').modal('show')
             .find('.modal-body')
             .html(data);
-        //        $('#modalEvento').find('.modal-header');
-        //.html("<h3> Cargar presentación </h3>");
+        $('#modalEvento').find('.modal-header')
+        .html("<h3> Cargar presentación </h3>");
     });
 }
 
@@ -386,7 +386,7 @@ function agregarExpositorModal(link) {
             .find('.modal-body')
             .html(data);
         $('#modalEvento').find('.modal-header')
-        //.html("<h3> Cargar presentación </h3>");
+        .html("<h3> Cargar expositor </h3>");
     });
 }
 
