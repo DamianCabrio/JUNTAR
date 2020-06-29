@@ -76,13 +76,15 @@
             
         $j= 11;
         $respuestas= $datos['respuestas'];
+        $url_archivo ="";
+        $url_descarga= "";
         foreach( $respuestas as  $dato2 ) {
                 if($dato2['pregunta_tipo'] ==3){
                     /// ../../../eventos/formularios/archivos/ 
                     $url_archivo = str_replace("../../../", "", $dato2['respuesta_user']);
                     $url_descarga= 'http://juntar.test/'.$url_archivo;
 
-                    $fila->setCellValueByColumnAndRow($j, $row, trim($url_descarga) );
+                    $fila->setCellValueByColumnAndRow($j, $row, str_replace(' ','',$url_descarga) );
                     // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
                 }else{
                     $fila->setCellValueByColumnAndRow($j, $row, $dato2['respuesta_user']);
