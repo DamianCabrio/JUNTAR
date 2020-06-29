@@ -129,7 +129,7 @@ class EventoController extends Controller {
 
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
+
     /**
      * Deletes an existing Evento model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -173,13 +173,19 @@ class EventoController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionConcederAval($id) {
         $this->findModel($id)->avalar();
 
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
+
+    public function actionDenegarAval($id) {
+        $this->findModel($id)->denegarAval();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     public function actionQuitarAval($id) {
         $this->findModel($id)->quitarAval();
 

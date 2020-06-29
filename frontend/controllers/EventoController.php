@@ -712,5 +712,23 @@ class EventoController extends Controller {
       }
 
     }
+    /**
+     * Recibe por parametro el nombre corto de un evento, buscar ese evento y setea en la instancia $evento.
+     * Cambia el estado de avalado a 3 y null al atributo eventoToken.
+     */
+    public function actionDenegarSolicitud($slug)
+    {
+      $evento = $this->findModel(null , $slug);
+      $evento->avalado = 3;
+      $evento->eventoToken = null;
+      if ($evento->save()) {
+        Yii::$app->session->setFlash('success','<small>Evento Denegado</small>');
+        return $this->redirect('/eventos/ver-evento/'.$slug);
+      } else {
+        Yii::$app->session->setFlash('error','<small>Se ha producido un error a al confirmar</small>');
+        return $this->redirect('/eventos/ver-evento/'.$slug);
+      }
+
+    }
 
 }
