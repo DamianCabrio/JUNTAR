@@ -369,7 +369,7 @@ function verPresentacionModal(link) {
             .html("<h3> Información de la Presentación </h3>");
     });
 }
-$('.cargarExpositores').click(function (link) {
+/*$('.cargarExpositores').click(function (link) {
     //impedimos que el cambio de pestaña se active
     link.preventDefault();
     //llamamos a la funcion que se encargue de mostrar el formulario
@@ -388,7 +388,7 @@ function agregarExpositorModal(link) {
         $('#modalEvento').find('.modal-header')
         .html("<h3> Cargar expositor </h3>");
     });
-}
+}*/
 
 //funcion utilizada para eliminar caracteres criticos en un texto
 function eliminarDiacriticos(texto) {
