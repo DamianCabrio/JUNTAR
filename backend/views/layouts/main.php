@@ -92,6 +92,8 @@ AppAsset::register($this);
                         ['label' => 'Listado Roles', 'url' => ['/rol/index']],
                     ],
                 ];
+                //Modalidades
+                $menuItems[] = ['label' => 'Gestionar Modalidades', 'url' => ['/modalidad-evento/index']];
                 //ABM Usuario
                 $menuItems[] = ['label' => 'Gestionar Usuarios', 'url' => ['/usuario/index']];
                 //ABM Eventos
@@ -126,46 +128,6 @@ AppAsset::register($this);
             </div>
         </div>
 
-        <section class="darkish_bg text-light">
-            <div class="container" style="padding-bottom: 4vh;">
-                <div class="row">
-                    <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                        <?= Html::img('images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-8">
-                        <h5 class="white-text">Juntar</h5>
-
-                        <p class="grey-text text-lighten-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada vitae erat a lobortis. Donec pretium tortor eros, a auctor massa suscipit vel. Donec augue odio, vulputate et egestas fringilla, varius vel ligula. Aliquam eu sagittis nisi, vitae imperdiet lorem. Vivamus lobortis diam vel sapien aliquet, dictum placerat tellus imperdiet.</p>
-
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <h5 class="white-text">Contacto</h5>
-                        <ul>
-                            <li>
-                                <a class="white-text link" href="#!">juntar@fi.uncoma.edu.ar</a>
-                            </li>
-                        </ul>
-                        <h5 class="white-text">Sobre</h5>
-                    <ul>
-                        <li>
-                            <?= Html::a('Sobre', ['site/about'], ['class' => 'profile-link']) ?>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <hr>
-                <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
-                    <div class="col-12 col-md-6 py-3">
-                        <?= Html::img('images/uncoma.png',  ['class' => 'img-fluid']); ?>
-                    </div>
-                    <div class="col-12 col-md-6 py-3">
-                        <?= Html::img('images/fai.png',  ['class' => 'img-fluid']); ?>
-                    </div>
-                </div>
-            </div>
-        </section>
         <footer class="footer dark_bg text-light">
 
             <div class="container">
