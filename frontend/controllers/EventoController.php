@@ -51,6 +51,8 @@ class EventoController extends Controller {
                     'allow' => true,
                     'actions' => [
                         "ver-evento",
+                        'verificar-solicitud',
+                        'confirmar-solicitud',
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -164,24 +166,17 @@ class EventoController extends Controller {
                                 return "noInscriptoYFechaLimiteInscripcionPasada";
                             }
                         }
+                        // El evento no tiene pre inscripcion
                     } else {
-                        if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
-                            return "puedePreinscripcion";
-                        } else {
+                        if($evento->fechaInicioEvento >= date("Y-m-d")){
+                            return "puedeInscripcion";
+                        }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
                         }
-                    }
-                    // El evento no tiene pre inscripcion
-                } else {
-                    if ($evento->fechaInicioEvento >= date("Y-m-d")) {
-                        return "puedeInscripcion";
-                    } else {
-                        return "noInscriptoYFechaLimiteInscripcionPasada";
                     }
                 }
             }
         }
-    }
 
     public function verificarDueño($model) {
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario) {
@@ -717,18 +712,5 @@ class EventoController extends Controller {
       }
 
     }
-
-
-    public function actionSolicitarAval($slug){
-        $model = $this->findModel("", $slug);
-        $model->avalado = 1; // Flag - Solicitado
-        $model->save();
-
-
-        // FALTA LA PARTE DE ENVIAR EL EVENTO POR MAIL
-        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
-
-    }
-
 
 }

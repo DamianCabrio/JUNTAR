@@ -90,10 +90,10 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <div class="col text-center">
                     <h4 class="text-white"><i class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
                     <h4><i class="material-icons large align-middle">location_on</i> <?= $evento->lugar ?></h4>
-                    <?php if (!$esFai) : ?>
-                        <h5 class="text-white">Evento no organizado por la FAI</h5>
-                    <?php else : ?>
+                    <?php if ($esFai == 1) : ?>
                         <h5 class="text-white">Evento organizado por la FAI</h5>
+                    <?php else : ?>
+                        <h5 class="text-white">Evento no organizado por la FAI</h5>
                     <?php endif; ?>
                 </div>
             </div>
@@ -130,22 +130,18 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         }
                         ?>
                         <!-- Solicitar Aval-->
-                        <?php
-                        if(($evento->avalado) == 0){
-                        ?>
-                            <?= Html::a('Solicitar aval', ['eventos/solicitar-aval/' . $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right']) ?>
-                        <?php
-                        }
-                        elseif(($evento->avalado) == 1){
-                        ?>
+                        <?php if ($evento->avalado != 1): ?>
+                        <?php if ($evento->avalado == 0): ?>
+                            <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'evento' => $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right'])?>
 
+                          <?php else: ?>
                         <button type="button" class="btn float-right disabled" data-toggle="modal" data-target="#aval-solicitado">Solicitar aval</button>
                             <!-- modal aval-->
                             <div class="modal fade" id="aval-solicitado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Usted ya ha solicitado el aval</h5>
+                                    <h5 class="modal-title">Usted ya ha solicitado el aval el día <?= Yii::$app->formatter->asDatetime($evento->avalado, 'dd/MM/yyyy' )?></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                      </button>
@@ -159,17 +155,20 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 </div>
                             </div>
                             </div>
-                        <?php
-                        }
-                    ?>
+                          <?php endif; ?>
+                        <?php endif; ?>
                      </div>
                     <?php
-                    } elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para invitados y no propietarios
-                        ?>
-                        <div class="card-header pinkish_bg">
-                            <br>
-                        </div>
-                    <?php
+                    } elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para mostrar a los user invitados
+
+                        echo '<div class="card-header pinkish_bg text-center">';
+                        if ($verificacionSolicitud) {
+                          echo Html::a('Confirmar Solicitud', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                            'class' => 'btn',
+                            'style' => ['background' => 'green']
+                          ]);
+                        }
+                        echo '</br></div>';
                     }
                     ?>
 
