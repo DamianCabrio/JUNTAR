@@ -574,14 +574,14 @@ class EventoController extends Controller
 
         $evento = Evento::findOne($idEvento);
 
-        $arrayEvento['idEvento'] =   $idEvento;
-        $arrayEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
-        $arrayEvento['inicio'] = $evento->fechaInicioEvento;
-        $arrayEvento['fin'] =  $evento->fechaFinEvento;
-        $arrayEvento['nombre'] = $evento->nombreEvento;
-        $arrayEvento['capacidad']  = $evento->capacidad ;
-        $arrayEvento['lugar']= $evento->lugar;
-        $arrayEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;;
+        $datosDelEvento['idEvento'] =   $idEvento;
+        $datosDelEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
+        $datosDelEvento['inicio'] = $evento->fechaInicioEvento;
+        $datosDelEvento['fin'] =  $evento->fechaFinEvento;
+        $datosDelEvento['nombre'] = $evento->nombreEvento;
+        $datosDelEvento['capacidad']  = $evento->capacidad ;
+        $datosDelEvento['lugar']= $evento->lugar;
+        $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;;
         
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
@@ -606,21 +606,20 @@ class EventoController extends Controller
         $listaRepuesta="";
 
         $listaRepuesta= array();
-       foreach($participantes as $unParticipante){
+       
+        foreach($participantes as $unParticipante){
 
-        $base = RespuestaFile::find();
-        $base->innerJoin('pregunta', 'respuesta.idpregunta=pregunta.id');
-        $base->select(['pregunta_tipo'=>'pregunta.tipo','respuesta_user'=>'respuesta']);
+            $base = RespuestaFile::find();
+            $base->innerJoin('pregunta', 'respuesta.idpregunta=pregunta.id');
+            $base->select(['pregunta_tipo'=>'pregunta.tipo','respuesta_user'=>'respuesta']);
+            $respuestas= $base->where(['respuesta.idinscripcion' =>$unParticipante['user_idInscripcion'] ])->asArray()->all();
 
-        $respuestas= $base->where(['respuesta.idinscripcion' =>$unParticipante['user_idInscripcion'] ])->asArray()->all();
-
-        $listaRepuesta[]= ['unParticipante'=>$unParticipante, 'respuestas'=>$respuestas];
-
-       }
+            $listaRepuesta[]= ['unParticipante'=>$unParticipante, 'respuestas'=>$respuestas];
+        }
        
 
        return $this->renderPartial('listaParticipantes',
-        ['arrayEvento' => $arrayEvento,
+        ['datosDelEvento' => $datosDelEvento,
          'preguntas' => $preguntas, 'listaRepuesta' => $listaRepuesta]);
     }
 
