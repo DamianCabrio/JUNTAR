@@ -17,7 +17,7 @@ $this->title = "Responder Formulario";
     </div>
 
     <?php foreach ($preguntas as $i => $pregunta) : ?>
-           <?php echo "<div class='card pb-5'>" ?>
+           <?php echo "<div class='card mb-5'>" ?>
            <?php echo "<div class='card-header darkish_bg text-white'>" ?>
            <?php echo "<h5>Pregunta " . ($i + 1)."</h5>" ?>
            <?php echo "</div>" ?>
@@ -31,8 +31,8 @@ $this->title = "Responder Formulario";
                 'class' => 'btn btn-lg responderPregunta'
             ]); ?>
         <?php else : ?>
-            <?= Html::button('Pregunta ' . ($i + 1),  ['class' => 'btn btn-lg', "disabled" => true, "style" => "background-color: #FE1355;"]); ?>
-            <p><?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></p>
+            
+            <p>Respuesta: <?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></p>
         <?php endif; ?>
            <?php echo "</div>" ?>
            <?php echo "</div>" ?>
