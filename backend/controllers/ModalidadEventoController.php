@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\ModalidadEvento;
-use app\models\ModalidadEventoSearch;
+use backend\models\ModalidadEvento;
+use backend\models\ModalidadEventoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,7 +37,7 @@ class ModalidadEventoController extends Controller
     {
         $searchModel = new ModalidadEventoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
         $model = new ModalidadEvento();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
