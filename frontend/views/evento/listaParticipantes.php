@@ -82,7 +82,7 @@
                 if($dato2['pregunta_tipo'] ==3){
                     /// ../../../eventos/formularios/archivos/ 
                     $url_archivo = str_replace("../../../", "", $dato2['respuesta_user']);
-                    $url_descarga= 'http://juntar.test/'.$url_archivo;
+                    $url_descarga= "http://".$_SERVER['SERVER_NAME'].'/'.$url_archivo;
 
                     $fila->setCellValueByColumnAndRow($j, $row, str_replace(' ','',$url_descarga) );
                     // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
