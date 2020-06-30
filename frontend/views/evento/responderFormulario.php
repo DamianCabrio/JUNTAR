@@ -19,6 +19,8 @@ $this->title = "Responder Formulario";
     $form = ActiveForm::begin([
         'id' => 'respuestas-form',
         'options' => ['class' => 'form-horizontal'],
+        "enableAjaxValidation" => false,
+        "enableClientValidation" => true,
     ]) ?>
     <?php foreach ($preguntas as $i => $pregunta) : ?>
         <div class='card mb-5'>
@@ -30,13 +32,13 @@ $this->title = "Responder Formulario";
         </div>
         <div class='card-footer'>
             <?php if($pregunta->tipo == 1): ?>
-                <?= $form->field($model, 'respuestaCorta')->textInput(['maxlength' => true])->label(false) ?>
+                <?= $form->field($model, "respuestaCorta[$i]")->textInput(['maxlength' => true])->label(false) ?>
             <?php endif; ?>
             <?php if($pregunta->tipo == 2): ?>
-                <?= $form->field($model, 'respuesta')->textarea(['maxlength' => true])->label(false) ?>
+                <?= $form->field($model, "respuesta[$i]")->textarea(['maxlength' => true])->label(false) ?>
             <?php endif; ?>
             <?php if($pregunta->tipo == 3): ?>
-                <?= $form->field($model, 'file')->fileInput()->label(false) ?>
+                <?= $form->field($model, "file[$i]")->fileInput()->label(false) ?>
             <?php endif; ?>
         <?php if ($respuestaYaHechas[$i] == false) : ?>
            <?php $url = Url::toRoute(["respuesta/create?id=" . $pregunta->id . "&id2=" . $idInscripcion]) ?>

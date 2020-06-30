@@ -17,9 +17,6 @@ use Yii;
  */
 class RespuestaTest extends \yii\db\ActiveRecord
 {
-
-    public $file = [];
-    public $respuestaCorta = [];
     /**
      * {@inheritdoc}
      */
@@ -27,6 +24,9 @@ class RespuestaTest extends \yii\db\ActiveRecord
     {
         return 'respuesta';
     }
+
+    public $file;
+    public $respuestaCorta = [];
 
     /**
      * {@inheritdoc}
@@ -36,7 +36,7 @@ class RespuestaTest extends \yii\db\ActiveRecord
         return [
             [['idpregunta', 'idinscripcion', 'respuesta', "respuestaCorta"], 'required'],
             [['idpregunta', 'idinscripcion'], 'integer'],
-            [['respuesta'], 'string', 'max' => 500],
+            [['respuesta'], 'each', 'rule' => ['string', 'max' => 500, "message" => "Esta campo no debe tener mas de 500 caracteres"]],
             [['respuestaCorta'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]],
             [['file'], "file", "extensions" => ["zip", "rar", "pdf"], 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
