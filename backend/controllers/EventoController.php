@@ -161,7 +161,8 @@ class EventoController extends Controller {
     public function actionSolicitudesDeAval() {
         $searchModel = new EventoSearch();
         $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find()->where(['not', ['eventoToken' => null]])->andWhere(['is', 'avalado', new \yii\db\Expression('null')]),
+//            'query' => $searchModel::find()->where(['not', ['eventoToken' => null]])->andWhere(['is', 'avalado', new \yii\db\Expression('null')]),
+            'query' => $searchModel::find()->where(['not', ['eventoToken' => null]]),
             'pagination' => [
                 'pageSize' => 20,
             ],

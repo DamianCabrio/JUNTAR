@@ -112,7 +112,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'label' => 'Avalado FAI',
                                     'value' => function ($dataProvider) {
 //                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                                        return ($dataProvider->avalado == 1 ? "Avalado" : "No");
+                                        if($dataProvider->avalado == 1){
+                                            return "Avalado";
+                                        }else{
+                                            if($dataProvider->avalado == 0){
+                                                return "No avalado";
+                                            }else{
+                                                return "Pendiente";
+                                            }
+                                        }
+//                                        return ($dataProvider->avalado == 1 ? "Avalado" : "No");
                                     }, //valor referenciado por ActiveQuery en el metodo idClub0
                                 ],
                                 //'imgLogo',
