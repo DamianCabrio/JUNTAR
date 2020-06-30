@@ -642,8 +642,6 @@ class EventoController extends Controller
         $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
         $listaInscriptos= $base->andWhere(["=", "inscripcion.estado", 1])->andWhere(["=", "inscripcion.acreditacion", 0])->asArray()->all();
 
-
-
         $emails = array();
 
         foreach($listaInscriptos as $unInscripto){
@@ -662,14 +660,14 @@ class EventoController extends Controller
               ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
               ->send();
 
-   
-
-        
+              Yii::$app->session->setFlash('success', '<h2> ¡Confirmación exitosa! </h2>'
+              . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
+           
+              return $this->refresh();
+       
 
     }
     
-
-
 
 
     public function actionOrganizarEventos()
