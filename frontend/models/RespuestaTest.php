@@ -15,37 +15,41 @@ use Yii;
  * @property Inscripcion $idinscripcion0
  * @property Pregunta $idpregunta0
  */
-class RespuestaTest extends \yii\db\ActiveRecord
-{
+class RespuestaTest extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'respuesta';
     }
 
     public $file;
-    public $respuestaCorta = [];
+    public $respuestaCorta;
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['idpregunta', 'idinscripcion', 'respuesta', "respuestaCorta"], 'required'],
             [['idpregunta', 'idinscripcion'], 'integer'],
             [['respuesta'], 'each', 'rule' => ['string', 'max' => 500, "message" => "Esta campo no debe tener mas de 500 caracteres"]],
-            [['respuestaCorta'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]],
+//            [['respuestaCorta'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]],
+            [['respuestaCorta'], 'string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"],
+//            [['respuestaCorta'], 'each', 'rule' => [['Number'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]]],
+//            [['respuestaCorta'], 'each', 'rule' => 'validate'],
             [['file'], "file", "extensions" => ["zip", "rar", "pdf"], 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
     }
 
-    public function upload()
-    {
+    public function unaFuncionPiola($unaRespuesta) {
+        return [['unaRespuesta'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]];
+    }
+
+    public function upload() {
         if ($this->validate()) {
             $this->file->saveAs("../web/eventos/formularios/archivos/" . $this->file->baseName . '.' . $this->file->extension);
             return true;
@@ -57,8 +61,7 @@ class RespuestaTest extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'idpregunta' => 'Idpregunta',
@@ -72,8 +75,7 @@ class RespuestaTest extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdinscripcion0()
-    {
+    public function getIdinscripcion0() {
         return $this->hasOne(Inscripcion::className(), ['idInscripcion' => 'idinscripcion']);
     }
 
@@ -82,8 +84,8 @@ class RespuestaTest extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdpregunta0()
-    {
+    public function getIdpregunta0() {
         return $this->hasOne(Pregunta::className(), ['id' => 'idpregunta']);
     }
+
 }
