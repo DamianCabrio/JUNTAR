@@ -671,7 +671,7 @@ class PermissionManagerController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('La página solicitada no existe.');
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
 }

@@ -2,6 +2,7 @@
 
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = "Crear Formulario";
@@ -60,7 +61,7 @@ $this->title = "Crear Formulario";
                             return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPregunta']);
                         },
                         'delete' => function ($url, $model) {
-                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta',  'data-method' => 'POST']);
+                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta', 'data-method' => 'POST']);
                         }
                     ],
                     'header' => 'Acciones',
@@ -71,14 +72,14 @@ $this->title = "Crear Formulario";
         ]);
         ?>
 
-    <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
+        <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
 
     <?php
-    Modal::begin([
-        'id' => 'modalPregunta',
-        'size' => 'modal-lg'
-    ]);
-    Modal::end();
-    ?>
+        Modal::begin([
+            'id' => 'modalPregunta',
+            'size' => 'modal-lg'
+        ]);
+        Modal::end();
+        ?>
 
 </div>

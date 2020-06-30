@@ -11,7 +11,7 @@ $this->title = 'Proyecto Juntar';
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-4 p-2 d-flex justify-content-center">
                 <div class="card text-center" style="width: 18rem;">
-                    <img class="card-img-top w-50 m-auto d-block"  src="<?= Yii::getAlias("@web/iconos/people.svg") ?>" alt="Card image cap">
+                    <img class="card-img-top w-50 m-auto d-block"  src="<?= Yii::getAlias("@web/iconos/person.svg") ?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Usuarios</h5>
                         <p class="card-text">Panel para gestionar todos los usuarios que están registrados en la plataforma.</p>
@@ -31,7 +31,7 @@ $this->title = 'Proyecto Juntar';
             </div>
             <div class="col-12 col-md-4 p-2 d-flex justify-content-center">
                 <div class="card text-center" style="width: 18rem;">
-                    <img class="card-img-top w-50 m-auto d-block m-2"  src="<?= Yii::getAlias("@web/iconos/avalar.svg") ?>" alt="Card image cap">
+                    <img class="card-img-top w-50 m-auto d-block m-2"  src="<?= Yii::getAlias("@web/iconos/list-unordered.svg") ?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"> Solicitudes de Aval </h5>
                         <p class="card-text"> Dar aval de la FAI a Eventos gestionados en la plataforma.</p>
@@ -51,7 +51,7 @@ $this->title = 'Proyecto Juntar';
             </div>
             <div class="col-12 col-md-4 p-2 d-flex justify-content-center">
                 <div class="card text-center" style="width: 18rem;">
-                    <img class="card-img-top w-50 m-auto" src="<?= Yii::getAlias("@web/iconos/permisos.svg") ?>" alt="Card image cap">
+                    <img class="card-img-top w-50 m-auto" src="<?= Yii::getAlias("@web/iconos/shield-check.svg") ?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Permisos</h5>
                         <p class="card-text">Panel para gestionar los permisos que tienen los diferentes roles dentro de la plataforma.</p>
@@ -61,7 +61,7 @@ $this->title = 'Proyecto Juntar';
             </div>
             <div class="col-12 col-md-4 p-2 d-flex justify-content-center">
                 <div class="card text-center" style="width: 18rem;">
-                    <img class="card-img-top w-50 m-auto d-block m-2"  src="<?= Yii::getAlias("@web/iconos/roles.svg") ?>" alt="Card image cap">
+                    <img class="card-img-top w-50 m-auto d-block m-2"  src="<?= Yii::getAlias("@web/iconos/people.svg") ?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Roles</h5>
                         <p class="card-text">Panel para gestionar los Roles que se le pueden asignar a los usuarios.</p>

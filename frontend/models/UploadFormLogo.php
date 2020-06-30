@@ -15,7 +15,7 @@ class UploadFormLogo extends Model
     public function rules()
     {
         return [
-            [['imageLogo'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize'=> 1024*1024*5, 'tooBig' => 'Debe ingresar una imagen menor a 5MB'],
+            [['imageLogo'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
     

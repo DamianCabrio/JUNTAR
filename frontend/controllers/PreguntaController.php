@@ -2,14 +2,13 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Evento;
-use frontend\models\Pregunta;
-use frontend\models\RespuestaSearch;
 use Yii;
+use frontend\models\Pregunta;
+use frontend\models\PreguntaSearch;
 use yii\filters\AccessControl;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
  * PreguntaController implements the CRUD actions for Pregunta model.
@@ -71,29 +70,21 @@ class PreguntaController extends Controller
      */
     public function actionCreate($id)
     {
+        $model = new Pregunta();
 
-        if($this->verificarDueño()) {
-            $model = new Pregunta();
+        $model->idevento = $id;
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
 
-            $model->idevento = $id;
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $model->save();
-                return $this->redirect(Yii::$app->request->referrer);
-            }
-
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('create', [
-                    'model' => $model,
-                    "esAjax" => true,
-                ]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                    "esAjax" => false,
-                ]);
-            }
-        }else{
-            return $this->goHome();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -106,27 +97,20 @@ class PreguntaController extends Controller
      */
     public function actionUpdate($id)
     {
+        $model = $this->findModel($id);
 
-        if($this->verificarDueño()) {
-            $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(Yii::$app->request->referrer);
-            }
-
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', [
-                    'model' => $model,
-                    "esAjax" => true,
-                ]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                    "esAjax" => false,
-                ]);
-            }
-        }else{
-            return $this->goHome();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -139,44 +123,9 @@ class PreguntaController extends Controller
      */
     public function actionDelete($id)
     {
+        $this->findModel($id)->delete();
 
-        if($this->verificarDueño()){
-            $pregunta = $this->findModel($id);
-            $respuestasAPregunta = RespuestaSearch::find()->where(["idpregunta" => $id])->all();
-
-            if(count($respuestasAPregunta) != 0){
-                foreach ($respuestasAPregunta as $respuestaAPregunta){
-                    if($pregunta->tipo == 3){
-                        $ruta = str_replace("../../../", "../web/", $respuestaAPregunta->respuesta);
-                        unlink($ruta);
-                    }
-
-                    $respuestaAPregunta->delete();
-                }
-            }
-
-            $pregunta->delete();
-
-            return $this->redirect(Yii::$app->request->referrer);
-        }else{
-            return $this->goHome();
-        }
-    }
-
-    public function verificarDueño() {
-
-        $eventoUrl = explode("/", Url::previous("slugEvento"));
-
-        if(isset($eventoUrl[3])){
-            $eventoSlug = $eventoUrl[3];
-            $evento = Evento::find()->where(["nombreCortoEvento" => $eventoSlug])->one();
-
-            if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
@@ -192,6 +141,6 @@ class PreguntaController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('La página solicitada no existe.');
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

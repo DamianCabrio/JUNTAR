@@ -14,7 +14,7 @@ $this->title = 'Juntar';
 
     <div class="body-content">
         <header class="hero gradient-hero">
-            <div class="center-content padding_hero">
+            <div class="center-content">
                 <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid padding_logo']); ?>
                 <br>
                 <h5 class="text-white text-uppercase">Sistema Gestión de Eventos</h5>
@@ -49,7 +49,6 @@ $this->title = 'Juntar';
                 </form>
             </div>
         </section>
-
         <section class="dark_bg">
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>
@@ -63,20 +62,20 @@ $this->title = 'Juntar';
                                         <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
                                         <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
                                         <?php
-                                            $esFai = $evento->avalado;
-                                            if($esFai == 1):
+                                            $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
+                                            if(!$esFai):
                                             ?>
-                                            - Evento organizado por la FAI
+                                            - Evento no organizado por la FAI
                                             <?php
                                             else:?>
-                                                - Evento no organizado por la FAI
+                                                - Evento organizado por la FAI
                                             <?php
                                             endif;
                                             ?>
                                         </h5>
                                         <hr>
                                         <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
-                                        <p class='card-text'><?= Html::decode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
+                                        <p class='card-text'><?= Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
                                         <?= Html::a('Más Información', ['/eventos/ver-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
                                     </div>
                                 </div>

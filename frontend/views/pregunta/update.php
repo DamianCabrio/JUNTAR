@@ -7,13 +7,12 @@ use yii\helpers\Html;
 
 $this->title = 'Actualizar Pregunta';
 ?>
-<div class="pregunta-update container">
+<div class="pregunta-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        "esAjax" => $esAjax,
     ]) ?>
 
 </div>

@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?=
                         GridView::widget([
                             'dataProvider' => $dataProvider,
-                            'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
                             'options' => ['style' => 'width:100%;'],
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
@@ -81,14 +81,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'attribute' => 'capacidad',
                                     'label' => 'Capacidad',
                                     'value' => 'capacidad', //valor referenciado por ActiveQuery en el metodo idClub0
-                                ],
-                                [
-                                    'attribute' => 'avalado',
-                                    'label' => 'Avalado FAI',
-                                    'value' => function ($dataProvider) {
-//                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                                        return ($dataProvider->avalado == 1 ? "Avalado" : "No");
-                                    }, //valor referenciado por ActiveQuery en el metodo idClub0
                                 ],
 //            [
 //                'attribute' => 'preInscripcion',

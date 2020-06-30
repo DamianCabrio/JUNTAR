@@ -31,9 +31,7 @@
         "wbraganca/yii2-dynamicform": "*",
         "unclead/yii2-multiple-input": "~2.0",
         "kartik-v/yii2-mpdf": "dev-master",
-        "2amigos/qrcode-library": "~1.1",
-        "yiimaker/yii2-social-share": "^2.3",
-	    "2amigos/yii2-ckeditor-widget" : "~2.1"
+        "2amigos/qrcode-library": "~1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

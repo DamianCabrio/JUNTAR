@@ -69,65 +69,6 @@
         ]
     },
     {
-        "name": "2amigos/yii2-ckeditor-widget",
-        "version": "2.1.0",
-        "version_normalized": "2.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/2amigos/yii2-ckeditor-widget.git",
-            "reference": "2ba96ec670d0745b5616d2aa94d720cc7288bc08"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/2amigos/yii2-ckeditor-widget/zipball/2ba96ec670d0745b5616d2aa94d720cc7288bc08",
-            "reference": "2ba96ec670d0745b5616d2aa94d720cc7288bc08",
-            "shasum": ""
-        },
-        "require": {
-            "ckeditor/ckeditor": "~4.7.0+full",
-            "yiisoft/yii2": "^2.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*"
-        },
-        "time": "2017-06-12T18:51:26+00:00",
-        "type": "yii2-extension",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "dosamigos\\ckeditor\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "2amigOS! Consulting Group",
-                "email": "hola@2amigos.us",
-                "homepage": "http://2amigos.us",
-                "role": "Developer"
-            }
-        ],
-        "description": "CKEditor widget for Yii2.",
-        "homepage": "http://yiiwheels.com/extension/ckeditor-widget",
-        "keywords": [
-            "2amigos",
-            "CKEditor",
-            "extension",
-            "widget",
-            "yii",
-            "yii 2",
-            "yii2"
-        ]
-    },
-    {
         "name": "bacon/bacon-qr-code",
         "version": "1.0.3",
         "version_normalized": "1.0.3.0",
@@ -402,49 +343,6 @@
             "gfm",
             "markdown",
             "markdown-extra"
-        ]
-    },
-    {
-        "name": "ckeditor/ckeditor",
-        "version": "4.7.3",
-        "version_normalized": "4.7.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ckeditor/ckeditor-releases.git",
-            "reference": "97b8f412f6b36985c734daf0717e81009a885dba"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/97b8f412f6b36985c734daf0717e81009a885dba",
-            "reference": "97b8f412f6b36985c734daf0717e81009a885dba",
-            "shasum": ""
-        },
-        "time": "2017-09-13T13:09:47+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+",
-            "LGPL-2.1+",
-            "MPL-1.1+"
-        ],
-        "authors": [
-            {
-                "name": "CKSource",
-                "homepage": "http://cksource.com"
-            }
-        ],
-        "description": "JavaScript WYSIWYG web text editor.",
-        "homepage": "http://ckeditor.com",
-        "keywords": [
-            "CKEditor",
-            "editor",
-            "fckeditor",
-            "html",
-            "javascript",
-            "richtext",
-            "text",
-            "wysiwyg"
         ]
     },
     {
@@ -1800,21 +1698,21 @@
     },
     {
         "name": "myclabs/deep-copy",
-        "version": "1.9.5",
-        "version_normalized": "1.9.5.0",
+        "version": "1.10.0",
+        "version_normalized": "1.10.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/myclabs/DeepCopy.git",
-            "reference": "b2c28789e80a97badd14145fda39b545d83ca3ef"
+            "reference": "5796d127b0c4ff505b77455148ea9d5269d99758"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/b2c28789e80a97badd14145fda39b545d83ca3ef",
-            "reference": "b2c28789e80a97badd14145fda39b545d83ca3ef",
+            "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5796d127b0c4ff505b77455148ea9d5269d99758",
+            "reference": "5796d127b0c4ff505b77455148ea9d5269d99758",
             "shasum": ""
         },
         "require": {
-            "php": "^7.1"
+            "php": "^7.1 || ^8.0"
         },
         "replace": {
             "myclabs/deep-copy": "self.version"
@@ -1824,7 +1722,7 @@
             "doctrine/common": "^2.6",
             "phpunit/phpunit": "^7.1"
         },
-        "time": "2020-01-17T21:11:47+00:00",
+        "time": "2020-06-28T07:02:41+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1846,6 +1744,12 @@
             "duplicate",
             "object",
             "object graph"
+        ],
+        "funding": [
+            {
+                "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                "type": "tidelift"
+            }
         ]
     },
     {
@@ -2128,27 +2032,27 @@
     },
     {
         "name": "phpdocumentor/reflection-common",
-        "version": "2.1.0",
-        "version_normalized": "2.1.0.0",
+        "version": "2.2.0",
+        "version_normalized": "2.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-            "reference": "6568f4687e5b41b054365f9ae03fcb1ed5f2069b"
+            "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/6568f4687e5b41b054365f9ae03fcb1ed5f2069b",
-            "reference": "6568f4687e5b41b054365f9ae03fcb1ed5f2069b",
+            "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b",
+            "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b",
             "shasum": ""
         },
         "require": {
-            "php": ">=7.1"
+            "php": "^7.2 || ^8.0"
         },
-        "time": "2020-04-27T09:25:28+00:00",
+        "time": "2020-06-27T09:03:43+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.x-dev"
+                "dev-2.x": "2.x-dev"
             }
         },
         "installation-source": "dist",
@@ -2234,28 +2138,27 @@
     },
     {
         "name": "phpdocumentor/type-resolver",
-        "version": "1.2.0",
-        "version_normalized": "1.2.0.0",
+        "version": "1.3.0",
+        "version_normalized": "1.3.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpDocumentor/TypeResolver.git",
-            "reference": "30441f2752e493c639526b215ed81d54f369d693"
+            "reference": "e878a14a65245fbe78f8080eba03b47c3b705651"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/30441f2752e493c639526b215ed81d54f369d693",
-            "reference": "30441f2752e493c639526b215ed81d54f369d693",
+            "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e878a14a65245fbe78f8080eba03b47c3b705651",
+            "reference": "e878a14a65245fbe78f8080eba03b47c3b705651",
             "shasum": ""
         },
         "require": {
-            "php": "^7.2",
+            "php": "^7.2 || ^8.0",
             "phpdocumentor/reflection-common": "^2.0"
         },
         "require-dev": {
-            "ext-tokenizer": "^7.2",
-            "mockery/mockery": "~1"
+            "ext-tokenizer": "*"
         },
-        "time": "2020-06-19T20:22:09+00:00",
+        "time": "2020-06-27T10:12:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2788,27 +2691,27 @@
     },
     {
         "name": "phpunit/php-token-stream",
-        "version": "4.0.2",
-        "version_normalized": "4.0.2.0",
+        "version": "4.0.3",
+        "version_normalized": "4.0.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-            "reference": "e61c593e9734b47ef462340c24fca8d6a57da14e"
+            "reference": "5672711b6b07b14d5ab694e700c62eeb82fcf374"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/e61c593e9734b47ef462340c24fca8d6a57da14e",
-            "reference": "e61c593e9734b47ef462340c24fca8d6a57da14e",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/5672711b6b07b14d5ab694e700c62eeb82fcf374",
+            "reference": "5672711b6b07b14d5ab694e700c62eeb82fcf374",
             "shasum": ""
         },
         "require": {
             "ext-tokenizer": "*",
-            "php": "^7.3"
+            "php": "^7.3 || ^8.0"
         },
         "require-dev": {
             "phpunit/phpunit": "^9.0"
         },
-        "time": "2020-06-16T07:00:44+00:00",
+        "time": "2020-06-27T06:36:25+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -5935,63 +5838,6 @@
             "assert",
             "check",
             "validate"
-        ]
-    },
-    {
-        "name": "yiimaker/yii2-social-share",
-        "version": "v2.3.2",
-        "version_normalized": "2.3.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/yiimaker/yii2-social-share.git",
-            "reference": "edaf448a1465173041c7fd14d8d670e852f257c7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/yiimaker/yii2-social-share/zipball/edaf448a1465173041c7fd14d8d670e852f257c7",
-            "reference": "edaf448a1465173041c7fd14d8d670e852f257c7",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.6.0",
-            "yiisoft/yii2": "^2.0.13"
-        },
-        "require-dev": {
-            "codeception/codeception": "~2.3",
-            "friendsofphp/php-cs-fixer": "^2.13"
-        },
-        "time": "2019-06-27T17:22:08+00:00",
-        "type": "yii2-extension",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.3.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "ymaker\\social\\share\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Vladimir Kuprienko",
-                "email": "vldmr.kuprienko@gmail.com",
-                "role": "Maintainer"
-            }
-        ],
-        "description": "Extension for sharing on social networks",
-        "keywords": [
-            "media",
-            "networks",
-            "share",
-            "social",
-            "widget",
-            "yii2"
         ]
     },
     {

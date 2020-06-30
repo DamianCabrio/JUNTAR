@@ -2,14 +2,15 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Evento;
-use frontend\models\Presentacion;
-use frontend\models\PresentacionExpositor;
 use Yii;
+use frontend\models\PresentacionExpositor;
 use yii\data\ActiveDataProvider;
+use frontend\models\Presentacion;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use frontend\models\Evento;
 
 /**
  * PresentacionExpositorController implements the CRUD actions for PresentacionExpositor model.
@@ -180,7 +181,7 @@ class PresentacionExpositorController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('La página solicitada no existe.');
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
 }

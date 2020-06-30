@@ -7,13 +7,12 @@ use yii\helpers\Html;
 
 $this->title = 'Nueva Pregunta';
 ?>
-<div class="pregunta-create container">
+<div class="pregunta-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        "esAjax" => $esAjax,
     ]) ?>
     <!--丽塔来过这里-->
 </div>

@@ -7,16 +7,35 @@ use yii\widgets\DetailView;
 /* @var $model frontend\models\Presentacion */
 
 $this->title = $model->tituloPresentacion;
+//$this->params['breadcrumbs'][] = ['label' => 'Presentacions', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="container">
 <div class="presentacion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-	<div class="table table-responsive">
+	<?php
+	/*
+	if(!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idEvento0->idUsuario0->idUsuario){
+		?>
+    <p>
+        <?= Html::a('Actualizar', ['update', 'id' => $model->idPresentacion], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Borrar', ['delete', 'id' => $model->idPresentacion], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Estás seguro de querer borrar esta presentación?',
+                'method' => 'post',
+            ],
+        ]) ?>
+	
+    </p>
+	<?php } */?>
+
     <?= DetailView::widget([
-		'model' => $model,
+        'model' => $model,
         'attributes' => [
+            //'idPresentacion',
             //'idEvento',
 			[
 				'attribute'=>'Nombre',
@@ -26,7 +45,6 @@ $this->title = $model->tituloPresentacion;
             //'descripcionPresentacion',
 			[
 				'attribute'=>'Descripción',
-				'format' => 'raw',	
 				'value'=>$model->descripcionPresentacion,
 			],
             //'diaPresentacion',
@@ -44,22 +62,9 @@ $this->title = $model->tituloPresentacion;
 				'attribute'=>'Hora fin',
 				'value'=>date('H:i', strtotime($model->horaFinPresentacion)),
 			],
-			//'linkARecursos',
-			[
-				'attribute'=>'Recursos',
-				'format' => 'raw',
-				'value' => function($model){
-					if($model->linkARecursos != NULL){
-						return '<a target="_blank" href="' .$model->linkARecursos. '"><i class="material-icons">attachment</i></a>';
-					}
-					else{
-						return 'No hay recursos para mostrar';
-					}
-				}	
-			]	
+            'linkARecursos',
         ],
-	]) ?>
-	</div>
+    ]) ?>
 
 </div>
 </div>

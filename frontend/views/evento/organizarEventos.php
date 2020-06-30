@@ -63,7 +63,7 @@ $this->title = 'Proyecto Juntar';
                                 <h5 class='card-title'><?= Html::encode($evento["fechaInicioEvento"]) ?></h5>
                                 <hr>
                                 <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
-                                <p class='card-text'><?= Html::decode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
+                                <p class='card-text'><?= Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
                                 <?= Html::a('Más Información', ['/eventos/ver-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
                                 </div>
                         </div>

@@ -73,11 +73,11 @@ CREATE TABLE evento (
   idCategoriaEvento tinyint(4) NOT NULL,
   idEstadoEvento tinyint(4) NOT NULL,
   idModalidadEvento tinyint(4) NOT NULL,
-  avalado tinyint(4) NOT NULL DEFAULT 0,
+  avalado int(11) NOT NULL DEFAULT 0,
   eventoToken varchar(255) DEFAULT NULL,
   nombreEvento varchar(200) NOT NULL,
   nombreCortoEvento varchar(100) NOT NULL,
-  descripcionEvento varchar(1600) NOT NULL,
+  descripcionEvento varchar(800) NOT NULL,
   lugar varchar(200) NOT NULL,
   fechaInicioEvento date NOT NULL,
   fechaFinEvento date NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `presentacion` (
   `idPresentacion` bigint(20) NOT NULL,
   `idEvento` bigint(20) NOT NULL,
   `tituloPresentacion` varchar(200) NOT NULL,
-  `descripcionPresentacion` varchar(2000) NOT NULL,
+  `descripcionPresentacion` varchar(800) NOT NULL,
   `diaPresentacion` date NOT NULL,
   `horaInicioPresentacion` time NOT NULL,
   `horaFinPresentacion` time NOT NULL,
@@ -198,17 +198,6 @@ CREATE TABLE `usuario` (
   `updated_at` int(11) NOT NULL,
   `verification_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `imagen_perfil`
---
-
-CREATE TABLE `imagen_perfil` (
-  `idUsuario` bigint(20) NOT NULL,
-  `rutaImagenPerfil` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -334,14 +323,6 @@ ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
-
---
--- Indices de la tabla `imagen_perfil`
---
-ALTER TABLE `imagen_perfil`
-  ADD PRIMARY KEY (`idUsuario`,`rutaImagenPerfil`),
-  ADD UNIQUE KEY `rutaImagenPerfil` (`rutaImagenPerfil`),
-  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `usuario_rol`
@@ -475,12 +456,6 @@ ALTER TABLE `presentacion`
 ALTER TABLE `presentacion_expositor`
   ADD CONSTRAINT `presentacion_expositor_ibfk_1` FOREIGN KEY (`idExpositor`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `presentacion_expositor_ibfk_2` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion` (`idPresentacion`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `imagen_perfil`
---
-ALTER TABLE `imagen_perfil`
-  ADD CONSTRAINT `imagen_perfil_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_rol`

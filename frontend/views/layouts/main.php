@@ -100,51 +100,50 @@ AppAsset::register($this);
     </div>
 
     <section class="darkish_bg text-light">
-        <div class="container">
+        <div class="container" style="padding-bottom: 4vh;">
             <div class="row">
                 <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
-                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
+                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?> 
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-8">
                     <h5 class="white-text">Juntar</h5>
 
-                    <p class="grey-text text-lighten-4">Somos una plataforma web para gestión de eventos libre y gratuita. El sitio permite a los usuarios navegar, crear y participar de eventos. Nació como un desafío universitario y podemos asegurar que hemos llegado a la meta que teníamos como objetivo e incluso la hemos superado gracias a un gran equipo de trabajo.</p>
+                    <p class="grey-text text-lighten-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada vitae erat a lobortis. Donec pretium tortor eros, a auctor massa suscipit vel. Donec augue odio, vulputate et egestas fringilla, varius vel ligula. Aliquam eu sagittis nisi, vitae imperdiet lorem. Vivamus lobortis diam vel sapien aliquet, dictum placerat tellus imperdiet.</p>
 
                 </div>
                 <div class="col-12 col-md-4">
                     <h5 class="white-text">Contacto</h5>
                     <ul>
                         <li>
-                            <?= Html::a('Escribinos un mensaje', ['site/contact'], ['class' => 'link']) ?>
+                        <?= Html::a('Escribinos un mensaje', ['site/contact'], ['class' => 'link']) ?>
                         </li>
                     </ul>
                     <h5 class="white-text">Sobre Nosotros</h5>
-                    <ul>
-                        <li>
-                            <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'link']) ?>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>
+                        <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'link']) ?>
+                    </li>
+                </ul>
                 </div>
             </div>
-            <div class="row padding_section">
-                <div class="col-12 col-md-6 py-3 text-center">
-                    <?= Html::img('@web/images/logo-uncoma-w.svg',  ['style' => 'max-height: 200px']); ?>
+            <hr>
+            <div class="row" style="padding-top: 4vh;padding-bottom: 2vh;">
+                <div class="col-12 col-md-6 py-3">
+                    <?= Html::img('@web/images/uncoma.png',  ['class' => 'img-fluid']); ?>
                 </div>
-                <div class="col-12 col-md-6 py-3 text-center">
-                    <?= Html::img('@web/images/logo-fai-w.png',  ['style' => 'max-height: 200px']); ?>
+                <div class="col-12 col-md-6 py-3">
+                    <?= Html::img('@web/images/fai.png',  ['class' => 'img-fluid']); ?>
                 </div>
             </div>
         </div>
     </section>
     <footer class="footer dark_bg text-light">
-        <div class="container-fluid">
-            <div class="container">
-                <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-            </div>
-        </div>
 
+        <div class="container">
+            <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+        </div>
     </footer>
 
     <?php $this->endBody() ?>
