@@ -142,21 +142,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <div class="padding_section">
                                     <i class="material-icons align-middle">today</i><span class=" align-middle"> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></span>
                                     <br>
-                                    <?php if ($esDueño || $esAdministrador) { ?>
-                                        <li class="list-group-item darkish_bg text-white">
-                                            <p><b> Lista de participantes: </b></p>
-                                            <span>
-                                                <?php
-                                                echo Html::a(
-                                                    '<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
-                                                   <span class=" align-middle"  style="color:#00ff00"> ListaDeParticipantes  </span>',
-                                                    ['evento/lista-participantes', 'idEvento' => $evento->idEvento]
-                                                );
-                                                ?>
-                                            </span>
-                                        </li>
+                                     <?php if ($esDueño || $esAdministrador) { ?>
+                                        <i class="material-icons align-middle">email</i><span class=" align-middle"> Escribir un mail</span>
+
                                     <?php } ?>
-                                    <br>
+                                    <br><br>
                                     <h2><strong><?= $evento->nombreEvento ?></strong>
                                     </h2>
                                     <br>
