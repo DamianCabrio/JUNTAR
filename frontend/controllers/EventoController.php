@@ -286,10 +286,12 @@ class EventoController extends Controller
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
-            $model->avalado = 0; // Flag - Por defecto
-            $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
+        $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
+        $model->avalado = 0; // Flag - Por defecto
+        $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+           
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
@@ -504,7 +506,7 @@ class EventoController extends Controller
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
