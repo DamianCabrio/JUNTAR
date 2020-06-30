@@ -1,13 +1,13 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Usuario;
+use backend\models\Usuario;
 
 /**
- * UsuarioSearch represents the model behind the search form of `app\models\Usuario`.
+ * UsuarioSearch represents the model behind the search form of `backend\models\Usuario`.
  */
 class UsuarioSearch extends Usuario
 {
@@ -18,7 +18,7 @@ class UsuarioSearch extends Usuario
     {
         return [
             [['idUsuario', 'dni', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['nombre', 'apellido', 'localidad', 'email', 'auth_key', 'password_hash', 'password_reset_token', 'verification_token'], 'safe'],
+            [['nombre', 'apellido', 'pais', 'provincia', 'localidad', 'email', 'auth_key', 'password_hash', 'password_reset_token', 'verification_token'], 'safe'],
         ];
     }
 
@@ -60,8 +60,6 @@ class UsuarioSearch extends Usuario
         $query->andFilterWhere([
             'idUsuario' => $this->idUsuario,
             'dni' => $this->dni,
-            //'fecha_nacimiento' => $this->fecha_nacimiento,
-            //'telefono' => $this->telefono,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -69,6 +67,8 @@ class UsuarioSearch extends Usuario
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])
             ->andFilterWhere(['like', 'apellido', $this->apellido])
+            ->andFilterWhere(['like', 'pais', $this->pais])
+            ->andFilterWhere(['like', 'provincia', $this->provincia])
             ->andFilterWhere(['like', 'localidad', $this->localidad])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])

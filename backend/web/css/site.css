@@ -1,6 +1,10 @@
-html,
-body {
+html, body {
     height: 100%;
+    background-color: rgb(216, 216, 216);
+}
+
+.navbar-dark {
+    background-color: #050714
 }
 
 .wrap {
@@ -10,7 +14,7 @@ body {
     padding: 0 0 60px;
 }
 
-.wrap > .container {
+.wrap>.container {
     padding: 70px 15px 20px;
 }
 
@@ -20,7 +24,9 @@ body {
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
-
+.height100vh{
+    min-height: 100vh;
+}
 .jumbotron {
     text-align: center;
     background-color: transparent;
@@ -37,6 +43,7 @@ body {
 }
 
 /* add sorting icons to gridview sort links */
+
 a.asc:after, a.desc:after {
     position: relative;
     top: 1px;
@@ -49,11 +56,13 @@ a.asc:after, a.desc:after {
 }
 
 a.asc:after {
-    content: /*"\e113"*/ "\e151";
+    /*content: "\e113" "\e151";*/
+    content: url(../iconos/arrow-down-circle.svg);
 }
 
 a.desc:after {
-    content: /*"\e114"*/ "\e152";
+    content: url(../iconos/arrow-up-circle.svg);
+    /*content: "\e114" "\e152";*/
 }
 
 .sort-numerical a.asc:after {
@@ -72,13 +81,11 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view th,
-.grid-view td:last-child {
+.grid-view th, .grid-view td:last-child {
     white-space: nowrap;
 }
 
-.grid-view .filters input,
-.grid-view .filters select {
+.grid-view .filters input, .grid-view .filters select {
     min-width: 50px;
 }
 
@@ -97,49 +104,153 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
+
+.nav li>form>button.logout {
     padding: 15px;
     border: none;
 }
 
 @media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
+    .nav li>form>button.logout {
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
     }
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav>li>form>button.logout:focus, .nav>li>form>button.logout:hover {
     text-decoration: none;
 }
 
-.nav > li > form > button.logout:focus {
+.nav>li>form>button.logout:focus {
     outline: none;
 }
 
-.filter-red{
+.filter-red {
     filter: invert(9%) sepia(95%) saturate(6904%) hue-rotate(2deg) brightness(124%) contrast(112%);
 }
 
-.filter-green{
+.filter-green {
     filter: invert(20%) sepia(94%) saturate(5910%) hue-rotate(122deg) brightness(97%) contrast(104%);
 }
 
-.filter-blue{
+.filter-blue {
     filter: invert(49%) sepia(98%) saturate(324%) hue-rotate(159deg) brightness(88%) contrast(97%);
 }
 
-.buttonRol:hover{
+.filter-white {
+    filter: invert(99%) sepia(6%) saturate(443%) hue-rotate(113deg) brightness(121%) contrast(100%);
+}
+
+.buttonRol:hover {
     background-color: lightblue;
     /*border: 1px solid red;*/
 }
 
-.roleDiv{
+.roleDiv {
     border: 1px solid blue;
 }
-.permissionDiv{
+
+.permissionDiv {
     border: 1px solid red;
+}
+
+.pinkish_bg {
+    background-color: #FE1355;
+    /*background-color: #0B0D19;*/
+    /*background-color: rgb(101,23,48);*/
+}
+
+.darkish_bg {
+    /*background-color: #FE1355;*/
+    background-color: #0B0D19;
+    /*background-color: rgb(101,23,48);*/
+}
+
+.lightblue_bg {
+    /*background-color: #0B0D19;*/
+    /*background-color: #FE1355;*/
+    /*background-color: #002489;*/
+    background-color: #2b2e3d;
+}
+
+.Agregar {
+    /*filter: invert(20%) sepia(94%) saturate(5910%) hue-rotate(122deg) brightness(97%) contrast(104%);*/
+    filter: invert(17%) sepia(87%) saturate(2367%) hue-rotate(102deg) brightness(98%) contrast(105%);
+}
+
+.Quitar {
+    /*filter: invert(9%) sepia(95%) saturate(6904%) hue-rotate(2deg) brightness(124%) contrast(112%);*/
+    filter: invert(14%) sepia(58%) saturate(6507%) hue-rotate(340deg) brightness(96%) contrast(94%);
+}
+
+.activePage a {
+    background-color: #FE1355;
+    color: white;
+}
+
+.hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1456428746267-a1756408f782?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: -webkit-box;
+    display: flex;
+    min-height: 50vh;
+}
+
+.gradient-hero {
+    min-height: 50vh;
+    background-position: center center;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.gradient-hero:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    content: " ";
+    background: radial-gradient(ellipse at center, #0B0D19 10%, #FE1355 100%);
+    opacity: 0.8;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+.center-content {
+    width: 700px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: auto;
+    z-index: 2;
+}
+
+.btn-pink {
+    background-color: #FE1355;
+    color: aliceblue!important;
+    border: none;
+    text-transform: capitalize;
+}
+
+.btn-pink:hover {
+    background-color: #050714;
+    color: aliceblue!important;
+}
+
+.btn-pink:focus {
+    outline: 0!important;
+    box-shadow: none;
+}
+
+.tarjetaIndex:hover{
+    background-color: #ddd;
 }

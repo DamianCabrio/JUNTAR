@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\UsuarioSearch */
+/* @var $model backend\models\UsuarioSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dni') ?>
 
-    <?= // $form->field($model, 'pais') ?>
+    <?= $form->field($model, 'pais') ?>
 
     <?php // echo $form->field($model, 'provincia') ?>
 

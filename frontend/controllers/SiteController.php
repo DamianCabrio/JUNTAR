@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\LoginForm;
-use common\models\Evento;
+use frontend\models\Evento;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -15,8 +15,9 @@ use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use yii\captcha\CaptchaAction;
+use \yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use yii\data\Pagination;
 
 //use yii\filters\VerbFilter;
 /**
@@ -38,16 +39,17 @@ class SiteController extends Controller {
                         'login',
                         'signup',
                         'error',
+                        'contact',
+                        'captcha',
+                        'about',
                         'request-password-reset',
                         'PasswordReset',
                         'resend-verification-email',
                         'verify-email',
                         'reset-password',
                         'index',
-                        'search-paises',
                         'search-localidades',
                         'search-provincias',
-//                        'search-provincias2',
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -55,16 +57,16 @@ class SiteController extends Controller {
                     'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
-//                        $module = Yii::$app->controller->module->id;
+                        //                        $module = Yii::$app->controller->module->id;
                         $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
                         $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
-//                        $route = "$module/$controller/$action";
+                        //                        $route = "$module/$controller/$action";
                         $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-//                        $post = Yii::$app->request->post();
+                        //                        $post = Yii::$app->request->post();
                         //preguntamos si el usuario tiene los permisos para visitar el sitio
-//                        if (Yii::$app->user->can($route, ['post' => $post])) {
+                        //                        if (Yii::$app->user->can($route, ['post' => $post])) {
                         if (Yii::$app->user->can($route)) {
-//                            return $this->goHome();
+                            //                            return $this->goHome();
                             return true;
                         }
                     }
@@ -94,10 +96,42 @@ class SiteController extends Controller {
      * Displays homepage.
      *
      * @return mixed
+     * 
      */
     public function actionIndex() {
-        $eventos = Evento::find()->orderBy("fechaCreacionEvento DESC")->limit(6)->all();
-        return $this->render('index', ["eventos" => $eventos]);
+        $request = Yii::$app->request;
+        $busqueda = $request->get("s", "");
+        $orden = $request->get("orden", "");
+
+        if ($orden != "") {
+            $ordenSQL = $orden == "0" ? "fechaCreacionEvento DESC" : "fechaInicioEvento DESC";
+        } else {
+            $ordenSQL = "fechaCreacionEvento DESC";
+        }
+
+        if ($busqueda != "") {
+            $eventos = Evento::find()
+                    ->innerJoin('usuario', 'usuario.idUsuario=evento.idUsuario')
+                    ->orderBy($ordenSQL)
+                    ->where(["idEstadoEvento" => 1])
+                    ->andwhere(["like", "nombre", $busqueda])
+                    ->orwhere(["like", "apellido", $busqueda])
+                    ->orWhere(["like", "nombreEvento", $busqueda]);
+        } else {
+            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1]);
+        }
+
+        //Paginación para 6 eventos por pagina
+        $countQuery = clone $eventos;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->pageSize = 6;
+        //$pages->applyLimit = $countQuery->count();
+        $models = $eventos->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
+
+
+        return $this->render('index', ["eventos" => $models, 'pages' => $pages,]);
     }
 
     /**
@@ -123,11 +157,10 @@ class SiteController extends Controller {
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post()) && $model->login() && $model->validate()) {
+            return $this->goBack(Url::previous());
         } else {
             $model->password = '';
-
             return $this->render('login', [
                         'model' => $model,
             ]);
@@ -143,6 +176,17 @@ class SiteController extends Controller {
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionSlug($slug) {
+        $model = Evento::find()->where(['nombreCortoEvento' => $slug])->one();
+        if (!is_null($model)) {
+            return $this->render('evento/verEvento', [
+                        'evento' => $model,
+            ]);
+        } else {
+            return $this->redirect('/site/index');
+        }
     }
 
     /**
@@ -166,32 +210,6 @@ class SiteController extends Controller {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                        'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
-    private function actionContacto() {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', '<h2> Consulta Recibida. </h2>'
-                        . '<p> Muchas gracias por ponerte en contacto con Juntar. </p>'
-                        . '<p> Un administrador se pondrá en contacto para responder tus consultas lo más rápido posible! </p>');
-            } else {
-                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2> '
-                        . '<p> Ocurrió un error mientras se enviaba su consulta. Por favor, intentelo nuevamente. </p>'
-                        . '<p> Si cree que es un error del servidor, por favor, contacte con un administrador </p>');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contacto', [
                         'model' => $model,
             ]);
         }
@@ -225,17 +243,17 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionSignup() {
+        //obtiene datos paises
         $dataCountry = file_get_contents("json/paises.json");
         $paises = json_decode($dataCountry, true);
         //Conversión de datos
         $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
         $paises = $this->conversionAutocomplete($paises);
-
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
                     . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goHome();
+            return $this->goBack(Url::previous());
         }
 
         return $this->render('signup', [
@@ -244,11 +262,6 @@ class SiteController extends Controller {
         ]);
     }
 
-    /**
-     * Busqueda de Localidades por Provincia
-     *
-     * @return mixed
-     */
     public function actionSearchProvincias() {
         $provincias = null;
         if (Yii::$app->request->post('pais') != null) {
@@ -277,25 +290,20 @@ class SiteController extends Controller {
         return $provincias;
     }
 
-    /**
-     * Busqueda de Localidades por Provincia
-     *
-     * @return mixed
-     */
     public function actionSearchLocalidades() {
         $localidades = null;
         if (Yii::$app->request->post('provincia') != null) {
-            
+
             //almacena el parámetro esperado
             $provincia = Yii::$app->request->post('provincia');
-            
+
             //define el tipo de respuesta del metodo
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            
-             //obtiene la data de las localidades del json
+
+            //obtiene la data de las localidades del json
             $dataLocalidades = file_get_contents("json/localidades.json");
             $localidades = json_decode($dataLocalidades, true);
-            
+
             //busca el indice de la provincia
             $indexProvincia = null;
             foreach ($localidades as $index => $unaProvincia) {
@@ -379,14 +387,16 @@ class SiteController extends Controller {
                 Yii::$app->session->setFlash('success', '<h2> ¡Confirmación exitosa! </h2>'
                         . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
 
-                //iniciamos authManager
-                $auth = Yii::$app->authManager;
-                //indicamos el rol que deseamos asignarle al usuario
-                $usuarioRegistrado = $auth->createRole('Registrado');
-                // Asignamos el rol al usuario registrado
-                $auth->assign($usuarioRegistrado, (Yii::$app->user->id));
-                //destruimos la referencha al authManager
-                $auth = null;
+                if (!Yii::$app->user->can("Organizador")) {
+                    //iniciamos authManager
+                    $auth = Yii::$app->authManager;
+                    //indicamos el rol que deseamos asignarle al usuario
+                    $usuarioRegistrado = $auth->createRole('Organizador');
+                    // Asignamos el rol al usuario registrado
+                    $auth->assign($usuarioRegistrado, (Yii::$app->user->id));
+                    //destruimos la referencha al authManager
+                    $auth = null;
+                }
 
                 return $this->goHome();
             }

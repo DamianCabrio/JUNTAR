@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 /*
- * This file is part of php-invoker.
+ * This file is part of phpunit/php-invoker.
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
@@ -9,6 +9,8 @@
  */
 namespace SebastianBergmann\Invoker;
 
-final class ProcessControlExtensionNotLoadedException extends \RuntimeException implements Exception
+use RuntimeException;
+
+final class ProcessControlExtensionNotLoadedException extends RuntimeException implements Exception
 {
 }

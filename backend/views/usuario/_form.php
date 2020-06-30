@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Usuario */
+/* @var $model backend\models\Usuario */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -26,22 +26,22 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->textInput() ?>
 
-    <?php echo $form->field($model, 'created_at')->textInput() ?>
+    <?= $form->field($model, 'created_at')->textInput() ?>
 
-    <?php echo $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'updated_at')->textInput() ?>
 
-    <?php echo $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-pink col-md-2 col-sm-12']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

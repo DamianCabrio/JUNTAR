@@ -5,9 +5,11 @@
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\rbac\Permission;
 
 AppAsset::register($this);
 ?>
@@ -19,7 +21,10 @@ AppAsset::register($this);
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::$app->charset; ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta name="theme-color" content="#050714" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <?php $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/ico', 'href' => Url::base(true).'/favicon.ico']); ?>
+
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -31,33 +36,47 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('@web/images/juntar-icon-b.svg',  ['style' => 'width:30px']),
+            'brandLabel' => Html::img('@web/images/juntar-logo/svg/juntar-icon-w.svg', ['style' => 'width:30px']),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
             ],
         ]);
         $menuItems = [
-            ['label' => 'Home', 'url' => ['/site/index'], 'linkOptions' => ['class' => 'link']],
+            ['label' => 'Inicio', 'url' => ['/site/index']],
         ];
         if (Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup'], 'linkOptions' => ['class' => 'link']];
-            $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login'], 'linkOptions' => ['class' => 'link']];
+            $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
         } else {
-            $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about'], 'linkOptions' => ['class' => 'link']];
-            $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact'], 'linkOptions' => ['class' => 'link']];
+            // Opciones solo para usuario con rol organizador 
+            if (Yii::$app->user->can('Organizador')) {
+
+                $menuItems[] = ['label' => 'Crear Evento', 'url' => ['/evento/cargar-evento']];
+            }
             //Logout
+
+            /** @var TYPE_NAME $urlImagenPerfil */
+            $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre . ".jpg";
+            if (@GetImageSize($urlImagenPerfil)) {
+                $imgPerfil = $urlImagenPerfil;
+            } else {
+                $imgPerfil = '@web/iconos/person-circle-w.svg';
+            }
             $menuItems[] = [
-                'label' => '<img class="ml-1" src="icons/person-circle.svg" alt="Cuenta" width="30" height="30" title="Cuenta" role="img" style="margin: -4px 8px 0 0;">',
+                'label' => Html::img($imgPerfil, ['class' => 'ml-1', "alt" => "Cuenta", "width" => "35", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
                 'items' => [
                     ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
-                    ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo, link']],
+                    ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],
+
+                    ['label' => 'Organizar Eventos', 'url' => ['/evento/organizar-eventos']],
+
+                    ['label' => 'Mis Inscripciones', 'url' => ['/cuenta/mis-inscripciones-a-eventos']],
                     [
                         "label" => "Cerrar Sesión",
                         "url" => ["/site/logout"],
                         "linkOptions" => [
                             "data-method" => "post",
-                            'class' => 'link'
                         ]
                     ],
                 ],
@@ -71,26 +90,61 @@ AppAsset::register($this);
         NavBar::end();
         ?>
 
-        <!--<div class="container">-->
-            <?php // echo
-//                Breadcrumbs::widget([
-//                    'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
-//                    'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
-//                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-//                ])
-            ?>
-            <?php // echo Alert::widget() ?>
 
-        <!--</div>-->
-        <?php // echo Yii::getAlias('@web');?>
+        <?php
+        echo Alert::widget([
+            'options' => ['class' => 'text-center']
+        ])
+        ?>
         <?php echo $content ?>
     </div>
-    
-    <footer class="footer dark_bg text-light">
 
+    <section class="darkish_bg text-light">
         <div class="container">
-            <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            <div class="row">
+                <div class="col-12 col-md-5" style="padding-top: 4vh; padding-bottom: 4vh;">
+                    <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid']); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <h5 class="white-text">Juntar</h5>
+
+                    <p class="grey-text text-lighten-4">Somos una plataforma web para gestión de eventos libre y gratuita. El sitio permite a los usuarios navegar, crear y participar de eventos. Nació como un desafío universitario y podemos asegurar que hemos llegado a la meta que teníamos como objetivo e incluso la hemos superado gracias a un gran equipo de trabajo.</p>
+
+                </div>
+                <div class="col-12 col-md-4">
+                    <h5 class="white-text">Contacto</h5>
+                    <ul>
+                        <li>
+                            <?= Html::a('Escribinos un mensaje', ['site/contact'], ['class' => 'link']) ?>
+                        </li>
+                    </ul>
+                    <h5 class="white-text">Sobre Nosotros</h5>
+                    <ul>
+                        <li>
+                            <?= Html::a('Sobre Nosotros', ['site/about'], ['class' => 'link']) ?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row padding_section">
+                <div class="col-12 col-md-6 py-3 text-center">
+                    <?= Html::img('@web/images/logo-uncoma-w.svg',  ['style' => 'max-height: 200px']); ?>
+                </div>
+                <div class="col-12 col-md-6 py-3 text-center">
+                    <?= Html::img('@web/images/logo-fai-w.png',  ['style' => 'max-height: 200px']); ?>
+                </div>
+            </div>
         </div>
+    </section>
+    <footer class="footer dark_bg text-light">
+        <div class="container-fluid">
+            <div class="container">
+                <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            </div>
+        </div>
+
     </footer>
 
     <?php $this->endBody() ?>

@@ -1,0 +1,48 @@
+body {
+  font-family: Arial;
+}
+
+td {
+  width: 50%;
+  text-align: center;
+}
+
+p {
+  padding: 0px;
+  margin: 5px;
+  font-size: 20px;
+}
+
+p.event {
+  padding: 0px;
+  margin: 15px;
+  font-size: 36px;
+}
+
+p.title {
+  font-size: 42px;
+}
+
+.centring {
+  text-align: center;
+}
+
+.logos {
+  padding-top: 30px;
+}
+
+.container {
+  margin-top: 60px;
+}
+
+#juntar-logo {
+  width: 25%;
+}
+
+#fai-logo {
+  width: 950px;
+}
+
+#uncoma-logo {
+  width: 300px;
+}

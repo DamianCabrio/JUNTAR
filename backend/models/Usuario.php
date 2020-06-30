@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -11,7 +11,7 @@ use Yii;
  * @property string $nombre
  * @property string $apellido
  * @property int|null $dni
- * @property string|null $pais
+ * @property string $pais
  * @property string|null $provincia
  * @property string|null $localidad
  * @property string $email
@@ -24,8 +24,10 @@ use Yii;
  * @property string|null $verification_token
  *
  * @property Evento[] $eventos
- * @property Expositor[] $expositors
+ * @property Presentacion[] $idPresentacions
  * @property Inscripcion[] $inscripcions
+ * @property Permiso[] $itemNames
+ * @property PresentacionExpositor[] $presentacionExpositors
  * @property UsuarioRol[] $usuarioRols
  */
 class Usuario extends \yii\db\ActiveRecord
@@ -44,14 +46,16 @@ class Usuario extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'apellido', 'dni', 'pais', 'provincia', 'localidad', 'email'], 'required'],
-//            [['dni', 'telefono', 'status', 'created_at', 'updated_at'], 'integer'],
-//            [['fecha_nacimiento'], 'safe'],
-            [['nombre', 'apellido', 'pais', 'provincia', 'localidad'], 'string', 'max' => 50],
-//            [['email', 'password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
-//            [['auth_key'], 'string', 'max' => 32],
+            [['nombre', 'apellido', 'pais', 'email', 'auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
+            [['dni', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['nombre', 'apellido'], 'string', 'max' => 50],
+            [['pais'], 'string', 'max' => 40],
+            [['provincia'], 'string', 'max' => 60],
+            [['localidad'], 'string', 'max' => 70],
+            [['email', 'password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
-//            [['password_reset_token'], 'unique'],
+            [['password_reset_token'], 'unique'],
         ];
     }
 
@@ -65,20 +69,28 @@ class Usuario extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'apellido' => 'Apellido',
             'dni' => 'Dni',
-//            'fecha_nacimiento' => 'Fecha Nacimiento',
-            'pais' => 'País',
+            'pais' => 'Pais',
             'provincia' => 'Provincia',
             'localidad' => 'Localidad',
-//            'telefono' => 'Telefono',
             'email' => 'Email',
-//            'auth_key' => 'Auth Key',
-//            'password_hash' => 'Password Hash',
-//            'password_reset_token' => 'Password Reset Token',
-//            'status' => 'Status',
-//            'created_at' => 'Created At',
-//            'updated_at' => 'Updated At',
-//            'verification_token' => 'Verification Token',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'verification_token' => 'Verification Token',
         ];
+    }
+    
+    public function deshabilitar(){
+        $this->status = 0;
+        $this->save();
+    }
+    
+    public function habilitar(){
+        $this->status = 10;
+        $this->save();
     }
 
     /**
@@ -92,13 +104,13 @@ class Usuario extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Expositors]].
+     * Gets query for [[IdPresentacions]].
      *
-     * @return \yii\db\ActiveQuery|ExpositorQuery
+     * @return \yii\db\ActiveQuery|PresentacionQuery
      */
-    public function getExpositors()
+    public function getIdPresentacions()
     {
-        return $this->hasMany(Expositor::className(), ['idUsuario' => 'idUsuario']);
+        return $this->hasMany(Presentacion::className(), ['idPresentacion' => 'idPresentacion'])->viaTable('presentacion_expositor', ['idExpositor' => 'idUsuario']);
     }
 
     /**
@@ -109,6 +121,26 @@ class Usuario extends \yii\db\ActiveRecord
     public function getInscripcions()
     {
         return $this->hasMany(Inscripcion::className(), ['idUsuario' => 'idUsuario']);
+    }
+
+    /**
+     * Gets query for [[ItemNames]].
+     *
+     * @return \yii\db\ActiveQuery|PermisoQuery
+     */
+    public function getItemNames()
+    {
+        return $this->hasMany(Permiso::className(), ['name' => 'item_name'])->viaTable('usuario_rol', ['user_id' => 'idUsuario']);
+    }
+
+    /**
+     * Gets query for [[PresentacionExpositors]].
+     *
+     * @return \yii\db\ActiveQuery|PresentacionExpositorQuery
+     */
+    public function getPresentacionExpositors()
+    {
+        return $this->hasMany(PresentacionExpositor::className(), ['idExpositor' => 'idUsuario']);
     }
 
     /**

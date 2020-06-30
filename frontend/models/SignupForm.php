@@ -30,16 +30,15 @@ class SignupForm extends Model {
         return [
             //Obligatorio
             [['nombre', 'apellido', 'email', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
-            
+
             //Reglas nombre
             ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
-            
             ['nombre', 'string', 'min' => 2, 'max' => 14,
                 //comentario para minlenght
                 'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
                 //comentario para maxLenght
                 'tooLong' => 'El nombre puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
-            
+
             //Reglas apellido
             ['apellido', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['apellido', 'string', 'min' => 2, 'max' => 14,
@@ -47,41 +46,40 @@ class SignupForm extends Model {
                 'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
                 //comentario para maxLenght
                 'tooLong' => 'El apellido puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
-            
+
             //Reglas localidad
-            ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de localidades argentinas solo si el pais es argentina
-            ['provincia', 'common\components\LocationValidator', 'when' => function ($model) { 
+            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
                 return ($model->pais == 'Argentina');
                 }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
-//            ['localidad', 'common\components\LocationValidator'],
-            
+
             //Reglas Provincia
             ['provincia', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de provincias argentinas solo si el pais es argentina
-            ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) { 
+            ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) {
                 return ($model->pais == 'Argentina');
                 }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
-            
+
             //Reglas DNI
             ['dni', 'integer', 'min' => 10000000, 'max' => 100000000],
-            
+
             //Reglas Email
             ['email', 'trim'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-            
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'La dirección de correo electrónico que ha ingresado ya está registrada.'],
+
             //Reglas password
             ['password', 'match', 'pattern' => '/\d/', 'message' => 'La contraseña debe tener al menos un número.'],
             ['password', 'match', 'pattern' => '/\w*[A-Z]/', 'message' => 'La contraseña debe tener al menos una mayúscula.'],
-            ['password', 'string', 'min' => 8, 'max' => 50, 'message' => 'La contraseña ingresada no es válida.',
+            ['password', 'string', 'min' => 6, 'max' => 50, 'message' => 'La contraseña ingresada no es válida.',
                 'tooShort' => 'La contraseña debe tener como mínimo 8 caracteres.', //comentario para minlenght
                 'tooLong' => 'La contraseña debe tener como máximo 20 caracteres.'], //comentario para maxlenght
         ];
@@ -120,6 +118,7 @@ class SignupForm extends Model {
      */
     protected function sendEmail($user) {
         return Yii::$app
+
                         ->mailer
                         ->compose(
                                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
@@ -132,3 +131,4 @@ class SignupForm extends Model {
     }
 
 }
+
