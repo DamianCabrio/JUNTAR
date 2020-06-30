@@ -39,6 +39,8 @@ class SiteController extends Controller {
                         'login',
                         'signup',
                         'error',
+                        'contact',
+                        'about',
                         'request-password-reset',
                         'PasswordReset',
                         'resend-verification-email',
