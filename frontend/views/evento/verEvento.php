@@ -143,7 +143,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <i class="material-icons align-middle">today</i><span class=" align-middle"> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></span>
                                     <br>
                                      <?php if ($esDueño || $esAdministrador) { ?>
-                                        <i class="material-icons align-middle">email</i><span class=" align-middle"> Escribir un mail</span>
+                                        <i class="material-icons align-middle">email</i><span class=" align-middle"> Escribir un mail a los participantes</span>
 
                                     <?php } ?>
                                     <br><br>
