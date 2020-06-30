@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     ?>
                     <?php
-                    if ($model->avalado != 1) {
+                    if ($model->avalado != 1 && $model->avalado != 3) {
                         echo Html::a('Conceder aval FAI', ['conceder-aval', 'id' => $model->idEvento], [
                             'class' => 'btn btn-primary mb-2 col-md-2 col-sm-12',
                             'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     } else {
                         echo Html::a('Quitar aval FAI', ['quitar-aval', 'id' => $model->idEvento], [
                             'class' => 'btn btn-pink mb-2 col-md-2 col-sm-12',
-                            'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
+                            'data' => ['confirm' => '¿Está seguro de querer quitar el aval de la FAI para este evento?'],
                         ]);
                     }
                     ?>
@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'fechaLimiteInscripcion',
                             'codigoAcreditacion',
                             'fechaCreacionEvento',
-                            'avalRequest',
+                            'eventoToken',
                         ],
                     ])
                     ?>

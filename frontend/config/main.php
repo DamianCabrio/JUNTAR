@@ -1,4 +1,9 @@
 <?php
+
+use ymaker\social\share\configurators\Configurator;
+use ymaker\social\share\drivers\Facebook;
+use ymaker\social\share\drivers\Twitter;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -20,6 +25,17 @@ return [
         '@rutaImagenPerfil' => '/profile/images/',
     ],
     'components' => [
+        "socialShare" => [
+            'class' => Configurator::class,
+            "socialNetworks" => [
+                "facebook" => [
+                    "class" => Facebook::class,
+                ],
+                "twitter" => [
+                    "class" => Twitter::class,
+                ],
+            ],
+        ],
         'qr' => [
             'class' => '\Da\QrCode\Component\QrCodeComponent',
             // ... you can configure more properties of the component here
@@ -65,9 +81,16 @@ return [
                  'eventos/despublicar-evento/<slug>' => 'evento/despublicar-evento',
                  'eventos/crear-formulario/<slug>' => 'evento/crear-formulario-dinamico',
                  'eventos/responder-formulario/<slug>' => 'evento/responder-formulario',
-                 "eventos/respuestas-formulario/<slug>" => "evento/respuestas-formulario",
+                 'eventos/respuestas-formulario/<slug>' => "evento/respuestas-formulario",
                  'eventos/suspender-evento/<slug>' => 'evento/suspender-evento',
+                 'eventos/finalizar-evento/<slug>' => 'evento/finalizar-evento',
+                 'eventos/solicitar-aval/<slug>' => 'evento/solicitar-aval',
                  'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
+                 'presentacion/view/<presentacion:\d+>' => 'presentacion/view',
+                 'presentacion/update/<presentacion:\d+>' => 'presentacion/update',
+                 'presentacion/borrar/<presentacion:\d+>' => 'presentacion/borrar',
+                 'evento/cargar-expositor/<idPresentacion:\d+>' => 'evento/cargar-expositor',
+                 'presentacion-expositor/ver-expositores/<idPresentacion:\d+>' => 'presentacion-expositor/ver-expositores',
                  "acreditacion" => "acreditacion/acreditacion",
                  'defaultRoute' => '/site/index',
               ],

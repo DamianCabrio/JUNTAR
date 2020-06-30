@@ -133,7 +133,9 @@ a.desc:after {
 .pinkish_bg {
     background-color: #FE1355;
 }
-
+.pinkish_text{
+    color: #FE1355;
+}
 .dark_light_bg {
     background: -webkit-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
     background: -o-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
@@ -144,7 +146,9 @@ a.desc:after {
 .full_width {
     width: 100%;
 }
-
+.height_100vh{
+    min-height: 100vh;
+}
 .card {
     border: none;
     color: black;
@@ -160,7 +164,10 @@ a.desc:after {
     padding-left: 0px;
     padding-right: 0px;
 }
-
+.noVpadding{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
 .padding_section {
     padding-top: 3vh;
     padding-bottom: 3vh;
@@ -170,7 +177,15 @@ a.desc:after {
     padding-top: 1vh;
     padding-bottom: 4vh;
 }
+.padding_hero {
+    padding-top: 7vh;
+    padding-bottom: 7vh;
+}
 
+.padding_event {
+    padding-top: 15vh;
+    padding-bottom: 15vh;
+}
 .pagination_center {
     justify-content: center;
 }
@@ -220,15 +235,7 @@ a.desc:after {
     z-index: 2;
 }
 
-.padding_hero {
-    padding-top: 7vh;
-    padding-bottom: 7vh;
-}
 
-.padding_event {
-    padding-top: 15vh;
-    padding-bottom: 15vh;
-}
 
 .alert {
     margin-bottom: 0px;
@@ -260,14 +267,14 @@ a.desc:after {
 
 .btn_publish {
     background-color: transparent!important;
-    color: #e6fff7!important;
-    border-color: #e6fff7!important;
-    border: solid 2px;
+    color: #FFFFFF!important;
+    font-weight: bold;
+  
 }
 
 .btn_publish:hover {
-    border-color: #cccccc!important;
-    color: #cccccc!important;
+    background-color: #000000!important;
+    color: #FFFFFF!important;
 }
 
 .btn_hide {
@@ -392,4 +399,16 @@ section {
         padding-right: 5px;
         padding-left: 5px;
     }
+}
+.modal-header{
+    background:#FE1355;
+    color:white;
+}
+
+.estado_negrita{
+    font-weight: bold;
+}
+
+.expositor-center{
+    margin-top:12%;
 }
