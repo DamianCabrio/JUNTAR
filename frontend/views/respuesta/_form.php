@@ -20,7 +20,7 @@ use dosamigos\ckeditor\CKEditor;
     <?= $form->field($model, 'respuesta')->textInput(['maxlength' => true])->label(false) ?>
     <?php endif; ?>
     <?php if($pregunta->tipo == 2): ?>
-        //echo $form->field($model, 'respuesta')->textarea(['maxlength' => true])->label(false);
+        <!--echo $form->field($model, 'respuesta')->textarea(['maxlength' => true])->label(false);-->
         <?= $form->field($model, 'respuesta')->widget(CKEditor::className(), [
                     "options" => ['rows' => '8'],
                     "preset" => "custom",
