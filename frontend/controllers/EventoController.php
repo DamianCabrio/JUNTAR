@@ -289,6 +289,7 @@ class EventoController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
             $model->avalado = 0; // Flag - Por defecto
+            $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
@@ -545,8 +546,6 @@ class EventoController extends Controller
      */
     public function actionPublicarEvento($slug) {
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = date('Y-m-d');
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
         $model->save();
 
@@ -561,8 +560,6 @@ class EventoController extends Controller
      */
     public function actionSuspenderEvento($slug) {
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = null;
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
         $model->save();
 
@@ -572,7 +569,6 @@ class EventoController extends Controller
 
      public function actionFinalizarEvento($slug){
         $model = $this->findModel("", $slug);
-
         $model->idEstadoEvento = 3;  //Flag  - Estado de evento finalizado
         $model->save();
 
