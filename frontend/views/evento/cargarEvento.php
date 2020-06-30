@@ -20,27 +20,28 @@ $this->title = "Cargar Evento";
             <div class="card-body">
                 <div class="row">
 					<div class="col-12">
-					<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-                    <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
-                    <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
 
-                    <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
-					<label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
-					</div>
-                    <div class="col-4 d-flex align-items-center form-advice">					
-                        <span class=""> Opciones automaticas: </span>
+            <div class="evento-form">
+     
+                <p class="text-center">Complete los siguientes campos</p>
+
+                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
+                <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
+
+                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
+
+                <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
+                <div class="row">
+                    <div class="col-4 form-advice">
+                        <span class="m-auto"> Opciones automaticas: </span>
                     </div>
-                    <div class="nombresCortos col-8" id="automaticSlug">
-					
+                    <div class="nombresCortos" id="automaticSlug">
                     </div>
-					<!--
-					<div class="col-12">
-						<input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
-					</div>
-					-->
                     <br>
                     <div class="col-12 mt-2 nombresCortos">
-                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'readonly' => true, 'placeholder' => 'Ingrese nombre corto',
+                        <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
+                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
                             'data-title' => 'Requisitos',
                             'data-toggle' => 'popover',
                             'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
@@ -93,7 +94,7 @@ $this->title = "Cargar Evento";
                 <br>
                 <br>
                 <div class="form-group">
-                    <label>¿Posee límite de espectadores?</label><br>
+                    <label>¿Posee límite de participantes?</label><br>
 
                     <div role="radiogroup" aria-required="true">
                         <div class="custom-control custom-radio">
@@ -128,9 +129,9 @@ $this->title = "Cargar Evento";
                 </div>
 
                 <?php ActiveForm::end(); ?>
-            </div>
+                </div>
 
-        </div>
-
+             </div>
+         </div>               
     </div>
 </div>
