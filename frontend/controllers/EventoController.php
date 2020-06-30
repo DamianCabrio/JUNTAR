@@ -232,7 +232,9 @@ class EventoController extends Controller
         $evento = $this->findModel("", $slug);
 
         $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
-        $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])->count();
+        $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])
+                                                ->andWhere(["=", "estado", 1])
+                                                ->andWhere(["=", "acreditacion", 0])->count();
 
 
         if ($this->verificarDueño($evento)) {
@@ -642,7 +644,7 @@ class EventoController extends Controller
         $datosDelEvento['lugar']= $evento->lugar;
         $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
 
-        return $this->renderPartial('EnviarEmailParticipantes',
+        return $this->render('enviarEmailInscriptos',
         ['datosDelEvento' => $datosDelEvento,'preguntas' => $preguntas]);
 
     }
