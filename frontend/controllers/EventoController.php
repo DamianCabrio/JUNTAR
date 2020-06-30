@@ -647,23 +647,22 @@ class EventoController extends Controller
         foreach($listaInscriptos as $unInscripto){
               $emails[]= $unInscripto['user_email'];
         }
-        
-        
-         return Yii::$app->mailer
-         
-              ->compose(
+
+        return Yii::$app->mailer
+
+            ->compose(
                 ['html' => 'confirmacionDeInscripcion-html'],
                 ['evento' => $evento],
-              )
-              ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-              ->setTo($emails)
-              ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
-              ->send();
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($emails)
+            ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
+            ->send();
 
               Yii::$app->session->setFlash('success', '<h2> ¡Confirmación exitosa! </h2>'
               . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
            
-              return $this->refresh();
+              return $this->redirect(Url::toRoute(["eventos/respuestas-formulario/". $evento->nombreCortoEvento]));
        
 
     }
