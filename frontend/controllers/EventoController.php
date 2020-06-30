@@ -633,7 +633,7 @@ class EventoController extends Controller
         $request = Yii::$app->request;
         $idEvento  = $request->get('idEvento');
 
-        $datosDelEvento = Evento::find()->where(['idEvento' => $idEvento ])->asArray()->all();
+        $evento = Evento::findOne(['idEvento' => $idEvento ]);
 
 
         $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
@@ -641,8 +641,8 @@ class EventoController extends Controller
         $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
         $listaInscriptos= $base->andWhere(["=", "inscripcion.estado", 1])->andWhere(["=", "inscripcion.acreditacion", 0])->asArray()->all();
 
-        return $this->render('enviarEmailInscriptos',
-        ['datosDelEvento' => $datosDelEvento,'listaInscriptos' => $listaInscriptos]);
+        return $this->renderPartial('enviarEmailInscriptos',
+        ['evento' => $evento,'listaInscriptos' => $listaInscriptos]);
 
     }
     
