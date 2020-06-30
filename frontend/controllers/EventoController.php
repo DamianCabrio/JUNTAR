@@ -659,7 +659,7 @@ class EventoController extends Controller
             ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
             ->send();
 
-              Yii::$app->session->setFlash('success', '<h2> ¡Confirmación exitosa! </h2>'
+              Yii::$app->session->setFlash('success', '<h2> ¡Se han enviado los correos a los inscriptos! </h2>'
               . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
            
               return $this->redirect(Url::toRoute(["eventos/respuestas-formulario/". $evento->nombreCortoEvento]));
@@ -667,6 +667,10 @@ class EventoController extends Controller
 
     }
     
+    
+    public function actionRedactarEmail(){
+        return $this->render('redactarEmail',['datosDelEvento' => '']);
+    }
 
 
     public function actionOrganizarEventos()
