@@ -30,7 +30,8 @@ $this->title = "Respuestas";
         <?php if($pregunta->tipo == 1): ?>
         <?= Html::input("text", "respuesta".$i, $respuestaAPregunta, ["disabled" => true]) ?>
         <?php elseif($pregunta->tipo == 2): ?>
-        <?= Html::textarea("respuesta".$i, $respuestaAPregunta,["disabled" => true]); ?>
+        //echo Html::textarea("respuesta".$i, $respuestaAPregunta,["disabled" => true]);
+        <?= Html::decode($respuestaAPregunta); ?>
         <?php elseif($pregunta->tipo == 3): ?>
             <?php if(!$tieneRespuesta): ?>
             <p><?= $respuestaAPregunta ?></p>
