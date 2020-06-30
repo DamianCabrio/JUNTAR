@@ -230,7 +230,9 @@ class EventoController extends Controller
         $evento = $this->findModel("", $slug);
 
         $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
-        $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])->count();
+        $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])
+                                                ->andWhere(["=", "estado", 1])
+                                                ->andWhere(["=", "acreditacion", 0])->count();
 
 
         if ($this->verificarDueño($evento)) {
@@ -669,24 +671,21 @@ class EventoController extends Controller
     }
 
     
-    public function actionEnviarEmailParticipantes()
+    public function actionEnviarEmailInscriptos()
     {
         $request = Yii::$app->request;
         $idEvento  = $request->get('idEvento');
 
-        $evento = Evento::findOne($idEvento);
+        $datosDelEvento = Evento::find()->where(['idEvento' => $idEvento ])->asArray()->all();
 
-        $datosDelEvento['idEvento'] =   $idEvento;
-        $datosDelEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
-        $datosDelEvento['inicio'] = $evento->fechaInicioEvento;
-        $datosDelEvento['fin'] =  $evento->fechaFinEvento;
-        $datosDelEvento['nombre'] = $evento->nombreEvento;
-        $datosDelEvento['capacidad']  = $evento->capacidad ;
-        $datosDelEvento['lugar']= $evento->lugar;
-        $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
 
-        return $this->renderPartial('EnviarEmailParticipantes',
-        ['datosDelEvento' => $datosDelEvento,'preguntas' => $preguntas]);
+        $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
+        $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
+        $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
+        $listaInscriptos= $base->andWhere(["=", "inscripcion.estado", 1])->andWhere(["=", "inscripcion.acreditacion", 0])->asArray()->all();
+
+        return $this->render('enviarEmailInscriptos',
+        ['datosDelEvento' => $datosDelEvento,'listaInscriptos' => $listaInscriptos]);
 
     }
     
