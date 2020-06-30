@@ -40,7 +40,7 @@ $this->title = "Cargar Evento";
                     </div>
                     <br>
                     <div class="col-12 mt-2 nombresCortos">
-                        <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
+                        <!--<input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>-->
                         <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
                             'data-title' => 'Requisitos',
                             'data-toggle' => 'popover',
