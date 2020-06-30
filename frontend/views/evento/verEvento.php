@@ -459,7 +459,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ?>
 
                                 </div>
-
+                                
                                 <div class="table table-responsive">
                                     <?=
                                         GridView::widget([
@@ -509,7 +509,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                         if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
                                                             $retorno = 'No hay recursos para mostrar';
                                                         } else {
-                                                            $retorno = '<a target="_blank" href="' . $dataProvider->linkARecursos . '">Link</a>';
+                                                            $retorno = '<a target="_blank" href="' . $dataProvider->linkARecursos . '"><i class="material-icons">attachment</i></a>';
                                                         }
                                                         return $retorno;
                                                     },
