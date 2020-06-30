@@ -236,7 +236,13 @@ a.desc:after {
 }
 
 
-
+.respuesta-form input{
+    width: 100%;
+}
+.respuesta-form textarea{
+    width: 100%;
+    min-height: 150px;
+}
 .alert {
     margin-bottom: 0px;
 }
