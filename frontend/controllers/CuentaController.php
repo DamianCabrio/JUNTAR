@@ -89,8 +89,6 @@ class CuentaController extends Controller {
                 ->where(['usuario.idUsuario' => Yii::$app->user->identity->id]);
         //Agrupamiento
         //->groupBy(['jugador.posicion']);
-
-        
         //obtenemos el unico usuario
         $userData = $model->one();
 
@@ -99,7 +97,7 @@ class CuentaController extends Controller {
 
         if ($modelImagenPerfil != null) {
             //utilizamos el control de operador en caso que no exista el archivo en la ruta guardada
-            if (@getimagesize(Url::base(true) .$modelImagenPerfil->rutaImagenPerfil)) {
+            if (@getimagesize(Url::base(true) . $modelImagenPerfil->rutaImagenPerfil)) {
                 $profileImageRoute = Url::base(true) . $modelImagenPerfil['rutaImagenPerfil'];
             }
         }
@@ -129,7 +127,10 @@ class CuentaController extends Controller {
                     if (file_exists($rutaImagenPerfil)) {
                         $nuevaRutaImagen = "profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . $model->nombre . '.jpg');
                         if (rename($rutaImagenPerfil, $nuevaRutaImagen)) {
-                            $cambioImagen = true;
+                            $imageModel = ImagenPerfil::findOne(['idUsuario' => Yii::$app->user->identity->idUsuario]);
+                            $imageModel->rutaImagenPerfil = "/" . $nuevaRutaImagen;
+
+                            $imageModel->update();
                         }
                     }
                 }

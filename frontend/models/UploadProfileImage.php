@@ -32,10 +32,17 @@ class UploadProfileImage extends Model {
 
     private function guardarImagenPerfil() {
         $model = ImagenPerfil::findOne(['idUsuario' => Yii::$app->user->identity->idUsuario]);
-        //Por ahora, se guarda la imagen con el mismo nombre siempre para evitar saturar el sv
-        //si a alguien se le ocurre cambiar muchas veces su foto de perfil. El archivo siempre
-        //se sobreescribe.
-        $model['rutaImagenPerfil'] = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+
+        //si no encuentra registro, crea un registro para la imagen de perfil del usuario
+        if ($model == null) {
+            $model = new ImagenPerfil();
+            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+            $model->idUsuario = Yii::$app->user->identity->idUsuario;
+        } else {
+            //si encuentra el registro, lo actualiza
+//            $model['rutaImagenPerfil'] = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+        }
         return $model->save();
     }
 

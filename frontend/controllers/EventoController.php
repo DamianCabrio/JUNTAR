@@ -3,46 +3,45 @@
 namespace frontend\controllers;
 
 use Da\QrCode\QrCode;
+use frontend\components\validateEmail;
+use frontend\models\CategoriaEvento;
+use frontend\models\Evento;
+use frontend\models\FormularioForm;
+use frontend\models\Inscripcion;
 use frontend\models\InscripcionSearch;
+use frontend\models\ModalidadEvento;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
 use frontend\models\RespuestaFile;
-use frontend\models\RespuestaSearch;
-use yii\helpers\Url;
-use Yii;
-use frontend\models\Inscripcion;
 use frontend\models\Presentacion;
-use frontend\models\Usuario;
-use frontend\models\PresentacionSearch;
 use frontend\models\PresentacionExpositor;
-use frontend\models\Evento;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use frontend\components\validateEmail;
-use yii\data\Pagination;
-use frontend\models\ModalidadEvento;
-use frontend\models\CategoriaEvento;
-
+use frontend\models\PresentacionSearch;
+use frontend\models\RespuestaSearch;
+use frontend\models\Usuario;
 use frontend\models\SolicitudAvalEvento;
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo
-
 use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
-use yii\web\UploadedFile;
-use yii\data\ActiveDataProvider;
 use UI\Controls\Label;
-use frontend\models\FormularioForm;
-//new QrCo
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
  */
-class EventoController extends Controller {
+class EventoController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -51,6 +50,8 @@ class EventoController extends Controller {
                     'allow' => true,
                     'actions' => [
                         "ver-evento",
+                        'verificar-solicitud',
+                        'confirmar-solicitud',
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -78,12 +79,13 @@ class EventoController extends Controller {
         return $behaviors;
     }
 
-    public function calcularCupos($evento) {
+    public function calcularCupos($evento)
+    {
         if (!is_null($evento->capacidad)) {
             //Cantidad de inscriptos al evento
             $cantInscriptos = Inscripcion::find()
-                    ->where(["idEvento" => $evento->idEvento, 'estado' => 1])
-                    ->count();
+                ->where(["idEvento" => $evento->idEvento, 'estado' => 1])
+                ->count();
 
             $cupoMaximo = $evento->capacidad;
 
@@ -98,25 +100,23 @@ class EventoController extends Controller {
         }
     }
 
-    public function obtenerEstadoEventoNoLogin($cupos, $evento) {
-        if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
+    public function obtenerEstadoEventoNoLogin($cupos, $evento)
+    {
+        if (($evento->fechaLimiteInscripcion != null && $evento->fechaLimiteInscripcion >= date("Y-m-d"))) {
             if ($cupos !== 0 || is_null($cupos)) {
                 return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
             } else {
                 return "sinCupos";
             }
-        } elseif ($evento->fechaInicioEvento >= date("Y-m-d") && $evento->fechaLimiteInscripcion == null) {
-            if ($cupos !== 0 || is_null($cupos)) {
-                return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
-            } else {
-                return "sinCupos";
-            }
+        } elseif ($evento->fechaLimiteInscripcion == null && $evento->fechaInicioEvento >= date("Y-m-d")) {
+            return $evento->preInscripcion == 0 ? "puedeInscripcion" : "puedePreinscripcion";
         } else {
             return "noInscriptoYFechaLimiteInscripcionPasada";
         }
     }
 
-    public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion) {
+    public function obtenerEstadoEvento($evento, $yaInscripto = false, $yaAcreditado = false, $cupos, $tipoInscripcion)
+    {
 
         // ¿Ya esta inscripto o no? - Si
         if ($yaInscripto) {
@@ -155,24 +155,19 @@ class EventoController extends Controller {
                 // ¿El evento tiene pre inscripcion activada? - Si
                 if ($evento->preInscripcion == 1) {
                     if ($evento->fechaLimiteInscripcion == null || $evento->fechaLimiteInscripcion == '1969-12-31') {
-                        if ($evento->fechaInicioEvento <= date("Y-m-d")) {
+                        if ($evento->fechaInicioEvento >= date("Y-m-d")) {
                             return "puedeInscripcion";
                         } else {
                             return "noInscriptoYFechaLimiteInscripcionPasada";
                         }
+                        // El evento no tiene pre inscripcion
                     } else {
-                        if ($evento->fechaLimiteInscripcion >= date("Y-m-d")) {
-                            return "puedePreinscripcion";
-                        } else {
+                        if($evento->fechaInicioEvento >= date("Y-m-d")){
+                            return "puedeInscripcion";
+                        }else{
                             return "noInscriptoYFechaLimiteInscripcionPasada";
                         }
-                    }
-                    // El evento no tiene pre inscripcion
-                } else {
-                    if ($evento->fechaInicioEvento >= date("Y-m-d")) {
-                        return "puedeInscripcion";
-                    } else {
-                        return "noInscriptoYFechaLimiteInscripcionPasada";
+                        // El evento no tiene pre inscripcion
                     }
                 }
             }
@@ -230,21 +225,50 @@ class EventoController extends Controller {
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
-    public function actionRespuestasFormulario($slug) {
+    public function actionRespuestasFormulario($slug)
+    {
         $evento = $this->findModel("", $slug);
 
+        $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
+        $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])->count();
+
+
         if ($this->verificarDueño($evento)) {
-            $usuariosInscriptosSearchModel = new InscripcionSearch();
-            $usuariosInscriptosDataProvider = new ActiveDataProvider([
-                'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
+            $hayPreguntas = false;
+            if ($cantidadPreguntas != 0) {
+                $hayPreguntas = true;
+            }
+            $usuariosSearchModel = new InscripcionSearch();
+            $usuariosPreinscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 0])->andWhere(["<>", "acreditacion", 1]),
                 'pagination' => false,
                 'sort' => ['attributes' => ['name', 'description']]
             ]);
+            $usuariosInscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 1])->andWhere(["<>", "acreditacion", 1]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+            Url::remember(Url::current(), 'verRespuestas');
             return $this->render('respuestasFormulario',
-                            ["inscriptos" => $usuariosInscriptosDataProvider,
-                                "evento" => $evento]);
+                ["preinscriptos" => $usuariosPreinscriptosDataProvider,
+                    "inscriptos" => $usuariosInscriptosDataProvider,
+                    "evento" => $evento, 'cantidadInscriptos'=>$cantidadInscriptos ,
+                    "hayPreguntas" => $hayPreguntas]);
         } else {
-            throw new NotFoundHttpException('La página solicitada no existe.');
+            if ($this->verificarDueño($evento)) {
+                $usuariosInscriptosSearchModel = new InscripcionSearch();
+                $usuariosInscriptosDataProvider = new ActiveDataProvider([
+                    'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
+                    'pagination' => false,
+                    'sort' => ['attributes' => ['name', 'description']]
+                ]);
+                return $this->render('respuestasFormulario',
+                    ["inscriptos" => $usuariosInscriptosDataProvider,
+                        "evento" => $evento]);
+            } else {
+                throw new NotFoundHttpException('La página solicitada no existe.');
+            }
         }
     }
 
@@ -262,9 +286,12 @@ class EventoController extends Controller {
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
+        $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
+        $model->avalado = 0; // Flag - Por defecto
+        $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
 
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+           
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
@@ -343,6 +370,7 @@ class EventoController extends Controller {
 
 
         if ($esDueño) {
+            Url::remember(Url::current(), "slugEvento");
             $preguntasSearchModel = new PreguntaSearch();
             $preguntasDataProvider = new ActiveDataProvider([
                 'query' => $preguntasSearchModel::find()->where(['idEvento' => $evento->idEvento]),
@@ -361,18 +389,21 @@ class EventoController extends Controller {
     public function actionResponderFormulario($slug) {
 
         $evento = $this->findModel("", $slug);
-        $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])->one();
+        $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])
+            ->andWhere(["<>", "estado", 1])
+            ->andWhere(["<>", "estado", 2])
+            ->one();
 
         if ($inscripcion != null) {
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
 
             $respuestaYaHechas = [];
-            foreach ($preguntas as $pregunta) {
-                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
-                if ($respuesta == null) {
+            foreach ($preguntas as $pregunta){
+                $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $inscripcion->idInscripcion])->one();
+                if($respuesta == null){
                     array_push($respuestaYaHechas, false);
-                } else {
-                    array_push($respuestaYaHechas, true);
+                }else{
+                    array_push($respuestaYaHechas, $respuesta);
                 }
             }
 
@@ -475,7 +506,7 @@ class EventoController extends Controller {
         $rutaLogo = (Yii::getAlias("@rutaLogo"));
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
             $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
@@ -517,8 +548,6 @@ class EventoController extends Controller {
      */
     public function actionPublicarEvento($slug) {
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = date('Y-m-d');
         $model->idEstadoEvento = 1;  //FLag - Estado de evento activo
         $model->save();
 
@@ -533,8 +562,6 @@ class EventoController extends Controller {
      */
     public function actionSuspenderEvento($slug) {
         $model = $this->findModel("", $slug);
-
-        $model->fechaCreacionEvento = null;
         $model->idEstadoEvento = 4;  //Flag  - Estado de evento borrador
         $model->save();
 
@@ -542,6 +569,13 @@ class EventoController extends Controller {
         return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
     }
 
+     public function actionFinalizarEvento($slug){
+        $model = $this->findModel("", $slug);
+        $model->idEstadoEvento = 3;  //Flag  - Estado de evento finalizado
+        $model->save();
+
+        return $this->redirect(['eventos/ver-evento/'. $model->nombreCortoEvento]);
+     }
 
     public function actionCargarExpositor($idPresentacion) {
         $model = new PresentacionExpositor();
@@ -575,64 +609,91 @@ class EventoController extends Controller {
 		  }
     }
 
-    public function actionInscriptosExcel() {
+    public function actionListaParticipantes()
+    {
         $request = Yii::$app->request;
         $idEvento = $request->get('idEvento');
 
         $evento = Evento::findOne($idEvento);
 
-        $arrayEvento['idEvento'] = $idEvento;
-        $arrayEvento['organizador'] = $evento->idUsuario0->nombre . " " . $evento->idUsuario0->apellido;
-        $arrayEvento['inicio'] = $evento->fechaInicioEvento;
-        $arrayEvento['fin'] = $evento->fechaFinEvento;
-        $arrayEvento['nombre'] = $evento->nombreEvento;
-
-        $arrayEvento['capacidad'] = $evento->capacidad;
-        $arrayEvento['lugar'] = $evento->lugar;
-        $arrayEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
-
+        $datosDelEvento['idEvento'] =   $idEvento;
+        $datosDelEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
+        $datosDelEvento['inicio'] = $evento->fechaInicioEvento;
+        $datosDelEvento['fin'] =  $evento->fechaFinEvento;
+        $datosDelEvento['nombre'] = $evento->nombreEvento;
+        $datosDelEvento['capacidad']  = $evento->capacidad ;
+        $datosDelEvento['lugar']= $evento->lugar;
+        $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
+        
         $base = Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
-        $base->select(['user_apellido' => 'usuario.apellido',
-            'user_nombre' => 'usuario.nombre',
-            'user_dni' => 'usuario.dni',
-            'user_pais' => 'usuario.pais',
-            'user_provincia' => 'usuario.provincia',
-            'user_localidad' => 'usuario.localidad',
-            'user_email' => 'usuario.email',
-            'user_idInscripcion' => 'inscripcion.idInscripcion',
-            'user_fechaPreInscripcion' => 'inscripcion.fechaPreInscripcion',
-            'user_fechaInscripcion' => 'inscripcion.fechaInscripcion']);
+        $base->select(['user_estado'=>'inscripcion.estado',
+                       'user_acreditacion'=>'inscripcion.acreditacion',
+                       'user_idInscripcion'=>'inscripcion.idInscripcion',
+                       'user_apellido'=>'usuario.apellido',
+                       'user_nombre'=> 'usuario.nombre',
+                       'user_dni'=>'usuario.dni',
+                       'user_pais'=>'usuario.pais',
+                       'user_provincia'=>'usuario.provincia',
+                       'user_localidad'=>'usuario.localidad',
+                       'user_email'=>'usuario.email',
+                       'user_fechaPreInscripcion'=>'inscripcion.fechaPreInscripcion',
+                       'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
 
         /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
-        $preinscriptos = $base->where(['inscripcion.idEvento' => $idEvento, 'inscripcion.estado' => 1])
-                        ->orderBy('usuario.apellido ASC')->asArray()->all();
-
-        $inscriptos  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 2 ])
-                             ->orderBy('usuario.apellido ASC')->asArray()->all();
-
-        $anulados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 3 ])
-                           ->orderBy('usuario.apellido ASC')->asArray()->all();
-
-        $acreditados  = $base ->where(['inscripcion.idEvento' => $idEvento,'inscripcion.estado' => 4 ])
-                              ->orderBy('usuario.apellido ASC')->asArray()->all();
+        $participantes = $base ->where(['inscripcion.idEvento' => $idEvento ])->orderBy('usuario.apellido ASC')->asArray()->all();
+        $preguntas= Pregunta::find()->where(['idevento' => $idEvento ])->asArray()->all();
 
 
+        $listaRepuesta="";
 
+        $listaRepuesta= array();
+       
+        foreach($participantes as $unParticipante){
 
-        $listados[] = ['index' => 0, 'titulo' => 'Preinscriptos', 'lista' => $preinscriptos];
-        $listados[] = ['index' => 1, 'titulo' => 'Inscriptos', 'lista' => $inscriptos];
-        $listados[] = ['index' => 2, 'titulo' => 'Anulados', 'lista' => $anulados];
-        $listados[] = ['index' => 3, 'titulo' => 'Acreditados', 'lista' => $acreditados];
+            $base = RespuestaFile::find();
+            $base->innerJoin('pregunta', 'respuesta.idpregunta=pregunta.id');
+            $base->select(['pregunta_tipo'=>'pregunta.tipo','respuesta_user'=>'respuesta']);
+            $respuestas= $base->where(['respuesta.idinscripcion' =>$unParticipante['user_idInscripcion'] ])->asArray()->all();
 
-        return $this->renderPartial('inscriptosExcel',
-                        ['listados' => $listados, 'arrayEvento' => $arrayEvento]);
+            $listaRepuesta[]= ['unParticipante'=>$unParticipante, 'respuestas'=>$respuestas];
+        }
+       
+
+       return $this->renderPartial('listaParticipantes',
+        ['datosDelEvento' => $datosDelEvento,
+         'preguntas' => $preguntas, 'listaRepuesta' => $listaRepuesta]);
     }
 
+    
+    public function actionEnviarEmailParticipantes()
+    {
+        $request = Yii::$app->request;
+        $idEvento  = $request->get('idEvento');
 
-    public function actionOrganizarEventos() {
+        $evento = Evento::findOne($idEvento);
 
+        $datosDelEvento['idEvento'] =   $idEvento;
+        $datosDelEvento['organizador'] = $evento->idUsuario0->nombre." ".$evento->idUsuario0->apellido;
+        $datosDelEvento['inicio'] = $evento->fechaInicioEvento;
+        $datosDelEvento['fin'] =  $evento->fechaFinEvento;
+        $datosDelEvento['nombre'] = $evento->nombreEvento;
+        $datosDelEvento['capacidad']  = $evento->capacidad ;
+        $datosDelEvento['lugar']= $evento->lugar;
+        $datosDelEvento['modalidad'] = $evento->idModalidadEvento0->descripcionModalidad;
+
+        return $this->renderPartial('EnviarEmailParticipantes',
+        ['datosDelEvento' => $datosDelEvento,'preguntas' => $preguntas]);
+
+    }
+    
+
+
+
+
+    public function actionOrganizarEventos()
+    {
         $idUsuario = Yii::$app->user->identity->idUsuario;
 
         $request = Yii::$app->request;
@@ -642,7 +703,7 @@ class EventoController extends Controller {
 
         if ($estadoEvento != "") {
             if ($estadoEvento == 0) {
-                $estado = 1; // activo 
+                $estado = 1; // activo
             }
             if ($estadoEvento == 1) {
                 $estado = 4; // suspendido
@@ -723,4 +784,23 @@ class EventoController extends Controller {
       }
 
     }
+    /**
+     * Recibe por parametro el nombre corto de un evento, buscar ese evento y setea en la instancia $evento.
+     * Cambia el estado de avalado a 3 y null al atributo eventoToken.
+     */
+    public function actionDenegarSolicitud($slug)
+    {
+      $evento = $this->findModel(null , $slug);
+      $evento->avalado = 3;
+      $evento->eventoToken = null;
+      if ($evento->save()) {
+        Yii::$app->session->setFlash('success','<small>Evento Denegado</small>');
+        return $this->redirect('/eventos/ver-evento/'.$slug);
+      } else {
+        Yii::$app->session->setFlash('error','<small>Se ha producido un error a al confirmar</small>');
+        return $this->redirect('/eventos/ver-evento/'.$slug);
+      }
+
+    }
+
 }

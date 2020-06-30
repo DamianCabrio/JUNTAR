@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
+class ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30
 {
     public static $files = array (
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
@@ -90,6 +90,7 @@ class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
     public static $prefixLengthsPsr4 = array (
         'y' => 
         array (
+            'ymaker\\social\\share\\' => 20,
             'yii\\swiftmailer\\' => 16,
             'yii\\jui\\' => 8,
             'yii\\gii\\' => 8,
@@ -121,6 +122,10 @@ class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
         'k' => 
         array (
             'kartik\\mpdf\\' => 12,
+        ),
+        'd' => 
+        array (
+            'dosamigos\\ckeditor\\' => 19,
         ),
         'c' => 
         array (
@@ -206,6 +211,10 @@ class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
     );
 
     public static $prefixDirsPsr4 = array (
+        'ymaker\\social\\share\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiimaker/yii2-social-share/src',
+        ),
         'yii\\swiftmailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer/src',
@@ -271,6 +280,10 @@ class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
         'kartik\\mpdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-mpdf/src',
+        ),
+        'dosamigos\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-ckeditor-widget/src',
         ),
         'cebe\\markdown\\' => 
         array (
@@ -1182,10 +1195,10 @@ class ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitf39ccf571cbb0d1f5fd7e245bea17679::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30::$classMap;
 
         }, null, ClassLoader::class);
     }

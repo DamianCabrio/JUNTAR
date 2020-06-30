@@ -129,7 +129,7 @@ class EventoController extends Controller {
 
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
+
     /**
      * Deletes an existing Evento model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -155,13 +155,14 @@ class EventoController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
     public function actionSolicitudesDeAval() {
         $searchModel = new EventoSearch();
         $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find()->where(['not', ['avalRequest' => null]])->andWhere(['is', 'avalado', new \yii\db\Expression('null')]),
+//            'query' => $searchModel::find()->where(['not', ['eventoToken' => null]])->andWhere(['is', 'avalado', new \yii\db\Expression('null')]),
+            'query' => $searchModel::find()->where(['not', ['eventoToken' => null]]),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -173,13 +174,19 @@ class EventoController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionConcederAval($id) {
         $this->findModel($id)->avalar();
 
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
+
+    public function actionDenegarAval($id) {
+        $this->findModel($id)->denegarAval();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     public function actionQuitarAval($id) {
         $this->findModel($id)->quitarAval();
 
