@@ -40,6 +40,7 @@ class SiteController extends Controller {
                         'signup',
                         'error',
                         'contact',
+                        'captcha',
                         'about',
                         'request-password-reset',
                         'PasswordReset',
