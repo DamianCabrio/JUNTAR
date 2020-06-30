@@ -7,10 +7,11 @@ use common\models\User;
 
   
 
-$emails = [];
-$emails =['marcos_benitez80@hotmail.com','marcos.benitez@est.fi.uncoma.edu.ar'];
+$emails = array();
 
-
+foreach($listaInscriptos as $unInscripto){
+      $emails[]= $unInscripto['user_email'];
+}
 
 
  return Yii::$app->mailer

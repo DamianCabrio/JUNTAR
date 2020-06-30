@@ -635,14 +635,36 @@ class EventoController extends Controller
 
         $evento = Evento::findOne(['idEvento' => $idEvento ]);
 
+///        $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
 
         $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
         $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
         $listaInscriptos= $base->andWhere(["=", "inscripcion.estado", 1])->andWhere(["=", "inscripcion.acreditacion", 0])->asArray()->all();
 
-        return $this->renderPartial('enviarEmailInscriptos',
-        ['evento' => $evento,'listaInscriptos' => $listaInscriptos]);
+
+
+        $emails = array();
+
+        foreach($listaInscriptos as $unInscripto){
+              $emails[]= $unInscripto['user_email'];
+        }
+        
+        
+         return Yii::$app->mailer
+         
+              ->compose(
+                ['html' => 'confirmacionDeInscripcion-html'],
+                ['evento' => $evento],
+              )
+              ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+              ->setTo($emails)
+              ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
+              ->send();
+
+   
+
+        
 
     }
     
