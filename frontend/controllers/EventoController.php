@@ -17,6 +17,7 @@ use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\PresentacionSearch;
 use frontend\models\RespuestaSearch;
+use frontend\models\RespuestaTest;
 use frontend\models\Usuario;
 use frontend\models\SolicitudAvalEvento;
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo
@@ -403,12 +404,13 @@ class EventoController extends Controller
                     array_push($respuestaYaHechas, $respuesta);
                 }
             }
-
+            $model = new RespuestaTest();
             return $this->render('responderFormulario',
                             ["preguntas" => $preguntas,
                                 "evento" => $evento,
                                 "idInscripcion" => $inscripcion->idInscripcion,
-                                "respuestaYaHechas" => $respuestaYaHechas]);
+                                "respuestaYaHechas" => $respuestaYaHechas,
+                                "model" => $model]);
         } else {
             return $this->goHome();
         }
