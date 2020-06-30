@@ -259,13 +259,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                         echo '<div class="card-header pinkish_bg text-center">';
                         if ($verificacionSolicitud && !Yii::$app->user->can('Validador')) {
-                          echo Html::a('Confirmar Solicitud', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                          echo Html::a('Confirmar Solicitud <i class="material-icons align-middle">check_circle_outline</i>', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
                             'class' => 'btn',
-                            'style' => ['background' => 'green']
                           ]);
-                          echo Html::a('Denegar Solicitud', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                          echo Html::a('Denegar Solicitud <i class="material-icons align-middle">highlight_off</i>', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
                             'class' => 'btn',
-                            'style' => ['background' => '#cc0000']
                           ]);
                         }
                         echo '</br></div>';
@@ -374,13 +372,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         <?= Html::a('Certificado', ['certificado/index', 'id' => $evento->idEvento], ['class' => 'btn btn-primary btn-lg full_width viewCertification']); ?>
                                     <?php endif; ?>
                                     <?php if (Yii::$app->user->can('Validador') && $evento->avalado != 1 && $evento->avalado != 3): ?>
-                                      <?= Html::a('Avalar Evento', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                                      <?= Html::a('Denegar Aval <i class="material-icons align-middle">highlight_off</i>', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
                                         'class' => 'btn m-2 float-right',
-                                        'style' => ['background' => 'green']
                                       ]);?>
-                                      <?= Html::a('Denegar Aval', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                                      <?= Html::a('Avalar Evento <i class="material-icons align-middle">check_circle_outline</i>', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
                                         'class' => 'btn m-2 float-right',
-                                        'style' => ['background' => '#cc0000']
                                       ]);?>
                                     <?php endif; ?>
                                 </div>
