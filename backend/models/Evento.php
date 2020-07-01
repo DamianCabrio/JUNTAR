@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\SolicitudAval;
 
 /**
  * This is the model class for table "evento".
@@ -159,6 +160,10 @@ class Evento extends \yii\db\ActiveRecord
     public function getPresentacions()
     {
         return $this->hasMany(Presentacion::className(), ['idEvento' => 'idEvento']);
+    }
+    
+    public function getIdAval0(){
+        return $this->hasOne(SolicitudAval::className(), ['idEvento' => 'idEvento']);
     }
 
     /**

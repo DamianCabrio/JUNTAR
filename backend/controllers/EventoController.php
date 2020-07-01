@@ -63,10 +63,11 @@ class EventoController extends Controller {
     public function actionIndex() {
         $searchModel = new EventoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+//        $aval = SolicitudAval::findOne(['idEvento' => $id]);
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+//                    'aval' => $aval,
         ]);
     }
 
@@ -160,4 +161,5 @@ class EventoController extends Controller {
 
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
+
 }

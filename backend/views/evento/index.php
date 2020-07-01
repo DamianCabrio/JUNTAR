@@ -109,19 +109,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'attribute' => 'avalado',
-                                    'label' => 'Avalado FAI',
+                                    'label' => 'Aval FAI',
                                     'value' => function ($dataProvider) {
-//                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                                        if($dataProvider->avalado == 1){
-                                            return "Avalado";
-                                        }else{
-                                            if($dataProvider->avalado == 0){
-                                                return "No avalado";
-                                            }else{
-                                                return "Pendiente";
-                                            }
+                                        if ($dataProvider->idAval0 != null && $dataProvider->idAval0 != '') {
+                                            return (($dataProvider->idAval0->avalado == 1) ? "Concedido" : "Denegado");
+                                        } else {
+                                            return "No Solicitado";
                                         }
-//                                        return ($dataProvider->avalado == 1 ? "Avalado" : "No");
                                     }, //valor referenciado por ActiveQuery en el metodo idClub0
                                 ],
                                 //'imgLogo',
