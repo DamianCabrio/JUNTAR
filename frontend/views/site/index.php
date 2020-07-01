@@ -63,7 +63,7 @@ $this->title = 'Juntar';
                                         <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
                                         <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
                                         <?php
-                                            $esFai = $evento->avalado;
+                                            $esFai = $evento->solicitudAval['avalado'];
                                             if($esFai == 1):
                                             ?>
                                             - Evento organizado por la FAI

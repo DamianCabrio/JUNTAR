@@ -174,4 +174,13 @@ class Evento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Presentacion::className(), ['idEvento' => 'idEvento']);
     }
+    /**
+     * Gets query for [[SolicitudAval]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSolicitudAval()
+    {
+        return $this->hasOne(SolicitudAval::className(), ['idEvento' => 'idEvento']);
+    }
 }
