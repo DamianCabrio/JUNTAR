@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Evento;
+use common\models\Evento;
 use frontend\models\Inscripcion;
 use frontend\models\AcreditacionForm;
 use yii\filters\AccessControl;

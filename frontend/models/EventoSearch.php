@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Evento;
+use common\models\Evento;
 
 /**
  * EventoSearch represents the model behind the search form of `common\models\Evento`.

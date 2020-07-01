@@ -7,7 +7,7 @@ use yii\filters\AccessControl;
 use \yii\helpers\Url;
 use Yii;
 use frontend\models\Inscripcion;
-use frontend\models\Evento;
+use common\models\Evento;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 

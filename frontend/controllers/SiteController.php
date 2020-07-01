@@ -3,10 +3,10 @@
 namespace frontend\controllers;
 
 use common\models\LoginForm;
-use frontend\models\Evento;
+use common\models\Evento;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
+use common\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;

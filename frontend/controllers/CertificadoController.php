@@ -7,7 +7,7 @@ use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\CategoriaEvento;
 use frontend\models\ModalidadEvento;
-use frontend\models\Evento;
+use common\models\Evento;
 use frontend\models\Certificado;
 use frontend\models\Usuario;
 use frontend\components\validateEmail;

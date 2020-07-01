@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use backend\models\Usuario;
-use frontend\models\Evento;
+use common\models\Evento;
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use Yii;

@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use Da\QrCode\QrCode;
 use frontend\components\validateEmail;
 use frontend\models\CategoriaEvento;
-use frontend\models\Evento;
+use common\models\Evento;
 use frontend\models\FormularioForm;
 use frontend\models\Inscripcion;
 use frontend\models\InscripcionSearch;
