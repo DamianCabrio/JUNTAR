@@ -31,17 +31,17 @@ $this->title = $model->tituloPresentacion;
 			],
             //'diaPresentacion',
 			[
-				'attribute'=>'Día',
+				'attribute'=>'Día de la presentación',
 				'value'=>date('d/m/Y', strtotime($model->diaPresentacion)),
 			],
             //'horaInicioPresentacion',
 			[
-				'attribute'=>'Hora inicio',
+				'attribute'=>'Hora de inicio',
 				'value'=>date('H:i', strtotime($model->horaInicioPresentacion)),
 			],
             //'horaFinPresentacion',
 			[
-				'attribute'=>'Hora fin',
+				'attribute'=>'Hora de fin',
 				'value'=>date('H:i', strtotime($model->horaFinPresentacion)),
 			],
 			//'linkARecursos',
