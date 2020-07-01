@@ -12,11 +12,14 @@ use frontend\models\InscripcionSearch;
 use frontend\models\ModalidadEvento;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
+use frontend\models\RespuestaCorta;
 use frontend\models\RespuestaFile;
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\PresentacionSearch;
+use frontend\models\RespuestaLarga;
 use frontend\models\RespuestaSearch;
+use frontend\models\RespuestaTest;
 use frontend\models\Usuario;
 use frontend\models\SolicitudAvalEvento;
 use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo
@@ -364,6 +367,10 @@ class EventoController extends Controller
         }
     }
 
+    public function actionNoJs(){
+        return $this->render("noJs");
+    }
+
     public function actionCrearFormularioDinamico($slug) {
 
         $evento = $this->findModel("", $slug);
@@ -389,7 +396,6 @@ class EventoController extends Controller
     }
 
     public function actionResponderFormulario($slug) {
-
         $evento = $this->findModel("", $slug);
         $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => Yii::$app->user->identity->idUsuario])
             ->andWhere(["<>", "estado", 1])
@@ -400,20 +406,58 @@ class EventoController extends Controller
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
 
             $respuestaYaHechas = [];
+            $todasRespuestasHechas = true;
             foreach ($preguntas as $pregunta){
                 $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $inscripcion->idInscripcion])->one();
                 if($respuesta == null){
+                    $todasRespuestasHechas = false;
                     array_push($respuestaYaHechas, false);
                 }else{
                     array_push($respuestaYaHechas, $respuesta);
                 }
             }
 
+            $model = new RespuestaTest();
+            if ($model->load(Yii::$app->request->post())){
+                    foreach ($respuestaYaHechas as $i => $respuestaYaHecha){
+                        if($preguntas[$i]->tipo == 1){
+                            $modeloRespuesta = new RespuestaCorta();
+                            $modeloRespuesta->respuesta = $model->respuestaCorta[$i];
+                        }else if($preguntas[$i]->tipo == 2){
+                            $modeloRespuesta = new RespuestaLarga();
+                            $modeloRespuesta->respuesta = $model->respuesta[$i];
+                        }else{
+                            $modeloRespuesta = new RespuestaFile();
+                            $modeloRespuesta->file = UploadedFile::getInstance($model, "file[$i]");
+                            $modeloRespuesta->respuesta = "../../../eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
+                            $saved = $modeloRespuesta->upload();
+                        }
+
+                        $modeloRespuesta->idinscripcion = $inscripcion->idInscripcion;
+                        $modeloRespuesta->idpregunta = $preguntas[$i]->id;
+
+                        if($preguntas[$i]->tipo == 3){
+                            $modeloRespuesta->save(false);
+                        }else{
+                            if($modeloRespuesta->validate()){
+                                $modeloRespuesta->save();
+                            }else{
+                                return "Errores:" . print_r($modeloRespuesta->errors);
+                            }
+                        }
+                }
+                Yii::$app->session->setFlash('success', '<h2> Se han enviado sus respuestas </h2>'
+                    . '<p> ¡Mucha suerte!. </p>');
+                return $this->redirect(Url::toRoute(["eventos/ver-evento/" . $evento->nombreCortoEvento]));
+            }
+
             return $this->render('responderFormulario',
                             ["preguntas" => $preguntas,
                                 "evento" => $evento,
                                 "idInscripcion" => $inscripcion->idInscripcion,
-                                "respuestaYaHechas" => $respuestaYaHechas]);
+                                "respuestaYaHechas" => $respuestaYaHechas,
+                                "todasRespuestasHechas" => $todasRespuestasHechas,
+                                "model" => $model,]);
         } else {
             return $this->goHome();
         }
@@ -695,7 +739,8 @@ class EventoController extends Controller
 
         Yii::$app->mailer
             ->compose(
-                ['html' => 'confirmacionDeInscripcion-html'], ['evento' => $evento],
+                ['html' => 'confirmacionDeInscripcion-html'],
+                ['evento' => $evento]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
             ->setBcc($emails)

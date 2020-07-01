@@ -114,11 +114,12 @@ class SiteController extends Controller {
                     ->innerJoin('usuario', 'usuario.idUsuario=evento.idUsuario')
                     ->orderBy($ordenSQL)
                     ->where(["idEstadoEvento" => 1])
+                    ->orwhere(["idEstadoEvento" => 3])
                     ->andwhere(["like", "nombre", $busqueda])
                     ->orwhere(["like", "apellido", $busqueda])
                     ->orWhere(["like", "nombreEvento", $busqueda]);
         } else {
-            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1]);
+            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1])->orwhere(["idEstadoEvento" => 3]);
         }
 
         //Paginación para 6 eventos por pagina

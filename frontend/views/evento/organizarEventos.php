@@ -57,14 +57,15 @@ $this->title = 'Proyecto Juntar';
                     <?php foreach ($eventos as $evento): ?>
                         <div class='col-12 col-md-4'>
                         <div class='card bg-light mb-3'>
-                        <?= Html::img(Url::base('').'/'. Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
+                            <?= Html::a(Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]), ['/eventos/ver-evento/' . $evento->nombreCortoEvento]) ?>
                             <div class='card-body'>
-                                <h5 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h5>
-                                <h5 class='card-title'><?= Html::encode($evento["fechaInicioEvento"]) ?></h5>
+                                <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
+                                <h5 class='card-title'><?= Html::encode("Organidaror: " . $evento["idUsuario0"]["nombre"] . " " . $evento["idUsuario0"]["apellido"]) ?></h5>
+                                <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?></h5>
                                 <hr>
                                 <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
                                 <p class='card-text'><?= Html::decode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
-                                <?= Html::a('Más Información', ['/eventos/ver-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
+                                <?= Html::a('Más Información', ['/eventos/ver-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
                                 </div>
                         </div>
                         </div>
