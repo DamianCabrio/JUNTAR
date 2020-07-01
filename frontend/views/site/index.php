@@ -52,20 +52,33 @@ $this->title = 'Juntar';
 
         <section class="dark_bg">
             <div class="container padding_section">
-                <?php if (count($eventos) != 0) : ?>
+            <?php if (count($eventos) != 0) : ?>
                     <div class="row">
+                        <?php $validarEmail = new validateEmail(); ?>
                         <?php foreach ($eventos as $evento) : ?>
+                            <div class="col-sm-12 col-md-4 mb-5">
                             <div class='card'>
-                                <div class='card bg-light mb-3'>
-                                    <?=Html::a(Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]), ['/eventos/ver-evento/' . $evento->nombreCortoEvento]) ?>
+                                <div class='card bg-light'>
+                                <?= Html::a(Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]), ['/eventos/ver-evento/' . $evento->nombreCortoEvento]) ?>
                                     <div class='card-body'>
                                         <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
-                                        <h5 class='card-title'><?= Html::encode("Organidaror: " . $evento["idUsuario0"]["nombre"]. " " . $evento["idUsuario0"]["apellido"]) ?></h5>
-                                        <h5 class='card-title'><?= Html::encode( "Inicio: ". date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
+                                        <h5 class='card-title'><?= Html::encode("Organidaror: " . $evento["idUsuario0"]["nombre"] . " " . $evento["idUsuario0"]["apellido"]) ?></h5>
+                                        <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
+                                        <?php
+                                            $esFai = $evento->avalado;
+                                            if($esFai == 1):
+                                            ?>
+                                            - Evento organizado por la FAI
+                                            <?php
+                                            else:?>
+                                                - Evento no organizado por la FAI
+                                            <?php
+                                            endif;
+                                            ?>
                                         </h5>
                                         <hr>
                                         <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
-                                        <p class='card-text'><?= Html::encode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
+                                        <p class='card-text'><?= Html::decode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
                                         <?= Html::a('Más Información', ['/eventos/ver-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
                                     </div>
                                 </div>
@@ -73,26 +86,29 @@ $this->title = 'Juntar';
                             </div>
 
                         <?php endforeach; ?>
-                    </div>
 
-                    <div class="row py-5 pagination-lg pagination_center">
-                        <?= // display pagination
-                            LinkPager::widget([
-                                'pagination' => $pages,
-                                "disableCurrentPageButton" => true,
-                            ]);
-                        ?>
-                    </div>
-            </div>
-        <?php else : ?>
-            <div class="container">
-            <div class="row">
-                <h2 class="text-white text-uppercase padding_section">No se encontraron eventos, vuelva a intentar.</h2><br>
-            </div>
-            </div>
-        <?php endif; ?>
 
+
+            </div>
+
+            <div class="row py-5 pagination-lg pagination_center">
+                <?= // display pagination
+                        LinkPager::widget([
+                            'pagination' => $pages,
+                            "disableCurrentPageButton" => true,
+                        ]);
+                ?>
+            </div>
     </div>
-    </section>
+<?php else : ?>
+    <div class="container">
+        <div class="row">
+            <h2 class="text-white text-uppercase padding_section">No se encontraron eventos, vuelva a intentar.</h2><br>
+        </div>
+    </div>
+<?php endif; ?>
+
+</div>
+</section>
 </div>
 </div>
