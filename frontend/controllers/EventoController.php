@@ -728,7 +728,7 @@ class EventoController extends Controller
         $asunto = $request->post('asunto');
         $para = $request->post('para');
         $mensaje = $request->post('mensaje');
-
+        $grupo= ""; 
 
         switch ($para) {
 
@@ -781,10 +781,8 @@ class EventoController extends Controller
 
            Yii::$app->session->setFlash('success', '<h3> ¡Se ha enviado el correo a '.$grupo .'</h3>');
         
-       //// volver a ver evento
-     //  return $this->redirect(Url::toRoute(["eventos/ver-evento/". $evento->nombreCortoEvento]));
+     // return $this->redirect(Url::toRoute(["evento/crear-email", 'idEvento'=>$idEvento]));
 
-     //return $this->render('testEmail',['para'=> $para,'asunto' => $asunto,'mensaje'=> $mensaje]);
 
     }
 
