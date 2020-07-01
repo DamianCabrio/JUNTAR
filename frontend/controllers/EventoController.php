@@ -778,7 +778,7 @@ class EventoController extends Controller
 
            Yii::$app->session->setFlash('success', '<h3> ¡Se ha enviado el correo a '.$grupo .'</h3>');
         
-           return $this->redirect(Url::toRoute(["evento/crear-email", 'idEvento'=>$idEvento]));
+           return $this->redirect(Url::toRoute(["eventos/crear-email/" . $evento->nombreCortoEvento]));
 
 
     }
