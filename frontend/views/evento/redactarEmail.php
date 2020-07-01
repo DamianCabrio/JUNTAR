@@ -12,7 +12,7 @@ $this->title = "Cargar Evento";
     <div class="container padding_section">
         <div class="card shadow">
             <div class="card-header pinkish_bg">
-                <h2 class="text-center text-white">Redactar un mail para los participantes</h2>
+                <h2 class="text-center text-white">Enviar un mail a los participantes</h2>
             </div>
             <div class="card-body">
                 <div class="row">

@@ -689,7 +689,7 @@ class EventoController extends Controller
               $emails[]= $unInscripto['user_email'];
         }
 
-        return Yii::$app->mailer
+        Yii::$app->mailer
 
             ->compose(
                 ['html' => 'confirmacionDeInscripcion-html'],
@@ -700,8 +700,7 @@ class EventoController extends Controller
             ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
             ->send();
 
-              Yii::$app->session->setFlash('success', '<h2> ¡Se han enviado los correos a los inscriptos! </h2>'
-              . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
+              Yii::$app->session->setFlash('success', '<h3> ¡Se han enviado los correos a los inscriptos! </h3>');
            
               return $this->redirect(Url::toRoute(["eventos/respuestas-formulario/". $evento->nombreCortoEvento]));
        
