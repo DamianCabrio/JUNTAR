@@ -120,9 +120,9 @@ class CertificadoController extends Controller
         ->all();
 
       $certificate = New Certificado();
-      $certificate->event = $event;
-      $certificate->presentations = $presentation;
-      $certificate->inscription = $inscription;
+      $certificate->setEvent($event);
+      $certificate->setPresentations($presentation);
+      $certificate->setInscription($inscription);
 
       return $certificate;
     }
