@@ -53,7 +53,7 @@ $this->title = 'Juntar';
         <section class="dark_bg">
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>
-                    <div class="card-columns">
+                    <div class="row">
                         <?php foreach ($eventos as $evento) : ?>
                             <div class='card'>
                                 <div class='card bg-light mb-3'>
@@ -70,6 +70,8 @@ $this->title = 'Juntar';
                                     </div>
                                 </div>
                             </div>
+                            </div>
+
                         <?php endforeach; ?>
                     </div>
 
