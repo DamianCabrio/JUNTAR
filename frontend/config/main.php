@@ -85,6 +85,7 @@ return [
                  'eventos/suspender-evento/<slug>' => 'evento/suspender-evento',
                  'eventos/finalizar-evento/<slug>' => 'evento/finalizar-evento',
                  'eventos/solicitar-aval/<slug>' => 'evento/solicitar-aval',
+                 'eventos/crear-email/<slug>' => 'evento/crear-email',
                  'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
                  'presentacion/view/<presentacion:\d+>' => 'presentacion/view',
                  'presentacion/update/<presentacion:\d+>' => 'presentacion/update',

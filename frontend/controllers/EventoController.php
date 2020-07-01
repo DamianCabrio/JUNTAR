@@ -708,13 +708,9 @@ class EventoController extends Controller
     }
     
     
-    public function actionCrearEmail(){
-
-        $request = Yii::$app->request;
-        $idEvento =  $request->get('idEvento');
-        
+    public function actionCrearEmail($slug){
         $participantes = [ 1=>'Pre-inscriptos', 2=>'Inscriptos', 3=>'Expositores',4=>'Todos' ] ;
-        $evento = Evento::findOne(['idEvento' =>$idEvento ]);
+        $evento = Evento::findOne(['nombreCortoEvento' => $slug]);
 
         return $this->render('crearEmail',['idEvento' =>$idEvento,'participantes'=> $participantes]);
     }

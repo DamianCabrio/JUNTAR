@@ -85,7 +85,7 @@ use yii\bootstrap4\Modal;
                             'buttons' => [
                                 'delete' => function ($url, $model) {
                                     return Html::a('<i class="material-icons large align-middle">remove_circle_outline</i>', $url, ['class' => 'btn verPresentacion', 'data-toggle' => 'modal', 'href' => '#myModal', 'data' => [
-                                                'confirm' => 'Esta seguro que desea Borrar el Expositor?',
+                                                'confirm' => '¿Esta seguro que desea Borrar el Expositor?',
                                                 'method' => 'post',
                                             ]]);
                                 },
