@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'attribute' => 'avalado',
-                                    'label' => 'Aval',
+                                    'label' => 'Aval FAI',
                                     'value' => function ($dataProvider) {
                                         return ($dataProvider->avalado == 0 ? 'Denegado' : 'Concedido');
                                     },
@@ -110,11 +110,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['class' => 'yii\grid\ActionColumn',
                                     'buttons' => [
                                         'view' => function($url, $model) {
-                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">',
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar Evento" title="Visualizar Evento" width="20" height="20" role="img">',
                                                             ['/evento/view', 'id' => $model->idEvento],
                                                             ['class' => 'btn btn-pink']);
                                         },
-                                    ]
+                                    ],
+                                                'header' => 'Accion',
                                 ],
                             ],
                         ]);
