@@ -6,6 +6,7 @@ use yii\behaviors\SluggableBehavior;
 
 use frontend\models\Usuario;
 use frontend\models\ModalidadEvento;
+use common\models\SolicitudAval;
 
 
 /**
