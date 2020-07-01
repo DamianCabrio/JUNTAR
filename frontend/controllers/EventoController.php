@@ -615,6 +615,7 @@ class EventoController extends Controller
     {
         $request = Yii::$app->request;
         $idEvento = $request->get('idEvento');
+        $extension= $request->get('extension');
 
         $evento = Evento::findOne($idEvento);
 
