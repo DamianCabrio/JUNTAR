@@ -722,14 +722,13 @@ class EventoController extends Controller
         $request = Yii::$app->request;
 
         $idEvento =  $request->post('idEvento');
-        $evento = Evento::findOne($idEvento);
+        $evento = Evento::findOne(['idEvento' => $idEvento]);
 
         $asunto = $request->post('asunto');
         $para = $request->post('para');
         $mensaje = $request->post('mensaje');
         $grupo= "";
 
-        $evento = Evento::findOne(['idEvento' => $idEvento]);
 
         switch ($para) {
 
