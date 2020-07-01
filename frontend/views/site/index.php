@@ -54,25 +54,14 @@ $this->title = 'Juntar';
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>
                     <div class="card-columns">
-                        <?php $validarEmail = new validateEmail(); ?>
                         <?php foreach ($eventos as $evento) : ?>
                             <div class='card'>
                                 <div class='card bg-light mb-3'>
                                     <?= Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
                                     <div class='card-body'>
                                         <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
+                                        <h5 class='card-title'><?= Html::encode("Organidaror: " . $evento["idUsuario0"]["nombre"]. " " . $evento["idUsuario0"]["apellido"]) ?></h5>
                                         <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
-                                        <?php
-                                            $esFai = $validarEmail->validate_by_domain($evento->idUsuario0->email);
-                                            if(!$esFai):
-                                            ?>
-                                            - Evento no organizado por la FAI
-                                            <?php
-                                            else:?>
-                                                - Evento organizado por la FAI
-                                            <?php
-                                            endif;
-                                            ?>
                                         </h5>
                                         <hr>
                                         <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
