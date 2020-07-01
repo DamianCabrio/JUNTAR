@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
 use frontend\models\Usuario;
 
 use frontend\models\ModalidadEvento;

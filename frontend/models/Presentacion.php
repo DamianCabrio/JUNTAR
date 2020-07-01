@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use Yii;
-use common\models\Evento;
 
 /**
  * This is the model class for table "presentacion".

@@ -16,7 +16,7 @@ class UploadProfileImage extends Model {
 
     public function rules() {
         return [
-            [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize'=> 1024*1024*5, 'tooBig' => 'Debe ingresar una imagen menor a 10MB'],
+            [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
 

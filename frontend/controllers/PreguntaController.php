@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Evento;
+use frontend\models\Evento;
 use frontend\models\Pregunta;
 use frontend\models\RespuestaSearch;
 use Yii;

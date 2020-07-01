@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use common\models\Evento;
+use frontend\models\Evento;
 use frontend\models\Expositor;
 
 /**

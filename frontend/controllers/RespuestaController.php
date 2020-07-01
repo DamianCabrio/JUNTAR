@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Evento;
+use frontend\models\Evento;
 use frontend\models\Inscripcion;
 use frontend\models\Pregunta;
 use frontend\models\Respuesta;
