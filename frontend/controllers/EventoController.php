@@ -652,7 +652,7 @@ class EventoController extends Controller
 
             ->compose(
                 ['html' => 'confirmacionDeInscripcion-html'],
-                ['evento' => $evento],
+                ['evento' => $evento]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
             ->setTo($emails)
