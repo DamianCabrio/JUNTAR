@@ -34,7 +34,7 @@ class SolicitudAval extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['idEvento', 'fechaSolicitud', 'tokenSolicitud'], 'required'],
+            [['idEvento', 'fechaSolicitud'], 'required'],
             [['idEvento', 'avalado', 'validador'], 'integer'],
             [['fechaSolicitud', 'fechaRevision'], 'safe'],
             [['tokenSolicitud'], 'string', 'max' => 200],
@@ -77,6 +77,39 @@ class SolicitudAval extends \yii\db\ActiveRecord {
 
     private function quitarToken() {
         $this->tokenSolicitud = null;
+    }
+
+    /**
+    * Generar y actualizar token en el modelo Evento
+    */
+    public function generateRequestToken()
+    {
+      $this->tokenSolicitud = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+    /**
+    * Envió de correo con la solicitud a los usuarios con el rol Verificador.
+    */
+    public function sendEmail()
+    {
+      $idUsers = Yii::$app->authManager->getUserIdsByRole('Validador');
+      $usersEmails = [];
+      foreach ($idUsers as $key => $id) {
+        $user = User::findOne(['idUsuario' => $id]);
+        array_push($usersEmails, $user->email);
+      }
+      $event = Evento::findOne(['idEvento' => $this->idEvento]);
+      $organizer = User::findOne(['idUsuario' => $event->idUsuario]);
+
+
+      return Yii::$app->mailer
+        ->compose(
+          ['html' => 'solicitudAval-html', 'text' => 'solicitudAval-text'],
+          ['event' => $event, 'organizer' => $organizer, 'token' => $this->tokenSolicitud],
+        )
+        ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+        ->setTo($usersEmails)
+        ->setSubject('Aprobación del Evento: ' . $event->nombreEvento)
+        ->send();
     }
 
     /**
