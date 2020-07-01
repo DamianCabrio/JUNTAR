@@ -6,7 +6,7 @@ use common\models\LoginForm;
 use frontend\models\Evento;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use common\models\SignupForm;
+use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
