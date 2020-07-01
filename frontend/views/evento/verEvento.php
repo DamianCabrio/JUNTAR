@@ -90,7 +90,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <div class="col text-center">
                     <h4 class="text-white"><i class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
                     <h4><i class="material-icons large align-middle">location_on</i> <?= $evento->lugar ?></h4>
-                    <?php if ($estadoAval != 'no solicitado' && $estadoAval->avalado == '1' )  : ?>
+                    <?php if ($esFai == 1)  : ?>
                         <h5 class="text-white">Evento organizado por la FAI</h5>
                     <?php else : ?>
                         <h5 class="text-white">Evento no organizado por la FAI</h5>

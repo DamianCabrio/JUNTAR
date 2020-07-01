@@ -465,7 +465,7 @@ class EventoController extends Controller
         }
 
         //$validarEmail = new validateEmail();
-        $esFai = $evento->avalado;
+        $esFai = $evento->solicitudAval['avalado'];
         $esDueño = $this->verificarDueño($evento);
         $esAdministrador = $this->verificarAdministrador($evento);
 
