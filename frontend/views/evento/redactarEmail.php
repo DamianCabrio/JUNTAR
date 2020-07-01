@@ -20,48 +20,42 @@ $this->title = "Cargar Evento";
 
             <div class="evento-form">
      
-                <p class="text-center">Complete los siguientes campos</p>
 
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+               
 
                 <div class="row">
-                <div class="col-md-2">
-                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                     <?=Html::label('Todos','alumno[lugarBautismo]') ?>
-                </div>
-                <div class="col-md-2">
-                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                     <?=Html::label('Pre-inscriptos','alumno[lugarBautismo]') ?>
-                </div>
-                <div class="col-md-2">
-                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                     <?=Html::label('Inscriptos','alumno[lugarBautismo]') ?>
-                </div>
-                <div class="col-md-2">
-                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                     <?=Html::label('Expositores','alumno[lugarBautismo]') ?>
-                </div>
+                    <div class="col-md-2">
+                        <p ><b>Para: </b></p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                        <?=Html::label('Todos','alumno[lugarBautismo]') ?>
+                    </div>
+                    <div class="col-md-2">
+                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                        <?=Html::label('Pre-inscriptos','alumno[lugarBautismo]') ?>
+                    </div>
+                    <div class="col-md-2">
+                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                        <?=Html::label('Inscriptos','alumno[lugarBautismo]') ?>
+                    </div>
+                    <div class="col-md-2">
+                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                        <?=Html::label('Expositores','alumno[lugarBautismo]') ?>
+                    </div>
                 </div>
 
-
-         
-
-
-                <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
                 <div class="row">
-                    <div class="col-4 form-advice">
-                        <span class="m-auto"> Opciones automaticas: </span>
+                    <div class="col-md-2">
+                        <p ><b>Agregar un asunto: </b></p>
                     </div>
-                    <div class="nombresCortos" id="automaticSlug">
+
+                    <div class="col-md-4">
+                    <?=Html::input('text','asunto','',['class'=>'form-control']); ?>
                     </div>
-                    <br>
-                    <div class="col-12 mt-2 nombresCortos">
-                        <!--<input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>-->
-                        <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
-                            'data-title' => 'Requisitos',
-                            'data-toggle' => 'popover',
-                            'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
-                    </div>
+  
                 </div>
 
 
@@ -87,14 +81,11 @@ $this->title = "Cargar Evento";
                         'removePlugins' => 'elementspath',
                         'resize_enabled' => false
                     ],
-                ])->label('Descripción *') ?>
+                ])->label('<b>Mensaje</b>') ?>
 
-              
-                <p class="font-italic">
-                    Los campos marcados con (*) son obligatorios. 
-                <p>
+    
                 <div class="form-group">
-                    <?= Html::submitButton('enviar mail', ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton('Enviar', ['class' => 'btn btn-success']) ?>
                 </div>
 
                 <?php ActiveForm::end(); ?>
