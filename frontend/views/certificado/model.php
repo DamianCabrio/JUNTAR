@@ -75,7 +75,7 @@
           <p class="centring">Se certifica que <b><?= $user->apellido.", ".$user->nombre?></b>, DNI Nº <b><?=$user->dni?></b></p>
           <p class="centring">  <?=$type." ".$category?> </p>
           <p class="centring event"><b>"<?= $event[0]['nombreEvento'] ?>"</b></p>
-          <p class="centring">  Realizado <?= $daysMessage ?> de <?= $months[$numberMonth]?> de <?= date("Y", strtotime($event[0]['fechaInicioEvento']))?>,
+          <p class="centring">  Realizado <?= $daysMessage ?> de <?= $months[$numberMonth]?> del <?= date("Y", strtotime($event[0]['fechaInicioEvento']))?>,
             <?php if ($certificateType != 'expositor'): ?>
               <?php if ($hours->format("H") != '00'): ?>
                 con una duración de <?= $hours->format("H:i")?> Hs.
