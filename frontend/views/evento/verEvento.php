@@ -292,7 +292,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         <span class=" align-middle">
                                         <?php
 
-                                        echo Html::a('Enviar un mail a los participantes', ['evento/crear-email', $evento->nombreCortoEvento], ['class' => '']);
+                                        echo Html::a('Enviar un mail a los participantes', ['evento/crear-email', 'idEvento'=>$evento->idEvento], ['class' => '']);
                                         ?>
                                         </span>
 

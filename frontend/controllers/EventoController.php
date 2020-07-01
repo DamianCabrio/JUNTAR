@@ -697,7 +697,7 @@ class EventoController extends Controller
                 ['html' => 'confirmacionDeInscripcion-html'], ['evento' => $evento],
             )
             ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-            ->setTo($emails)
+            ->setBcc($emails)
             ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
             ->send();
 
@@ -709,62 +709,77 @@ class EventoController extends Controller
     
     
     public function actionCrearEmail(){
-        
-        
-        $participantes = [ 1=>'Pre-inscriptos', 2=>'Inscriptos', 3=>'Expositores',4=>'Todos',  ] ;
-        $evento = Evento::findOne(['idEvento' =>1]);
 
-        return $this->render('redactarEmail',['model' => $evento,'participantes'=> $participantes]);
+        $request = Yii::$app->request;
+        $idEvento =  $request->get('idEvento');
+        
+        $participantes = [ 1=>'Pre-inscriptos', 2=>'Inscriptos', 3=>'Expositores',4=>'Todos' ] ;
+        $evento = Evento::findOne(['idEvento' =>$idEvento ]);
+
+        return $this->render('crearEmail',['idEvento' =>$idEvento,'participantes'=> $participantes]);
     }
 
 
     public function actionEnviarEmail(){
 
         $request = Yii::$app->request;
-        $idEvento =1;
 
+        $idEvento =  $request->post('idEvento');
         $asunto = $request->post('asunto');
         $para = $request->post('para');
         $mensaje = $request->post('mensaje');
 
 
-
         switch ($para) {
 
             case 1: ///  1: preinscripto
-                  $base= Inscripcion::find()->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
-                  $base->select(['user_email'=>'usuario.email']);
-                  $base->andWhere(["=", "inscripcion.estado", 0])
-                       ->andWhere(["=", "inscripcion.idEvento",  $idEvento ])->asArray()->all();
-                  $participantes= $base->asArray()->all();
-
+                 $participantes=  $this->actionObtenerPrinscriptos( $idEvento );
+                 if(count($participantes)>=1){
+                     $this->actionEventoEmail( $participantes, $asunto, $mensaje, 'enviarEmail-html');
+                     $grupo= "Pre-inscriptos"; 
+                 }
             break;
 
             case 2: //  2: inscripto  
-                  $base= Inscripcion::find()->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
-                  $base->select(['user_email'=>'usuario.email']);
-                  $base->andWhere(["=", "inscripcion.estado", 1])
-                       ->andWhere(["=", "inscripcion.acreditacion", 0])
-                       ->andWhere(["=", "inscripcion.idEvento",  $idEvento ]);
-                  $participantes= $base->asArray()->all();
+                $participantes=  $this->actionObtenerInscriptos( $idEvento );
+                if(count($participantes)>=1){
+                    $this->actionEventoEmail( $participantes, $asunto, $mensaje, 'enviarEmail-html');
+                    $grupo= "Inscriptos"; 
+                }
             break;
  
             case 3: //  3:'Expositores' 
-                $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
-                $base->innerJoin('presentacion_expositor', 'presentacion_expositor.idExpositor=inscripcion.idUsuario');
-                $base->select(['user_email'=>'usuario.email']);
-                $participantes= $base->andWhere(["=", "inscripcion.estado", 1])->asArray()->all();
-                break;
+                $participantes=  $this->actionObtenerExpositores( $idEvento );
+                if(count($participantes)>=1){
+                     $this->actionEventoEmail( $participantes, $asunto, $mensaje, 'enviarEmail-html');
+                     $grupo= "Expositores"; 
+                }
 
-            case 4: //   4:'Todos',
-                break;
+            break;
 
-         }
+            case 4: //   4:'Todos',     
+                $prinscriptos =  $this->actionObtenerPrinscriptos( $idEvento );
+                if(count($prinscriptos)>=1){
+                     $this->actionEventoEmail( $prinscriptos, $asunto, $mensaje, 'enviarEmail-html');
+                }
+   
+                $inscriptos =  $this->actionObtenerInscriptos( $idEvento );
+                if(count( $inscriptos)>=1){
+                     $this->actionEventoEmail(   $inscriptos , $asunto, $mensaje, 'enviarEmail-html');
+                }
+    
+                $expositores=  $this->actionObtenerExpositores( $idEvento );
+                if(count( $inscriptos)>=1){
+                    $this->actionEventoEmail( $expositores, $asunto, $mensaje, 'enviarEmail-html');
+                }
+                $grupo= "Todos"; 
+
+            break;
+        }
 
 
-        $this->actionEventoEmail( $participantes, $asunto, $mensaje, 'enviarEmail-html');
 
-          //    Yii::$app->session->setFlash('success', '<h3> ¡Se ha enviado el correo a los! '.$para .'</h3>');
+           Yii::$app->session->setFlash('success', '<h3> ¡Se ha enviado el correo a '.$grupo .'</h3>');
         
        //// volver a ver evento
      //  return $this->redirect(Url::toRoute(["eventos/ver-evento/". $evento->nombreCortoEvento]));
@@ -773,22 +788,52 @@ class EventoController extends Controller
 
     }
 
+
+    
+    public function actionObtenerPrinscriptos($idEvento )
+    {
+        $base= Inscripcion::find()->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
+        $base->select(['user_email'=>'usuario.email']);
+        $base->andWhere(["=", "inscripcion.estado", 0])
+             ->andWhere(["=", "inscripcion.idEvento",  $idEvento ])->asArray()->all();
+        $participantes= $base->asArray()->all();
+        return $participantes;
+    }
+
+    public function actionObtenerInscriptos($idEvento )
+    {
+        $base= Inscripcion::find()->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
+        $base->select(['user_email'=>'usuario.email']);
+        $base->andWhere(["=", "inscripcion.estado", 1])
+             ->andWhere(["=", "inscripcion.acreditacion", 0])
+             ->andWhere(["=", "inscripcion.idEvento",  $idEvento ]);
+        $participantes= $base->asArray()->all();
+        return $participantes;
+    }
+
+    public function actionObtenerExpositores($idEvento )
+    {
+        $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
+        $base->innerJoin('presentacion_expositor', 'presentacion_expositor.idExpositor=inscripcion.idUsuario');
+        $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
+
+        $base->select(['user_email'=>'usuario.email']);
+        $participantes= $base->andWhere(["=", "inscripcion.estado", 1])->asArray()->all();
+        return $participantes;
+    }
+
+
     public function actionEventoEmail($participantes, $asunto, $mensaje, $plantilla)
     {
-        $emailsTo = array();
-
+        $emailsTo= [];
         foreach($participantes as $unParticipante){
-              $emailsTo[]= $unParticipante['user_email'];
+              array_push($emailsTo, $unParticipante['user_email']);
         }
-
        
         Yii::$app->mailer
-            ->compose(
-                ['html' => $plantilla], 
-                ['mensaje'=> $mensaje]
-            )
+            ->compose( ['html' => $plantilla], ['mensaje'=> $mensaje])
             ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-            ->setTo($emailsTo)
+            ->setBcc($emailsTo)
             ->setSubject($asunto)
             ->send();
     }

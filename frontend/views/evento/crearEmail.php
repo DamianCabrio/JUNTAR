@@ -22,6 +22,8 @@ $this->title = "Cargar Evento";
      
                 <?php $form = ActiveForm::begin(['action' =>['evento/enviar-email'],  'method' => 'post','options' => ['enctype' => 'multipart/form-data'] ]);?>
 
+                    <?= Html::hiddenInput('idEvento', $idEvento);?>
+
                   <div class="col-md-12">
                       <?= Html::label('<b>Para: </b>'); ?>
                       <?= Html::dropDownList("para",null, $participantes, ['class' => 'form-control','prompt' => 'Elija un grupo de participantes' ])   ?>
