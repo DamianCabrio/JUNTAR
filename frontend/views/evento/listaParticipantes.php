@@ -9,7 +9,6 @@
     use PhpOffice\PhpSpreadsheet\Style\Border;
 
 
-    $extension= 'csv';
 
     $template =  new Spreadsheet();
 
