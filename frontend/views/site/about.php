@@ -32,5 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		<p><b><a class="link" href="https://github.com/DamianCabrio/JUNTAR" target="_blank">Link a repositorio Juntar</a></b></p>
 	</div>
 
-<!-- 素晴らしいチーム、これは10/10です -->	
 </div>
+    <!-- 冠状病毒团伙 !-->
+	<!-- 素晴らしいチーム、これは10/10です !-->
+	<!-- Von hier zu den Sternen ★★★★★ -->
+
