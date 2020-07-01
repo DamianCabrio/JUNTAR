@@ -710,7 +710,8 @@ class EventoController extends Controller
     
     
     public function actionRedactarEmail(){
-        return $this->render('redactarEmail',['datosDelEvento' => '']);
+        $evento = Evento::findOne(['idEvento' =>1]);
+        return $this->render('redactarEmail',['model' => $evento]);
     }
 
 
