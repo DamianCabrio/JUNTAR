@@ -23,10 +23,29 @@ $this->title = "Cargar Evento";
                 <p class="text-center">Complete los siguientes campos</p>
 
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-                <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
-                <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
 
-                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
+                <div class="row">
+                <div class="col-md-2">
+                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                     <?=Html::label('Todos','alumno[lugarBautismo]') ?>
+                </div>
+                <div class="col-md-2">
+                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                     <?=Html::label('Pre-inscriptos','alumno[lugarBautismo]') ?>
+                </div>
+                <div class="col-md-2">
+                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                     <?=Html::label('Inscriptos','alumno[lugarBautismo]') ?>
+                </div>
+                <div class="col-md-2">
+                    <?= Html::radio('nunca', true, ['value' => 1]) ?>
+                     <?=Html::label('Expositores','alumno[lugarBautismo]') ?>
+                </div>
+                </div>
+
+
+         
+
 
                 <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
                 <div class="row">
