@@ -12,12 +12,12 @@ use yii\helpers\Url;
       <div class="row m-2 ">
         <div class="col-12 col-md-6">
           <?php if ($attendanceCertificate) {
-            echo '<label>Asistencia</label>'.Html::a($iconsPdf, ['certificado/preview-attendance', 'id' => $idEvent], ['class' => 'btn btn-primary']);
+            echo '<label>Asistencia</label></br>'.Html::a($iconsPdf, ['certificado/preview-attendance', 'id' => $idEvent], ['class' => 'btn btn-primary']);
           } ?>
         </div>
         <div class="col-12 col-md-6">
           <?php if ($organizerCertificate) {
-            echo '<label>Organizador</label>';
+            echo '<label>Organizador</label></br>';
             echo Html::a($iconsPdf, ['certificado/preview-organizer', 'id' => $idEvent], ['class' => 'btn btn-primary']);
           } ?>
         </div>

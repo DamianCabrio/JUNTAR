@@ -113,7 +113,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         <?php
                         if (($evento->idEstadoEvento) == 4) {
                        ?>
-                        
+
                         <!-- Button trigger modal -->
                         <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
                         <!-- Modal -->
@@ -129,7 +129,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <div class="modal-body">
                                 <p>¿Está seguro de querer finalizar su evento?</p>
                                 <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
-                                <span class="float-right font-weight-bold">Juntar</span> 
+                                <span class="float-right font-weight-bold">Juntar</span>
                             </div>
                             <div class="modal-footer">
                                 <?= Html::a('Si', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
@@ -154,17 +154,17 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <div class="modal-body">
                                 <p>¿Está seguro de querer publicar su evento?</p>
                                 <p>Será visible en los lanzamientos de la plataforma y pasará a estar disponible para las inscripciones</p>
-                                <span class="float-right font-weight-bold">Juntar</span> 
+                                <span class="float-right font-weight-bold">Juntar</span>
                             </div>
                             <div class="modal-footer">
-                            <?= Html::a('Si', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>  
+                            <?= Html::a('Si', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                             </div>
                             </div>
                         </div>
-                        </div>       
-                        <?php 
-                        } 
+                        </div>
+                        <?php
+                        }
                         elseif (($evento->idEstadoEvento) == 1) {
                         ?>
                          <!-- Button trigger modal -->
@@ -183,7 +183,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <div class="modal-body">
                                 <p>¿Está seguro de querer finalizar su evento?</p>
                                 <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
-                                <span class="float-right font-weight-bold">Juntar</span> 
+                                <span class="float-right font-weight-bold">Juntar</span>
                             </div>
                             <div class="modal-footer">
                                 <?= Html::a('Si', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
@@ -191,7 +191,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                             </div>
                         </div>
-                        </div> 
+                        </div>
 
                           <!-- Button trigger modal -->
                         <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#publicar">Suspender</button>
@@ -208,7 +208,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <div class="modal-body">
                                 <p>¿Está seguro de querer suspender su evento?</p>
                                 <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y podrá seguir editando</p>
-                                <span class="float-right font-weight-bold">Juntar</span> 
+                                <span class="float-right font-weight-bold">Juntar</span>
                             </div>
                             <div class="modal-footer">
                                  <?= Html::a('Si', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
@@ -217,11 +217,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                         </div>
                         </div>
-                              
+
                         <?php
                         }
                         ?>
-                                    
+
                         <!-- Solicitar Aval-->
                         <?php if ($evento->avalado != 1 && $evento->avalado != 3): ?>
                         <?php if ($evento->avalado == 0): ?>
@@ -289,9 +289,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <br>
                                      <?php if ($esDueño || $esAdministrador) { ?>
                                         <i class="material-icons align-middle">email</i>
-                                        <span class=" align-middle"> 
+                                        <span class=" align-middle">
                                         <?php
-                                       
+
                                         echo Html::a('Enviar un mail a los participantes', ['evento/redactar-email', $evento->nombreCortoEvento], ['class' => '']);
                                         ?>
                                         </span>
@@ -374,7 +374,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                     Modal::begin([
                                         'id' => 'modalCertificado',
-                                        'size' => 'modal-sm'
                                     ]);
                                     Modal::end();
                                     ?>
@@ -469,7 +468,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ?>
 
                                 </div>
-                                
+
                                 <div class="table table-responsive">
                                     <?=
                                         GridView::widget([
@@ -543,7 +542,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                                  $string = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/'.$dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
                                                             }
                                                             $string .= '&nbsp;&nbsp;&nbsp;&nbsp;' . Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores/'.$dataProvider->idPresentacion], ['class' => 'verExpositores']);
-                                                            
+
                                                         }
                                                         return $string;
                                                     },
