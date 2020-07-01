@@ -19,7 +19,7 @@ $this->title = "Responder Formulario";
     <?php
     $form = ActiveForm::begin([
                 'id' => 'respuestas-form',
-                'options' => ['class' => 'form-horizontal'],
+                'options' => ['class' => 'form-horizontal', 'enctype'=>'multipart/form-data'],
             ])
     ?>
     <?php foreach ($preguntas as $i => $pregunta) : ?>

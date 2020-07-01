@@ -422,18 +422,15 @@ class EventoController extends Controller
                         }else{
                             $modeloRespuesta = new RespuestaFile();
                             $modeloRespuesta->file = UploadedFile::getInstance($model, "file[$i]");
-                            $modeloRespuesta->idinscripcion = $inscripcion->idInscripcion;
-                            $modeloRespuesta->idpregunta = $preguntas[$i]->id;
-                            if ($modeloRespuesta->upload()) {
-                                $modeloRespuesta->respuesta = "../../../eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
-                            }
+                            $modeloRespuesta->respuesta = "../../../eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
+                            $saved = $modeloRespuesta->upload();
                         }
 
                         $modeloRespuesta->idinscripcion = $inscripcion->idInscripcion;
                         $modeloRespuesta->idpregunta = $preguntas[$i]->id;
 
                         if($preguntas[$i]->tipo == 3){
-                            $modeloRespuesta->save();
+                            $modeloRespuesta->save(false);
                         }else{
                             if($modeloRespuesta->validate()){
                                 $modeloRespuesta->save();
