@@ -12,14 +12,34 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-use pwa_juntar;
-
-
 -- #######################################################################################################################
 -- #######################################################################################################################
 --
 -- Volcado de datos para las tablas
 --
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `pais`, `provincia`, `localidad`, `email`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
+(1, 'Marta', 'Caña', 20332183, '', NULL, 'Neuquén', 'admin01@test.com', 'OmzVKGUJExEJuN4e_yJnso6tNabdoF09', '$2y$13$hkfdaAZgIQEaZTrHRNsnje0otnGEzHo.BIoaXbsWqEbb51si.PR3e', NULL, 10, 1590994328, 1590994328, 'FAcDt5Ki0rSn5JLg9aMtCaV4F-LeTGUY_1590994328'),
+(2, 'Carlos', 'Sepulveda', 20332183, '', NULL, 'Plottier', 'admin02@test.com', '5tT59IUEQHIF7A8RpYCNaj15feVcY5hI', '$2y$13$VSLcQKUMVi4yGc8o1DRcIeH1u.KkzuohRRghOS6JZAKIBWcUX/GZ.', NULL, 10, 1590994652, 1590994652, 'jx4kYymAYb5I_bx29h5KC9m3fLAnqirN_1590994652'),
+(3, 'Rodrigo', 'Lazo', 20332183, '', NULL, 'Neuquén', 'organizador01@test.com', 'RfIaQzvchcC1zfRlAo2C7OpT04tNwcxF', '$2y$13$atb/agLp5ViXD20KG91yRefE0SN73JLrNOaJnD6UVcN64DQkTyrze', NULL, 10, 1590994729, 1590994729, '4i0PgyPBBD-1zt0DlQEVo8PP9MLtFAAN_1590994729'),
+(4, 'Sabrina', 'Casas', 18664055, '', NULL, 'Centenario', 'organizador02@test.com', 'o546IVKZ0Vc1tnzfYruu3jTq1AEQl5XY', '$2y$13$OdLxghAQtDLB4WS7aIpWrOd7WR12ZuzfPfu/g23E.T8l06e8ALuWq', NULL, 10, 1590994776, 1590994776, 'zBU1IGmB733ix97W1n4GwVWVXQZhNemm_1590994776'),
+(5, 'Marina', 'Perez', 26301284, '', NULL, 'General Roca', 'organizador03@test.com', 'PGvTg0o2LXqumMIZr4i472LZ_plvBBa-', '$2y$13$9IPBnPbxR6u3ucMMOR6rt.s/sIemcAtTiiaLAgqr7XguzZDRc0VsC', NULL, 10, 1590994822, 1590994822, 'amd5a1LNUJzwxXYcnozxpVd8gp0caScy_1590994822'),
+(6, 'Alejandro', 'Medario', 32976700, '', NULL, 'Neuquén', 'registrado01@test.com', 'nE1auJs4ex8KmM7mo5UEtvrkFtSt94FI', '$2y$13$TkAsHr/QXEWKXR0OAxCm/.9ij2nod5iBibpk6ly0ZkTz9YeHmrEha', NULL, 10, 1590994878, 1590994878, 'vucICXx57O0zJv3LkAK7ueInqv9vrF1I_1590994878'),
+(7, 'Matias', 'Contreras', 31179842, '', NULL, 'Cipolletti', 'registrado02@test.com', '5pjZV8xixJkfcspDznsGCq3QuIbU05da', '$2y$13$gc42YUd7Qsp2vrJACHZYLOn3b.Mh9JmS1N/ZOLIf7ayyFhKre7rgW', NULL, 10, 1590994958, 1590994958, 'GApav7SolKFCdriU-_NNYnTleAfenZyz_1590994958'),
+(8, 'Lidia', 'Calderon', 32684666, '', NULL, 'Plottier', 'registrado03@test.com', 'dHMzF22B5zRjX4dSLn6J-fqlXPpvJYa2', '$2y$13$4Ym0uF4zAjqdCFboFsSurOekefP0bdSsR7faxqrlQaSK8Ma7NAqEq', NULL, 10, 1590995084, 1590995084, '_UvCdkNDMuJCQLjRlfQOjb6Hv_SaWb48_1590995084'),
+(9, 'Anastasia', 'Palomo', 34740201, '', NULL, 'Centenario', 'registrado04@test.com', 'LHalzRHycE2DAdCGiyGCetHUDEPVaFoK', '$2y$13$FerwjQJV1hAAiE6d6tBiueIDQoB4brUfBQJFUzYwLjZPeywtp27b6', NULL, 10, 1590995156, 1590995156, 'inbyGzB29SLhZquC0z4tw-mZpX0VzcL6_1590995156'),
+(10, 'Joana', 'Otero', 24464510, '', NULL, 'Neuquén', 'registrado05@test.com', 'qKdu_wt2JYETR6_E2u87OYY3iOy16cBx', '$2y$13$rnVUVvZutr/96w1cS4HhfetZw3dBQBlD9u.1ya4cdg7FPKDwUoov.', NULL, 10, 1590995182, 1590995182, 'TR9EWhAvtwWD8FR3-Sm1qc9HdBGRO6BP_1590995182'),
+(11, 'Araceli', 'Manzano', 31747790, '', NULL, 'Neuquén', 'registrado06@test.com', 'sHy4nUiJC24Ahf7iAoM6LLdbqrozvcAA', '$2y$13$2bjcaQxu2/4UnjjwStwPSeQJgNNS/B09gbdw8uJPsbm6TLcCNcFi6', NULL, 10, 1590995202, 1590995202, '8wjkPYwqlYBeop4L8bL_VHabpkfLpUgL_1590995202'),
+(12, 'Fabiola', 'Maroto', 33102179, '', NULL, 'Plottier', 'registrado07@test.com', 'ipIF8YUsd4YWUho4xQk26K1LNyfh4Znz', '$2y$13$baEfEtJVIbb7NTQZLerLyeZdpWW/S525t0Ky.zTSx3c9pPwjBlp3a', NULL, 10, 1590995230, 1590995230, '_6rZyiqUDrYVG9Qsq2RUFnloz09aKVqN_1590995230'),
+(13, 'Elias', 'Contreras', 30147983, '', NULL, 'Centenario', 'contreras.elias@test.com', 'Nn3xdz9B86R-sQwWdDtrOOk79e0CdMtN', '$2y$13$ysREVfh1HwvP/p0cC.jtGe.UiPYHS/.kvqPq5Ga9Y8.BeDZSgyL9K', NULL, 10, 1590995252, 1590995252, 'r01h04ffYeO0X--HeoR_Sl5s571YJRj4_1590995252'),
+(14, 'Fernanda', 'Rosa', 28561145, '', NULL, 'Neuquén', 'registrado09@test.com', 'eEymH70Ta4pi5uM1JdM4EQVMDCe8c94e', '$2y$13$YbKN8Zjs9YNBNSPSE/Npy.aowEX9nROQ44acOnuShe4lxpdKUpQgW', NULL, 10, 1590995290, 1590995290, 'lulupIU6dETfykAga9Pw4WzgcY3T6CBL_1590995290'),
+(15, 'Elba', 'Thidora', 23609276, '', NULL, 'Plottier', 'registrado10@test.com', 'NzK7e7ANsT2rLyqzqavoG8vm8wWo8eEC', '$2y$13$9l4aj9xXl7KZAjewr9tDIeAdog7ShW/jRBmQqlRjTHwtxro9tfJF6', NULL, 10, 1590995334, 1590995334, 'VzTx3f30jl_RjQXgahQ5jfPM9xzrBCPV_1590995334'),
+(17, 'Pablo', 'Kogan', 27894458, 'Argentina', 'Rio Negro', 'General Fernandez Oro', 'pablo.kogan@fi.uncoma.edu.ar', 'gjn-6uGKJQsvPugxpxuSMuJWUW_pci4u', '$2y$13$K5dZR0CrUqWO7zDwVZUj/Oa8p.21PDN1LvMO8TlNZIyN58MLJospS', NULL, 10, 1592327713, 1592327776, 'b9_rCItrP6MDoz8vM2VR0rO-S1-M2M5f_1592327713'),
+(18, 'Leandro', 'Casanova', 36876234, 'Argentina', 'Chubut', 'Barrio Caleta Cordova', 'leandro.casanova@est.fi.uncoma.edu.ar', 'iwOgqdR2UqPHX3f6VDjWTIFzgsJo0q4b', '$2y$13$fT6WjOr/2Hv8miGKPxT9KeSfjG/oUX1cqbHO34rzezQmEVdKHiJ3a', NULL, 10, 1592327723, 1592327806, 'vz3oZFJt_PbQ86vwllCYOjL7brmZ4o57_1592327723'),
+(19, 'Natalia', 'Baeza', 27979821, 'Argentina', 'Neuquen', 'Neuquen', 'baeza.natalia@gmail.com', 'BxADsNR5nEaUPbEdyIVFRnQ44RBWWV_l', '$2y$13$iM8Z.6IZsVWXuper5joPduhW7Jvgfw4MhqK/4TSGnKcNo0qbfUtxS', NULL, 10, 1592328971, 1592328995, '8SBwnoDKG-e8UEfeqjcXnNjeCkoAskRl_1592328971');
 
 --
 -- Volcado de datos para la tabla `permiso`
@@ -28,35 +48,53 @@ use pwa_juntar;
 INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('acreditacion/acreditacion', 2, 'Permite a un usuario acreditarse en un evento', NULL, NULL, 1592267103, 1592267103),
 ('Administrador', 1, 'Superusuario Administrador', NULL, NULL, 1590382997, 1590382997),
+('certificado/index', 2, 'FRONTEND - Permite visualizar un certificado', NULL, NULL, 1592995152, 1592995152),
+('certificado/preview-attendance', 2, 'FRONTEND - Permite visualizar el certificado de asistencia', NULL, NULL, 1592995103, 1592995103),
+('certificado/preview-organizer', 2, 'FRONTEND - Permite visualizar el certificado para el organizador del evento', NULL, NULL, 1592995122, 1592995122),
+('cuenta/cambiar-email', 2, 'Permite a un usuario cambiar su email', NULL, NULL, 1592969767, 1592969767),
+('cuenta/cambiar-email-request', 2, 'Permite a un usuario pedir un cambio de email', NULL, NULL, 1592969780, 1592969780),
+('cuenta/cambiar-password', 2, 'Permite a un usuario cambiar su contraseña', NULL, NULL, 1592969791, 1592969791),
 ('cuenta/change-rol', 2, 'Permite a un usuario cambiar su rol', NULL, NULL, 1591577677, 1591577677),
 ('cuenta/desactivar-cuenta', 2, 'Permite desactivar tu cuenta', NULL, NULL, 1592440553, 1592440553),
 ('cuenta/editprofile', 2, 'Modificar datos del perfil', NULL, NULL, 1591368838, 1591368838),
+('cuenta/mis-eventos-gestionados', 2, 'Permite a un usuario visualizar sus eventos gestionados', NULL, NULL, 1592969818, 1592969818),
+('cuenta/mis-inscripciones-a-eventos', 2, 'Permite a un usuario visualizar sus inscripciones a eventos', NULL, NULL, 1592969807, 1592969807),
 ('cuenta/profile', 2, 'Perfil de usuario', NULL, NULL, 1591354697, 1591354697),
 ('cuenta/upload-profile-image', 2, 'Permite subir una imagen de perfil', NULL, NULL, 1592417186, 1592417186),
 ('evento/cargar-evento', 2, 'Permite cargar un evento en la plataforma', NULL, NULL, 1592267549, 1592267549),
 ('evento/cargar-expositor', 2, 'Permite cargar un expositor al evento', NULL, NULL, 1592267671, 1592267671),
+('evento/confirmar-solicitud', 2, 'Confirmar Solicitud', NULL, NULL, NULL, NULL),
+('evento/crear-formulario-dinamico', 2, 'Permite Crear Formulario de Inscripción.', NULL, NULL, NULL, NULL),
+('evento/create', 2, 'BACKEND - Permite crear un nuevo evento', NULL, NULL, 1592994135, 1592994135),
+('evento/delete', 2, 'BACKEND - Permite eliminar un evento', NULL, NULL, 1592994123, 1592994123),
+('evento/denegar-solicitud', 2, 'Denegar Solicitud', NULL, NULL, NULL, NULL),
 ('evento/despublicar-evento', 2, 'Permite eliminar la publicacion de un evento de la plataforma', NULL, NULL, 1592267644, 1592267644),
 ('evento/editar-evento', 2, 'Permite editar un evento de la plataforma', NULL, NULL, 1592267568, 1592267568),
+('evento/enviar-solicitud-evento', 2, 'Solicitud Evento', NULL, NULL, NULL, NULL),
+('evento/index', 2, 'BACKEND - Permite visualizar todos los eventos de la plataforma', NULL, NULL, 1592994088, 1592994088),
+('evento/inscriptos-excel', 2, 'FRONTEND - Permite descargar un excel con los datos de los usuarios inscriptos a un evento', NULL, NULL, 1592994970, 1592994970),
 ('evento/listar-eventos', 2, 'Permite visualizar todos los eventos creados por un organizador', NULL, NULL, 1592267591, 1592267591),
+('evento/organizar-eventos', 2, 'Permite organizar eventos', NULL, NULL, 1592969476, 1592969476),
 ('evento/publicar-evento', 2, 'Permite publicar un evento en la plataforma', NULL, NULL, 1592267609, 1592267609),
+('evento/responder-formulario', 2, 'FRONTEND - Permite responder a un formulario de preinscripcion', NULL, NULL, 1592995026, 1592995026),
+('evento/respuestas-formulario', 2, 'Acceder a las repuestas del formulario', NULL, NULL, NULL, NULL),
+('evento/send-request-event', 2, 'Solicitud Verificacion', NULL, NULL, NULL, NULL),
+('evento/solicitudes-de-aval', 2, 'Solicitud de Aval', NULL, NULL, NULL, NULL),
+('evento/suspender-evento', 2, 'FRONTEND - Permite al organizador del evento suspender un evento', NULL, NULL, 1592994988, 1592994988),
+('evento/update', 2, 'BACKEND - Permite actualizar un evento', NULL, NULL, 1592994115, 1592994115),
 ('evento/ver-evento', 2, 'Permite ver eventos', NULL, NULL, 1592266904, 1592266904),
-('evento/ver-evento2', 2, 'permite ver eventos version 2', NULL, NULL, 1592343374, 1592343374),
+('evento/verificar-solicitud', 2, 'Verificar Solicitud de Evento FAI', NULL, NULL, NULL, NULL),
+('evento/view', 2, 'BACKEND - Permite visualizar un evento de la plataforma', NULL, NULL, 1592994103, 1592994103),
 ('inscripcion/eliminar-inscripcion', 2, 'Permite a un usuario anular la inscripcion a un evento', NULL, NULL, 1592267073, 1592267073),
+('inscripcion/inscribir-a-usuario', 2, 'a', NULL, NULL, 1593040411, 1593040411),
 ('inscripcion/preinscripcion', 2, 'Permite a un usuario preinscribirse a un evento', NULL, NULL, 1592267029, 1592267029),
+('modalidad-evento/index', 2, 'Modalidades', NULL, NULL, NULL, NULL),
 ('Organizador', 1, 'Usuario gestor de eventos', NULL, NULL, 1590382997, 1590382997),
+('pregunta/create', 2, 'a', NULL, NULL, 1593040700, 1593040700),
+('pregunta/delete', 2, 'a', NULL, NULL, 1593040704, 1593040704),
+('pregunta/update', 2, 'a', NULL, NULL, 1593040702, 1593040702),
 ('permisos/index', 2, 'Permite visualizar un permiso', NULL, NULL, 1592313735, 1592313735),
 ('permisos/view', 2, 'Permite visualizar un permiso', NULL, NULL, 1592312996, 1592312996),
-('permission-manager/assing-permission', 2, NULL, NULL, NULL, NULL, NULL),
-('permission-manager/create-permission', 2, 'Permite crear un nuevo permiso para la plataforma', NULL, NULL, 1591336656, 1591336656),
-('permission-manager/create-rol', 2, 'Permite crear un nuevo rol en la plataforma', NULL, NULL, 1591336774, 1591336774),
-('permission-manager/get-permisos-by-rol', 2, 'Gestión de permisos por Rol.', NULL, NULL, NULL, NULL),
-('permission-manager/index', 2, 'Permite visualizar los roles para asignarles permisos', NULL, NULL, 1591336739, 1591336739),
-('permission-manager/index3', 2, 'Index de prueba', NULL, NULL, 1591524752, 1591524752),
-('permission-manager/index5', 2, 'permite ver permission manager v5', NULL, NULL, 1592323598, 1592323598),
-('permission-manager/list-controllers', 2, NULL, NULL, NULL, NULL, NULL),
-('permission-manager/remove', 2, 'Permite borrar permisos', NULL, NULL, 1591577405, 1591577405),
-('permission-manager/update-permission', 2, 'Permite actualizar un permiso', NULL, NULL, 1591577497, 1591577497),
-('permission-manager/update-rol', 2, 'Permite actualizar roles', NULL, NULL, 1591577363, 1591577363),
 ('permission/asignar-permiso-a-rol', 2, 'Permite asignar un permiso a un rol', NULL, NULL, 1592304078, 1592304078),
 ('permission/asignar-permisos', 2, 'UI para asignacion de permisos', NULL, NULL, 1592303862, 1592303862),
 ('permission/create-permiso', 2, 'Permite registrar un nuevo permiso', NULL, NULL, 1592304105, 1592304105),
@@ -65,10 +103,15 @@ INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `crea
 ('permission/remove-permiso', 2, 'Permite quitar el registro de un permiso', NULL, NULL, 1592303918, 1592303918),
 ('permission/update-permiso', 2, 'Permite actualizar el registro de un permiso', NULL, NULL, 1592304120, 1592304120),
 ('permission/ver-permiso', 2, 'Permite visualizar un permiso', NULL, NULL, 1592315112, 1592315112),
+('presentacion-expositor/ver-expositores', 2, 'Permite visualizar los expositores de una presentacion', NULL, NULL, 1592967098, 1592967098),
+('presentacion/view', 2, 'Permite visualizar una presentacion', NULL, NULL, 1592967016, 1592967016),
 ('presentacion/cargar-presentacion', 2, 'Permite cargar una presentacion de un evento', NULL, NULL, 1592267738, 1592267738),
 ('presentacion/delete', 2, 'Permite borrar una presentacion', NULL, NULL, 1592437894, 1592437894),
+('presentacion/borrar', 2, 'Permite actualizar una presentacion', NULL, NULL, 1592435903, 1592435903),
 ('presentacion/update', 2, 'Permite actualizar una presentacion', NULL, NULL, 1592435903, 1592435903),
 ('Registrado', 1, 'Usuario registrado en la plataforma', NULL, NULL, NULL, NULL),
+('respuesta/create', 2, 'a', NULL, NULL, 1593041904, 1593041904),
+('respuesta/ver', 2, 'a', NULL, NULL, 1593040392, 1593040392),
 ('rol/create-rol', 2, 'Permite crear un nuevo rol', NULL, NULL, 1592322049, 1592322049),
 ('rol/index', 2, 'Permite visualizar todos los roles', NULL, NULL, 1592317961, 1592317961),
 ('rol/remove-rol', 2, 'Permite eliminar un rol registrado', NULL, NULL, 1592322744, 1592322744),
@@ -82,31 +125,33 @@ INSERT INTO `permiso` (`name`, `type`, `description`, `rule_name`, `data`, `crea
 ('site/login', 2, 'Formulario de ingreso', NULL, NULL, 1590380545, 1590380545),
 ('site/logout', 2, 'Desloguearse de la plataforma', NULL, NULL, 1590380545, 1590380545),
 ('site/profile', 2, 'Perfil de usuario', NULL, NULL, 1591353071, 1591353071),
+('site/request-password-reset', 2, 'a', NULL, NULL, 1593040642, 1593040642),
+('site/resend-verification-email', 2, 'a', NULL, NULL, 1593040632, 1593040632),
+('site/reset-password', 2, 'a', NULL, NULL, 1593040638, 1593040638),
+('site/verify-email', 2, 'a', NULL, NULL, 1593040647, 1593040647),
 ('usuario/assign', 2, 'Permite asignar roles a usuarios', NULL, NULL, 1591577559, 1591577559),
+('usuario/crear-usuario', 2, 'Crear Usuario ', NULL, NULL, 1593630733, 1593630733),
 ('usuario/create', 2, 'Permite un usuario nuevo usuario', NULL, NULL, 1591336605, 1591336605),
 ('usuario/delete', 2, 'Permite borrar usuarios', NULL, NULL, 1591577571, 1591577571),
 ('usuario/index', 2, 'Permite visualizar todos los usuarios registrados en la plataforma', NULL, NULL, 1591336269, 1591336269),
 ('usuario/update', 2, 'Permite editar los datos de un usuario especifico', NULL, NULL, 1591336346, 1591336346),
-('usuario/view', 2, 'Permite visualizar un usuario especifico', NULL, NULL, 1591336327, 1591336327);
+('usuario/view', 2, 'Permite visualizar un usuario especifico', NULL, NULL, 1591336327, 1591336327),
+('Validador', 1, 'Gestor de las solicitudes de Eventos FAI', NULL, NULL, NULL, NULL);
 
 --
--- Volcado de datos para la tabla `permiso_rol`
+-- Volcado de datos para la tabla `permiso_rol` @
 --
 
 INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
+('Administrador', 'evento/create'),
+('Administrador', 'evento/delete'),
+('Administrador', 'evento/index'),
+('Administrador', 'evento/solicitudes-de-aval'),
+('Administrador', 'evento/update'),
+('Administrador', 'evento/view'),
+('Administrador', 'modalidad-evento/index'),
 ('Administrador', 'Organizador'),
 ('Administrador', 'permisos/index'),
-('Administrador', 'permission-manager/assing-permission'),
-('Administrador', 'permission-manager/create-permission'),
-('Administrador', 'permission-manager/create-rol'),
-('Administrador', 'permission-manager/get-permisos-by-rol'),
-('Administrador', 'permission-manager/index'),
-('Administrador', 'permission-manager/index3'),
-('Administrador', 'permission-manager/index5'),
-('Administrador', 'permission-manager/list-controllers'),
-('Administrador', 'permission-manager/remove'),
-('Administrador', 'permission-manager/update-permission'),
-('Administrador', 'permission-manager/update-rol'),
 ('Administrador', 'permission/asignar-permiso-a-rol'),
 ('Administrador', 'permission/asignar-permisos'),
 ('Administrador', 'permission/create-permiso'),
@@ -126,64 +171,70 @@ INSERT INTO `permiso_rol` (`parent`, `child`) VALUES
 ('Administrador', 'site/login'),
 ('Administrador', 'site/logout'),
 ('Administrador', 'usuario/assign'),
+('Administrador', 'usuario/crear-usuario'),
 ('Administrador', 'usuario/create'),
 ('Administrador', 'usuario/delete'),
 ('Administrador', 'usuario/index'),
 ('Administrador', 'usuario/update'),
 ('Administrador', 'usuario/view'),
+('Organizador', 'certificado/index'),
+('Organizador', 'certificado/preview-organizer'),
+('Organizador', 'certificado/preview-attendance'),
+('Organizador', 'cuenta/mis-eventos-gestionados'),
 ('Organizador', 'evento/cargar-evento'),
 ('Organizador', 'evento/cargar-expositor'),
+('Organizador', 'evento/crear-formulario-dinamico'),
 ('Organizador', 'evento/despublicar-evento'),
 ('Organizador', 'evento/editar-evento'),
+('Organizador', 'evento/enviar-solicitud-evento'),
+('Organizador', 'evento/inscriptos-excel'),
 ('Organizador', 'evento/listar-eventos'),
+('Organizador', 'evento/organizar-eventos'),
 ('Organizador', 'evento/publicar-evento'),
+('Organizador', 'evento/respuestas-formulario'),
+('Organizador', 'evento/send-request-event'),
+('Organizador', 'evento/suspender-evento'),
+('Organizador', 'inscripcion/inscribir-a-usuario'),
+('Organizador', 'pregunta/create'),
+('Organizador', 'pregunta/delete'),
+('Organizador', 'pregunta/update'),
 ('Organizador', 'presentacion/cargar-presentacion'),
 ('Organizador', 'presentacion/delete'),
 ('Organizador', 'presentacion/update'),
-('Organizador', 'Registrado'),
-('Registrado', 'acreditacion/acreditacion'),
-('Registrado', 'cuenta/change-rol'),
-('Registrado', 'cuenta/desactivar-cuenta'),
-('Registrado', 'cuenta/editprofile'),
-('Registrado', 'cuenta/profile'),
-('Registrado', 'cuenta/upload-profile-image'),
-('Registrado', 'evento/ver-evento'),
-('Registrado', 'evento/ver-evento2'),
-('Registrado', 'inscripcion/eliminar-inscripcion'),
-('Registrado', 'inscripcion/preinscripcion'),
-('Registrado', 'site/about'),
-('Registrado', 'site/captcha'),
-('Registrado', 'site/contact'),
-('Registrado', 'site/error'),
-('Registrado', 'site/index'),
-('Registrado', 'site/login'),
-('Registrado', 'site/logout'),
-('Registrado', 'site/profile');
-
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `pais`, `provincia`, `localidad`, `email`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
-(1, 'Marta', 'Caña', 20332183, '', NULL, 'Neuquén', 'admin01@test.com', 'OmzVKGUJExEJuN4e_yJnso6tNabdoF09', '$2y$13$hkfdaAZgIQEaZTrHRNsnje0otnGEzHo.BIoaXbsWqEbb51si.PR3e', NULL, 10, 1590994328, 1590994328, 'FAcDt5Ki0rSn5JLg9aMtCaV4F-LeTGUY_1590994328'),
-(2, 'Carlos', 'Sepulveda', 20332183, '', NULL, 'Plottier', 'admin02@test.com', '5tT59IUEQHIF7A8RpYCNaj15feVcY5hI', '$2y$13$VSLcQKUMVi4yGc8o1DRcIeH1u.KkzuohRRghOS6JZAKIBWcUX/GZ.', NULL, 10, 1590994652, 1590994652, 'jx4kYymAYb5I_bx29h5KC9m3fLAnqirN_1590994652'),
-(3, 'Rodrigo', 'Lazo', 20332183, '', NULL, 'Neuquén', 'organizador01@test.com', 'RfIaQzvchcC1zfRlAo2C7OpT04tNwcxF', '$2y$13$atb/agLp5ViXD20KG91yRefE0SN73JLrNOaJnD6UVcN64DQkTyrze', NULL, 10, 1590994729, 1590994729, '4i0PgyPBBD-1zt0DlQEVo8PP9MLtFAAN_1590994729'),
-(4, 'Sabrina', 'Casas', 18664055, '', NULL, 'Centenario', 'organizador02@test.com', 'o546IVKZ0Vc1tnzfYruu3jTq1AEQl5XY', '$2y$13$OdLxghAQtDLB4WS7aIpWrOd7WR12ZuzfPfu/g23E.T8l06e8ALuWq', NULL, 10, 1590994776, 1590994776, 'zBU1IGmB733ix97W1n4GwVWVXQZhNemm_1590994776'),
-(5, 'Marina', 'Perez', 26301284, '', NULL, 'General Roca', 'organizador03@test.com', 'PGvTg0o2LXqumMIZr4i472LZ_plvBBa-', '$2y$13$9IPBnPbxR6u3ucMMOR6rt.s/sIemcAtTiiaLAgqr7XguzZDRc0VsC', NULL, 10, 1590994822, 1590994822, 'amd5a1LNUJzwxXYcnozxpVd8gp0caScy_1590994822'),
-(6, 'Alejandro', 'Medario', 32976700, '', NULL, 'Neuquén', 'registrado01@test.com', 'nE1auJs4ex8KmM7mo5UEtvrkFtSt94FI', '$2y$13$TkAsHr/QXEWKXR0OAxCm/.9ij2nod5iBibpk6ly0ZkTz9YeHmrEha', NULL, 10, 1590994878, 1590994878, 'vucICXx57O0zJv3LkAK7ueInqv9vrF1I_1590994878'),
-(7, 'Matias', 'Contreras', 31179842, '', NULL, 'Cipolletti', 'registrado02@test.com', '5pjZV8xixJkfcspDznsGCq3QuIbU05da', '$2y$13$gc42YUd7Qsp2vrJACHZYLOn3b.Mh9JmS1N/ZOLIf7ayyFhKre7rgW', NULL, 10, 1590994958, 1590994958, 'GApav7SolKFCdriU-_NNYnTleAfenZyz_1590994958'),
-(8, 'Lidia', 'Calderon', 32684666, '', NULL, 'Plottier', 'registrado03@test.com', 'dHMzF22B5zRjX4dSLn6J-fqlXPpvJYa2', '$2y$13$4Ym0uF4zAjqdCFboFsSurOekefP0bdSsR7faxqrlQaSK8Ma7NAqEq', NULL, 10, 1590995084, 1590995084, '_UvCdkNDMuJCQLjRlfQOjb6Hv_SaWb48_1590995084'),
-(9, 'Anastasia', 'Palomo', 34740201, '', NULL, 'Centenario', 'registrado04@test.com', 'LHalzRHycE2DAdCGiyGCetHUDEPVaFoK', '$2y$13$FerwjQJV1hAAiE6d6tBiueIDQoB4brUfBQJFUzYwLjZPeywtp27b6', NULL, 10, 1590995156, 1590995156, 'inbyGzB29SLhZquC0z4tw-mZpX0VzcL6_1590995156'),
-(10, 'Joana', 'Otero', 24464510, '', NULL, 'Neuquén', 'registrado05@test.com', 'qKdu_wt2JYETR6_E2u87OYY3iOy16cBx', '$2y$13$rnVUVvZutr/96w1cS4HhfetZw3dBQBlD9u.1ya4cdg7FPKDwUoov.', NULL, 10, 1590995182, 1590995182, 'TR9EWhAvtwWD8FR3-Sm1qc9HdBGRO6BP_1590995182'),
-(11, 'Araceli', 'Manzano', 31747790, '', NULL, 'Neuquén', 'registrado06@test.com', 'sHy4nUiJC24Ahf7iAoM6LLdbqrozvcAA', '$2y$13$2bjcaQxu2/4UnjjwStwPSeQJgNNS/B09gbdw8uJPsbm6TLcCNcFi6', NULL, 10, 1590995202, 1590995202, '8wjkPYwqlYBeop4L8bL_VHabpkfLpUgL_1590995202'),
-(12, 'Fabiola', 'Maroto', 33102179, '', NULL, 'Plottier', 'registrado07@test.com', 'ipIF8YUsd4YWUho4xQk26K1LNyfh4Znz', '$2y$13$baEfEtJVIbb7NTQZLerLyeZdpWW/S525t0Ky.zTSx3c9pPwjBlp3a', NULL, 10, 1590995230, 1590995230, '_6rZyiqUDrYVG9Qsq2RUFnloz09aKVqN_1590995230'),
-(13, 'Elias', 'Contreras', 30147983, '', NULL, 'Centenario', 'registrado08@test.com', 'Nn3xdz9B86R-sQwWdDtrOOk79e0CdMtN', '$2y$13$ysREVfh1HwvP/p0cC.jtGe.UiPYHS/.kvqPq5Ga9Y8.BeDZSgyL9K', NULL, 10, 1590995252, 1590995252, 'r01h04ffYeO0X--HeoR_Sl5s571YJRj4_1590995252'),
-(14, 'Fernanda', 'Rosa', 28561145, '', NULL, 'Neuquén', 'registrado09@test.com', 'eEymH70Ta4pi5uM1JdM4EQVMDCe8c94e', '$2y$13$YbKN8Zjs9YNBNSPSE/Npy.aowEX9nROQ44acOnuShe4lxpdKUpQgW', NULL, 10, 1590995290, 1590995290, 'lulupIU6dETfykAga9Pw4WzgcY3T6CBL_1590995290'),
-(15, 'Elba', 'Thidora', 23609276, '', NULL, 'Plottier', 'registrado10@test.com', 'NzK7e7ANsT2rLyqzqavoG8vm8wWo8eEC', '$2y$13$9l4aj9xXl7KZAjewr9tDIeAdog7ShW/jRBmQqlRjTHwtxro9tfJF6', NULL, 10, 1590995334, 1590995334, 'VzTx3f30jl_RjQXgahQ5jfPM9xzrBCPV_1590995334'),
-(17, 'Pablo', 'Kogan', 27894458, 'Argentina', 'Rio Negro', 'General Fernandez Oro', 'pablo.kogan@fi.uncoma.edu.ar', 'gjn-6uGKJQsvPugxpxuSMuJWUW_pci4u', '$2y$13$K5dZR0CrUqWO7zDwVZUj/Oa8p.21PDN1LvMO8TlNZIyN58MLJospS', NULL, 10, 1592327713, 1592327776, 'b9_rCItrP6MDoz8vM2VR0rO-S1-M2M5f_1592327713'),
-(18, 'Leandro', 'Casanova', 36876234, 'Argentina', 'Chubut', 'Barrio Caleta Cordova', 'leandro.casanova@est.fi.uncoma.edu.ar', 'iwOgqdR2UqPHX3f6VDjWTIFzgsJo0q4b', '$2y$13$fT6WjOr/2Hv8miGKPxT9KeSfjG/oUX1cqbHO34rzezQmEVdKHiJ3a', NULL, 10, 1592327723, 1592327806, 'vz3oZFJt_PbQ86vwllCYOjL7brmZ4o57_1592327723'),
-(19, 'Natalia', 'Baeza', 27979821, 'Argentina', 'Neuquen', 'Neuquen', 'baeza.natalia@gmail.com', 'BxADsNR5nEaUPbEdyIVFRnQ44RBWWV_l', '$2y$13$iM8Z.6IZsVWXuper5joPduhW7Jvgfw4MhqK/4TSGnKcNo0qbfUtxS', NULL, 10, 1592328971, 1592328995, '8SBwnoDKG-e8UEfeqjcXnNjeCkoAskRl_1592328971');
-
+('Organizador', 'presentacion-expositor/ver-expositores'),
+('Organizador', 'presentacion/view'),
+('Organizador', 'respuesta/create'),
+('Organizador', 'respuesta/ver'),
+('Organizador', 'acreditacion/acreditacion'),
+('Organizador', 'cuenta/cambiar-email'),
+('Organizador', 'cuenta/cambiar-email-request'),
+('Organizador', 'cuenta/cambiar-password'),
+('Organizador', 'cuenta/change-rol'),
+('Organizador', 'cuenta/desactivar-cuenta'),
+('Organizador', 'cuenta/editprofile'),
+('Organizador', 'cuenta/mis-inscripciones-a-eventos'),
+('Organizador', 'cuenta/profile'),
+('Organizador', 'cuenta/upload-profile-image'),
+('Organizador', 'evento/responder-formulario'),
+('Organizador', 'evento/ver-evento'),
+('Organizador', 'inscripcion/eliminar-inscripcion'),
+('Organizador', 'inscripcion/preinscripcion'),
+('Organizador', 'site/about'),
+('Organizador', 'site/captcha'),
+('Organizador', 'site/contact'),
+('Organizador', 'site/error'),
+('Organizador', 'site/index'),
+('Organizador', 'site/login'),
+('Organizador', 'site/logout'),
+('Organizador', 'site/profile'),
+('Organizador', 'site/request-password-reset'),
+('Organizador', 'site/resend-verification-email'),
+('Organizador', 'site/reset-password'),
+('Organizador', 'site/verify-email'),
+('Validador', 'evento/confirmar-solicitud'),
+('Validador', 'evento/denegar-solicitud'),
+('Validador', 'evento/verificar-solicitud'),
+('Validador', 'Organizador');
 --
 -- Volcado de datos para la tabla `usuario_rol`
 --
@@ -195,23 +246,22 @@ INSERT INTO `usuario_rol` (`item_name`, `user_id`, `created_at`) VALUES
 ('Organizador', 4, NULL),
 ('Organizador', 5, NULL),
 ('Organizador', 6, 1592257182),
-('Organizador', 9, 1592249241),
 ('Organizador', 17, 1592327776),
 ('Organizador', 18, 1592327806),
 ('Organizador', 19, 1592328995),
-('Registrado', 6, NULL),
-('Registrado', 7, NULL),
-('Registrado', 8, NULL),
-('Registrado', 9, 1591271733),
-('Registrado', 10, NULL),
-('Registrado', 11, NULL),
-('Registrado', 12, NULL),
-('Registrado', 13, NULL),
-('Registrado', 14, NULL),
-('Registrado', 15, NULL);
-
+('Organizador', 7, NULL),
+('Organizador', 8, NULL),
+('Organizador', 9, 1591271733),
+('Organizador', 10, NULL),
+('Organizador', 11, NULL),
+('Organizador', 12, NULL),
+('Organizador', 13, NULL),
+('Organizador', 14, NULL),
+('Organizador', 15, NULL),
+('Validador', 13, NULL),
+('Validador', 14, NULL);
 --
--- Volcado de datos para la tabla `categoria_evento`
+-- Volcado de datos para la tabla `categoria_evento` @
 --
 
 INSERT INTO categoria_evento (idCategoriaEvento, descripcionCategoria) VALUES
@@ -316,25 +366,6 @@ INSERT INTO `presentacion_expositor` (`idExpositor`, `idPresentacion`) VALUES
 (13, 11),
 (14, 15),
 (19, 20);
-
---
--- Volcado de datos para la tabla `pregunta`
---
-
-INSERT INTO `pregunta` (`id`, `idevento`, `tipo`, `descripcion`) VALUES
-(9, 3, '1', 'Hola'),
-(10, 3, '2', 'Test2'),
-(13, 1, '2', '¿Como te llamas?'),
-(14, 3, '3', 'Subi tu cv');
-
---
--- Volcado de datos para la tabla `respuesta`
---
-
-INSERT INTO `respuesta` (`id`, `idpregunta`, `idinscripcion`, `respuesta`) VALUES
-(2, 9, 9, 'a'),
-(3, 10, 9, 'dasdas'),
-(16, 14, 9, '../web/eventos/formularios/archivos/IMG-20170129-WA0005.jpeg');
 
 -- #######################################################################################################################
 -- #######################################################################################################################
