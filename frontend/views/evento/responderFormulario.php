@@ -34,12 +34,15 @@ $this->title = "Responder Formulario";
             <?php if ($respuestaYaHechas[$i] == false) : ?>
                 <?php if ($pregunta->tipo == 1): ?>
                     <?= $form->field($model, "respuestaCorta[$i]")->textInput(['maxlength' => true])->label(false) ?>
+                    <small id="respuestaCortaHelp" class="form-text text-muted">Maximo 50 caracteres</small>
                 <?php endif; ?>
                 <?php if ($pregunta->tipo == 2): ?>
                     <?= $form->field($model, "respuesta[$i]")->textarea(['maxlength' => true])->label(false) ?>
+                    <small id="respuestaLargaaHelp" class="form-text text-muted">Maximo 500 caracteres</small>
                 <?php endif; ?>
                 <?php if ($pregunta->tipo == 3): ?>
                     <?= $form->field($model, "file[$i]")->fileInput()->label(false) ?>
+                    <small id="respuestaFileaHelp" class="form-text text-muted">Maximo 5 megas. Formatos aceptados: zip, rar, pdf</small>
                 <?php endif; ?>
 
             <?php else: ?>
@@ -53,7 +56,9 @@ $this->title = "Responder Formulario";
         </div>
     <?php endforeach; ?>
 
+    <?php if (!$todasRespuestasHechas): ?>
     <?= Html::submitButton("Enviar", ['class' => 'btn btn-lg btn-outline-success']) ?>
+    <?php endif; ?>
     <?= Html::a('Volver Atrás', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-lg btn-outline-success']); ?>
     <?php ActiveForm::end() ?>
 

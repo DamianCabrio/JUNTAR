@@ -106,5 +106,4 @@ $this->title = "Respuesta a el formulario";
     ]);
     Modal::end();
     ?>
-
 </div>

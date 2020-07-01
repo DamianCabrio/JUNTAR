@@ -403,9 +403,11 @@ class EventoController extends Controller
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
 
             $respuestaYaHechas = [];
+            $todasRespuestasHechas = true;
             foreach ($preguntas as $pregunta){
                 $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $inscripcion->idInscripcion])->one();
                 if($respuesta == null){
+                    $todasRespuestasHechas = false;
                     array_push($respuestaYaHechas, false);
                 }else{
                     array_push($respuestaYaHechas, $respuesta);
@@ -451,6 +453,7 @@ class EventoController extends Controller
                                 "evento" => $evento,
                                 "idInscripcion" => $inscripcion->idInscripcion,
                                 "respuestaYaHechas" => $respuestaYaHechas,
+                                "todasRespuestasHechas" => $todasRespuestasHechas,
                                 "model" => $model,]);
         } else {
             return $this->goHome();
