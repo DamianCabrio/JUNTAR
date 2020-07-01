@@ -2,32 +2,31 @@
 
 namespace frontend\controllers;
 
+use Yii;
+use yii\helpers\Url;
+use yii\web\UploadedFile;
+use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
 use common\models\User;
-use frontend\models\CambiarEmailForm;
-use frontend\models\CambiarEmailRequest;
-use frontend\models\CambiarPasswordForm;
+use frontend\models\Usuario;
+use frontend\models\UploadProfileImage;
 use frontend\models\EventoSearch;
 use frontend\models\InscripcionSearch;
-use frontend\models\UploadProfileImage;
-use frontend\models\Usuario;
-use Yii;
-use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
-use yii\helpers\Url;
-use yii\web\Controller;
-use yii\web\UploadedFile;
+use frontend\models\CambiarPasswordForm;
+use frontend\models\CambiarEmailForm;
+use frontend\models\CambiarEmailRequest;
+use frontend\models\ImagenPerfil;
 
 /**
  * Site controller
  */
-class CuentaController extends Controller
-{
+class CuentaController extends Controller {
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -76,14 +75,8 @@ class CuentaController extends Controller
             return $this->goHome();
         }
         $profileImageRoute = Url::base(true) . "/iconos/person-bounding-box.svg";
-        $rutaImagenPerfil = Url::base(true) . "/profile/images/" . (Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
 
-        if (@GetImageSize($rutaImagenPerfil)) {
-            $profileImageRoute = $rutaImagenPerfil;
-        }
-//        $model = new Usuario();
         $model = Usuario::find()
-//        $queryUser = (new \yii\db\Query())
                 //campos buscados
                 ->select(['nombre, apellido, password_hash, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
                 //distintos en
@@ -93,19 +86,27 @@ class CuentaController extends Controller
                 //relacion entre tablas
                 ->innerJoin('usuario_rol', 'usuario_rol.user_id = usuario.idUsuario')
                 //condicion
-                ->where(['idUsuario' => Yii::$app->user->identity->id]);
+                ->where(['usuario.idUsuario' => Yii::$app->user->identity->id]);
         //Agrupamiento
         //->groupBy(['jugador.posicion']);
-        //obtenemos el array asociativo a partir de la query
-//        $userData = $queryUser->all();
-//        $userData = $model->all();
+
+        
+        //obtenemos el unico usuario
         $userData = $model->one();
+
+        //buscamos los datos de la imagen del perfil en los registros
+        $modelImagenPerfil = ImagenPerfil::findOne(['idUsuario' => Yii::$app->user->identity->id]);
+
+        if ($modelImagenPerfil != null) {
+            //utilizamos el control de operador en caso que no exista el archivo en la ruta guardada
+            if (@getimagesize(Url::base(true) .$modelImagenPerfil->rutaImagenPerfil)) {
+                $profileImageRoute = Url::base(true) . $modelImagenPerfil['rutaImagenPerfil'];
+            }
+        }
 
         return $this->render('profile', [
                     'dataUser' => $userData,
                     'profileImage' => $profileImageRoute,
-                    'route' => $rutaImagenPerfil
-//                    'data' => $queryUser,
         ]);
     }
 
@@ -174,16 +175,15 @@ class CuentaController extends Controller
 
             if ($model->profileImage != null) {
                 if ($model->upload()) {
-                    $model->profileImage = (Yii::getAlias("@web/profile/images/")) . $model->profileImage->baseName . '.' . $model->profileImage->extension;
                     Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
                             . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
                 } else {
                     Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
                             . '<p> No pudimos actualizar tu imagen de perfil. </p>');
                 }
-            }else{
+            } else {
                 Yii::$app->session->setFlash('error', '<h2> Campo vacío </h2>'
-                            . '<p> No ingresó ninguna imagen. </p>');
+                        . '<p> No ingresó ninguna imagen. </p>');
             }
 
             return $this->redirect(['profile']);
@@ -205,7 +205,7 @@ class CuentaController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('La página solicitada no existe.');
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -307,13 +307,13 @@ class CuentaController extends Controller
 
         $model = new CambiarPasswordForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() ) {
-            if($model->cambiarPassword()){
-            Yii::$app->session->setFlash('success', '<h2> Contraseña actualizada </h2>'
-                    . '<p> La nueva contraseña fue guardada. </p>');
-            }else{
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->cambiarPassword()) {
+                Yii::$app->session->setFlash('success', '<h2> Contraseña actualizada </h2>'
+                        . '<p> La nueva contraseña fue guardada. </p>');
+            } else {
                 Yii::$app->session->setFlash('error', '<h2> Algo salió mal </h2>'
-                    . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
+                        . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
             }
 
             return $this->redirect(['/cuenta/profile']);

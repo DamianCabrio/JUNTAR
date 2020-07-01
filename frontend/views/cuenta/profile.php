@@ -6,8 +6,6 @@ use yii\bootstrap4\Modal;
 
 $this->title = "Perfil";
 $this->params['breadcrumbs'][] = $this->title;
-//$dataUser = array_shift($data);
-//print_r($dataUser);
 ?>
 
 <div class="container-fluid padding_section dark_light_bg" style="min-height: 100vh;">
@@ -150,6 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'size' => 'modal-lg'
                 ]);
                 Modal::end();
+                //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS
                 ?>
             </div>
             <!-- Profile Card Content -->

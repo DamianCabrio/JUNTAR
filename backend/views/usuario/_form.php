@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-pink col-md-2 col-sm-12']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
