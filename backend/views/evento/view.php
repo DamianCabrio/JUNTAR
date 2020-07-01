@@ -112,7 +112,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'fechaLimiteInscripcion',
                             'codigoAcreditacion',
                             'fechaCreacionEvento',
-                            'eventoToken',
                         ],
                     ])
                     ?>
