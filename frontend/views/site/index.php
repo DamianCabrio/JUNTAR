@@ -55,14 +55,13 @@ $this->title = 'Juntar';
                 <?php if (count($eventos) != 0) : ?>
                     <div class="row">
                         <?php foreach ($eventos as $evento) : ?>
-                            <div class="col-sm-12 col-md-4">
-                            <div class='card mb-3'>
-                                <div class='card bg-light'>
-                                    <?= Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
+                            <div class='card'>
+                                <div class='card bg-light mb-3'>
+                                    <?=Html::a(Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]), ['/eventos/ver-evento/' . $evento->nombreCortoEvento]) ?>
                                     <div class='card-body'>
                                         <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
                                         <h5 class='card-title'><?= Html::encode("Organidaror: " . $evento["idUsuario0"]["nombre"]. " " . $evento["idUsuario0"]["apellido"]) ?></h5>
-                                        <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
+                                        <h5 class='card-title'><?= Html::encode( "Inicio: ". date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?>
                                         </h5>
                                         <hr>
                                         <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
