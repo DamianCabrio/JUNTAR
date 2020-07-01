@@ -94,7 +94,7 @@ AppAsset::register($this);
                         'label' => 'Eventos',
                         'items' => [
                             ['label' => 'Listado Eventos', 'url' => ['/evento/index']],
-                            ['label' => 'Solicitudes de Aval', 'url' => ['/evento/solicitudes-de-aval']],
+                            ['label' => 'Solicitudes de Aval', 'url' => ['/solicitud-aval/solicitudes-de-aval']],
                         ],
                     ];
                     //ABM ModalidadEventos

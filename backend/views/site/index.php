@@ -31,11 +31,11 @@ $this->title = 'Proyecto Juntar';
             </div>
             <div class="col-12 col-md-4 p-2 d-flex justify-content-center">
                 <div class="card text-center" style="width: 18rem;">
-                    <img class="card-img-top w-50 m-auto d-block m-2"  src="<?= Yii::getAlias("@web/iconos/avalar.svg") ?>" alt="Card image cap">
+                    <img class="card-img-top w-50 m-auto d-block m-2"  src="<?= Yii::getAlias("@web/iconos/solicitudesAval.svg") ?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"> Solicitudes de Aval </h5>
                         <p class="card-text"> Dar aval de la FAI a Eventos gestionados en la plataforma.</p>
-                        <a href="<?= Url::to(['evento/solicitudes-de-aval']); ?>" class="btn btn-pink"> Gestionar </a>
+                        <a href="<?= Url::to(['solicitud-aval/solicitudes-de-aval']); ?>" class="btn btn-pink"> Gestionar </a>
                     </div>
                 </div>
             </div>

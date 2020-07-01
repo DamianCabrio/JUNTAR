@@ -1,11 +1,12 @@
 <?php
 
 namespace frontend\models;
-use frontend\models\Usuario;
-
-use frontend\models\ModalidadEvento;
 use Yii;
 use yii\behaviors\SluggableBehavior;
+
+use frontend\models\Usuario;
+use frontend\models\ModalidadEvento;
+
 
 /**
  * This is the model class for table "evento".
