@@ -295,8 +295,9 @@ class PermissionController extends Controller {
                     Yii::$app->session->setFlash('error', '<p> Ha ocurrido un error </p>');
                 }
             } else {
-                Yii::$app->session->setFlash('error', '<p>El Rol ya esta creado.</p>');
+                Yii::$app->session->setFlash('error', '<p>El Permiso ya esta creado.</p>');
             }
+            return $this->redirect(Yii::$app->request->referrer);
         }
 
         //obtenemos las vistas de todo el sitio
