@@ -1,10 +1,12 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use common\models\User;
+use common\components\ProvinceValidator;
+use common\components\LocationValidator;
 
 /**
  * Signup form
@@ -53,7 +55,7 @@ class SignupForm extends Model {
             ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
                 return ($model->pais == 'Argentina');
                 }, 'whenClient' => "function (attribute, value) {
-                    return $('#signupform-pais').val() == 'Argentina';
+                    return ($('#signupform-pais').val() === 'Argentina');
                 }"
             ],
 
@@ -63,7 +65,7 @@ class SignupForm extends Model {
             ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) {
                 return ($model->pais == 'Argentina');
                 }, 'whenClient' => "function (attribute, value) {
-                    return $('#signupform-pais').val() == 'Argentina';
+                    return ($('#signupform-pais').val() === 'Argentina');
                 }"
             ],
 
