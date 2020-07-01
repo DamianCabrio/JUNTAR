@@ -58,7 +58,8 @@ $this->title = "Cargar Evento";
                 ])->label('<b>Mensaje:</b>') ?>
                   </div>
     
-                <div class="form-group">
+                <div class="form-group col-md-12">
+
                     <?= Html::submitButton('Enviar', ['class' => 'btn btn-success']) ?>
                 </div>
 

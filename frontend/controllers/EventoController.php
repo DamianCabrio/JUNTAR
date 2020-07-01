@@ -717,6 +717,44 @@ class EventoController extends Controller
     }
 
 
+    public function actionEnviarEmail(){
+
+
+
+        switch ($para) {
+            case 'todos':
+                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                break;
+            case 'pre-inscriptos':
+                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                break;
+ 
+            case 'inscriptos':
+                echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                break;
+            case 'expositores':
+                echo Html::label('No se puede inscribir, período de inscripciones cerrado');
+                break;
+         }
+
+        
+        Yii::$app->mailer
+            ->compose(
+                ['html' => 'confirmacionDeInscripcion-html'], ['evento' => $evento],
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($emails)
+            ->setSubject( $evento->nombreEvento.':'.$asunto)
+            ->send();
+
+              Yii::$app->session->setFlash('success', '<h3> ¡Se ha enviado el correo a los! '.$para .'</h3>');
+           
+       //// volver a ver evento
+       return $this->redirect(Url::toRoute(["eventos/ver-evento/". $evento->nombreCortoEvento]));
+    }
+
+
+
     public function actionOrganizarEventos()
     {
         $idUsuario = Yii::$app->user->identity->idUsuario;
