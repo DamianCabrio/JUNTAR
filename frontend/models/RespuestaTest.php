@@ -34,19 +34,12 @@ class RespuestaTest extends \yii\db\ActiveRecord {
         return [
             [['idpregunta', 'idinscripcion', 'respuesta', "respuestaCorta"], 'required'],
             [['idpregunta', 'idinscripcion'], 'integer'],
-            [['respuesta'], 'each', 'rule' => ['string', 'max' => 500, "message" => "Esta campo no debe tener mas de 500 caracteres"]],
-//            [['respuestaCorta'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]],
+            [['respuesta'], 'string', 'max' => 500, "message" => "Esta campo no debe tener mas de 500 caracteres"],
             [['respuestaCorta'], 'string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"],
-//            [['respuestaCorta'], 'each', 'rule' => [['Number'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]]],
-//            [['respuestaCorta'], 'each', 'rule' => 'validate'],
-            [['file'], "file", "extensions" => ["zip", "rar", "pdf"], 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
+            [['file'], "file", "extensions" => ["zip", "rar", "pdf", "odt"], 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
-    }
-
-    public function unaFuncionPiola($unaRespuesta) {
-        return [['unaRespuesta'], 'each', 'rule' => ['string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"]];
     }
 
     public function upload() {

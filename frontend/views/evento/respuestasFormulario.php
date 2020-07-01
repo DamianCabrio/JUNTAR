@@ -94,9 +94,7 @@ $this->title = "Respuesta a el formulario";
     
     <?php 
       
-      if($cantidadInscriptos>=1){ 
-          echo  $cantidadInscriptos;
-    
+      if($cantidadInscriptos>=1){
           echo  Html::a('enviar mail a los insriptos', ["eventos/enviar-email-inscriptos", $evento->idEvento], ['class' => 'btn btn-lg']); 
         } 
     ?>

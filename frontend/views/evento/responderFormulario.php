@@ -7,6 +7,7 @@ use yii\helpers\Url;
 
 $this->title = "Responder Formulario";
 ?>
+    <noscript><meta http-equiv="refresh"content="0; url=<?= Url::toRoute(["eventos/no-js"]) ?>"></noscript>
 
 <div class="responder-formulario container">
     <div class="pb-5">
@@ -19,10 +20,6 @@ $this->title = "Responder Formulario";
     $form = ActiveForm::begin([
                 'id' => 'respuestas-form',
                 'options' => ['class' => 'form-horizontal'],
-//                "enableAjaxValidation" => false,
-//                "enableClientValidation" => true,
-//                'validateOnSubmit' => true
-//                'clientOptions' => ['validateOnSubmit' => true,],
             ])
     ?>
     <?php foreach ($preguntas as $i => $pregunta) : ?>
@@ -34,6 +31,7 @@ $this->title = "Responder Formulario";
                 <?= $pregunta->descripcion ?>
             </div>
             <div class='card-footer'>
+            <?php if ($respuestaYaHechas[$i] == false) : ?>
                 <?php if ($pregunta->tipo == 1): ?>
                     <?= $form->field($model, "respuestaCorta[$i]")->textInput(['maxlength' => true])->label(false) ?>
                 <?php endif; ?>
@@ -43,30 +41,23 @@ $this->title = "Responder Formulario";
                 <?php if ($pregunta->tipo == 3): ?>
                     <?= $form->field($model, "file[$i]")->fileInput()->label(false) ?>
                 <?php endif; ?>
-                <?php if ($respuestaYaHechas[$i] == false) : ?>
-                    <?php $url = Url::toRoute(["respuesta/create?id=" . $pregunta->id . "&id2=" . $idInscripcion]) ?>
-                    <?=
-                    Html::a('Completar ' . ($i + 1), $url, [
-//                        'class' => 'btn btn-lg responderPregunta'
-                        'class' => 'btn btn-lg responderPregunta'
-                    ]);
-                    ?>
-                <?php else : ?>
 
-                    <?php if ($pregunta->tipo == 3): ?>
-                        <span>Respuesta: <?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></span>
-                    <?php else: ?>
-                        <span>Respuesta: <?= Html::a("Descargar", Html::encode($respuestaYaHechas[$i]->respuesta), ['class' => 'btn btn-lg btn-outline-success']) ?></span>
-                    <?php endif; ?>
+            <?php else: ?>
+                <?php if ($pregunta->tipo != 3): ?>
+                    <span>Respuesta: <?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></span>
+                <?php else: ?>
+                    <span>Respuesta: <?= Html::a("Descargar", Html::encode($respuestaYaHechas[$i]->respuesta), ['class' => 'btn btn-lg btn-outline-success', "target" => "_blank"]) ?></span>
                 <?php endif; ?>
+            <?php endif; ?>
             </div>
         </div>
     <?php endforeach; ?>
+
+    <?= Html::submitButton("Enviar", ['class' => 'btn btn-lg btn-outline-success']) ?>
+    <?= Html::a('Volver Atrás', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-lg btn-outline-success']); ?>
     <?php ActiveForm::end() ?>
 
     <br><br>
-
-    <?= Html::a('Volver Atrás', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-lg btn-outline-success']); ?>
 
 </div>
 

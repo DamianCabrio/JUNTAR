@@ -35,7 +35,7 @@ class RespuestaFile extends \yii\db\ActiveRecord
             [['idpregunta', 'idinscripcion'], 'required'],
             [['idpregunta', 'idinscripcion'], 'integer'],
             [['respuesta'], 'string', 'max' => 500],
-            [['file'], "file", "extensions" => ["zip", "rar", "pdf"], 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
+            [['file'], "file", "extensions" => ["zip", "rar", "pdf", "odt"], 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
