@@ -725,7 +725,9 @@ class EventoController extends Controller
         $asunto = $request->post('asunto');
         $para = $request->post('para');
         $mensaje = $request->post('mensaje');
-        $grupo= ""; 
+        $grupo= "";
+
+        $evento = Evento::findOne(['idEvento' => $idEvento]);
 
         switch ($para) {
 
