@@ -425,7 +425,10 @@ function generarInicialesYear(nombreEvento) {
 function generarCortoYear(nombreEvento) {
     var year = new Date().getFullYear();
     var cortoYear = year;
-    cortoYear += "-" + nombreEvento.split(' ').slice(0, 2).join('-');
+//    cortoYear += "-" + nombreEvento.split(' ').slice(0, 2).join('-');
+    cortoYear += "-" + nombreEvento.toLowerCase().replace(/[^\w ]+/g, '') //reemplaza caracteres alfanumericos
+        .replace(/ +/g, '-').split('-').slice(0, 2).join('-')
+         //
     var html = '<div class="col-12">  <input type="radio" id="opc3" name="shortName" value="' + cortoYear + '"> '
         + '<label for="opc3"> ' + cortoYear + '</label>  </div>';
     return html;

@@ -368,7 +368,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ]);
                                     Modal::end();
                                     ?>
-                                    <?php if ($estadoEvento == 'Finalizado' and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
+                                    <?php if ($evento->fechaFinEvento < date("Y-m-d") and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
                                         <?= Html::a('Certificado', ['certificado/index', 'id' => $evento->idEvento], ['class' => 'btn btn-primary btn-lg full_width viewCertification']); ?>
                                     <?php endif; ?>
                                     <?php if (Yii::$app->user->can('Validador') && $evento->avalado != 1 && $evento->avalado != 3): ?>
@@ -459,7 +459,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ?>
 
                                 </div>
-
+                                
                                 <div class="table table-responsive">
                                     <?=
                                         GridView::widget([
@@ -509,7 +509,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                         if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
                                                             $retorno = 'No hay recursos para mostrar';
                                                         } else {
-                                                            $retorno = '<a target="_blank" href="' . $dataProvider->linkARecursos . '">Link</a>';
+                                                            $retorno = '<a target="_blank" href="' . $dataProvider->linkARecursos . '"><i class="material-icons">attachment</i></a>';
                                                         }
                                                         return $retorno;
                                                     },

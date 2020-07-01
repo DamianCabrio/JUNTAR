@@ -50,10 +50,10 @@ $this->title = $model->tituloPresentacion;
 				'format' => 'raw',
 				'value' => function($model){
 					if($model->linkARecursos != NULL){
-						return '<a target="_blank" href="' .$model->linkARecursos. '">Link</a>';
+						return '<a target="_blank" href="' .$model->linkARecursos. '"><i class="material-icons">attachment</i></a>';
 					}
 					else{
-						return 'No hay recursos';
+						return 'No hay recursos para mostrar';
 					}
 				}	
 			]	

@@ -103,16 +103,18 @@ class Evento extends \yii\db\ActiveRecord
 
     public function avalar(){
         $this->avalado = 1;
-        $this->save();
+//        $this->update();
+        $this->save(false);
     }
 
     public function quitarAval(){
         $this->avalado = 0;
-        $this->save();
+//        $this->update();
+        $this->save(false);
     }
     public function denegarAval(){
         $this->avalado = 3;
-        $this->save();
+        $this->save(false);
     }
 
     /**

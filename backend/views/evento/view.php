@@ -38,14 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'btn btn-primary mb-2 col-md-2 col-sm-12',
                             'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
                         ]);
-                        echo Html::a('Denegar aval FAI', ['denegar-aval', 'id' => $model->idEvento], [
-                            'class' => 'btn btn-danger mb-2 col-md-2 col-sm-12',
-                            'data' => ['confirm' => '¿Está seguro de denegar el aval de la FAI para este evento?'],
-                        ]);
                     } else {
                         echo Html::a('Quitar aval FAI', ['quitar-aval', 'id' => $model->idEvento], [
                             'class' => 'btn btn-pink mb-2 col-md-2 col-sm-12',
-                            'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
+                            'data' => ['confirm' => '¿Está seguro de querer quitar el aval de la FAI para este evento?'],
                         ]);
                     }
                     ?>
