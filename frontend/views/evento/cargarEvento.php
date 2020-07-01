@@ -117,7 +117,7 @@ $this->title = "Cargar Evento";
 
                 <!-- calendar -->
                 <div id="fechaLimite">
-                    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto', 'required'])->label('Fecha limite de inscripción *') ?>
+                    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto', 'required'])->label('Fecha límite de pre-inscripción *') ?>
                 </div>
                 <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
 
