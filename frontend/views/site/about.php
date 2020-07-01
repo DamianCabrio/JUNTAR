@@ -24,4 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			<li>Kevin Espinoza</li>
 		</ul>
 	<p class="text-white">素晴らしいチーム、これは10/10です</p>
+    <!-- 冠状病毒团伙 !-->
+    <!-- 素晴らしいチーム、これは10/10です !-->
 </div>
