@@ -20,7 +20,7 @@ $this->title = "Cargar Evento";
 
             <div class="evento-form">
      
-                <?php $form = ActiveForm::begin(['action' =>['forum-post/create'],  'method' => 'post','options' => ['enctype' => 'multipart/form-data'] ]);?>
+                <?php $form = ActiveForm::begin(['action' =>['evento/enviar-email'],  'method' => 'post','options' => ['enctype' => 'multipart/form-data'] ]);?>
 
                   <div class="col-md-12">
                       <?= Html::label('<b>Para: </b>'); ?>
@@ -33,33 +33,35 @@ $this->title = "Cargar Evento";
                   </div>
                   <br>
                   <div class="col-md-12">
-                  <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
-                    "options" => ['rows' => '8'],
-                    "preset" => "custom",
-                    "clientOptions" => [
-                        'toolbarGroups' => [
-                            ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
-                            ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
-                            '/',
-                            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
-                            ['name' => 'colors'],
-                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
-                            ['name' => 'links'],
-                            ['name' => 'styles'],
-                            ['name' => 'colors'],
-                            ['name' => 'tools'],
-                            ['name' => 'others'],
-                            
+                  <?= 
+                     CKEditor::widget([ 'name' =>'mensaje', 
+                        "options" => ['rows' => '6'],
+                        "preset" => "custom",
+                        "clientOptions" => [
+                            'toolbarGroups' => [
+                                ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+                                ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
+                                '/',
+                                ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                                ['name' => 'colors'],
+                                ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+                                ['name' => 'links'],
+                                ['name' => 'styles'],
+                                ['name' => 'colors'],
+                                ['name' => 'tools'],
+                                ['name' => 'others'],
+                                
+                            ],
+                            'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
+                            'removePlugins' => 'elementspath',
+                            'resize_enabled' => false
                         ],
-                        'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
-                        'removePlugins' => 'elementspath',
-                        'resize_enabled' => false
-                    ],
-                ])->label('<b>Mensaje:</b>') ?>
-                  </div>
+                   ])
+                   ?>
+                </div>
+                <br>
     
                 <div class="form-group col-md-12">
-
                     <?= Html::submitButton('Enviar', ['class' => 'btn btn-success']) ?>
                 </div>
 

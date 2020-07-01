@@ -642,7 +642,6 @@ class EventoController extends Controller
                        'user_fechaPreInscripcion'=>'inscripcion.fechaPreInscripcion',
                        'user_fechaInscripcion'=>'inscripcion.fechaInscripcion']);
 
-        /// 1: preinscripto    2: inscripto     3: anulado    4: acreditado
 
         $participantes = $base ->where(['inscripcion.idEvento' => $idEvento ])->orderBy('usuario.apellido ASC')->asArray()->all();
         $preguntas= Pregunta::find()->where(['idevento' => $idEvento ])->asArray()->all();
@@ -678,10 +677,14 @@ class EventoController extends Controller
 
 ///        $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
 
-        $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
+        $base= Inscripcion::find();
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
         $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
-        $listaInscriptos= $base->andWhere(["=", "inscripcion.estado", 1])->andWhere(["=", "inscripcion.acreditacion", 0])->asArray()->all();
+        $listaInscriptos= $base->andWhere(["=", "inscripcion.estado", 1])
+                                ->andWhere(["=", "inscripcion.acreditacion", 0])
+                                ->andWhere(["=", "inscripcion.idEvento", $idEvento])
+
+                                ->asArray()->all();
 
         $emails = array();
 
@@ -690,10 +693,8 @@ class EventoController extends Controller
         }
 
         Yii::$app->mailer
-
             ->compose(
-                ['html' => 'confirmacionDeInscripcion-html'],
-                ['evento' => $evento],
+                ['html' => 'confirmacionDeInscripcion-html'], ['evento' => $evento],
             )
             ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
             ->setTo($emails)
@@ -704,55 +705,93 @@ class EventoController extends Controller
            
               return $this->redirect(Url::toRoute(["eventos/respuestas-formulario/". $evento->nombreCortoEvento]));
        
-
     }
     
     
-    public function actionRedactarEmail(){
+    public function actionCrearEmail(){
         
-        $participantes=[ 1=>'Todos', 2=>'Pre-inscriptos', 3=>'Inscriptos', 4=>'Expositores' ] ;
-
+        
+        $participantes = [ 1=>'Pre-inscriptos', 2=>'Inscriptos', 3=>'Expositores',4=>'Todos',  ] ;
         $evento = Evento::findOne(['idEvento' =>1]);
+
         return $this->render('redactarEmail',['model' => $evento,'participantes'=> $participantes]);
     }
 
 
     public function actionEnviarEmail(){
 
+        $request = Yii::$app->request;
+        $idEvento =1;
+
+        $asunto = $request->post('asunto');
+        $para = $request->post('para');
+        $mensaje = $request->post('mensaje');
+
 
 
         switch ($para) {
-            case 'todos':
-                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-                break;
-            case 'pre-inscriptos':
-                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-                break;
+
+            case 1: ///  1: preinscripto
+                  $base= Inscripcion::find()->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
+                  $base->select(['user_email'=>'usuario.email']);
+                  $base->andWhere(["=", "inscripcion.estado", 0])
+                       ->andWhere(["=", "inscripcion.idEvento",  $idEvento ])->asArray()->all();
+                  $participantes= $base->asArray()->all();
+
+            break;
+
+            case 2: //  2: inscripto  
+                  $base= Inscripcion::find()->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
+                  $base->select(['user_email'=>'usuario.email']);
+                  $base->andWhere(["=", "inscripcion.estado", 1])
+                       ->andWhere(["=", "inscripcion.acreditacion", 0])
+                       ->andWhere(["=", "inscripcion.idEvento",  $idEvento ]);
+                  $participantes= $base->asArray()->all();
+            break;
  
-            case 'inscriptos':
-                echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+            case 3: //  3:'Expositores' 
+                $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
+                $base->innerJoin('presentacion_expositor', 'presentacion_expositor.idExpositor=inscripcion.idUsuario');
+                $base->select(['user_email'=>'usuario.email']);
+                $participantes= $base->andWhere(["=", "inscripcion.estado", 1])->asArray()->all();
                 break;
-            case 'expositores':
-                echo Html::label('No se puede inscribir, período de inscripciones cerrado');
+
+            case 4: //   4:'Todos',
                 break;
+
          }
 
-        
-        Yii::$app->mailer
-            ->compose(
-                ['html' => 'confirmacionDeInscripcion-html'], ['evento' => $evento],
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-            ->setTo($emails)
-            ->setSubject( $evento->nombreEvento.':'.$asunto)
-            ->send();
 
-              Yii::$app->session->setFlash('success', '<h3> ¡Se ha enviado el correo a los! '.$para .'</h3>');
-           
+        $this->actionEventoEmail( $participantes, $asunto, $mensaje, 'enviarEmail-html');
+
+          //    Yii::$app->session->setFlash('success', '<h3> ¡Se ha enviado el correo a los! '.$para .'</h3>');
+        
        //// volver a ver evento
-       return $this->redirect(Url::toRoute(["eventos/ver-evento/". $evento->nombreCortoEvento]));
+     //  return $this->redirect(Url::toRoute(["eventos/ver-evento/". $evento->nombreCortoEvento]));
+
+     //return $this->render('testEmail',['para'=> $para,'asunto' => $asunto,'mensaje'=> $mensaje]);
+
     }
 
+    public function actionEventoEmail($participantes, $asunto, $mensaje, $plantilla)
+    {
+        $emailsTo = array();
+
+        foreach($participantes as $unParticipante){
+              $emailsTo[]= $unParticipante['user_email'];
+        }
+
+       
+        Yii::$app->mailer
+            ->compose(
+                ['html' => $plantilla], 
+                ['mensaje'=> $mensaje]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($emailsTo)
+            ->setSubject($asunto)
+            ->send();
+    }
 
 
     public function actionOrganizarEventos()
