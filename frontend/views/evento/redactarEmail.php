@@ -20,46 +20,20 @@ $this->title = "Cargar Evento";
 
             <div class="evento-form">
      
+                <?php $form = ActiveForm::begin(['action' =>['forum-post/create'],  'method' => 'post','options' => ['enctype' => 'multipart/form-data'] ]);?>
 
-                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-               
-
-                <div class="row">
-                    <div class="col-md-2">
-                        <p ><b>Para: </b></p>
-                    </div>
-
-                    <div class="col-md-2">
-                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                        <?=Html::label('Todos','alumno[lugarBautismo]') ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                        <?=Html::label('Pre-inscriptos','alumno[lugarBautismo]') ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                        <?=Html::label('Inscriptos','alumno[lugarBautismo]') ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?= Html::radio('nunca', true, ['value' => 1]) ?>
-                        <?=Html::label('Expositores','alumno[lugarBautismo]') ?>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-2">
-                        <p ><b>Agregar un asunto: </b></p>
-                    </div>
-
-                    <div class="col-md-4">
-                    <?=Html::input('text','asunto','',['class'=>'form-control']); ?>
-                    </div>
-  
-                </div>
-
-
-                <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
+                  <div class="col-md-12">
+                      <?= Html::label('<b>Para: </b>'); ?>
+                      <?= Html::dropDownList("para",null, $participantes, ['class' => 'form-control','prompt' => 'Elija un grupo de participantes' ])   ?>
+                  </div>
+                  <br>               
+                  <div class="col-md-12">
+                      <?= Html::label('<b>Asunto: </b>'); ?>
+                      <?= Html::input('text','asunto','',['class'=>'form-control','placeholder' => 'Agregue un asunto']); ?>
+                  </div>
+                  <br>
+                  <div class="col-md-12">
+                  <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
                     "options" => ['rows' => '8'],
                     "preset" => "custom",
                     "clientOptions" => [
@@ -81,8 +55,8 @@ $this->title = "Cargar Evento";
                         'removePlugins' => 'elementspath',
                         'resize_enabled' => false
                     ],
-                ])->label('<b>Mensaje</b>') ?>
-
+                ])->label('<b>Mensaje:</b>') ?>
+                  </div>
     
                 <div class="form-group">
                     <?= Html::submitButton('Enviar', ['class' => 'btn btn-success']) ?>
@@ -90,7 +64,6 @@ $this->title = "Cargar Evento";
 
                 <?php ActiveForm::end(); ?>
                 </div>
-
              </div>
          </div>               
     </div>

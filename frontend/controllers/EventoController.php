@@ -709,8 +709,11 @@ class EventoController extends Controller
     
     
     public function actionRedactarEmail(){
+        
+        $participantes=[ 1=>'Todos', 2=>'Pre-inscriptos', 3=>'Inscriptos', 4=>'Expositores' ] ;
+
         $evento = Evento::findOne(['idEvento' =>1]);
-        return $this->render('redactarEmail',['model' => $evento]);
+        return $this->render('redactarEmail',['model' => $evento,'participantes'=> $participantes]);
     }
 
 
