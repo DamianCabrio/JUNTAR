@@ -4,7 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Usuario;
-use common\models\SignupForm;
+use backend\models\RegistrarUsuarioForm;
+use backend\models\CambiarPasswordForm;
 use backend\models\UsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -98,101 +99,21 @@ class UsuarioController extends Controller {
     }
 
     /**
-     * Creates a new Usuario model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate() {
-        $model = new Usuario();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
-            return $this->redirect(['view', 'id' => $model->idUsuario]);
-        }
-
-        return $this->render('create', [
-                    'model' => $model,
-        ]);
-    }
-    
-    /**
      * Signs user up.
      *
      * @return mixed
      */
-    public function actionSignup() {
+    public function actionCrearUsuario() {
         //obtiene datos paises
-        $dataCountry = file_get_contents("../../common/json/paises.json");
-        $paises = json_decode($dataCountry, true);
-        //Conversión de datos
-        $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
-        $paises = $this->conversionAutocomplete($paises);
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->signup()) {
-            Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
-                    . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goBack(Url::previous());
+        $model = new RegistrarUsuarioForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->registrar()) {
+            Yii::$app->session->setFlash('success', '<h2> Usuario creado con éxito </h2>');
+            return $this->redirect(['view', 'id' => $model->obtenerIdInsercion()]);
         }
 
-        return $this->render('signup', [
+        return $this->render('crearUsuario', [
                     'model' => $model,
-                    'paises' => $paises,
         ]);
-    }
-
-    public function actionSearchProvincias() {
-        $provincias = null;
-        if (Yii::$app->request->post('pais') != null) {
-
-            //almacena el parámetro esperado
-            $pais = Yii::$app->request->post('pais');
-
-            //define el tipo de respuesta del metodo
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-            //obtiene la data de las provincias del json
-            $dataProvincias = file_get_contents("../../common/json/provincias.json");
-            $provincias = json_decode($dataProvincias, true);
-
-            //busca el indice del pais
-            $indexPais = null;
-            foreach ($provincias as $index => $unPais) {
-                if (array_search($pais, $unPais)) {
-                    $indexPais = $index;
-                }
-            }
-            // Conversión de datos para obtener las provincias
-            $provincias = ArrayHelper::map($provincias[$indexPais]['provincias'], 'id', 'nombre');
-            $provincias = $this->conversionAutocomplete($provincias);
-        }
-        return $provincias;
-    }
-
-    public function actionSearchLocalidades() {
-        $localidades = null;
-        if (Yii::$app->request->post('provincia') != null) {
-
-            //almacena el parámetro esperado
-            $provincia = Yii::$app->request->post('provincia');
-
-            //define el tipo de respuesta del metodo
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-            //obtiene la data de las localidades del json
-            $dataLocalidades = file_get_contents("../../common/json/localidades.json");
-            $localidades = json_decode($dataLocalidades, true);
-
-            //busca el indice de la provincia
-            $indexProvincia = null;
-            foreach ($localidades as $index => $unaProvincia) {
-                if (array_search($provincia, $unaProvincia)) {
-                    $indexProvincia = $index;
-                }
-            }
-            //Conversión de datos para obtener las localidades 
-            $localidades = ArrayHelper::map($localidades[$indexProvincia]['ciudades'], 'id', 'nombre');
-            $localidades = $this->conversionAutocomplete($localidades);
-        }
-        return $localidades;
     }
 
     /**
@@ -204,13 +125,26 @@ class UsuarioController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        $modelCambiarPw = null;
+//        $modifyPw = null;
+        if (Yii::$app->request->get('modifyPw') != null) {
+            $modelCambiarPw = new CambiarPasswordForm();
+            if ($modelCambiarPw->load(Yii::$app->request->post()) && $modelCambiarPw->validate() && $modelCambiarPw->cambiarPassword(Yii::$app->request->get('id'))) {
+                Yii::$app->session->setFlash('success', '<h2> Contraseña modificada con éxito </h2>');
+                return $this->redirect(['update', 'id' => $model->idUsuario]);
+            }
+        }
+//        if (Yii::$app->request->get('newPassword') != null) {
+//            if ($modelCambiarPw->load(Yii::$app->request->post()) && $modelCambiarPw->validate() && $modelCambiarPw->cambiarPassword($model->idUsuario)) {
+//        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idUsuario]);
         }
 
         return $this->render('update', [
                     'model' => $model,
+                    'modelCambiarPw' => $modelCambiarPw,
         ]);
     }
 
@@ -224,8 +158,9 @@ class UsuarioController extends Controller {
     public function actionDeshabilitar($id) {
         $this->findModel($id)->deshabilitar();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
+
     /**
      * Deletes an existing Usuario model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -236,7 +171,7 @@ class UsuarioController extends Controller {
     public function actionHabilitar($id) {
         $this->findModel($id)->habilitar();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
