@@ -97,14 +97,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'attribute' => 'avalado',
                                     'label' => 'Aval FAI',
                                     'value' => function ($dataProvider) {
-                                        return ($dataProvider->avalado == 0 ? 'Denegado' : 'Concedido');
+                                        if ($dataProvider->avalado === 0) {
+                                            return "Denegado";
+                                        } else if ($dataProvider->avalado === 1) {
+                                            return "Concedido";
+                                        } else {
+                                            return "Pendiente";
+                                        }
                                     },
                                 ],
                                 [
                                     'attribute' => 'validador',
                                     'label' => 'Revisado por',
                                     'value' => function ($dataProvider) {
-                                        return ($dataProvider->validador0->nombre . ' ' . $dataProvider->validador0->apellido);
+                                        if ($dataProvider->validador0 != null && $dataProvider->validador0 != '') {
+                                            return ($dataProvider->validador0->nombre . ' ' . $dataProvider->validador0->apellido);
+                                        } else {
+                                            return "-";
+                                        }
                                     },
                                 ],
                                 ['class' => 'yii\grid\ActionColumn',
@@ -115,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             ['class' => 'btn btn-pink']);
                                         },
                                     ],
-                                                'header' => 'Accion',
+                                    'header' => 'Accion',
                                 ],
                             ],
                         ]);

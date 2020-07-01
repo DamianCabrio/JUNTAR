@@ -8,6 +8,7 @@ use common\models\SolicitudAvalSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -19,14 +20,32 @@ class SolicitudAvalController extends Controller {
      * {@inheritdoc}
      */
     public function behaviors() {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+        $behaviors['access'] = [
+            //utilizamos el filtro AccessControl
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                    'matchCallback' => function ($rule, $action) {
+                        //$module = Yii::$app->controller->module->id;
+                        $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
+                        $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
+                        // $route = "$module/$controller/$action";
+                        $route = "$controller/$action";                     //generamos la ruta que se busca acceder
+                        //$post = Yii::$app->request->post();
+                        //preguntamos si el usuario tiene los permisos para visitar el sitio
+                        //if (Yii::$app->user->can($route, ['post' => $post])) {
+                        if (Yii::$app->user->can($route)) {
+                            //return $this->goHome();
+                            return true;
+                        }
+                    }
                 ],
             ],
         ];
+
+        return $behaviors;
     }
 
     /**
@@ -40,6 +59,10 @@ class SolicitudAvalController extends Controller {
             $seleccionado = Yii::$app->request->get('selected');
         }
         switch ($seleccionado){
+            case "activas":
+                //activas
+                $querySearchModel = $searchModel::find()->where(['not', ['tokenSolicitud' => null]])->andWhere(['is', 'avalado', null]);
+                break;
             case "denegadas":
 //                $querySearchModel = $searchModel::find()->where(['is', 'tokenSolicitud', null])->andWhere(['avalado' => 0]);
                 $querySearchModel = $searchModel::find()->where(['avalado' => 0]);
