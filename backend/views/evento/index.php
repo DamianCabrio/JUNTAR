@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card">
                 <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
-                <?= Html::a('Crear Evento', ['create'], ['class' => 'btn btn-pink mt-3 ml-3 col-2']) ?>
+                <?php // echo Html::a('Crear Evento', ['create'], ['class' => 'btn btn-pink mt-3 ml-3 col-2']) ?>
 
                 <div class="card-body">
                     <div class="table-responsive">
