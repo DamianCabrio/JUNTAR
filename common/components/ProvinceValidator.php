@@ -19,19 +19,19 @@ public function init() {
         var selectedProvince = $("#signupform-provincia").val();
         var selectedCountry = $("#signupform-pais").val();
         deferred.push($.getJSON('../json/provincias.json', function(json){
-          var result = false;
-          $.each(json, function(id, country){
-            if (country.name == selectedCountry ) {
-              $.each(country.provincias, function(id, province){
-                if (province.nombre == selectedProvince) {
-                  result = true;
+            var result = false;
+            $.each(json, function(id, country){
+                if (country.name == selectedCountry ) {
+                    $.each(country.provincias, function(id, province){
+                        if (province.nombre == selectedProvince) {
+                          result = true;
+                        }
+                    });
                 }
-              });
+            });
+            if (!result) {
+              messages.push($message);
             }
-          });
-          if (!result) {
-            messages.push($message);
-          }
         }));
         JS;
     }

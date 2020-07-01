@@ -48,8 +48,8 @@ class SiteController extends Controller {
                         'verify-email',
                         'reset-password',
                         'index',
-                        'search-localidades',
-                        'search-provincias',
+                        'buscar-provincias',
+                        'buscar-localidades',
                     ],
                     'roles' => ['?'], // <----- guest
                 ],
@@ -158,7 +158,7 @@ class SiteController extends Controller {
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login() && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->login()) {
             return $this->goBack(Url::previous());
         } else {
             $model->password = '';
@@ -254,7 +254,7 @@ class SiteController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->signup()) {
             Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
                     . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
-            return $this->goBack(Url::previous());
+            return $this->goHome();
         }
 
         return $this->render('signup', [
@@ -263,7 +263,7 @@ class SiteController extends Controller {
         ]);
     }
 
-    public function actionSearchProvincias() {
+    public function actionBuscarProvincias() {
         $provincias = null;
         if (Yii::$app->request->post('pais') != null) {
 
@@ -291,7 +291,7 @@ class SiteController extends Controller {
         return $provincias;
     }
 
-    public function actionSearchLocalidades() {
+    public function actionBuscarLocalidades() {
         $localidades = null;
         if (Yii::$app->request->post('provincia') != null) {
 

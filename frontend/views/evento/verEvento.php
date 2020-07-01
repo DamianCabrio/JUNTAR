@@ -90,7 +90,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                 <div class="col text-center">
                     <h4 class="text-white"><i class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
                     <h4><i class="material-icons large align-middle">location_on</i> <?= $evento->lugar ?></h4>
-                    <?php if ($esFai == 1) : ?>
+                    <?php if ($esFai == 1)  : ?>
                         <h5 class="text-white">Evento organizado por la FAI</h5>
                     <?php else : ?>
                         <h5 class="text-white">Evento no organizado por la FAI</h5>
@@ -227,14 +227,18 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         <?php if ($evento->avalado == 0): ?>
                             <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'evento' => $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right'])?>
 
+                        <!-- Solicitar Aval-->
+                        <?php if ($estadoAval == 'no solicitado'): ?>
+                          <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'id' => $evento->idEvento], ['class' => 'btn btn_publish float-right'])?>
                           <?php else: ?>
-                        <button type="button" class="btn float-right disabled" data-toggle="modal" data-target="#aval-solicitado">Solicitar aval</button>
+                            <?php if ($estadoAval->avalado != '0' && $estadoAval->avalado != '1' ): ?>
+                              <button type="button" class="btn float-right disabled" data-toggle="modal" data-target="#aval-solicitado">Solicitar aval</button>
                             <!-- modal aval-->
                             <div class="modal fade" id="aval-solicitado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Usted ya ha solicitado el aval el día <?= Yii::$app->formatter->asDatetime($evento->avalado, 'dd/MM/yyyy' )?></h5>
+                                    <h5 class="modal-title">Usted ya ha solicitado el aval el día <?= Yii::$app->formatter->asDatetime($estadoAval->fechaSolicitud, 'dd/MM/yyyy' )?></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                      </button>
@@ -250,19 +254,19 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             </div>
                           <?php endif; ?>
                         <?php endif; ?>
-                        <?php if ($evento->avalado == 3): ?>
-                        <span class="badge badge-warning float-right p-2">Solicitud de Aval Rechazado</span>
+                        <?php if ($estadoAval != 'no solicitado' && $estadoAval->avalado == '0'): ?>
+                          <button class="btn float-right disabled"><b>Solicitud de Aval Rechazado</b></button>
                       <?php endif; ?>
                      </div>
                     <?php
                     } elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para mostrar a los user invitados
 
                         echo '<div class="card-header pinkish_bg text-center">';
-                        if ($verificacionSolicitud && !Yii::$app->user->can('Validador')) {
-                          echo Html::a('Confirmar Solicitud <i class="material-icons align-middle">check_circle_outline</i>', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                        if ($verificacionSolicitud != false && !Yii::$app->user->can('Validador')) {
+                          echo Html::a('Confirmar Solicitud <i class="material-icons align-middle">check_circle_outline</i>', ['confirmar-solicitud', 'token' => $verificacionSolicitud], [
                             'class' => 'btn',
                           ]);
-                          echo Html::a('Denegar Solicitud <i class="material-icons align-middle">highlight_off</i>', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
+                          echo Html::a('Denegar Solicitud <i class="material-icons align-middle">highlight_off</i>', ['denegar-solicitud', 'token' => $verificacionSolicitud], [
                             'class' => 'btn',
                           ]);
                         }
@@ -377,16 +381,20 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ]);
                                     Modal::end();
                                     ?>
+                                    <!-- Certificado -->
                                     <?php if ($evento->fechaFinEvento < date("Y-m-d") and !Yii::$app->user->isGuest and $estadoEventoInscripcion == 'yaAcreditado') : ?>
                                         <?= Html::a('Certificado', ['certificado/index', 'id' => $evento->idEvento], ['class' => 'btn btn-primary btn-lg full_width viewCertification']); ?>
                                     <?php endif; ?>
-                                    <?php if (Yii::$app->user->can('Validador') && $evento->avalado != 1 && $evento->avalado != 3): ?>
-                                      <?= Html::a('Denegar Aval <i class="material-icons align-middle">highlight_off</i>', ['denegar-solicitud', 'slug' => $evento->nombreCortoEvento], [
-                                        'class' => 'btn m-2 float-right',
-                                      ]);?>
-                                      <?= Html::a('Avalar Evento <i class="material-icons align-middle">check_circle_outline</i>', ['confirmar-solicitud', 'slug' => $evento->nombreCortoEvento], [
-                                        'class' => 'btn m-2 float-right',
-                                      ]);?>
+                                    <!-- Validar evento - Usuario Validador-->
+                                    <?php if ($estadoAval != 'no solicitado' && Yii::$app->user->can('Validador')): ?>
+                                      <?php if ($estadoAval->avalado != '0' &&  $estadoAval->avalado != '1' ): ?>
+                                        <?= Html::a('Denegar Aval <i class="material-icons align-middle">highlight_off</i>', ['denegar-solicitud', 'id' => $evento->idEvento], [
+                                          'class' => 'btn m-2 float-right',
+                                        ]);?>
+                                        <?= Html::a('Avalar Evento <i class="material-icons align-middle">check_circle_outline</i>', ['confirmar-solicitud', 'id' => $evento->idEvento], [
+                                          'class' => 'btn m-2 float-right',
+                                        ]);?>
+                                      <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>

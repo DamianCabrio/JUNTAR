@@ -1,11 +1,13 @@
 <?php
 
 namespace frontend\models;
-use frontend\models\Usuario;
-
-use frontend\models\ModalidadEvento;
 use Yii;
 use yii\behaviors\SluggableBehavior;
+
+use frontend\models\Usuario;
+use frontend\models\ModalidadEvento;
+use common\models\SolicitudAval;
+
 
 /**
  * This is the model class for table "evento".
@@ -172,5 +174,14 @@ class Evento extends \yii\db\ActiveRecord
     public function getPresentacions()
     {
         return $this->hasMany(Presentacion::className(), ['idEvento' => 'idEvento']);
+    }
+    /**
+     * Gets query for [[SolicitudAval]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSolicitudAval()
+    {
+        return $this->hasOne(SolicitudAval::className(), ['idEvento' => 'idEvento']);
     }
 }
