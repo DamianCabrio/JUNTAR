@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Usuario;
+use common\models\SignupForm;
 use backend\models\UsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -111,6 +112,87 @@ class UsuarioController extends Controller {
         return $this->render('create', [
                     'model' => $model,
         ]);
+    }
+    
+    /**
+     * Signs user up.
+     *
+     * @return mixed
+     */
+    public function actionSignup() {
+        //obtiene datos paises
+        $dataCountry = file_get_contents("../../common/json/paises.json");
+        $paises = json_decode($dataCountry, true);
+        //Conversión de datos
+        $paises = ArrayHelper::map($paises['countries'], 'id', 'name');
+        $paises = $this->conversionAutocomplete($paises);
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->signup()) {
+            Yii::$app->session->setFlash('success', '<h2> ¡Sólo queda confirmar tu correo! </h2>'
+                    . '<p> Muchas gracias por registrarte en la plataforma Juntar. Por favor, revisa tu dirección de correo para confirmar tu cuenta. </p>');
+            return $this->goBack(Url::previous());
+        }
+
+        return $this->render('signup', [
+                    'model' => $model,
+                    'paises' => $paises,
+        ]);
+    }
+
+    public function actionSearchProvincias() {
+        $provincias = null;
+        if (Yii::$app->request->post('pais') != null) {
+
+            //almacena el parámetro esperado
+            $pais = Yii::$app->request->post('pais');
+
+            //define el tipo de respuesta del metodo
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            //obtiene la data de las provincias del json
+            $dataProvincias = file_get_contents("../../common/json/provincias.json");
+            $provincias = json_decode($dataProvincias, true);
+
+            //busca el indice del pais
+            $indexPais = null;
+            foreach ($provincias as $index => $unPais) {
+                if (array_search($pais, $unPais)) {
+                    $indexPais = $index;
+                }
+            }
+            // Conversión de datos para obtener las provincias
+            $provincias = ArrayHelper::map($provincias[$indexPais]['provincias'], 'id', 'nombre');
+            $provincias = $this->conversionAutocomplete($provincias);
+        }
+        return $provincias;
+    }
+
+    public function actionSearchLocalidades() {
+        $localidades = null;
+        if (Yii::$app->request->post('provincia') != null) {
+
+            //almacena el parámetro esperado
+            $provincia = Yii::$app->request->post('provincia');
+
+            //define el tipo de respuesta del metodo
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            //obtiene la data de las localidades del json
+            $dataLocalidades = file_get_contents("../../common/json/localidades.json");
+            $localidades = json_decode($dataLocalidades, true);
+
+            //busca el indice de la provincia
+            $indexProvincia = null;
+            foreach ($localidades as $index => $unaProvincia) {
+                if (array_search($provincia, $unaProvincia)) {
+                    $indexProvincia = $index;
+                }
+            }
+            //Conversión de datos para obtener las localidades 
+            $localidades = ArrayHelper::map($localidades[$indexProvincia]['ciudades'], 'id', 'nombre');
+            $localidades = $this->conversionAutocomplete($localidades);
+        }
+        return $localidades;
     }
 
     /**
