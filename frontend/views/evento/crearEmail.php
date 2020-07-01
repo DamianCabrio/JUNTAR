@@ -6,7 +6,7 @@ use frontend\models\ModalidadEvento;
 use yii\bootstrap4\ActiveForm;
 
 
-$this->title = "Cargar Evento";
+$this->title = "Crear Email";
 ?>
 <div class="dark_light_bg">
     <div class="container padding_section">
