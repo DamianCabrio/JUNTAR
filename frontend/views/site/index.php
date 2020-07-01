@@ -53,10 +53,11 @@ $this->title = 'Juntar';
         <section class="dark_bg">
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>
-                    <div class="card-columns">
+                    <div class="row">
                         <?php foreach ($eventos as $evento) : ?>
-                            <div class='card'>
-                                <div class='card bg-light mb-3'>
+                            <div class="col-sm-12 col-md-4">
+                            <div class='card mb-3'>
+                                <div class='card bg-light'>
                                     <?= Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
                                     <div class='card-body'>
                                         <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
@@ -70,6 +71,8 @@ $this->title = 'Juntar';
                                     </div>
                                 </div>
                             </div>
+                            </div>
+
                         <?php endforeach; ?>
                     </div>
 
