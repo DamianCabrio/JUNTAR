@@ -221,12 +221,6 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                         <?php
                         }
                         ?>
-
-                        <!-- Solicitar Aval-->
-                        <?php if ($evento->avalado != 1 && $evento->avalado != 3): ?>
-                        <?php if ($evento->avalado == 0): ?>
-                            <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'evento' => $evento->nombreCortoEvento], ['class' => 'btn btn_publish float-right'])?>
-
                         <!-- Solicitar Aval-->
                         <?php if ($estadoAval == 'no solicitado'): ?>
                           <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'id' => $evento->idEvento], ['class' => 'btn btn_publish float-right'])?>
