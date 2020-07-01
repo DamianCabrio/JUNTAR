@@ -110,7 +110,7 @@ $this->title = "Cargar Evento";
 
 
                 <div id="mostrarCapacidad">
-                    <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                    <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número de participantes *')  ?>
                 </div>
                 <!-- select requiere preInscripcion -->
                 <?= $form->field($model, 'preInscripcion')->radioList([0 => 'No', 1 => 'Si'])->label('¿Requiere preinscripción? *') ?>

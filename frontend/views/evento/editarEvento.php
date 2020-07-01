@@ -96,7 +96,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 
                     <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Fin *') ?>
                     <div class="form-group">
-                        <label>¿Posee límite de espectadores?</label><br>
+                        <label>¿Posee límite de participantes?</label><br>
 
                         <div role="radiogroup" aria-required="true">
                             <div class="custom-control custom-radio">
@@ -111,7 +111,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                     </div>
 
                     <div id="mostrarCapacidad">
-                        <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                        <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número de participantes *')  ?>
                     </div>
 
                     <!-- select requiere preInscripcion -->
