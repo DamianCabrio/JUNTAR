@@ -1,21 +1,26 @@
-
 <?php
+use yii\base\Model;
+use yii\base\InvalidArgumentException;
 
-    $usersEmails = [];
+use frontend\models\Evento;
+use common\models\User;
 
-    foreach ($listaInscriptos as $unInscripto) {
-      array_push($usersEmails, $unInscripto['user_email']);
-    }
+  
 
-    $organizer ="Pepe";
-    $usersEmails = ['marcos_benitez80@hotmail.com'];
+$emails = array();
 
-    return Yii::$app->mailer
+foreach($listaInscriptos as $unInscripto){
+      $emails[]= $unInscripto['user_email'];
+}
+
+
+ return Yii::$app->mailer
+ 
       ->compose(
-        ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-        ['event' => 'dd', 'organizer' => $organizer],
+        ['html' => 'confirmacionDeInscripcion-html'],
+        ['evento' => $evento],
       )
       ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-      ->setTo($usersEmails)
-      ->setSubject('Inscripción al evento: ' . "Flisol")
+      ->setTo($emails)
+      ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
       ->send();

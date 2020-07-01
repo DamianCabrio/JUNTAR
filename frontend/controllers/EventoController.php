@@ -674,21 +674,44 @@ class EventoController extends Controller
         $request = Yii::$app->request;
         $idEvento  = $request->get('idEvento');
 
-        $datosDelEvento = Evento::find()->where(['idEvento' => $idEvento ])->asArray()->all();
+        $evento = Evento::findOne(['idEvento' => $idEvento ]);
 
+///        $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
 
         $base= Inscripcion::find()->where(["idEvento" =>   $idEvento ]);
         $base->innerJoin('usuario', 'usuario.idUsuario=inscripcion.idUsuario');
         $base->select(['user_email'=>'usuario.email','user_apellido'=>'usuario.apellido','user_nombre'=>'usuario.nombre']);
         $listaInscriptos= $base->andWhere(["=", "inscripcion.estado", 1])->andWhere(["=", "inscripcion.acreditacion", 0])->asArray()->all();
 
-        return $this->render('enviarEmailInscriptos',
-        ['datosDelEvento' => $datosDelEvento,'listaInscriptos' => $listaInscriptos]);
+        $emails = array();
+
+        foreach($listaInscriptos as $unInscripto){
+              $emails[]= $unInscripto['user_email'];
+        }
+
+        return Yii::$app->mailer
+
+            ->compose(
+                ['html' => 'confirmacionDeInscripcion-html'],
+                ['evento' => $evento],
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($emails)
+            ->setSubject('Inscripción el Evento: ' .  $evento->nombreEvento)
+            ->send();
+
+              Yii::$app->session->setFlash('success', '<h2> ¡Se han enviado los correos a los inscriptos! </h2>'
+              . '<p> Su dirección de correo ha sido confirmada exitosamente. Ya puede acceder al contenido de la plataforma </p>');
+           
+              return $this->redirect(Url::toRoute(["eventos/respuestas-formulario/". $evento->nombreCortoEvento]));
+       
 
     }
     
-
-
+    
+    public function actionRedactarEmail(){
+        return $this->render('redactarEmail',['datosDelEvento' => '']);
+    }
 
 
     public function actionOrganizarEventos()

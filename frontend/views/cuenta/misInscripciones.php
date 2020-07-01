@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'fechaPreInscripcion',
-                'label' => 'Pre-Inscripto:',
+                'label' => 'Pre-Inscripto',
             ],
             [
                 'attribute' => 'fechaInscripcion',
@@ -41,10 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Acreditacion',
                 "filter" => [0 => "No acreditado", 1 => "Acreditado"]
             ],
-            [
+            /*[
                 'attribute' => 'certificado',
                 'label' => 'Certificado',
-            ],
+            ],*/
             [
                 'attribute' => 'estado',
                 'label' => 'Estado',
