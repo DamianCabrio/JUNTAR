@@ -711,8 +711,9 @@ class EventoController extends Controller
     public function actionCrearEmail($slug){
         $participantes = [ 1=>'Pre-inscriptos', 2=>'Inscriptos', 3=>'Expositores',4=>'Todos' ] ;
         $evento = Evento::findOne(['nombreCortoEvento' => $slug]);
+        $idEvento = $evento->idEvento;
 
-        return $this->render('crearEmail',['idEvento' =>$idEvento,'participantes'=> $participantes]);
+        return $this->render('crearEmail',['idEvento' => $idEvento,'participantes'=> $participantes]);
     }
 
 
