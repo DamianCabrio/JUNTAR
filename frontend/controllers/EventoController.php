@@ -664,7 +664,7 @@ class EventoController extends Controller
 
        return $this->renderPartial('listaParticipantes',
         ['datosDelEvento' => $datosDelEvento,
-         'preguntas' => $preguntas, 'listaRepuesta' => $listaRepuesta]);
+         'preguntas' => $preguntas, 'listaRepuesta' => $listaRepuesta, 'extension'=>$extension]);
     }
 
     

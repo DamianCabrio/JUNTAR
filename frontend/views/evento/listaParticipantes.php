@@ -9,30 +9,28 @@
     use PhpOffice\PhpSpreadsheet\Style\Border;
 
 
-    $fileType = 'Ods';
+    $extension= 'csv';
 
-    $templateExcel  = $spreadsheet = new Spreadsheet();
+    $template =  new Spreadsheet();
 
-    $nombreDelLibro = $datosDelEvento['idEvento']."_Participantes_".$datosDelEvento['idEvento'].".ods";
+    $nombreDelLibro = $datosDelEvento['idEvento']."_Participantes_".$datosDelEvento['idEvento'];
 
         
-    $fila= $templateExcel->setActiveSheetIndex(0);
-    $fila->setCellValue('B9', $datosDelEvento['idEvento']);
+    $fila= $template->setActiveSheetIndex(0);
 
      
     // Datos del Evento 
-    
-    $fila->setCellValueByColumnAndRow( 10, 2, $datosDelEvento['organizador'] );
-    $fila->setCellValueByColumnAndRow( 10, 3, 'Inicio: '.date("d-m-Y", strtotime($datosDelEvento['inicio']))  );
-    $fila->setCellValueByColumnAndRow( 10, 4, 'Fin: '. date("d-m-Y", strtotime($datosDelEvento['fin'])) );
-    $fila->setCellValueByColumnAndRow( 10, 5, 'Capacidad: '. $datosDelEvento['capacidad'] );
-    $fila->setCellValueByColumnAndRow( 10, 6, 'Lugar: '.$datosDelEvento['lugar'] );
-    $fila->setCellValueByColumnAndRow( 10, 7, 'Modalidad: '. $datosDelEvento['modalidad'] );
+    if($extension=='ods'){
+        $fila->setCellValueByColumnAndRow( 10, 2, $datosDelEvento['organizador'] );
+        $fila->setCellValueByColumnAndRow( 10, 3, 'Inicio: '.date("d-m-Y", strtotime($datosDelEvento['inicio']))  );
+        $fila->setCellValueByColumnAndRow( 10, 4, 'Fin: '. date("d-m-Y", strtotime($datosDelEvento['fin'])) );
+        $fila->setCellValueByColumnAndRow( 10, 5, 'Capacidad: '. $datosDelEvento['capacidad'] );
+        $fila->setCellValueByColumnAndRow( 10, 6, 'Lugar: '.$datosDelEvento['lugar'] );
+        $fila->setCellValueByColumnAndRow( 10, 7, 'Modalidad: '. $datosDelEvento['modalidad'] );
+    }
 
     $row = 12;    // $row: los datos son insertado a partir de la fila 10
-
     $i = 1;    // $i: enumera la cantidad las filas de la tabla
-
 
     // Encabezado  datos del usuario
 
@@ -54,7 +52,7 @@
         $i++;
     }
 
-
+ 
 
     ///// listado de los datos de los usuarios inscripto a un evento
     $i=1;
@@ -97,11 +95,22 @@
         $row = $row + 1;
     }
 
+    if($extension== 'csv'){          
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($template);
+        $writer->setDelimiter(';');
+        $writer->setEnclosure('');
+        $writer->setSheetIndex(0);
+        $nombreDelLibro= $nombreDelLibro.'.csv';
+     } 
+
+     if($extension == 'ods') {
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($template);
+        $nombreDelLibro = $nombreDelLibro.'.ods';
+     }
 
     /// guarda el archivo
-    $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter( $templateExcel, $fileType );
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="'.$nombreDelLibro .'"');
+    header('Content-Disposition: attachment;filename="'. $nombreDelLibro .'"');
     ob_end_clean();
 
     $writer->save("php://output");

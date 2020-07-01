@@ -445,8 +445,15 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 <?php
                                                 echo Html::a(
                                                     '<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
-                                                   <span class=" align-middle"  style="color:#00ff00"> ListaDeParticipantes  </span>',
-                                                    ['evento/lista-participantes', 'idEvento' => $evento->idEvento]
+                                                     <span class=" align-middle"  style="color:#00ff00"> ListaDeParticipantes.ods  </span>',
+                                                    ['evento/lista-participantes', 'idEvento' => $evento->idEvento,'extension'=>'ods']
+                                                );?>
+                                                <br>
+                                                 <?php
+                                                echo Html::a(
+                                                    '<i class="material-icons align-middle" style="color:#00ff00">file_download</i>
+                                                    <span class=" align-middle"  style="color:#00ff00"> ListaDeParticipantes.csv  </span>',
+                                                    ['evento/lista-participantes', 'idEvento' => $evento->idEvento,'extension'=>'csv']
                                                 );
                                                 ?>
                                             </span>
