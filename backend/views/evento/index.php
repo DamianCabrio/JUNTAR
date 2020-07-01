@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card">
                 <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
-                <?= Html::a('Crear Evento', ['create'], ['class' => 'btn btn-pink mt-3 ml-3 col-2']) ?>
+                <?php // echo Html::a('Crear Evento', ['create'], ['class' => 'btn btn-pink mt-3 ml-3 col-2']) ?>
 
                 <div class="card-body">
                     <div class="table-responsive">
@@ -109,19 +109,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'attribute' => 'avalado',
-                                    'label' => 'Avalado FAI',
+                                    'label' => 'Aval FAI',
                                     'value' => function ($dataProvider) {
-//                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                                        if($dataProvider->avalado == 1){
-                                            return "Avalado";
-                                        }else{
-                                            if($dataProvider->avalado == 0){
-                                                return "No avalado";
-                                            }else{
-                                                return "Pendiente";
-                                            }
+                                        if ($dataProvider->idAval0 != null && $dataProvider->idAval0 != '') {
+                                            return (($dataProvider->idAval0->avalado == 1) ? "Concedido" : "Denegado");
+                                        } else {
+                                            return "No Solicitado";
                                         }
-//                                        return ($dataProvider->avalado == 1 ? "Avalado" : "No");
                                     }, //valor referenciado por ActiveQuery en el metodo idClub0
                                 ],
                                 //'imgLogo',

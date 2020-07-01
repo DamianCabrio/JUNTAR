@@ -2,6 +2,8 @@
 
 namespace frontend\models;
 
+use Yii;
+
 /**
  * This is the model class for table "respuesta".
  *
@@ -13,38 +15,36 @@ namespace frontend\models;
  * @property Inscripcion $idinscripcion0
  * @property Pregunta $idpregunta0
  */
-class RespuestaFile extends \yii\db\ActiveRecord
-{
+class RespuestaTest extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-
-    public $file;
-
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'respuesta';
     }
 
+    public $file;
+    public $respuestaCorta;
+
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [["respuesta"], 'required'],
+            [['idpregunta', 'idinscripcion', 'respuesta', "respuestaCorta"], 'required', "message" => "Esta campo no puede estar vacio"],
             [['idpregunta', 'idinscripcion'], 'integer'],
-            [['respuesta'], 'string', 'max' => 500],
+            [['respuesta'], 'string', 'max' => 500, "message" => "Esta campo no debe tener mas de 500 caracteres"],
+            [['respuestaCorta'], 'string', 'max' => 50, "message" => "Esta campo no debe tener mas de 50 caracteres"],
             [['file'], "file", "extensions" => ["zip", "rar", "pdf"], 'skipOnEmpty' => false, 'maxSize' => 5000000, 'tooBig' => 'El limite de archivo son de 5 mb'],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
     }
 
-    public function upload()
-    {
+    public function upload() {
         if ($this->validate()) {
-            $this->file->saveAs("eventos/formularios/archivos/" . $this->file->baseName . '.' . $this->file->extension);
+            $this->file->saveAs("../web/eventos/formularios/archivos/" . $this->file->baseName . '.' . $this->file->extension);
             return true;
         } else {
             return false;
@@ -54,8 +54,7 @@ class RespuestaFile extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'idpregunta' => 'Idpregunta',
@@ -69,8 +68,7 @@ class RespuestaFile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdinscripcion0()
-    {
+    public function getIdinscripcion0() {
         return $this->hasOne(Inscripcion::className(), ['idInscripcion' => 'idinscripcion']);
     }
 
@@ -79,8 +77,8 @@ class RespuestaFile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdpregunta0()
-    {
+    public function getIdpregunta0() {
         return $this->hasOne(Pregunta::className(), ['id' => 'idpregunta']);
     }
+
 }

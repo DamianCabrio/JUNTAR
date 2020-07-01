@@ -19,20 +19,19 @@ public function init() {
         var selectedProvince = $("#signupform-provincia").val();
         var selectedLocation = $("#signupform-localidad").val();
         deferred.push($.getJSON('../json/localidades.json', function(json){
-          var result = false;
-          $.each(json, function(id, province){
-            if (province.nombre == selectedProvince ) {
-              $.each(province.ciudades, function(id, location){
-                if (location.nombre == selectedLocation) {
-                  console.log(province.nombre );
-                  result = true;
+            var result = false;
+            $.each(json, function(id, province){
+                if (province.nombre == selectedProvince ) {
+                    $.each(province.ciudades, function(id, location){
+                        if (location.nombre == selectedLocation) {
+                          result = true;
+                        }
+                    });
                 }
-              });
+            });
+            if (!result) {
+              messages.push($message);
             }
-          });
-          if (!result) {
-            messages.push($message);
-          }
         }));
         JS;
     }
