@@ -101,22 +101,6 @@ class Evento extends \yii\db\ActiveRecord
         $this->save();
     }
 
-    public function avalar(){
-        $this->avalado = 1;
-//        $this->update();
-        $this->save(false);
-    }
-
-    public function quitarAval(){
-        $this->avalado = 0;
-//        $this->update();
-        $this->save(false);
-    }
-    public function denegarAval(){
-        $this->avalado = 3;
-        $this->save(false);
-    }
-
     /**
      * Gets query for [[IdCategoriaEvento0]].
      *

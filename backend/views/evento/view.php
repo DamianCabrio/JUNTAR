@@ -33,16 +33,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     ?>
                     <?php
-                    if ($model->avalado != 1 && $model->avalado != 3) {
-                        echo Html::a('Conceder aval FAI', ['conceder-aval', 'id' => $model->idEvento], [
-                            'class' => 'btn btn-primary mb-2 col-md-2 col-sm-12',
-                            'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
-                        ]);
-                    } else {
-                        echo Html::a('Quitar aval FAI', ['quitar-aval', 'id' => $model->idEvento], [
-                            'class' => 'btn btn-pink mb-2 col-md-2 col-sm-12',
-                            'data' => ['confirm' => '¿Está seguro de querer quitar el aval de la FAI para este evento?'],
-                        ]);
+//                        print_r($aval);
+                    if ($aval != null && $aval != '') {
+                        if ($aval->avalado != 1) {
+                            echo Html::a('Conceder aval FAI', ['solicitud-aval/conceder-aval', 'id' => $model->idEvento], [
+                                'class' => 'btn btn-primary mb-2 col-md-2 col-sm-12',
+                                'data' => ['confirm' => '¿Está seguro de querer conceder el aval de la FAI para este evento?'],
+                            ]);
+                        } else {
+                            echo Html::a('Quitar aval FAI', ['solicitud-aval/quitar-aval', 'id' => $model->idEvento], [
+                                'class' => 'btn btn-pink mb-2 col-md-2 col-sm-12',
+                                'data' => ['confirm' => '¿Está seguro de querer quitar el aval de la FAI para este evento?'],
+                            ]);
+                        }
                     }
                     ?>
                 </div>
@@ -57,8 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'avalado',
                                 'label' => 'Aval FAI',
-                                'value' => function ($model) {
-                                    return ($model->avalado == 1 ? "Avalado" : "No");
+                                'value' => function ($model) use ($aval) {
+                                    if ($aval != null && $aval != '') {
+                                        return (($aval->avalado == 1) ? "Concedido" : "Denegado");
+                                    }else{
+                                        return "No fue solicitado";
+                                    }
                                 },
                             ],
                             [
