@@ -442,6 +442,8 @@ class EventoController extends Controller
                             }
                         }
                 }
+                Yii::$app->session->setFlash('success', '<h2> Ya ha enviado el formulario </h2>'
+                    . '<p> ¡Mucha suerte!. </p>');
                 return $this->redirect(Url::toRoute(["eventos/ver-evento/" . $evento->nombreCortoEvento]));
             }
 
