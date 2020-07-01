@@ -9,17 +9,17 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
  */
-class EventoController extends Controller
-{
+class EventoController extends Controller {
+
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -59,14 +59,13 @@ class EventoController extends Controller
      * Lists all Evento models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new EventoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -76,10 +75,9 @@ class EventoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -88,8 +86,7 @@ class EventoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Evento();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -97,7 +94,7 @@ class EventoController extends Controller
         }
 
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -108,8 +105,7 @@ class EventoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -117,7 +113,7 @@ class EventoController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -128,11 +124,23 @@ class EventoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionDeshabilitar($id) {
+        $this->findModel($id)->deshabilitar();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    /**
+     * Deletes an existing Evento model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionHabilitar($id) {
+        $this->findModel($id)->habilitar();
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
@@ -142,12 +150,46 @@ class EventoController extends Controller
      * @return Evento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Evento::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
+
+    public function actionSolicitudesDeAval() {
+        $searchModel = new EventoSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $searchModel::find()->where(['not', ['avalRequest' => null]])->andWhere(['is', 'avalado', new \yii\db\Expression('null')]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+//            'sort' => ['attributes' => ['name']]
+        ]);
+
+        return $this->render('solicitudesDeAval', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionConcederAval($id) {
+        $this->findModel($id)->avalar();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionDenegarAval($id) {
+        $this->findModel($id)->denegarAval();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionQuitarAval($id) {
+        $this->findModel($id)->quitarAval();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
 }

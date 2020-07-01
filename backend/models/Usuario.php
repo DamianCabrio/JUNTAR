@@ -82,6 +82,16 @@ class Usuario extends \yii\db\ActiveRecord
             'verification_token' => 'Verification Token',
         ];
     }
+    
+    public function deshabilitar(){
+        $this->status = 0;
+        $this->save();
+    }
+    
+    public function habilitar(){
+        $this->status = 10;
+        $this->save();
+    }
 
     /**
      * Gets query for [[Eventos]].

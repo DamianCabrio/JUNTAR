@@ -173,7 +173,7 @@ function cargarBotonera2(rolSeleccionado, click, nroPagina) {
 //    if (page > 0) {
 //        modifyStyle(nroPagina);
 //    }
-    alert(nroPagina);
+//    alert(nroPagina);
 
 //    page = nroPagina;
 //    alert(page);

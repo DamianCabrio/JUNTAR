@@ -12,51 +12,109 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card">
+                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
+                <p class="m-3">
+                    <?= Html::a('Crear Usuario', ['/usuario/create'], ['class' => 'btn btn-pink col-md-2 col-sm-12']) ?>
+                </p>
 
-    <p>
-        <?= Html::a('Create Usuario', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'idUsuario',
-            'nombre',
-            'apellido',
-            'dni',
-            'pais',
-            //'provincia',
-            //'localidad',
-            //'email:email',
-            //'auth_key',
-            //'password_hash',
-            //'password_reset_token',
-            //'status',
-            //'created_at',
-            //'updated_at',
-            //'verification_token',
-
-            ['class' => 'yii\grid\ActionColumn',
-                'buttons' => [
-                    'update' => function($url, $model) {
-                        return Html::a('<img src="'.Yii::getAlias('@web/iconos/pencil.svg').'" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn']);
-                    },
-                    'view' => function($url, $model) {
-                        return Html::a('<img src="'.Yii::getAlias('@web/iconos/eye.svg').'" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn']);
-                    },
-                    'delete' => function($url, $model) {
-                        return Html::a('<img src="'.Yii::getAlias('@web/iconos/trash.svg').'" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn']);
-                    }
-                ]
-            ],
-        ],
-    ]); ?>
-
-
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <?=
+                        GridView::widget([
+                            'dataProvider' => $dataProvider,
+//        'options' => ['style' => 'width:100%;'],
+                            'filterModel' => $searchModel,
+                            'columns' => [
+                                ['class' => 'yii\grid\SerialColumn'],
+//            'idUsuario',
+                                [
+                                    'attribute' => 'nombre',
+                                    'label' => 'Nombre',
+                                    'value' => function($model) {
+                                        return $model->nombre . " " . $model->apellido;
+                                    },
+                                ],
+//            'nombre',
+//            'apellido',
+                                'dni',
+                                'pais',
+                                'provincia',
+                                'localidad',
+//            'email',
+                                [
+                                    'attribute' => 'email',
+                                    'label' => 'Email',
+                                    'value' => 'email',
+                                ],
+                                //'auth_key',
+                                //'password_hash',
+                                //'password_reset_token',
+//            'status',
+                                [
+                                    'attribute' => 'status',
+                                    'label' => 'Estado',
+                                    'value' => function($model) {
+                                        $estado = "";
+                                        switch ($model->status) {
+                                            case 0:
+                                                $estado = "Deshabilitado";
+                                                break;
+                                            case 9:
+                                                $estado = "Desactivado";
+                                                break;
+                                            case 10:
+                                                $estado = "Activo";
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        return $estado;
+                                    },
+                                ],
+                                [
+                                    'attribute' => 'created_at',
+                                    'label' => 'Fecha Registro',
+                                    'value' => function($dataProvider) {
+                                        return date("Y-m-d H:i:s", $dataProvider->created_at);
+                                    },
+                                ],
+                                //'created_at',
+                                //'updated_at',
+                                //'verification_token',
+                                ['class' => 'yii\grid\ActionColumn',
+                                    'buttons' => [
+                                        'update' => function($url, $model) {
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn btn-pink']);
+                                        },
+                                        'view' => function($url, $model) {
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
+                                        },
+                                        'delete' => function($url, $model) {
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', ['/usuario/deshabilitar'], ['class' => 'btn btn-pink']);
+                                        }
+                                    ]
+                                ],
+                            ],
+                            'pager' => [
+                                'class' => '\yii\widgets\LinkPager',
+                                // Css for each options. Links
+                                'linkOptions' => ['class' => 'btn btn-light pageLink'],
+                                'disabledPageCssClass' => 'btn disabled',
+                                'options' => ['class' => 'pagination d-flex justify-content-center'],
+                                'prevPageLabel' => 'Anterior',
+                                'nextPageLabel' => 'Siguiente',
+                                //                            Current Active option value
+                                'activePageCssClass' => 'activePage',
+                            ],
+                        ]);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

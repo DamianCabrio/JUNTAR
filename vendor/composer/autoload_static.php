@@ -123,6 +123,10 @@ class ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30
         array (
             'kartik\\mpdf\\' => 12,
         ),
+        'd' => 
+        array (
+            'dosamigos\\ckeditor\\' => 19,
+        ),
         'c' => 
         array (
             'cebe\\markdown\\' => 14,
@@ -276,6 +280,10 @@ class ComposerStaticInit9c92ad6475f3fbb1388c9d9c968d6a30
         'kartik\\mpdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-mpdf/src',
+        ),
+        'dosamigos\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-ckeditor-widget/src',
         ),
         'cebe\\markdown\\' => 
         array (

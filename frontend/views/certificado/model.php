@@ -26,32 +26,24 @@
 </head>
   <body>
     <?php
-      //Obtención de los datos.
-      $days = [];
-      $hours = new DateTime("0000-00-00 00:00:00");
-      $latestDay = null;
-      if (!is_object($presentations)) {
-        foreach ($presentations as $presentation) {
-          if ($latestDay < $presentation['diaPresentacion'] ) {
-            $latestDay = $presentation['diaPresentacion'];
-            $dayPresentation = strtotime($presentation['diaPresentacion']);
-            array_push($days, date("d", $dayPresentation));
-          }
-          $hoursInit = new DateTime($presentation['horaInicioPresentacion']);
-          $hoursEnd = new DateTime($presentation['horaFinPresentacion']);
-          $hoursDiff = $hoursInit->diff($hoursEnd);
-          $hours->add($hoursDiff);
-        }
-      } else {
-        $dayPresentation = strtotime($presentations->diaPresentacion);
+    //Obtención de los datos.
+    $days = [];
+    $hours = new DateTime("0000-00-00 00:00:00");
+    $latestDay = null;
+    foreach ($presentations['collections'] as $presentation) {
+      if ($latestDay < $presentation['diaPresentacion'] ) {
+        $latestDay = $presentation['diaPresentacion'];
+        $dayPresentation = strtotime($presentation['diaPresentacion']);
         array_push($days, date("d", $dayPresentation));
-        $hoursInit = new DateTime($presentations->horaInicioPresentacion);
-        $hoursEnd = new DateTime($presentations->horaFinPresentacion);
-        $hoursDiff = $hoursInit->diff($hoursEnd);
-        $hours->add($hoursDiff);
       }
-      //Arrays Auxiliar.
-      $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+      $hoursInit = new DateTime($presentation['horaInicioPresentacion']);
+      $hoursEnd = new DateTime($presentation['horaFinPresentacion']);
+      $hoursDiff = $hoursInit->diff($hoursEnd);
+      $hours->add($hoursDiff);
+    }
+
+    //Arrays Auxiliar.
+    $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 	  $numberMonth = date("m", strtotime($event[0]->fechaInicioEvento)) -1;
       if (count($days) > 1) {
         $daysMessage = "los días ";
@@ -75,7 +67,7 @@
           $type = "Participó como Organizador del ";
           break;
         case 'expositor':
-          $type = "Participó como Expositor de <b>\"".$presentations->tituloPresentacion."\"</b> en el";
+          $type = "Participó como Expositor de <b>\"".$presentation->tituloPresentacion."\"</b> en el";
           break;
         case 'asistencia':
           $type = "Asistió al ";
