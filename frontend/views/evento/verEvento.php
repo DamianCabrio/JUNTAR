@@ -232,6 +232,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     </div>
                                 </div>
                                 <!-- Solicitar Aval-->
+								<?php if ($evento->fechaInicioEvento > date("Y-m-d")): ?>
                                 <?php if ($estadoAval == 'no solicitado') : ?>
                                     <div class="btn-group" role="group" aria-label="Fifth group">
                                         <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'id' => $evento->idEvento], ['class' => 'btn btn_publish d-flex align-items-center']) ?>
@@ -264,6 +265,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
+								<?php endif; ?>
                                 <?php if ($estadoAval != 'no solicitado' && $estadoAval->avalado == '0') : ?>
                                     <div class="btn-group" role="group" aria-label="Seventh group">
                                         <button class="btn float-right disabled"><b>Solicitud de Aval Rechazado</b></button>
