@@ -2,11 +2,35 @@
 
 /* @var $this yii\web\View */
 
-use yii\bootstrap4\ActiveForm;
-use yii\bootstrap4\Html;
-use yii\helpers\Url;
-use yii\bootstrap4\LinkPager;
 use frontend\components\validateEmail;
+use yii\bootstrap4\Html;
+use yii\bootstrap4\LinkPager;
+use yii\helpers\Url;
+
+$openGraph = Yii::$app->opengraph;
+
+$openGraph->getBasic()
+    ->setUrl(Yii::$app->request->hostInfo . Yii::$app->request->url)
+    ->setTitle("Juntar")
+    ->setDescription("Somos una plataforma web para gestión de eventos libre y gratuita. El sitio permite a los usuarios navegar, crear y participar de eventos. Nació como un desafío universitario y podemos asegurar que hemos llegado a la meta que teníamos como objetivo e incluso la hemos superado gracias a un gran equipo de trabajo. Licencia GNU GPL version 3")
+    ->setSiteName("Juntar")
+    ->setLocale('es_AR')
+    ->render();
+
+$openGraph->useTwitterCard()
+    ->setCard('summary')
+    ->setSite(Yii::$app->request->hostInfo . Yii::$app->request->url)
+    ->render();
+
+$openGraph->getImage()
+    ->setUrl(Url::base('') . "images/juntar-logo/png/juntar-avatar-bg-b.png")
+    ->setAttributes([
+        'secure_url' => Url::base('') . "images/juntar-logo/png/juntar-avatar-bg-b.png",
+        'width' => 100,
+        'height' => 100,
+        'alt' => "Logo Evento",
+    ])
+    ->render();
 
 $this->title = 'Juntar';
 ?>
@@ -15,7 +39,7 @@ $this->title = 'Juntar';
     <div class="body-content">
         <header class="hero gradient-hero">
             <div class="center-content padding_hero">
-                <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg',  ['class' => 'img-fluid padding_logo']); ?>
+                <?= Html::img('@web/images/juntar-logo/svg/juntar-logo-w.svg', ['class' => 'img-fluid padding_logo']); ?>
                 <br>
                 <h5 class="text-white text-uppercase">Sistema Gestión de Eventos</h5>
                 <br>
@@ -29,8 +53,8 @@ $this->title = 'Juntar';
 
                         <div class="col-sm-12 col-md-4 mb-3">
                             <select name="orden" class="custom-select custom-select-lg" onchange="this.form.submit()">
-                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="0">Fecha de creación</option>
-                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 1) ? "selected" : "" ?> value="1">Fecha de inicio del evento</option>
+                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="0">Fecha de inicio del evento</option>
+                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 1) ? "selected" : "" ?> value="1">Fecha de creación</option>
                             </select>
                         </div>
 
