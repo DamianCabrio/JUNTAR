@@ -138,7 +138,7 @@ class PermissionController extends Controller {
             'pagination' => [
                 'pageSize' => 10,
             ],
-            'sort' => ['attributes' => ['name']]
+            'sort' => ['attributes' => ['name', 'description']]
         ]);
 
         return $this->render('asignarPermisos', [

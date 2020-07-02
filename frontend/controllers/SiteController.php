@@ -136,18 +136,6 @@ class SiteController extends Controller {
     }
 
     /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
-    public function actionProfile() {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        return $this->render('profile');
-    }
-
-    /**
      * Logs in a user.
      *
      * @return mixed

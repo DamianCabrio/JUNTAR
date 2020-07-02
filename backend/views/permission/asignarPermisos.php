@@ -123,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'attribute' => 'description',
-                                    'format' => 'html',
+//                                    'format' => 'html',
                                     'label' => 'Descripcion',
                                     'value' => 'description',
                                     //                                'value' => function ($data) {
@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     //                                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
                                     //                                            Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
                                     //                                },
-                                    'headerOptions' => ['style' => 'width:50%;', 'class' => 'text-center'],
+//                                    'headerOptions' => ['style' => 'width:50%;', 'class' => 'text-center'],
                                 ],
                                 [
                                     //genera una url para cada boton de accion
