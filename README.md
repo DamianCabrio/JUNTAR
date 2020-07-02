@@ -1,25 +1,5 @@
 # JUNTAR
 
-Para inicializar el proyecto correr el archivo INIT.bat
+Somos una plataforma web para gestión de eventos libre y gratuita. El sitio permite a los usuarios navegar, crear y participar de eventos. Nació como un desafío universitario y podemos asegurar que hemos llegado a la meta que teníamos como objetivo e incluso la hemos superado gracias a un gran equipo de trabajo. Licencia GNU GPL version 3
 
-Si van a usar el gii para generar código se van a dar cuanta que los botones de acción no aparece, esto es por un error de compatibilidad con boostrap 4. Para hacerlas funcionar tiene que agregar estas líneas de código.
-
-            ['class' => 'yii\grid\ActionColumn',
-                'buttons' => [
-                    'update' =>  function($url,$model) {
-                        return Html::a('<i class="fas fa-edit"></i>', $url, [
-                            'title' => Yii::t('app', 'update')
-                        ]);
-                    },
-                    'view' =>  function($url,$model) {
-                        return Html::a('<i class="fas fa-eye"></i>', $url, [
-                            'title' => Yii::t('app', 'view')
-                        ]);
-                    },
-                    'delete' => function($url,$model) {
-                        return Html::a('<i class="fas fa-trash"></i>', $url, [
-                            'title' => Yii::t('app', 'delete')
-                        ]);
-                    }
-                 ]
-            ],
+https://juntar.fi.uncoma.edu.ar/
