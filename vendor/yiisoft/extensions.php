@@ -81,9 +81,7 @@ return array (
     'version' => '2.22.0.0',
     'alias' => 
     array (
-      '@unclead/multipleinput/examples' => $vendorDir . '/unclead/yii2-multiple-input/examples',
-      '@unclead/multipleinput' => $vendorDir . '/unclead/yii2-multiple-input/src',
-      '@unclead/multipleinput/tests' => $vendorDir . '/unclead/yii2-multiple-input/tests',
+      '@ymaker/social/share' => $vendorDir . '/yiimaker/yii2-social-share/src',
     ),
   ),
   'kartik-v/yii2-mpdf' => 

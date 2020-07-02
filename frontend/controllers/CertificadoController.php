@@ -120,9 +120,9 @@ class CertificadoController extends Controller
         ->all();
 
       $certificate = New Certificado();
-      $certificate->event = $event;
-      $certificate->presentations = $presentation;
-      $certificate->inscription = $inscription;
+      $certificate->setEvent($event);
+      $certificate->setPresentations($presentation);
+      $certificate->setInscription($inscription);
 
       return $certificate;
     }
@@ -138,15 +138,20 @@ class CertificadoController extends Controller
       $userData = Usuario::findOne(Yii::$app->user->identity->id);
       $eventData = $certificate->event;
 
-      $validateEmail= new validateEmail();
-      $isOficial = $validateEmail->validate_by_domain($organizer->email);
-
-      if ($idPresentation != null) {
-        $presentationData = Presentacion::findOne($idPresentation);
+      if ($eventData[0]->solicitudAval['avalado'] == 1) {
+        $footer = 'Facultad de Informática - UNComa';
+        $isOficial = true;
       } else {
-        $presentationData = $certificate->presentations;
+        $footer = null;
+        $isOficial = false;
       }
 
+      if ($idPresentation != null) {
+        $presentation = Presentacion::findOne($idPresentation);
+      } else {
+        $presentation = null;
+      }
+      $presentationData = $certificate->presentations;
       $category = CategoriaEvento::findOne($certificate->event[0]->idCategoriaEvento);
       $modality = ModalidadEvento::findOne($certificate->event[0]->idModalidadEvento);
       //Regenera el modelo del pdf con los datos y el estilo deseado.
@@ -157,7 +162,10 @@ class CertificadoController extends Controller
         'category' => $category,
         'certificateType' => $type,
         'isOficial' => $isOficial,
-        'presentations' => $presentationData,
+        'presentations' => [
+          'collections' => $presentationData,
+          'presentation' => $presentation,
+        ],
       ]);
 
       $pdf = new Pdf([
@@ -171,7 +179,7 @@ class CertificadoController extends Controller
           'options' => ['title' => 'Certificado'],
           'methods' => [
               'SetHeader' => ['Certificado Digital <img src=images/juntar-logo/png/juntar-logo-k.png style=width:65px;>'],
-              'SetFooter' => ['Facultad de Informática - UNComa'],
+              'SetFooter' => [$footer],
               'SetTitle' => ['Certificado Juntar'],
               'SetAuthor' => ['Facultad de Informática - UNComa'],
            ]

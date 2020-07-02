@@ -13,13 +13,17 @@ use frontend\models\ModalidadEvento;
 /* @var $form yii\widgets\ActiveForm */
 $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 ?>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-12 m-auto">
+<div class="dark_light_bg">
+    <div class="container padding_section">
+        <div class="card shadow">
+            <div class="card-header pinkish_bg">
+                <h2 class="text-center text-white">Editar Evento</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+					<div class="col-12">
 
             <div class="evento-form">
-               
-                    <h2 class="text-center">Editar evento</h2>
                     <p class="text-center">Complete los siguientes campos</p>
 
                     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
@@ -40,7 +44,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                     </div>
                     <br>
                     <div class="col-12 mt-2 nombresCortos">
-                        <input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>
+                        <!--<input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>-->
                         <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
                             'data-title' => 'Requisitos',
                             'data-toggle' => 'popover',
@@ -94,7 +98,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 
                     <?= $form->field($model, 'fechaFinEvento')->input('date', ['style' => 'width: auto'])->label('Fecha Fin *') ?>
                     <div class="form-group">
-                        <label>¿Posee límite de espectadores?</label><br>
+                        <label>¿Posee límite de participantes?</label><br>
 
                         <div role="radiogroup" aria-required="true">
                             <div class="custom-control custom-radio">
@@ -109,7 +113,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                     </div>
 
                     <div id="mostrarCapacidad">
-                        <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                        <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número de participantes *')  ?>
                     </div>
 
                     <!-- select requiere preInscripcion -->
@@ -117,7 +121,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 
                     <!-- calendar -->
                     <div id="fechaLimite">
-                        <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto'])->label('Fecha limite de inscripción *') ?>
+                        <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto'])->label('Fecha límite de pre-inscripción *') ?>
                     </div>
                     <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
 

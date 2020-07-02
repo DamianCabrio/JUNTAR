@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\SolicitudAval;
 
 /**
  * This is the model class for table "evento".
@@ -86,7 +87,19 @@ class Evento extends \yii\db\ActiveRecord
             'fechaLimiteInscripcion' => 'Fecha Limite Inscripcion',
             'codigoAcreditacion' => 'Codigo Acreditacion',
             'fechaCreacionEvento' => 'Fecha Creacion Evento',
+            'eventoToken' => 'Solicitud Aval FAI',
+            'avalado' => 'Avalado FAI',
         ];
+    }
+
+    public function deshabilitar(){
+        $this->idEstadoEvento = 2;
+        $this->save();
+    }
+
+    public function habilitar(){
+        $this->idEstadoEvento = 4;
+        $this->save();
     }
 
     /**
@@ -147,6 +160,10 @@ class Evento extends \yii\db\ActiveRecord
     public function getPresentacions()
     {
         return $this->hasMany(Presentacion::className(), ['idEvento' => 'idEvento']);
+    }
+    
+    public function getIdAval0(){
+        return $this->hasOne(SolicitudAval::className(), ['idEvento' => 'idEvento']);
     }
 
     /**

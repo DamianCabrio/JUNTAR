@@ -28,9 +28,9 @@ $this->title = 'Proyecto Juntar';
 
                         <div class="col-sm-12 col-md-4 mb-3">
                             <select name="estadoEvento" class="custom-select custom-select-lg" onchange="this.form.submit()">
-                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 0) ? "selected" : "" ?> value="0">Estado activo</option>
-                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 1) ? "selected" : "" ?> value="1">Estado suspendido</option>
-                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 2) ? "selected" : "" ?> value="2">Estado finalizado</option>
+                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 0) ? "selected" : "" ?> value="0">Estado Activo</option>
+                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 1) ? "selected" : "" ?> value="1">Estado Borrador</option>
+                                <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 2) ? "selected" : "" ?> value="2">Estado Finalizado</option>
                             </select>
                         </div>
 
@@ -57,14 +57,15 @@ $this->title = 'Proyecto Juntar';
                     <?php foreach ($eventos as $evento): ?>
                         <div class='col-12 col-md-4'>
                         <div class='card bg-light mb-3'>
-                        <?= Html::img(Url::base('').'/'. Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]) ?>
+                            <?= Html::a(Html::img(Url::base('') . '/' . Html::encode($evento["imgLogo"]), ["class" => "card-img-top"]), ['/eventos/ver-evento/' . $evento->nombreCortoEvento]) ?>
                             <div class='card-body'>
-                                <h5 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h5>
-                                <h5 class='card-title'><?= Html::encode($evento["fechaInicioEvento"]) ?></h5>
+                                <h4 class='card-title'><?= Html::encode($evento["nombreEvento"]) ?></h4>
+                                <h5 class='card-title'><?= Html::encode("Organizador: " . $evento["idUsuario0"]["nombre"] . " " . $evento["idUsuario0"]["apellido"]) ?></h5>
+                                <h5 class='card-title'><?= Html::encode( date('d/m/Y', strtotime($evento["fechaInicioEvento"])) ) ?></h5>
                                 <hr>
                                 <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
                                 <p class='card-text'><?= Html::decode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
-                                <?= Html::a('Más Información', ['/eventos/ver-evento/'. $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
+                                <?= Html::a('Más Información', ['/eventos/ver-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
                                 </div>
                         </div>
                         </div>

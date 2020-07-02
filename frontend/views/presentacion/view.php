@@ -31,17 +31,17 @@ $this->title = $model->tituloPresentacion;
 			],
             //'diaPresentacion',
 			[
-				'attribute'=>'Día',
+				'attribute'=>'Día de la presentación',
 				'value'=>date('d/m/Y', strtotime($model->diaPresentacion)),
 			],
             //'horaInicioPresentacion',
 			[
-				'attribute'=>'Hora inicio',
+				'attribute'=>'Hora de inicio',
 				'value'=>date('H:i', strtotime($model->horaInicioPresentacion)),
 			],
             //'horaFinPresentacion',
 			[
-				'attribute'=>'Hora fin',
+				'attribute'=>'Hora de fin',
 				'value'=>date('H:i', strtotime($model->horaFinPresentacion)),
 			],
 			//'linkARecursos',
@@ -50,10 +50,10 @@ $this->title = $model->tituloPresentacion;
 				'format' => 'raw',
 				'value' => function($model){
 					if($model->linkARecursos != NULL){
-						return '<a target="_blank" href="' .$model->linkARecursos. '">Link</a>';
+						return '<a target="_blank" href="' .$model->linkARecursos. '"><i class="material-icons">attachment</i></a>';
 					}
 					else{
-						return 'No hay recursos';
+						return 'No hay recursos para mostrar';
 					}
 				}	
 			]	

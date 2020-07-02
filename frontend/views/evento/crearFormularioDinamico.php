@@ -2,7 +2,6 @@
 
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = "Crear Formulario";
@@ -10,8 +9,8 @@ $this->title = "Crear Formulario";
 
 <div class="formulario-dinamico container">
 
-        <?= Html::a("Agregar Pregunta", Url::toRoute(["pregunta/create?id=" . $evento->idEvento]),
-            ['class' => 'btn btn-primary agregarPregunta mb-4', "data-id" => Url::toRoute(["pregunta/create?id=" . $evento->idEvento])]) ?>
+        <?= Html::a("Agregar Pregunta", Url::toRoute(["eventos/crear-pregunta/" . $evento->nombreCortoEvento]),
+            ['class' => 'btn btn-primary agregarPregunta mb-4', "data-id" => Url::toRoute(["eventos/crear-pregunta/" . $evento->nombreCortoEvento])]) ?>
 
         <?=
         \yii\grid\GridView::widget([
@@ -46,12 +45,12 @@ $this->title = "Crear Formulario";
                 [
                     'class' => 'yii\grid\ActionColumn',
                     //genera una url para cada boton de accion
-                    'urlCreator' => function ($action, $model, $key, $index) {
+                    'urlCreator' => function ($action, $model, $key, $index) use ($evento) {
                         if ($action == "update") {
-                            return Url::to(['/pregunta/update', 'id' => $key]);
+                            return Url::to(['eventos/editar-pregunta/' . $evento->nombreCortoEvento . "/". $key]);
                         }
                         if ($action == "delete") {
-                            return Url::to(['/pregunta/delete', 'id' => $key]);
+                            return Url::to(['eventos/eliminar-pregunta/'. $evento->nombreCortoEvento . "/". $key]);
                         }
                     },
                     //describe los botones de accion
@@ -61,7 +60,7 @@ $this->title = "Crear Formulario";
                             return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPregunta']);
                         },
                         'delete' => function ($url, $model) {
-                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta', 'data-method' => 'POST']);
+                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta',  'data-method' => 'POST']);
                         }
                     ],
                     'header' => 'Acciones',
@@ -72,14 +71,14 @@ $this->title = "Crear Formulario";
         ]);
         ?>
 
-        <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
+    <?= Html::a('Volver Atras', Url::toRoute("eventos/ver-evento/" . $evento->nombreCortoEvento), ['class' => 'btn btn-outline-success']); ?>
 
     <?php
-        Modal::begin([
-            'id' => 'modalPregunta',
-            'size' => 'modal-lg'
-        ]);
-        Modal::end();
-        ?>
+    Modal::begin([
+        'id' => 'modalPregunta',
+        'size' => 'modal-lg'
+    ]);
+    Modal::end();
+    ?>
 
 </div>

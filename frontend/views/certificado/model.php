@@ -26,45 +26,29 @@
 </head>
   <body>
     <?php
-      //Obtención de los datos.
-      $days = [];
-      $hours = new DateTime("0000-00-00 00:00:00");
-      $latestDay = null;
-      if (!is_object($presentations)) {
-        foreach ($presentations as $presentation) {
-          if ($latestDay < $presentation['diaPresentacion'] ) {
-            $latestDay = $presentation['diaPresentacion'];
-            $dayPresentation = strtotime($presentation['diaPresentacion']);
-            array_push($days, date("d", $dayPresentation));
-          }
-          $hoursInit = new DateTime($presentation['horaInicioPresentacion']);
-          $hoursEnd = new DateTime($presentation['horaFinPresentacion']);
-          $hoursDiff = $hoursInit->diff($hoursEnd);
-          $hours->add($hoursDiff);
-        }
-      } else {
-        $dayPresentation = strtotime($presentations->diaPresentacion);
-        array_push($days, date("d", $dayPresentation));
-        $hoursInit = new DateTime($presentations->horaInicioPresentacion);
-        $hoursEnd = new DateTime($presentations->horaFinPresentacion);
+    //Obtención de los datos.
+    $hours = new DateTime("0000-00-00 00:00:00");
+    if (!is_null($presentations['collections'])) {
+      foreach ($presentations['collections'] as $presentation) {
+        $hoursInit = new DateTime($presentation['horaInicioPresentacion']);
+        $hoursEnd = new DateTime($presentation['horaFinPresentacion']);
         $hoursDiff = $hoursInit->diff($hoursEnd);
         $hours->add($hoursDiff);
       }
-      //Arrays Auxiliar.
-      $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    }
+
+    $initialDay = strtotime($event[0]->fechaInicioEvento);
+    $latestDay = strtotime($event[0]->fechaFinEvento);
+    if ($initialDay <> $latestDay) {
+      $daysMessage = "desde el ".date("d", $initialDay)." hasta el ".date("d", $latestDay);
+    } else {
+      $daysMessage = "el dìa ".date("d", $initialDay);
+    }
+
+    //Arrays Auxiliar.
+    $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 	  $numberMonth = date("m", strtotime($event[0]->fechaInicioEvento)) -1;
-      if (count($days) > 1) {
-        $daysMessage = "los días ";
-        foreach ($days as $day => $value) {
-          if (array_key_last($days) == $day) {
-            $daysMessage .= $value;
-          } else {
-            $daysMessage .= $value.", ";
-          }
-        }
-      } else {
-        $daysMessage = "el día ".$days[0];
-      }
+
       if ($category->descripcionCategoria != 'Otra') {
         $category = $category->descripcionCategoria ;
       } else {
@@ -75,7 +59,7 @@
           $type = "Participó como Organizador del ";
           break;
         case 'expositor':
-          $type = "Participó como Expositor de <b>\"".$presentations->tituloPresentacion."\"</b> en el";
+          $type = "Participó como Expositor de <b>\"".$presentation->tituloPresentacion."\"</b> en el";
           break;
         case 'asistencia':
           $type = "Asistió al ";
@@ -91,8 +75,13 @@
           <p class="centring">Se certifica que <b><?= $user->apellido.", ".$user->nombre?></b>, DNI Nº <b><?=$user->dni?></b></p>
           <p class="centring">  <?=$type." ".$category?> </p>
           <p class="centring event"><b>"<?= $event[0]['nombreEvento'] ?>"</b></p>
-          <p class="centring">  Realizado <?= $daysMessage ?> de <?= $months[$numberMonth]?> de <?= date("Y", strtotime($event[0]['fechaInicioEvento']))?>
-            con una duración de <?= $hours->format("H:i")?> Hs, dictado en: <b><?= $event[0]['lugar'] ?></b>.</p>
+          <p class="centring">  Realizado <?= $daysMessage ?> de <?= $months[$numberMonth]?> del <?= date("Y", strtotime($event[0]['fechaInicioEvento']))?>,
+            <?php if ($certificateType != 'expositor'): ?>
+              <?php if ($hours->format("H") != '00'): ?>
+                con una duración de <?= $hours->format("H:i")?> Hs.
+              <?php endif; ?>
+            <?php endif; ?>dictado en:</p></br>
+          <p class="centring"> <b><?= $event[0]['lugar'] ?></b>.</p>
           <p class="centring">Neuquén, <?= date('d/m/Y')?>.</p>
         </div>
       </div>

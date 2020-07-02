@@ -5,7 +5,6 @@
  */
 $(document).ready(function () {
 
-
     //Permite quitar la imagen logo cargada en el input file del formulario de carga y edicion
     $("#quitarLogo").click(function () {
         $("#uploadformlogo-imagelogo").val(null);
@@ -28,7 +27,7 @@ $(document).ready(function () {
         $("#i0").attr('checked', true);
     }
     $("#evento-preinscripcion input").change(function () {
-        respuesta = $(this).val();
+        var respuesta = $(this).val();
         if (respuesta == 1) {
             $("#fechaLimite").show();
             $("#evento-fechalimiteinscripcion").attr("required", true);
@@ -52,7 +51,7 @@ $(document).ready(function () {
         $("#espectadores-no").attr('checked', true);
     }
     $("#w0 input[name=posee-espectadores]").change(function () {
-        capacidad = $(this).val();
+        var capacidad = $(this).val();
         if (capacidad == 2) {
             $("#mostrarCapacidad").show();
             $("#evento-capacidad").attr("required", true);
@@ -101,13 +100,18 @@ $(document).ready(function () {
     ;
     //input provincia
     $('#signupform-pais').change(function () {
-        autocompleteProvincias($(this).val());
+        if ($(this).val() !== null && $(this).val() !== '') {
+            autocompleteProvincias($(this).val());
+        }
     });
     //input localidad
 
     $('#signupform-provincia').change(function () {
-        autocompleteLocalidades($(this).val());
+        if ($(this).val() !== null && $(this).val() !== '') {
+            autocompleteLocalidades($(this).val());
+        }
     });
+
     //funcionalidad agregar pregunta
     $('.agregarPregunta').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -270,7 +274,7 @@ $(document).ready(function () {
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
  * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
- * 
+ *
  * @returns none
  */
 function verExpositoresModal(link) {
@@ -282,25 +286,25 @@ function verExpositoresModal(link) {
     }).done(function (data) {
 
         $('#modalEvento').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalEvento').find('.modal-header')
-            .html("<h3> Lista de expositores </h3>");
+                .html("<h3> Lista de expositores </h3>");
     });
 }
 
-function verRespuestasModal(link) {
-    //hace la petición a la url
-    //si para cargar el formulario necesita enviarle data, se especifica
+function verRespuestasModal(unaUrl) {
+//hace la petición a la url
+//si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
-        url: link
-        //        data: {data: data}
+        url: unaUrl
+//        data: {data: data}
     }).done(function (data) {
         $('#modalRespuestas').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalRespuestas').find('.modal-header')
-        .html("<h3> Respuestas </h3>");
+                .html("<h3>Ver respuestas</h3>");
     });
 }
 
@@ -309,13 +313,13 @@ function editPresentacionModal(link) {
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: link
-        //        data: {data: data}
+                //        data: {data: data}
     }).done(function (data) {
         $('#modalEvento').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalEvento').find('.modal-header')
-        .html("<h3> Editar presentación </h3>");
+                .html("<h3> Editar presentación </h3>");
     });
 }
 
@@ -333,7 +337,7 @@ function deletePresentacionModal(link) {
         var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
         //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
         $(dataHTML).find('div.presentacion-delete').each(function () {
-            console.log($(this).html());
+//            console.log($(this).html());
             $('.modal-header').html("<h3> Borrar presentacion </h3>");
             $('.modal-body').html($(this).html());
         });
@@ -345,13 +349,13 @@ function agregarPresentacionModal(link) {
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: link
-        //        data: {data: data}
+                //        data: {data: data}
     }).done(function (data) {
         $('#modalEvento').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalEvento').find('.modal-header')
-        .html("<h3> Cargar presentación </h3>");
+                .html("<h3> Cargar presentación </h3>");
     });
 }
 
@@ -363,32 +367,32 @@ function verPresentacionModal(link) {
         //        data: {data: data}
     }).done(function (data) {
         $('#modalEvento').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalEvento').find('.modal-header')
-            .html("<h3> Información de la Presentación </h3>");
+                .html("<h3> Información de la Presentación </h3>");
     });
 }
 /*$('.cargarExpositores').click(function (link) {
-    //impedimos que el cambio de pestaña se active
-    link.preventDefault();
-    //llamamos a la funcion que se encargue de mostrar el formulario
-    agregarExpositorModal($(this).attr('href'));
-});
-function agregarExpositorModal(link) {
-    //hace la petición a la url
-    //si para cargar el formulario necesita enviarle data, se especifica
-    $.ajax({
-        url: link
-        //        data: {data: data}
-    }).done(function (data) {
-        $('#modalEvento').modal('show')
-            .find('.modal-body')
-            .html(data);
-        $('#modalEvento').find('.modal-header')
-        .html("<h3> Cargar expositor </h3>");
-    });
-}*/
+ //impedimos que el cambio de pestaña se active
+ link.preventDefault();
+ //llamamos a la funcion que se encargue de mostrar el formulario
+ agregarExpositorModal($(this).attr('href'));
+ });
+ function agregarExpositorModal(link) {
+ //hace la petición a la url
+ //si para cargar el formulario necesita enviarle data, se especifica
+ $.ajax({
+ url: link
+ //        data: {data: data}
+ }).done(function (data) {
+ $('#modalEvento').modal('show')
+ .find('.modal-body')
+ .html(data);
+ $('#modalEvento').find('.modal-header')
+ .html("<h3> Cargar expositor </h3>");
+ });
+ }*/
 
 //funcion utilizada para eliminar caracteres criticos en un texto
 function eliminarDiacriticos(texto) {
@@ -399,41 +403,45 @@ function generarOpcionesNombreCorto(nombreEvento) {
     $('#automaticSlug').append(generarSlug(nombreEvento));
     $('#automaticSlug').append(generarInicialesYear(nombreEvento));
     $('#automaticSlug').append(generarCortoYear(nombreEvento));
+    $('#automaticSlug').append('<div class="col-12"><input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label></div>');
 }
 
 function generarSlug(nombreEvento) {
     var slug = nombreEvento.toLowerCase()
-        .replace(/[^\w ]+/g, '') //reemplaza caracteres alfanumericos
-        .replace(/ +/g, '-'); //
+            .replace(/[^\w ]+/g, '') //reemplaza caracteres alfanumericos
+            .replace(/ +/g, '-'); //
 
-    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc1" name="shortName" value="' + slug + '"> '
-        + '<label for="opc1"> ' + slug + '</label> </span> </div>';
+    var html = '<div class="col-12"> <input type="radio" id="opc1" name="shortName" value="' + slug + '"> '
+            + '<label for="opc1"> ' + slug + '</label> </div>';
     return html;
 }
 
 function generarInicialesYear(nombreEvento) {
     var year = new Date().getFullYear();
     var inicialesYear = nombreEvento.match(/\b(\w)/g)
-        .join('');
+            .join('');
     inicialesYear += year;
-    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc2" name="shortName" value="' + inicialesYear + '"> '
-        + '<label for="opc2"> ' + inicialesYear + '</label> </span> </div>';
+    var html = '<div class="col-12"><input type="radio" id="opc2" name="shortName" value="' + inicialesYear + '"> '
+            + '<label for="opc2"> ' + inicialesYear + '</label>  </div>';
     return html;
 }
 
 function generarCortoYear(nombreEvento) {
     var year = new Date().getFullYear();
     var cortoYear = year;
-    cortoYear += "-" + nombreEvento.split(' ').slice(0, 2).join('-');
-    var html = '<div class="col-12"> <span class="m-auto"> <input type="radio" id="opc3" name="shortName" value="' + cortoYear + '"> '
-        + '<label for="opc3"> ' + cortoYear + '</label> </span> </div>';
+//    cortoYear += "-" + nombreEvento.split(' ').slice(0, 2).join('-');
+    cortoYear += "-" + nombreEvento.toLowerCase().replace(/[^\w ]+/g, '') //reemplaza caracteres alfanumericos
+            .replace(/ +/g, '-').split('-').slice(0, 2).join('-')
+    //
+    var html = '<div class="col-12">  <input type="radio" id="opc3" name="shortName" value="' + cortoYear + '"> '
+            + '<label for="opc3"> ' + cortoYear + '</label>  </div>';
     return html;
 }
 
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
  * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
- * 
+ *
  * @returns none
  */
 function editEventoModal(url) {
@@ -462,13 +470,13 @@ function editarPerfilModal(unaUrl, titulo) {
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: unaUrl
-        //        data: {data: data}
+                //        data: {data: data}
     }).done(function (data) {
         $('#profileModal').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#profileModal').find('.modal-header')
-            .html("<h3> " + titulo + " </h3>");
+                .html("<h3> " + titulo + " </h3>");
     });
 }
 
@@ -477,13 +485,13 @@ function agregarPreguntaModal(unaUrl, titulo) {
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: unaUrl
-        //        data: {data: data}
+                //        data: {data: data}
     }).done(function (data) {
         $('#modalPregunta').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalPregunta').find('.modal-header')
-            .html("<h3> " + titulo + " </h3>");
+                .html("<h3> " + titulo + " </h3>");
     });
 }
 
@@ -492,13 +500,13 @@ function editarPreguntaModal(unaUrl, titulo) {
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: unaUrl
-        //        data: {data: data}
+                //        data: {data: data}
     }).done(function (data) {
         $('#modalPregunta').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalPregunta').find('.modal-header')
-            .html("<h3> " + titulo + " </h3>");
+                .html("<h3> " + titulo + " </h3>");
     });
 }
 
@@ -507,13 +515,13 @@ function responderRespuestaModal(unaUrl, titulo) {
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: unaUrl
-        //        data: {data: data}
+                //        data: {data: data}
     }).done(function (data) {
         $('#modalPregunta').modal('show')
-            .find('.modal-body')
-            .html(data);
+                .find('.modal-body')
+                .html(data);
         $('#modalPregunta').find('.modal-header')
-            .html("<h3> " + titulo + " </h3>");
+                .html("<h3> " + titulo + " </h3>");
     });
 }
 
@@ -527,17 +535,17 @@ function viewCertificationModal(url) {
     //si para cargar el formulario necesita enviarle data, se envia.
     $.ajax({
         url: url
-        //        data: {data: data}
+                //        data: {data: data}
     }).done(function (data) {
         //data recibe la vista que deberia renderizarse al visitar la url
         //hacemos visible el modal
-        console.log(data);
+//        console.log(data);
         $('#modalCertificado').modal('show');
         //convertimos a html la vista recibida
         var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
         //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
         $(dataHTML).find('div.certificates-buttons').each(function () {
-            $('.modal-header').html("<h3>Certificado de</h3>");
+            $('.modal-header').html("<h3>Certificados</h3>");
             $('.modal-body').html($(this).html());
         });
     });
@@ -551,26 +559,26 @@ function viewCertificationModal(url) {
  */
 function autocompleteProvincias(nombrePais) {
     $.ajax({
-        url: "search-provincias",
-        data: { pais: nombrePais },
+        url: "/site/buscar-provincias",
+        data: {pais: nombrePais},
         type: "POST",
         dataType: "json"
     })
-        .done(function (data) {
-            console.log(data);
-            if (data !== null) {
-                if ($("#signupform-provincia").autocomplete !== undefined) {
-                    $("#signupform-provincia").autocomplete({
-                        autoFill: true,
-                        minLength: "2",
-                        source: data,
-                        select: function (event, ui) {
-                            $("#signupform-provincia").val(ui.item.id);
-                        }
-                    });
+            .done(function (data) {
+//                console.log(data);
+                if (data !== null) {
+                    if ($("#signupform-provincia").autocomplete !== undefined) {
+                        $("#signupform-provincia").autocomplete({
+                            autoFill: true,
+                            minLength: "2",
+                            source: data,
+                            select: function (event, ui) {
+                                $("#signupform-provincia").val(ui.item.id);
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
 }
 
 /**
@@ -582,26 +590,25 @@ function autocompleteProvincias(nombrePais) {
  */
 function autocompleteLocalidades(nombreProvincia) {
     $.ajax({
-        url: "search-localidades",
-        data: { provincia: nombreProvincia },
+        url: "/site/buscar-localidades",
+        data: {provincia: nombreProvincia},
         type: "POST",
         dataType: "json"
     })
-        .done(function (data) {
-            console.log(data);
-            if (data !== null) {
-                //                        dataLocalidades = data;
-                if ($("#signupform-localidad").autocomplete !== undefined) {
-                    $("#signupform-localidad").autocomplete({
-                        autoFill: true,
-                        minLength: "2",
-                        source: data,
-                        select: function (event, ui) {
-                            $("#signupform-localidad").val(ui.item.id);
-                        }
-                    });
+            .done(function (data) {
+//                console.log(data);
+                if (data !== null) {
+                    //                        dataLocalidades = data;
+                    if ($("#signupform-localidad").autocomplete !== undefined) {
+                        $("#signupform-localidad").autocomplete({
+                            autoFill: true,
+                            minLength: "2",
+                            source: data,
+                            select: function (event, ui) {
+                                $("#signupform-localidad").val(ui.item.id);
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
 }
-

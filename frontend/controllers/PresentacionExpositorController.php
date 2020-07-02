@@ -2,15 +2,14 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use frontend\models\PresentacionExpositor;
-use yii\data\ActiveDataProvider;
+use frontend\models\Evento;
 use frontend\models\Presentacion;
+use frontend\models\PresentacionExpositor;
+use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use frontend\models\Evento;
 
 /**
  * PresentacionExpositorController implements the CRUD actions for PresentacionExpositor model.
@@ -31,14 +30,6 @@ class PresentacionExpositorController extends Controller {
                         "ver-expositores",
                     ],
                     'roles' => ['?'], // <----- guest
-                ],
-                [
-                    'allow' => true,
-                    'actions' => [
-                        "ver-expositores",
-                        "delete"
-                    ],
-                    'roles' => ['@'], // <----- guest
                 ],
                 [
                     'allow' => true,
@@ -64,20 +55,6 @@ class PresentacionExpositorController extends Controller {
         return $behaviors;
     }
 
-    /**
-     * Lists all PresentacionExpositor models.
-     * @return mixed
-     */
-    public function actionIndex($idPresentacion) {
-        $dataProvider = new ActiveDataProvider([
-            'query' => PresentacionExpositor::find(),
-        ]);
-
-        return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-
     public function actionVerExpositores($idPresentacion) {
         $dataProvider = new ActiveDataProvider([
             'query' => PresentacionExpositor::find()->where(['idPresentacion' => $idPresentacion]),
@@ -101,57 +78,7 @@ class PresentacionExpositorController extends Controller {
             ]);
         }
     }
-
-    /**
-     * Displays a single PresentacionExpositor model.
-     * @param integer $idExpositor
-     * @param integer $idPresentacion
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($idExpositor, $idPresentacion) {
-        return $this->render('view', [
-                    'model' => $this->findModel($idExpositor, $idPresentacion),
-        ]);
-    }
-
-    /**
-     * Creates a new PresentacionExpositor model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate() {
-        $model = new PresentacionExpositor();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idExpositor' => $model->idExpositor, 'idPresentacion' => $model->idPresentacion]);
-        }
-
-        return $this->render('create', [
-                    'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing PresentacionExpositor model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $idExpositor
-     * @param integer $idPresentacion
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($idExpositor, $idPresentacion) {
-        $model = $this->findModel($idExpositor, $idPresentacion);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idExpositor' => $model->idExpositor, 'idPresentacion' => $model->idPresentacion]);
-        }
-
-        return $this->render('update', [
-                    'model' => $model,
-        ]);
-    }
-
+    
     /**
      * Deletes an existing PresentacionExpositor model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -181,7 +108,7 @@ class PresentacionExpositorController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
 }

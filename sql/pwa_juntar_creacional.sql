@@ -12,10 +12,6 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-create database pwa_juntar;
-
-use pwa_juntar;
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -198,7 +194,16 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `imagen_perfil`
+--
 
+CREATE TABLE `imagen_perfil` (
+  `idUsuario` bigint(20) NOT NULL,
+  `rutaImagenPerfil` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 --
 -- Estructura de tabla para la tabla `usuario_rol`
 --
@@ -207,6 +212,22 @@ CREATE TABLE `usuario_rol` (
   `item_name` varchar(64) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `created_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitud_aval`
+--
+
+CREATE TABLE `solicitud_aval` (
+  `idSolicitudAval` bigint(20) NOT NULL,
+  `idEvento` bigint(20) NOT NULL,
+  `fechaSolicitud` datetime NOT NULL,
+  `tokenSolicitud` varchar(200) NOT NULL,
+  `fechaRevision` datetime DEFAULT NULL,
+  `avalado` tinyint(1) DEFAULT NULL,
+  `validador` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -234,6 +255,20 @@ CREATE TABLE `respuesta` (
   `idinscripcion` bigint(20) NOT NULL,
   `respuesta` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Estructura de tabla para la tabla `solicitud_aval`
+--
+
+CREATE TABLE `solicitud_aval` (
+  `idSolicitudAval` bigint(20) NOT NULL,
+  `idEvento` bigint(20) NOT NULL,
+  `fechaSolicitud` datetime NOT NULL,
+  `tokenSolicitud` varchar(200) DEFAULT NULL,
+  `fechaRevision` datetime DEFAULT NULL,
+  `avalado` tinyint(1) DEFAULT NULL,
+  `validador` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 -- #######################################################################################################################
@@ -323,6 +358,14 @@ ALTER TABLE `usuario`
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
 
 --
+-- Indices de la tabla `imagen_perfil`
+--
+ALTER TABLE `imagen_perfil`
+  ADD PRIMARY KEY (`idUsuario`,`rutaImagenPerfil`),
+  ADD UNIQUE KEY `rutaImagenPerfil` (`rutaImagenPerfil`),
+  ADD KEY `idUsuario` (`idUsuario`);
+
+--
 -- Indices de la tabla `usuario_rol`
 --
 ALTER TABLE `usuario_rol`
@@ -345,6 +388,20 @@ ALTER TABLE `respuesta`
   ADD KEY `idpregunta` (`idpregunta`),
   ADD KEY `idinscripcion` (`idinscripcion`);
 
+--
+-- Indices de la tabla `solicitud_aval`
+--
+ALTER TABLE `solicitud_aval`
+  ADD PRIMARY KEY (`idSolicitudAval`) USING BTREE,
+  ADD UNIQUE KEY `idEvento` (`idEvento`) USING BTREE,
+  ADD KEY `validador` (`validador`) USING BTREE;
+
+
+
+ALTER TABLE `solicitud_aval`
+  ADD PRIMARY KEY (`idSolicitudAval`) USING BTREE,
+  ADD UNIQUE KEY `idEvento` (`idEvento`) USING BTREE,
+  ADD KEY `validador` (`validador`) USING BTREE;
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -406,6 +463,8 @@ ALTER TABLE `pregunta`
 ALTER TABLE `respuesta`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `solicitud_aval`
+  MODIFY `idSolicitudAval` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -456,6 +515,11 @@ ALTER TABLE `presentacion_expositor`
   ADD CONSTRAINT `presentacion_expositor_ibfk_2` FOREIGN KEY (`idPresentacion`) REFERENCES `presentacion` (`idPresentacion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `imagen_perfil`
+--
+ALTER TABLE `imagen_perfil`
+  ADD CONSTRAINT `imagen_perfil_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+--
 -- Filtros para la tabla `usuario_rol`
 --
 ALTER TABLE `usuario_rol`
@@ -475,6 +539,10 @@ ALTER TABLE `respuesta`
   ADD CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`idpregunta`) REFERENCES `pregunta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `respuesta_ibfk_2` FOREIGN KEY (`idinscripcion`) REFERENCES `inscripcion` (`idInscripcion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+ALTER TABLE `solicitud_aval`
+  ADD CONSTRAINT `solicitud_aval_ibfk_1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`),
+  ADD CONSTRAINT `solicitud_aval_ibfk_2` FOREIGN KEY (`validador`) REFERENCES `usuario` (`idUsuario`) ON DELETE SET NULL ON UPDATE SET NULL;
+COMMIT;
 -- #######################################################################################################################
 -- #######################################################################################################################
 

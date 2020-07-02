@@ -2,13 +2,14 @@
 
 namespace frontend\controllers;
 
-use Yii;
+use frontend\models\Evento;
 use frontend\models\Pregunta;
-use frontend\models\PreguntaSearch;
+use frontend\models\RespuestaSearch;
+use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PreguntaController implements the CRUD actions for Pregunta model.
@@ -68,23 +69,31 @@ class PreguntaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
+    public function actionCreate($slug)
     {
-        $model = new Pregunta();
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        if($this->verificarDueño($evento->idEvento)) {
+            $model = new Pregunta();
 
-        $model->idevento = $id;
-        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
+            $model->idevento = $evento->idEvento;
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                $model->save();
+                return $this->redirect(Yii::$app->request->referrer);
+            }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('create', [
+                    'model' => $model,
+                    "esAjax" => true,
+                ]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    "esAjax" => false,
+                ]);
+            }
+        }else{
+            return $this->goHome();
         }
     }
 
@@ -95,22 +104,29 @@ class PreguntaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($slug,$id)
     {
-        $model = $this->findModel($id);
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        if($this->verificarDueño($evento->idEvento)) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(Yii::$app->request->referrer);
+            }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('update', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('update', [
+                    'model' => $model,
+                    "esAjax" => true,
+                ]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                    "esAjax" => false,
+                ]);
+            }
+        }else{
+            return $this->goHome();
         }
     }
 
@@ -121,12 +137,42 @@ class PreguntaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($slug,$id)
     {
-        $this->findModel($id)->delete();
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        if($this->verificarDueño($evento->idEvento)) {
+            $pregunta = $this->findModel($id);
+            $respuestasAPregunta = RespuestaSearch::find()->where(["idpregunta" => $id])->all();
 
-        return $this->redirect(Yii::$app->request->referrer);
+            if(count($respuestasAPregunta) != 0){
+                foreach ($respuestasAPregunta as $respuestaAPregunta){
+                    if($pregunta->tipo == 3){
+                        $ruta = str_replace("../../../", "../web/", $respuestaAPregunta->respuesta);
+                        unlink($ruta);
+                    }
+
+                    $respuestaAPregunta->delete();
+                }
+            }
+
+            $pregunta->delete();
+
+            return $this->redirect(Yii::$app->request->referrer);
+        }else{
+            return $this->goHome();
+        }
     }
+
+    public function verificarDueño($id) {
+
+            $evento = Evento::find()->where(["idEvento" => $id])->one();
+
+            if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
     /**
      * Finds the Pregunta model based on its primary key value.
@@ -141,6 +187,6 @@ class PreguntaController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 }

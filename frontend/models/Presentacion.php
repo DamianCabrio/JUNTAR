@@ -40,11 +40,13 @@ class Presentacion extends \yii\db\ActiveRecord
             [['idEvento'], 'integer'],
             [['diaPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'safe'],
             [['tituloPresentacion'], 'string', 'max' => 200],
-            [['descripcionPresentacion'], 'string', 'max' => 800],
+            [['descripcionPresentacion'], 'string', 'max' => 2000],
             [['linkARecursos'], 'string', 'max' => 300],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
             ['horaFinPresentacion','compare','compareAttribute'=>'horaInicioPresentacion','operator'=>'>'],
-            ['diaPresentacion','required']
+            ['diaPresentacion','required'],
+            [['tituloPresentacion'], 'unique', 'targetAttribute' => ['tituloPresentacion', 'idEvento'], 'message' => 'El nombre de la presentación ya fue registrado.'],
+
         ];
     }
 

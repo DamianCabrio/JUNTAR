@@ -2,16 +2,21 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Evento;
+use frontend\models\Inscripcion;
 use frontend\models\Pregunta;
-use frontend\models\RespuestaFile;
+use frontend\models\Respuesta;
+
 use frontend\models\RespuestaCorta;
+use frontend\models\RespuestaFile;
 use frontend\models\RespuestaLarga;
 use frontend\models\RespuestaSearch;
+use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
-use Yii;
 
 /**
  * RespuestaController implements the CRUD actions for Respuesta model.
@@ -66,142 +71,118 @@ class RespuestaController extends Controller
         return $behaviors;
     }
 
-    /**
-     * Lists all Respuesta models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new RespuestaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionVer($slug, $id){
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        if($this->verificarDueño($evento->idEvento)) {
+            $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
 
-    /**
-     * Displays a single Respuesta model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    public function actionVer($id, $id2){
-        $preguntas = Pregunta::find()->where(["idEvento" => $id])->all();
-
-        $respuestas = [];
-        foreach ($preguntas as $pregunta){
-            $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id])->one();
-            if($respuesta == null){
-                array_push($respuestas, null);
-            }else{
-                array_push($respuestas, $respuesta);
-            }
-        }
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('ver', [
-                'preguntas' => $preguntas,
-                "respuestas" => $respuestas,
-            ]);
-        } else {
-            return $this->render('ver', [
-                'preguntas' => $preguntas,
-                "respuestas" => $respuestas,
-            ]);
-        }
-    }
-
-    /**
-     * Creates a new Respuesta model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate($id, $id2)
-    {
-        $pregunta = Pregunta::find()->where(["id" => $id])->one();
-
-        if($pregunta->tipo == 1){
-            $model = new RespuestaCorta;
-        }elseif ($pregunta->tipo == 2){
-            $model = new RespuestaLarga();
-        }else{
-            $model = new RespuestaFile;
-        }
-
-            $model->idpregunta = $id;
-            $model->idinscripcion = $id2;
-
-        if($pregunta->tipo == 3){
-            if (Yii::$app->request->isPost) {
-                $model->file = UploadedFile::getInstance($model, 'file');
-                if ($model->upload()) {
-                    $model->respuesta = "../web/eventos/formularios/archivos/" . $model->file->baseName . '.' . $model->file->extension;
-                    $model->save();
-                    return $this->redirect(Yii::$app->request->referrer);
+            if($preguntas != null){
+                $respuestas = [];
+                foreach ($preguntas as $pregunta){
+                    $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $id])->one();
+                    if($respuesta == null){
+                        array_push($respuestas, null);
+                    }else{
+                        array_push($respuestas, $respuesta);
+                    }
                 }
             }
-        }else{
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(Yii::$app->request->referrer);
+
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('ver', [
+                    'preguntas' => $preguntas,
+                    "respuestas" => $respuestas,
+                    "esAjax" => true,
+                ]);
+            } else {
+                return $this->render('ver', [
+                    'preguntas' => $preguntas,
+                    "respuestas" => $respuestas,
+                    "esAjax" => false,
+                ]);
             }
+        }else{
+            return $this->goHome();
         }
+    }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create', [
-                'model' => $model,
-                "pregunta" => $pregunta,
-                "volverAtras" => false,
-            ]);
+//    /**
+//     * Creates a new Respuesta model.
+//     * If creation is successful, the browser will be redirected to the 'view' page.
+//     * @return mixed
+//     */
+//    public function actionCreate($id, $id2)
+//    {
+//        $inscripcionAEvento = Inscripcion::find()->where(["idInscripcion" => $id2])
+//            ->andWhere(["<>", "estado", 1])
+//            ->andWhere(["<>", "estado", 2])->one();
+//
+//        if(Yii::$app->user->identity->idUsuario == $inscripcionAEvento->idUsuario0->idUsuario){
+//            if($inscripcionAEvento != null){
+//                $pregunta = Pregunta::find()->where(["id" => $id])->one();
+//                if ($pregunta == null) {
+//                    throw new NotFoundHttpException('La página solicitada no existe.');
+//                }
+//
+//                if ($pregunta->tipo == 1) {
+//                    $model = new RespuestaCorta;
+//                } elseif ($pregunta->tipo == 2) {
+//                    $model = new RespuestaLarga();
+//                } else {
+//                    $model = new RespuestaFile;
+//                }
+//
+//                $model->idpregunta = $id;
+//                $model->idinscripcion = $id2;
+//
+//                if($pregunta->tipo == 3){
+//                    if (Yii::$app->request->isPost) {
+//                        $model->file = UploadedFile::getInstance($model, 'file');
+//                        if ($model->upload()) {
+//                            $model->respuesta = "../../../eventos/formularios/archivos/" . $model->file->baseName . '.' . $model->file->extension;
+//                            $model->save(false);
+//                            return $this->redirect(Yii::$app->request->referrer);
+//                        }
+//                    }
+//                }else{
+//                    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//                        return $this->redirect(Yii::$app->request->referrer);
+//                    }
+//                }
+//
+//                if (Yii::$app->request->isAjax) {
+//                    return $this->renderAjax('create', [
+//                        'model' => $model,
+//                        "pregunta" => $pregunta,
+//                        "inscripcion" => $inscripcionAEvento,
+//                        "volverAtras" => false,
+//                    ]);
+//                } else {
+//                    return $this->render('create', [
+//                        'model' => $model,
+//                        "pregunta" => $pregunta,
+//                        "inscripcion" => $inscripcionAEvento,
+//                        "volverAtras" => true,
+//                    ]);
+//                }
+//            }else{
+//                throw new NotFoundHttpException('La página solicitada no existe.');
+//            }
+//        }else{
+//            throw new NotFoundHttpException('La página solicitada no existe.');
+//        }
+//    }
+
+    public function verificarDueño($id) {
+
+        $evento = Evento::find()->where(["idEvento" => $id])->one();
+
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) {
+            return true;
         } else {
-            return $this->render('create', [
-                'model' => $model,
-                "pregunta" => $pregunta,
-                "volverAtras" => true,
-            ]);
+            return false;
         }
-    }
-
-    /**
-     * Updates an existing Respuesta model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Respuesta model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
@@ -217,6 +198,6 @@ class RespuestaController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 }

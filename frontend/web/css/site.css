@@ -133,7 +133,9 @@ a.desc:after {
 .pinkish_bg {
     background-color: #FE1355;
 }
-
+.pinkish_text{
+    color: #FE1355;
+}
 .dark_light_bg {
     background: -webkit-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
     background: -o-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
@@ -144,13 +146,18 @@ a.desc:after {
 .full_width {
     width: 100%;
 }
-
+.height_100vh{
+    min-height: 100vh;
+}
 .card {
     border: none;
     color: black;
     background-color: #EFEFEF;
 }
-
+.btn-txt:hover{
+    background-color: transparent!important;
+    cursor: context-menu!important;
+}
 .btn_icon {
     color: white;
     padding: 6px 6px 0px 6px;
@@ -160,7 +167,10 @@ a.desc:after {
     padding-left: 0px;
     padding-right: 0px;
 }
-
+.noVpadding{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
 .padding_section {
     padding-top: 3vh;
     padding-bottom: 3vh;
@@ -170,7 +180,15 @@ a.desc:after {
     padding-top: 1vh;
     padding-bottom: 4vh;
 }
+.padding_hero {
+    padding-top: 7vh;
+    padding-bottom: 7vh;
+}
 
+.padding_event {
+    padding-top: 15vh;
+    padding-bottom: 15vh;
+}
 .pagination_center {
     justify-content: center;
 }
@@ -220,16 +238,14 @@ a.desc:after {
     z-index: 2;
 }
 
-.padding_hero {
-    padding-top: 7vh;
-    padding-bottom: 7vh;
-}
 
-.padding_event {
-    padding-top: 15vh;
-    padding-bottom: 15vh;
+.respuesta-form input{
+    width: 100%;
 }
-
+.respuesta-form textarea{
+    width: 100%;
+    min-height: 150px;
+}
 .alert {
     margin-bottom: 0px;
 }

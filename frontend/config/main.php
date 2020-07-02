@@ -1,4 +1,9 @@
 <?php
+
+use ymaker\social\share\configurators\Configurator;
+use ymaker\social\share\drivers\Facebook;
+use ymaker\social\share\drivers\Twitter;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -10,14 +15,28 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'frontend\controllers',
+    "homeUrl" => ["site/index"],
     'bootstrap' => ['log'],
     'language' => "es_AR",
     'timeZone' => 'America/Argentina/Buenos_Aires',
     'aliases' =>[
         '@rutaLogo' => '/eventos/images/logos/',
         '@rutaFlyer' => '/eventos/images/flyers/',
+        '@rutaQR' => '/eventos/images/qrcodes/',
+        '@rutaImagenPerfil' => '/profile/images/',
     ],
     'components' => [
+        "socialShare" => [
+            'class' => Configurator::class,
+            "socialNetworks" => [
+                "facebook" => [
+                    "class" => Facebook::class,
+                ],
+                "twitter" => [
+                    "class" => Twitter::class,
+                ],
+            ],
+        ],
         'qr' => [
             'class' => '\Da\QrCode\Component\QrCodeComponent',
             // ... you can configure more properties of the component here
@@ -47,7 +66,7 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => '/site/error',
         ],
           'urlManager' => [
             'enablePrettyUrl' => true,
@@ -65,15 +84,23 @@ return [
                  'eventos/responder-formulario/<slug>' => 'evento/responder-formulario',
                  'eventos/respuestas-formulario/<slug>' => "evento/respuestas-formulario",
                  'eventos/suspender-evento/<slug>' => 'evento/suspender-evento',
+                 "eventos/no-js" => "evento/no-js",
                  'eventos/finalizar-evento/<slug>' => 'evento/finalizar-evento',
                  'eventos/solicitar-aval/<slug>' => 'evento/solicitar-aval',
-                 'presentacion/cargar-presentacion/<slug>' => 'presentacion/cargar-presentacion',
+                 'eventos/crear-email/<slug>' => 'evento/crear-email',
+                 'eventos/crear-pregunta/<slug>' => 'pregunta/create',
+                 'eventos/editar-pregunta/<slug>/<id:\d+>' => 'pregunta/update',
+                 'eventos/eliminar-pregunta/<slug>/<id:\d+>' => 'pregunta/delete',
+                 'presentacion/cargar-presentacion/<slug>/' => 'presentacion/cargar-presentacion',
+                 'respuesta/ver/<slug>/<id:\d+>' => 'respuesta/ver',
                  'presentacion/view/<presentacion:\d+>' => 'presentacion/view',
                  'presentacion/update/<presentacion:\d+>' => 'presentacion/update',
                  'presentacion/borrar/<presentacion:\d+>' => 'presentacion/borrar',
                  'evento/cargar-expositor/<idPresentacion:\d+>' => 'evento/cargar-expositor',
                  'presentacion-expositor/ver-expositores/<idPresentacion:\d+>' => 'presentacion-expositor/ver-expositores',
                  "acreditacion" => "acreditacion/acreditacion",
+                 "inscripcion/inscribir-a-usuario/<slug>/<id:\d+>" => "inscripcion/inscribir-a-usuario",
+                 "inscripcion/anular-inscripcion/<slug>/<id:\d+>" => "inscripcion/anular-inscripcion",
                  'defaultRoute' => '/site/index',
               ],
           ],

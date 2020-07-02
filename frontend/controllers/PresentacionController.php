@@ -2,20 +2,21 @@
 
 namespace frontend\controllers;
 
-use Yii;
+use backend\models\Usuario;
+use frontend\models\Evento;
 use frontend\models\Presentacion;
+use frontend\models\PresentacionExpositor;
+use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use frontend\models\PresentacionExpositor;
-use frontend\models\Evento;
-use yii\data\ActiveDataProvider;
-use backend\models\Usuario;
 
 /**
  * PresentacionController implements the CRUD actions for Presentacion model.
  */
-class PresentacionController extends Controller {
+class PresentacionController extends Controller
+{
 
     /**
      * {@inheritdoc}
@@ -57,20 +58,6 @@ class PresentacionController extends Controller {
     }
 
     /**
-     * Lists all Presentacion models.
-     * @return mixed
-     */
-    public function actionIndex() {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Presentacion::find(),
-        ]);
-
-        return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Displays a single Presentacion model.
      * @param integer $presentacion
      * @return mixed
@@ -79,11 +66,11 @@ class PresentacionController extends Controller {
     public function actionView($presentacion) {
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                        'model' => $this->findModel($presentacion),
+                'model' => $this->findModel($presentacion),
             ]);
         } else {
             return $this->render('view', [
-                        'model' => $this->findModel($presentacion),
+                'model' => $this->findModel($presentacion),
             ]);
         }
     }
@@ -92,8 +79,8 @@ class PresentacionController extends Controller {
         $idPresentacion = Presentacion::findOne($presentacion);
         $evento = Evento::findOne($idPresentacion->idEvento);
         return $this->render('borrar', [
-                    'model' => $this->findModel($presentacion),
-                    'evento' => $evento,
+            'model' => $this->findModel($presentacion),
+            'evento' => $evento,
         ]);
     }
 
@@ -110,7 +97,7 @@ class PresentacionController extends Controller {
         }
 
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -133,21 +120,22 @@ class PresentacionController extends Controller {
         $model->horaFinPresentacion = $horaFinSinSeg;
 
         //si tiene datos cargados los almacena
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //volvemos a la pagina de la que vinimos
-            return $this->redirect(Yii::$app->request->referrer);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->save()) {
+            return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
+            }
         }
 
         If (Yii::$app->request->isAjax) {
             //retorna renderizado para llamado en ajax
             return $this->renderAjax('editarPresentacion', [
-                        'model' => $model,
-                        'evento' => $evento,
+                'model' => $model,
+                'evento' => $evento,
             ]);
         } else {
             return $this->render('editarPresentacion', [
-                        'model' => $model,
-                        'evento' => $evento,
+                'model' => $model,
+                'evento' => $evento,
             ]);
         }
     }
@@ -178,11 +166,11 @@ class PresentacionController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
     /**
-     * Carga una nueva presentacion al evento 
+     * Carga una nueva presentacion al evento
      */
     public function actionCargarPresentacion($slug) {
 
@@ -192,10 +180,9 @@ class PresentacionController extends Controller {
         $model = new Presentacion();
         $preExpositor = new PresentacionExpositor();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()) {
                 //$preExpositor->idExpositor = $preExpositor->idExpositor ;  
-
                 return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
             }
         }
@@ -203,32 +190,32 @@ class PresentacionController extends Controller {
             throw new NotFoundHttpException('El evento no fue encontrado.');
         }
         $item = Evento::find()     //buscar los eventos del usuario
-                ->select(['nombreEvento'])
-                ->indexBy('idEvento')
-                ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
-                ->column();
+        ->select(['nombreEvento'])
+            ->indexBy('idEvento')
+            ->where(['idUsuario' => $idUsuario, 'idEvento' => $evento->idEvento])
+            ->column();
 
         $data = Usuario::find() //arreglo de usuarios para autocomplete
-                ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
-                ->asArray()
-                ->all();
+        ->select(["CONCAT(nombre,' ',apellido) as value", "CONCAT(nombre,' ',apellido)  as  label", "idUsuario as idUsuario"])
+            ->asArray()
+            ->all();
 
         If (Yii::$app->request->isAjax) {
             //retorna renderizado para llamado en ajax
             return $this->renderAjax('cargarPresentacion', [
-                        'model' => $model,
-                        'item' => $item,
-                        "evento" => $evento,
-                        'preExpositor' => $preExpositor,
-                        'arrUsuario' => $data
+                'model' => $model,
+                'item' => $item,
+                "evento" => $evento,
+                'preExpositor' => $preExpositor,
+                'arrUsuario' => $data
             ]);
         } else {
             return $this->render('cargarPresentacion', [
-                        'model' => $model,
-                        'item' => $item,
-                        "evento" => $evento,
-                        'preExpositor' => $preExpositor,
-                        'arrUsuario' => $data
+                'model' => $model,
+                'item' => $item,
+                "evento" => $evento,
+                'preExpositor' => $preExpositor,
+                'arrUsuario' => $data
             ]);
         }
     }
