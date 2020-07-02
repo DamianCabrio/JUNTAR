@@ -288,7 +288,7 @@ class CuentaController extends Controller {
      * @param int $id identificador del usuario.
      * @return mixed
      */
-    public function actionChangeRol($id) {
+    private function actionChangeRol($id) {
         $organizateRol = yii::$app->authManager->getRole('Organizador');
         if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
             yii::$app->authManager->assign($organizateRol, $id);

@@ -110,14 +110,14 @@ $this->title = "Cargar Evento";
 
 
                 <div id="mostrarCapacidad">
-                    <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                    <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número de participantes *')  ?>
                 </div>
                 <!-- select requiere preInscripcion -->
                 <?= $form->field($model, 'preInscripcion')->radioList([0 => 'No', 1 => 'Si'])->label('¿Requiere preinscripción? *') ?>
 
                 <!-- calendar -->
                 <div id="fechaLimite">
-                    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto', 'required'])->label('Fecha limite de inscripción *') ?>
+                    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto', 'required'])->label('Fecha límite de pre-inscripción *') ?>
                 </div>
                 <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
 
@@ -134,4 +134,6 @@ $this->title = "Cargar Evento";
              </div>
          </div>               
     </div>
+</div>
+</div>
 </div>

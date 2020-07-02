@@ -274,7 +274,7 @@ $(document).ready(function () {
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
  * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
- * 
+ *
  * @returns none
  */
 function verExpositoresModal(link) {
@@ -441,7 +441,7 @@ function generarCortoYear(nombreEvento) {
 /**
  * Metodo editProfileModal --> El modelo relacionado a la edicion del perfil en un documento html
  * y captura su div para mostrarlo en un modal, para evitar pasear de una pagina a otra
- * 
+ *
  * @returns none
  */
 function editEventoModal(url) {
@@ -545,7 +545,7 @@ function viewCertificationModal(url) {
         var dataHTML = $.parseHTML(data); //<----try with $.parseHTML().
         //buscamos el div que queremos mostrar en la vista recibida y lo escribimos sobre el cuerpo del modal
         $(dataHTML).find('div.certificates-buttons').each(function () {
-            $('.modal-header').html("<h3>Certificado de</h3>");
+            $('.modal-header').html("<h3>Certificados</h3>");
             $('.modal-body').html($(this).html());
         });
     });
@@ -612,4 +612,3 @@ function autocompleteLocalidades(nombreProvincia) {
                 }
             });
 }
-

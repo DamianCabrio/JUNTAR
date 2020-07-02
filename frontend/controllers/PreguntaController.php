@@ -69,13 +69,13 @@ class PreguntaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
+    public function actionCreate($slug)
     {
-
-        if($this->verificarDueño()) {
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        if($this->verificarDueño($evento->idEvento)) {
             $model = new Pregunta();
 
-            $model->idevento = $id;
+            $model->idevento = $evento->idEvento;
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $model->save();
                 return $this->redirect(Yii::$app->request->referrer);
@@ -104,10 +104,10 @@ class PreguntaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($slug,$id)
     {
-
-        if($this->verificarDueño()) {
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        if($this->verificarDueño($evento->idEvento)) {
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -137,10 +137,10 @@ class PreguntaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($slug,$id)
     {
-
-        if($this->verificarDueño()){
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        if($this->verificarDueño($evento->idEvento)) {
             $pregunta = $this->findModel($id);
             $respuestasAPregunta = RespuestaSearch::find()->where(["idpregunta" => $id])->all();
 
@@ -163,13 +163,9 @@ class PreguntaController extends Controller
         }
     }
 
-    public function verificarDueño() {
+    public function verificarDueño($id) {
 
-        $eventoUrl = explode("/", Url::previous("slugEvento"));
-
-        if(isset($eventoUrl[3])){
-            $eventoSlug = $eventoUrl[3];
-            $evento = Evento::find()->where(["nombreCortoEvento" => $eventoSlug])->one();
+            $evento = Evento::find()->where(["idEvento" => $id])->one();
 
             if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) {
                 return true;
@@ -177,7 +173,6 @@ class PreguntaController extends Controller
                 return false;
             }
         }
-    }
 
     /**
      * Finds the Pregunta model based on its primary key value.

@@ -7,32 +7,33 @@
     use PhpOffice\PhpSpreadsheet\Cell\DataType;
     use PhpOffice\PhpSpreadsheet\Style\Alignment;
     use PhpOffice\PhpSpreadsheet\Style\Border;
+    use yii\helpers\Html;
+    use yii\helpers\Url;
 
 
-    $fileType = 'Ods';
 
-    $templateExcel  = $spreadsheet = new Spreadsheet();
 
-    $nombreDelLibro = $datosDelEvento['idEvento']."_Participantes_".$datosDelEvento['idEvento'].".ods";
+
+    $template =  new Spreadsheet();
+
+    $nombreDelLibro = $datosDelEvento['idEvento']."_Participantes_".$datosDelEvento['idEvento'];
 
         
-    $fila= $templateExcel->setActiveSheetIndex(0);
-    $fila->setCellValue('B9', $datosDelEvento['idEvento']);
+    $fila= $template->setActiveSheetIndex(0);
 
      
     // Datos del Evento 
-    
-    $fila->setCellValueByColumnAndRow( 10, 2, $datosDelEvento['organizador'] );
-    $fila->setCellValueByColumnAndRow( 10, 3, 'Inicio: '.date("d-m-Y", strtotime($datosDelEvento['inicio']))  );
-    $fila->setCellValueByColumnAndRow( 10, 4, 'Fin: '. date("d-m-Y", strtotime($datosDelEvento['fin'])) );
-    $fila->setCellValueByColumnAndRow( 10, 5, 'Capacidad: '. $datosDelEvento['capacidad'] );
-    $fila->setCellValueByColumnAndRow( 10, 6, 'Lugar: '.$datosDelEvento['lugar'] );
-    $fila->setCellValueByColumnAndRow( 10, 7, 'Modalidad: '. $datosDelEvento['modalidad'] );
+    if($extension=='ods'){
+        $fila->setCellValueByColumnAndRow( 10, 2, $datosDelEvento['organizador'] );
+        $fila->setCellValueByColumnAndRow( 10, 3, 'Inicio: '.date("d-m-Y", strtotime($datosDelEvento['inicio']))  );
+        $fila->setCellValueByColumnAndRow( 10, 4, 'Fin: '. date("d-m-Y", strtotime($datosDelEvento['fin'])) );
+        $fila->setCellValueByColumnAndRow( 10, 5, 'Capacidad: '. $datosDelEvento['capacidad'] );
+        $fila->setCellValueByColumnAndRow( 10, 6, 'Lugar: '.$datosDelEvento['lugar'] );
+        $fila->setCellValueByColumnAndRow( 10, 7, 'Modalidad: '. $datosDelEvento['modalidad'] );
+    }
 
     $row = 12;    // $row: los datos son insertado a partir de la fila 10
-
     $i = 1;    // $i: enumera la cantidad las filas de la tabla
-
 
     // Encabezado  datos del usuario
 
@@ -50,11 +51,11 @@
     // Encabezado  preguntas del Usurio
     $i= 11;
     foreach($preguntas as $pregunta){
-        $fila->setCellValueByColumnAndRow( $i, 11, $pregunta['descripcion'] );
+        $fila->setCellValueByColumnAndRow( $i, 11, mb_convert_encoding( $pregunta['descripcion'] , 'UTF-8' )  );
         $i++;
     }
 
-
+    
 
     ///// listado de los datos de los usuarios inscripto a un evento
     $i=1;
@@ -66,13 +67,13 @@
         $fila->setCellValueByColumnAndRow( 1, $row, $i );
         $fila->setCellValueByColumnAndRow( 2, $row, obtenerEstado( $unParticipante) );
         $fila->setCellValueByColumnAndRow( 3, $row, obtenerFecha($unParticipante) );
-        $fila->setCellValueByColumnAndRow( 4, $row, $unParticipante['user_apellido'] );
-        $fila->setCellValueByColumnAndRow( 5, $row, $unParticipante['user_nombre'] );
-        $fila->setCellValueByColumnAndRow( 6, $row, $unParticipante['user_dni'] );
-        $fila->setCellValueByColumnAndRow( 7, $row, $unParticipante['user_pais'] );
-        $fila->setCellValueByColumnAndRow( 8, $row, $unParticipante['user_provincia'] );
-        $fila->setCellValueByColumnAndRow( 9, $row, $unParticipante['user_localidad'] );
-        $fila->setCellValueByColumnAndRow( 10,$row, $unParticipante['user_email'] );
+        $fila->setCellValueByColumnAndRow( 4, $row, mb_convert_encoding( $unParticipante['user_apellido'], 'UTF-8' )  );
+        $fila->setCellValueByColumnAndRow( 5, $row, mb_convert_encoding( $unParticipante['user_nombre'], 'UTF-8' ) );
+        $fila->setCellValueByColumnAndRow( 6, $row, mb_convert_encoding( $unParticipante['user_dni'], 'UTF-8' )  );
+        $fila->setCellValueByColumnAndRow( 7, $row, mb_convert_encoding( $unParticipante['user_pais'], 'UTF-8' ) );
+        $fila->setCellValueByColumnAndRow( 8, $row, mb_convert_encoding( $unParticipante['user_provincia'], 'UTF-8' )  );
+        $fila->setCellValueByColumnAndRow( 9, $row, mb_convert_encoding( $unParticipante['user_localidad'], 'UTF-8' ));
+        $fila->setCellValueByColumnAndRow( 10,$row, mb_convert_encoding( $unParticipante['user_email'], 'UTF-8' ));
             
         $j= 11;
         $respuestas= $datos['respuestas'];
@@ -80,14 +81,11 @@
         $url_descarga= "";
         foreach( $respuestas as  $dato2 ) {
                 if($dato2['pregunta_tipo'] ==3){
-                    /// ../../../eventos/formularios/archivos/ 
-                    $url_archivo = str_replace("../../../", "", $dato2['respuesta_user']);
-                    $url_descarga= "http://".$_SERVER['SERVER_NAME'].'/'.$url_archivo;
+                   $url_descarga = Url::base('') . $dato2['respuesta_user'];
 
-                    $fila->setCellValueByColumnAndRow($j, $row, str_replace(' ','',$url_descarga) );
-                    // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
+                    $fila->setCellValueByColumnAndRow($j, $row, $url_descarga );
                 }else{
-                    $fila->setCellValueByColumnAndRow($j, $row, $dato2['respuesta_user']);
+                    $fila->setCellValueByColumnAndRow($j, $row, mb_convert_encoding( Html::encode($dato2['respuesta_user']), 'UTF-8' ));
                 }
      
             $j++;
@@ -97,11 +95,22 @@
         $row = $row + 1;
     }
 
+    if($extension== 'csv'){          
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($template);
+        $writer->setDelimiter(';');
+     // $writer->setEnclosure('');
+     // $writer->setSheetIndex(0);
+        $nombreDelLibro= $nombreDelLibro.'.csv';
+     } 
+
+     if($extension == 'ods') {
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($template);
+        $nombreDelLibro = $nombreDelLibro.'.ods';
+     }
 
     /// guarda el archivo
-    $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter( $templateExcel, $fileType );
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="'.$nombreDelLibro .'"');
+    header('Content-Disposition: attachment;filename="'. $nombreDelLibro .'"');
     ob_end_clean();
 
     $writer->save("php://output");

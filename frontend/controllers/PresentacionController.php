@@ -58,20 +58,6 @@ class PresentacionController extends Controller
     }
 
     /**
-     * Lists all Presentacion models.
-     * @return mixed
-     */
-    public function actionIndex() {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Presentacion::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Displays a single Presentacion model.
      * @param integer $presentacion
      * @return mixed
@@ -134,9 +120,10 @@ class PresentacionController extends Controller
         $model->horaFinPresentacion = $horaFinSinSeg;
 
         //si tiene datos cargados los almacena
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //volvemos a la pagina de la que vinimos
-            return $this->redirect(Yii::$app->request->referrer);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->save()) {
+            return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
+            }
         }
 
         If (Yii::$app->request->isAjax) {
@@ -193,10 +180,9 @@ class PresentacionController extends Controller
         $model = new Presentacion();
         $preExpositor = new PresentacionExpositor();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()) {
                 //$preExpositor->idExpositor = $preExpositor->idExpositor ;  
-
                 return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
             }
         }
