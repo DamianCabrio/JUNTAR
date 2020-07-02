@@ -27,9 +27,9 @@ $openGraph->useTwitterCard()
 
 if ($evento->imgLogo != null) {
     $openGraph->getImage()
-        ->setUrl(Html::encode($evento->imgLogo))
+        ->setUrl(Url::base('') . Html::encode($evento->imgLogo))
         ->setAttributes([
-            'secure_url' => Html::encode($evento->imgLogo),
+            'secure_url' => Url::base('') . Html::encode($evento->imgLogo),
             'width' => 100,
             'height' => 100,
             'alt' => "Logo Evento",
