@@ -40,7 +40,7 @@ class Presentacion extends \yii\db\ActiveRecord
             [['idEvento'], 'integer'],
             [['diaPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'safe'],
             [['tituloPresentacion'], 'string', 'max' => 200],
-            [['descripcionPresentacion'], 'string', 'max' => 800],
+            [['descripcionPresentacion'], 'string', 'max' => 2000],
             [['linkARecursos'], 'string', 'max' => 300],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
             ['horaFinPresentacion','compare','compareAttribute'=>'horaInicioPresentacion','operator'=>'>'],
