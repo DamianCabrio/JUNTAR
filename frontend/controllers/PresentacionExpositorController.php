@@ -78,6 +78,22 @@ class PresentacionExpositorController extends Controller {
             ]);
         }
     }
+    
+    /**
+     * Deletes an existing PresentacionExpositor model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $idExpositor
+     * @param integer $idPresentacion
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($idExpositor, $idPresentacion) {
+        $this->findModel($idExpositor, $idPresentacion)->delete();
+        $objPresentacion = Presentacion::findOne($idPresentacion);
+        $objEvento = Evento::findOne($objPresentacion->idEvento);
+
+        return $this->redirect(['eventos/ver-evento/' . $objEvento->nombreCortoEvento]);
+    }
 
     /**
      * Finds the PresentacionExpositor model based on its primary key value.
