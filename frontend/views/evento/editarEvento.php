@@ -129,6 +129,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                     <p>
                     <div class="form-group">
                             <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+                            <?= Html::a('Cancelar', ['eventos/ver-evento/'.$model->nombreCortoEvento], ['class' => 'btn btn-primary']); ?>
                     </div>
                     <?php ActiveForm::end(); ?>
                 </div>
