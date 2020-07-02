@@ -177,7 +177,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             ?>
                                 <div class="btn-group" role="group" aria-label="Fourth group">
                                     <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
-                                    <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#publicar">Suspender</button>
+									<?php if ($evento->fechaFinEvento > date("Y-m-d")): ?>
+										<button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#publicar">Suspender</button>
+									<?php endif; ?>
                                 </div>
                                 <!-- Button trigger modal -->
 
