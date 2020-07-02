@@ -921,10 +921,11 @@ class EventoController extends Controller
             $eventos = Evento::find()
                     ->where(["idUsuario" => $idUsuario])
                     ->andwhere(["like", "idEstadoEvento", $estado]);
-        } elseif ($busqueda != "") {
-            $eventos = Evento::find()
+            if ($busqueda != "") {
+                $eventos = Evento::find()
                     ->where(["idUsuario" => $idUsuario])
                     ->andwhere(["like", "nombreEvento", $busqueda]);
+        }
         } else {
             $eventos = Evento::find()->where(["idUsuario" => $idUsuario])->andwhere(["idEstadoEvento" => 1]); // por defecto mostrar los eventos propios que son activos
         }
