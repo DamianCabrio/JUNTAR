@@ -44,7 +44,7 @@ class RespuestaFile extends \yii\db\ActiveRecord
     public function upload()
     {
         if ($this->validate()) {
-            $this->file->saveAs("eventos/formularios/archivos/" . $this->file->baseName . '.' . $this->file->extension);
+            $this->file->saveAs("../web/eventos/formularios/archivos/" . $this->file->baseName . '.' . $this->file->extension);
             return true;
         } else {
             return false;
