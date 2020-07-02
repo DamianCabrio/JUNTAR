@@ -104,7 +104,7 @@ class SolicitudAval extends \yii\db\ActiveRecord {
       return Yii::$app->mailer
         ->compose(
           ['html' => 'solicitudAval-html', 'text' => 'solicitudAval-text'],
-          ['event' => $event, 'organizer' => $organizer, 'token' => $this->tokenSolicitud],
+          ['event' => $event, 'organizer' => $organizer, 'token' => $this->tokenSolicitud]
         )
         ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
         ->setTo($usersEmails)

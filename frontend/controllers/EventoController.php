@@ -255,7 +255,6 @@ class EventoController extends Controller
                 'pagination' => false,
                 'sort' => ['attributes' => ['name', 'description']]
             ]);
-            Url::remember(Url::current(), 'verRespuestas');
             return $this->render('respuestasFormulario',
                 ["preinscriptos" => $usuariosPreinscriptosDataProvider,
                     "inscriptos" => $usuariosInscriptosDataProvider,
@@ -380,7 +379,6 @@ class EventoController extends Controller
 
 
         if ($esDueño) {
-            Url::remember(Url::current(), "slugEvento");
             $preguntasSearchModel = new PreguntaSearch();
             $preguntasDataProvider = new ActiveDataProvider([
                 'query' => $preguntasSearchModel::find()->where(['idEvento' => $evento->idEvento]),
@@ -430,7 +428,7 @@ class EventoController extends Controller
                         }else{
                             $modeloRespuesta = new RespuestaFile();
                             $modeloRespuesta->file = UploadedFile::getInstance($model, "file[$i]");
-                            $modeloRespuesta->respuesta = "../../../eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
+                            $modeloRespuesta->respuesta = "eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
                             $saved = $modeloRespuesta->upload();
                         }
 
@@ -511,7 +509,11 @@ class EventoController extends Controller
         }
 
         //$validarEmail = new validateEmail();
-        $esFai = $evento->solicitudAval['avalado'];
+        if(isset($evento->solicitudAval['avalado'])){
+            $esFai = $evento->solicitudAval['avalado'] == null ? false : true;
+        }else{
+            $esFai = false;
+        }
         $esDueño = $this->verificarDueño($evento);
         $esAdministrador = $this->verificarAdministrador($evento);
 

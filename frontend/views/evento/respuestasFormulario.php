@@ -34,10 +34,10 @@ $this->title = "Respuesta a el formulario";
                         [
                             'attribute' => 'Acciones',
                             'format' => 'raw',
-                            'value' => function ($dataProvider) use ($hayPreguntas) {
+                            'value' => function ($dataProvider) use ($hayPreguntas, $evento) {
                                 if ($hayPreguntas) {
-                                    $return = Html::a("Ver respuestas", Url::toRoute("respuesta/ver?id=" . $dataProvider->idEvento . "&id2=" . $dataProvider->idInscripcion), ["class" => "verRespuesta ml-2 btn btn-outline-success mb-2"]);
-                                    $return .= Html::a("Inscribir A Evento", Url::toRoute("inscripcion/inscribir-a-usuario?idUsuario=" . $dataProvider->idUsuario . "&idEvento=" . $dataProvider->idEvento), ['class' => 'ml-2 btn btn-outline-success mb-2']);
+                                    $return = Html::a("Ver respuestas", Url::toRoute("respuesta/ver/" . $evento->nombreCortoEvento . "/" . $dataProvider->idInscripcion), ["class" => "verRespuesta ml-2 btn btn-outline-success mb-2"]);
+                                    $return .= Html::a("Inscribir A Evento", Url::toRoute("inscripcion/inscribir-a-usuario/". $evento->nombreCortoEvento . "/" . $dataProvider->idUsuario), ['class' => 'ml-2 btn btn-outline-success mb-2']);
                                 } else {
                                     $return = "No hay preguntas que responder en el evento";
                                 }
@@ -74,9 +74,9 @@ $this->title = "Respuesta a el formulario";
                 [
                     'attribute' => 'Acciones',
                     'format' => 'raw',
-                    'value' => function ($dataProvider) {
-                        $return = Html::a("Ver respuestas", Url::toRoute("respuesta/ver?id=" . $dataProvider->idEvento . "&id2=" . $dataProvider->idInscripcion), ["class" => "verRespuesta ml-2 btn btn-outline-success mb-2"]);
-                        $return .= Html::a("Anular Inscripcion", Url::toRoute("inscripcion/anular-inscripcion?idUsuario=" . $dataProvider->idUsuario . "&idEvento=" . $dataProvider->idEvento), ['class' => 'ml-2 btn btn-outline-success mb-2']);
+                    'value' => function ($dataProvider) use ($evento) {
+                        $return = Html::a("Ver respuestas", Url::toRoute("respuesta/ver/" . $evento->nombreCortoEvento . "/" . $dataProvider->idInscripcion), ["class" => "verRespuesta ml-2 btn btn-outline-success mb-2"]);
+                        $return .= Html::a("Anular Inscripcion", Url::toRoute("inscripcion/anular-inscripcion/". $evento->nombreCortoEvento . "/" . $dataProvider->idUsuario), ['class' => 'ml-2 btn btn-outline-success mb-2']);
                         return $return;
                     },
                     'headerOptions' => ['style' => 'width:65%;text-align:center;', 'class' => 'text-center'],
