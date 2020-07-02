@@ -75,7 +75,7 @@ CREATE TABLE evento (
   idModalidadEvento tinyint(4) NOT NULL,
   nombreEvento varchar(200) NOT NULL,
   nombreCortoEvento varchar(100) NOT NULL,
-  descripcionEvento varchar(1600) NOT NULL,
+  descripcionEvento varchar(2000) NOT NULL,
   lugar varchar(200) NOT NULL,
   fechaInicioEvento date NOT NULL,
   fechaFinEvento date NOT NULL,
@@ -261,7 +261,7 @@ CREATE TABLE `respuesta` (
   `id` int(11) NOT NULL,
   `idpregunta` bigint(20) NOT NULL,
   `idinscripcion` bigint(20) NOT NULL,
-  `respuesta` varchar(500) NOT NULL
+  `respuesta` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
