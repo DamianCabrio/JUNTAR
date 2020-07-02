@@ -9,8 +9,8 @@ $this->title = "Crear Formulario";
 
 <div class="formulario-dinamico container">
 
-        <?= Html::a("Agregar Pregunta", Url::toRoute(["pregunta/create?id=" . $evento->idEvento]),
-            ['class' => 'btn btn-primary agregarPregunta mb-4', "data-id" => Url::toRoute(["pregunta/create?id=" . $evento->idEvento])]) ?>
+        <?= Html::a("Agregar Pregunta", Url::toRoute(["eventos/crear-pregunta/" . $evento->nombreCortoEvento]),
+            ['class' => 'btn btn-primary agregarPregunta mb-4', "data-id" => Url::toRoute(["eventos/crear-pregunta/" . $evento->nombreCortoEvento])]) ?>
 
         <?=
         \yii\grid\GridView::widget([
@@ -45,12 +45,12 @@ $this->title = "Crear Formulario";
                 [
                     'class' => 'yii\grid\ActionColumn',
                     //genera una url para cada boton de accion
-                    'urlCreator' => function ($action, $model, $key, $index) {
+                    'urlCreator' => function ($action, $model, $key, $index) use ($evento) {
                         if ($action == "update") {
-                            return Url::to(['/pregunta/update', 'id' => $key]);
+                            return Url::to(['eventos/editar-pregunta/' . $evento->nombreCortoEvento . "/". $key]);
                         }
                         if ($action == "delete") {
-                            return Url::to(['/pregunta/delete', 'id' => $key]);
+                            return Url::to(['eventos/eliminar-pregunta/'. $evento->nombreCortoEvento . "/". $key]);
                         }
                     },
                     //describe los botones de accion

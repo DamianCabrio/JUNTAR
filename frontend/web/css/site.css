@@ -154,7 +154,10 @@ a.desc:after {
     color: black;
     background-color: #EFEFEF;
 }
-
+.btn-txt:hover{
+    background-color: transparent!important;
+    cursor: context-menu!important;
+}
 .btn_icon {
     color: white;
     padding: 6px 6px 0px 6px;
