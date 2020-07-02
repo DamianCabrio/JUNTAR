@@ -29,8 +29,8 @@ $this->title = 'Juntar';
 
                         <div class="col-sm-12 col-md-4 mb-3">
                             <select name="orden" class="custom-select custom-select-lg" onchange="this.form.submit()">
-                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="0">Fecha de creación</option>
-                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 1) ? "selected" : "" ?> value="1">Fecha de inicio del evento</option>
+                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 0) ? "selected" : "" ?> value="0">Fecha de inicio del evento</option>
+                                <option <?= (isset($_GET["orden"]) && $_GET["orden"] == 1) ? "selected" : "" ?> value="1">Fecha de creación</option>
                             </select>
                         </div>
 

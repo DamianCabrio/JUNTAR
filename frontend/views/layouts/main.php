@@ -110,7 +110,7 @@ AppAsset::register($this);
                 <div class="col-12 col-md-8">
                     <h5 class="white-text">Juntar</h5>
 
-                    <p class="grey-text text-lighten-4">Somos una plataforma web para gestión de eventos libre y gratuita. El sitio permite a los usuarios navegar, crear y participar de eventos. Nació como un desafío universitario y podemos asegurar que hemos llegado a la meta que teníamos como objetivo e incluso la hemos superado gracias a un gran equipo de trabajo.</p>
+                    <p class="grey-text text-lighten-4">Somos una plataforma web para gestión de eventos libre y gratuita. El sitio permite a los usuarios navegar, crear y participar de eventos. Nació como un desafío universitario y podemos asegurar que hemos llegado a la meta que teníamos como objetivo e incluso la hemos superado gracias a un gran equipo de trabajo. Licencia GNU GPL version 3</p>
 
                 </div>
                 <div class="col-12 col-md-4">
