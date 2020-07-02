@@ -58,20 +58,6 @@ class PresentacionController extends Controller
     }
 
     /**
-     * Lists all Presentacion models.
-     * @return mixed
-     */
-    public function actionIndex() {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Presentacion::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Displays a single Presentacion model.
      * @param integer $presentacion
      * @return mixed

@@ -12,7 +12,7 @@ $viewLink = Yii::$app->urlManager->createAbsoluteUrl(['/evento/ver-evento/', 'sl
 <div class="request">
     <small> Correo Generado Automáticamente </small>
     <p>El usuario <b><?= $organizer->apellido." ".$organizer->nombre ?></b> organizador del Evento <b><?= $event->nombreEvento?></b>
-    solicita la aprobación para que sea un evento avalado por la Falculta de Informática - UNComa. </p>
+    solicita la aprobación para que sea un evento avalado por la Facultad de Informática - UNComa. </p>
     <div class="" style="width: 50%; background-color: #212529; border-radius: 15px; padding: 5px; padding-bottom: 60px;">
       <ul style="list-style: none;">
         <li style="background-color: #DDDDDD; border-radius: 6px; margin: 7px; padding: 5px;">

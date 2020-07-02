@@ -112,7 +112,7 @@ class PermissionController extends Controller {
         //si recibe asignarPermiso procede a asignar el permiso al rol seleccionado
         if (Yii::$app->request->get('asignarPermiso') != null && $rolSeleccionado != null) {
             $this->asignarPermisoARol($rolSeleccionado, Yii::$app->request->get('asignarPermiso'));
-//            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(Yii::$app->request->referrer);
         }
 
         //generamos los arreglos de permisos y roles
@@ -138,7 +138,7 @@ class PermissionController extends Controller {
             'pagination' => [
                 'pageSize' => 10,
             ],
-            'sort' => ['attributes' => ['name']]
+            'sort' => ['attributes' => ['name', 'description']]
         ]);
 
         return $this->render('asignarPermisos', [

@@ -11,7 +11,7 @@ $viewLink = Yii::$app->urlManager->createAbsoluteUrl(['/evento/ver-evento/', 'sl
 
     Correo Generado Automáticamente
     El usuario <?= $organizer->apellido." ".$organizer->nombre ?> organizador del Evento <?= $event->nombreEvento?>
-    solicita la aprobación para que sea un evento avalado por la Falculta de Informática - UNComa.
+    solicita la aprobación para que sea un evento avalado por la Facultad de Informática - UNComa.
 
        Organizador:  <?= $organizer->apellido." ".$organizer->nombre ?>
 

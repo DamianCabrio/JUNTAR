@@ -49,7 +49,7 @@ $this->title = "Responder Formulario";
                 <?php if ($pregunta->tipo != 3): ?>
                     <span>Respuesta: <?= Html::encode($respuestaYaHechas[$i]->respuesta) ?></span>
                 <?php else: ?>
-                    <span>Respuesta: <?= Html::a("Descargar", Url::base(true) . Html::encode($respuestaYaHechas[$i]->respuesta), ['class' => 'btn btn-lg btn-outline-success', "target" => "_blank"]) ?></span>
+                    <span>Respuesta: <?= Html::a("Descargar", Html::encode(Url::base('').$respuestaYaHechas[$i]->respuesta), ['class' => 'btn btn-lg btn-outline-success', "target" => "_blank"]) ?></span>
                 <?php endif; ?>
             <?php endif; ?>
             </div>

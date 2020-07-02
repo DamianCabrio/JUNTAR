@@ -292,7 +292,7 @@ class EventoController extends Controller
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
         $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
-        $model->avalado = 0; // Flag - Por defecto
+//        $model->avalado = 0; // Flag - Por defecto
         $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -426,9 +426,10 @@ class EventoController extends Controller
                             $modeloRespuesta = new RespuestaLarga();
                             $modeloRespuesta->respuesta = $model->respuesta[$i];
                         }else{
+                          
                             $modeloRespuesta = new RespuestaFile();
                             $modeloRespuesta->file = UploadedFile::getInstance($model, "file[$i]");
-                            $modeloRespuesta->respuesta = "eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
+                            $modeloRespuesta->respuesta = "/eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
                             $saved = $modeloRespuesta->upload();
                         }
 
@@ -921,10 +922,11 @@ class EventoController extends Controller
             $eventos = Evento::find()
                     ->where(["idUsuario" => $idUsuario])
                     ->andwhere(["like", "idEstadoEvento", $estado]);
-        } elseif ($busqueda != "") {
-            $eventos = Evento::find()
+            if ($busqueda != "") {
+                $eventos = Evento::find()
                     ->where(["idUsuario" => $idUsuario])
                     ->andwhere(["like", "nombreEvento", $busqueda]);
+        }
         } else {
             $eventos = Evento::find()->where(["idUsuario" => $idUsuario])->andwhere(["idEstadoEvento" => 1]); // por defecto mostrar los eventos propios que son activos
         }

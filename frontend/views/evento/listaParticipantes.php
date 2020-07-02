@@ -7,6 +7,10 @@
     use PhpOffice\PhpSpreadsheet\Cell\DataType;
     use PhpOffice\PhpSpreadsheet\Style\Alignment;
     use PhpOffice\PhpSpreadsheet\Style\Border;
+    use yii\helpers\Html;
+    use yii\helpers\Url;
+
+
 
 
 
@@ -47,11 +51,11 @@
     // Encabezado  preguntas del Usurio
     $i= 11;
     foreach($preguntas as $pregunta){
-        $fila->setCellValueByColumnAndRow( $i, 11, $pregunta['descripcion'] );
+        $fila->setCellValueByColumnAndRow( $i, 11, mb_convert_encoding( $pregunta['descripcion'] , 'UTF-8' )  );
         $i++;
     }
 
- 
+    
 
     ///// listado de los datos de los usuarios inscripto a un evento
     $i=1;
@@ -63,13 +67,13 @@
         $fila->setCellValueByColumnAndRow( 1, $row, $i );
         $fila->setCellValueByColumnAndRow( 2, $row, obtenerEstado( $unParticipante) );
         $fila->setCellValueByColumnAndRow( 3, $row, obtenerFecha($unParticipante) );
-        $fila->setCellValueByColumnAndRow( 4, $row, $unParticipante['user_apellido'] );
-        $fila->setCellValueByColumnAndRow( 5, $row, $unParticipante['user_nombre'] );
-        $fila->setCellValueByColumnAndRow( 6, $row, $unParticipante['user_dni'] );
-        $fila->setCellValueByColumnAndRow( 7, $row, $unParticipante['user_pais'] );
-        $fila->setCellValueByColumnAndRow( 8, $row, $unParticipante['user_provincia'] );
-        $fila->setCellValueByColumnAndRow( 9, $row, $unParticipante['user_localidad'] );
-        $fila->setCellValueByColumnAndRow( 10,$row, $unParticipante['user_email'] );
+        $fila->setCellValueByColumnAndRow( 4, $row, mb_convert_encoding( $unParticipante['user_apellido'], 'UTF-8' )  );
+        $fila->setCellValueByColumnAndRow( 5, $row, mb_convert_encoding( $unParticipante['user_nombre'], 'UTF-8' ) );
+        $fila->setCellValueByColumnAndRow( 6, $row, mb_convert_encoding( $unParticipante['user_dni'], 'UTF-8' )  );
+        $fila->setCellValueByColumnAndRow( 7, $row, mb_convert_encoding( $unParticipante['user_pais'], 'UTF-8' ) );
+        $fila->setCellValueByColumnAndRow( 8, $row, mb_convert_encoding( $unParticipante['user_provincia'], 'UTF-8' )  );
+        $fila->setCellValueByColumnAndRow( 9, $row, mb_convert_encoding( $unParticipante['user_localidad'], 'UTF-8' ));
+        $fila->setCellValueByColumnAndRow( 10,$row, mb_convert_encoding( $unParticipante['user_email'], 'UTF-8' ));
             
         $j= 11;
         $respuestas= $datos['respuestas'];
@@ -77,14 +81,11 @@
         $url_descarga= "";
         foreach( $respuestas as  $dato2 ) {
                 if($dato2['pregunta_tipo'] ==3){
-                    /// ../../../eventos/formularios/archivos/ 
-                    $url_archivo = str_replace("../../../", "", $dato2['respuesta_user']);
-                    $url_descarga= "http://".$_SERVER['SERVER_NAME'].'/'.$url_archivo;
+                   $url_descarga = Url::base('') . $dato2['respuesta_user'];
 
-                    $fila->setCellValueByColumnAndRow($j, $row, str_replace(' ','',$url_descarga) );
-                    // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
+                    $fila->setCellValueByColumnAndRow($j, $row, $url_descarga );
                 }else{
-                    $fila->setCellValueByColumnAndRow($j, $row, $dato2['respuesta_user']);
+                    $fila->setCellValueByColumnAndRow($j, $row, mb_convert_encoding( Html::encode($dato2['respuesta_user']), 'UTF-8' ));
                 }
      
             $j++;
@@ -97,8 +98,8 @@
     if($extension== 'csv'){          
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($template);
         $writer->setDelimiter(';');
-        $writer->setEnclosure('');
-        $writer->setSheetIndex(0);
+     // $writer->setEnclosure('');
+     // $writer->setSheetIndex(0);
         $nombreDelLibro= $nombreDelLibro.'.csv';
      } 
 
