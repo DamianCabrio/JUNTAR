@@ -426,9 +426,10 @@ class EventoController extends Controller
                             $modeloRespuesta = new RespuestaLarga();
                             $modeloRespuesta->respuesta = $model->respuesta[$i];
                         }else{
+                          
                             $modeloRespuesta = new RespuestaFile();
                             $modeloRespuesta->file = UploadedFile::getInstance($model, "file[$i]");
-                            $modeloRespuesta->respuesta = Url::base('')."/eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
+                            $modeloRespuesta->respuesta = "/eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
                             $saved = $modeloRespuesta->upload();
                         }
 

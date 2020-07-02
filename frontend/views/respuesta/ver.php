@@ -36,7 +36,7 @@ $this->title = "Respuestas";
             <?php if(!$tieneRespuesta): ?>
             <p><?= $respuestaAPregunta ?></p>
             <?php else: ?>
-                <?= Html::a("Descargar", $respuestaAPregunta, ["download" => true]); ?>
+                <?= Html::a("Descargar", Url::base('').$respuestaAPregunta, ["download" => true]); ?>
             <?php endif; ?>
         <?php endif; ?>
         <br><br>
