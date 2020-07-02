@@ -56,6 +56,7 @@ $this->title = "Cargar Expositor";
                                 <?= Html::activeHiddenInput($model, 'idExpositor', ['id' => 'inputIdExpositor']) . '<br>' ?>
                                 <div class="form-group">
                                     <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+                                    <?= Html::a('Cancelar', ['eventos/ver-evento/'.$objetoEvento->nombreCortoEvento], ['class' => 'btn btn-primary']); ?>
                                 </div>
                                 <?php ActiveForm::end(); ?>
                             </div>
