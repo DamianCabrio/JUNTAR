@@ -7,6 +7,8 @@
     use PhpOffice\PhpSpreadsheet\Cell\DataType;
     use PhpOffice\PhpSpreadsheet\Style\Alignment;
     use PhpOffice\PhpSpreadsheet\Style\Border;
+    use yii\helpers\Url;
+
 
 
 
@@ -77,12 +79,9 @@
         $url_descarga= "";
         foreach( $respuestas as  $dato2 ) {
                 if($dato2['pregunta_tipo'] ==3){
-                    /// ../../../eventos/formularios/archivos/ 
-                    $url_archivo = str_replace("../../../", "", $dato2['respuesta_user']);
-                    $url_descarga= "http://".$_SERVER['SERVER_NAME'].'/'.$url_archivo;
+                   $url_descarga = Url::base('') . $dato2['respuesta_user'];
 
-                    $fila->setCellValueByColumnAndRow($j, $row, str_replace(' ','',$url_descarga) );
-                    // ej:  http://juntar.test/eventos/formularios/archivos/Captura.png
+                    $fila->setCellValueByColumnAndRow($j, $row, $url_descarga );
                 }else{
                     $fila->setCellValueByColumnAndRow($j, $row, $dato2['respuesta_user']);
                 }
