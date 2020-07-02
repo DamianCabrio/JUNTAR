@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<li>Kevin Espinoza</li>
 		</ul>
 		<p><b>Programación Web Avanzada - 2020</b></p>
-		<p>Plantel Docente</p>
+		<p>Equipo de Catedra</p>
 		<ul>
 			<li>Natalia Baeza</li>
 			<li>Valeria Zoratto</li>
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 
 </div>
-    <!-- 冠状病毒团伙 !-->
+    <!-- 用大量的工作和爱创造的页面 !-->
 	<!-- 素晴らしいチーム、これは10/10です !-->
 	<!-- Von hier zu den Sternen ★★★★★ -->
 
