@@ -292,7 +292,7 @@ class EventoController extends Controller
         $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
 
         $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
-        $model->avalado = 0; // Flag - Por defecto
+//        $model->avalado = 0; // Flag - Por defecto
         $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
