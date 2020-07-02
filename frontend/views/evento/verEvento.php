@@ -231,50 +231,46 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         </div>
                                     </div>
                                 </div>
-
-                            <?php
-                            }
-                            ?>
-                            <!-- Solicitar Aval-->
-                            <?php if ($estadoAval == 'no solicitado') : ?>
-                                <div class="btn-group" role="group" aria-label="Fifth group">
-                                    <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'id' => $evento->idEvento], ['class' => 'btn btn_publish d-flex align-items-center']) ?>
-                                </div>
-
-                            <?php else : ?>
-                                <?php if ($estadoAval->avalado != '0' && $estadoAval->avalado != '1') : ?>
-                                    <div class="btn-group" role="group" aria-label="Sixth group">
-                                        <button type="button" class="btn float-right disabled" data-toggle="modal" data-target="#aval-solicitado">Solicitar aval</button>
+                                <!-- Solicitar Aval-->
+                                <?php if ($estadoAval == 'no solicitado') : ?>
+                                    <div class="btn-group" role="group" aria-label="Fifth group">
+                                        <?= Html::a('Solicitar Aval', ['evento/enviar-solicitud-evento', 'id' => $evento->idEvento], ['class' => 'btn btn_publish d-flex align-items-center']) ?>
                                     </div>
 
-                                    <!-- modal aval-->
-                                    <div class="modal fade" id="aval-solicitado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Usted ya ha solicitado el aval el día <?= Yii::$app->formatter->asDatetime($estadoAval->fechaSolicitud, 'dd/MM/yyyy') ?></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p class="text-">Un representante de la Facultad de Informática está evaluando su evento.</p>
-                                                    <p></p>
-                                                    <hr>
-                                                    <span class="float-right font-weight-bold">Juntar</span>
+                                <?php else : ?>
+                                    <?php if ($estadoAval->avalado != '0' && $estadoAval->avalado != '1') : ?>
+                                        <div class="btn-group" role="group" aria-label="Sixth group">
+                                            <button type="button" class="btn float-right disabled" data-toggle="modal" data-target="#aval-solicitado">Solicitar aval</button>
+                                        </div>
+
+                                        <!-- modal aval-->
+                                        <div class="modal fade" id="aval-solicitado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Usted ya ha solicitado el aval el día <?= Yii::$app->formatter->asDatetime($estadoAval->fechaSolicitud, 'dd/MM/yyyy') ?></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="text-">Un representante de la Facultad de Informática está evaluando su evento.</p>
+                                                        <p></p>
+                                                        <hr>
+                                                        <span class="float-right font-weight-bold">Juntar</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
                                 <?php endif; ?>
-                            <?php endif; ?>
-                            <?php if ($estadoAval != 'no solicitado' && $estadoAval->avalado == '0') : ?>
-                                <div class="btn-group" role="group" aria-label="Seventh group">
-                                <button class="btn float-right disabled"><b>Solicitud de Aval Rechazado</b></button>
-                                </div>
-                                
-                            <?php endif; ?>
-                        </div>
+                                <?php if ($estadoAval != 'no solicitado' && $estadoAval->avalado == '0') : ?>
+                                    <div class="btn-group" role="group" aria-label="Seventh group">
+                                        <button class="btn float-right disabled"><b>Solicitud de Aval Rechazado</b></button>
+                                    </div>
+
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php
                     } elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para mostrar a los user invitados
