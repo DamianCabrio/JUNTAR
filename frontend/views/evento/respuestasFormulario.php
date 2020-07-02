@@ -37,10 +37,10 @@ $this->title = "Respuesta a el formulario";
                             'value' => function ($dataProvider) use ($hayPreguntas, $evento) {
                                 if ($hayPreguntas) {
                                     $return = Html::a("Ver respuestas", Url::toRoute("respuesta/ver/" . $evento->nombreCortoEvento . "/" . $dataProvider->idInscripcion), ["class" => "verRespuesta ml-2 btn btn-outline-success mb-2"]);
-                                    $return .= Html::a("Inscribir A Evento", Url::toRoute("inscripcion/inscribir-a-usuario/". $evento->nombreCortoEvento . "/" . $dataProvider->idUsuario), ['class' => 'ml-2 btn btn-outline-success mb-2']);
                                 } else {
-                                    $return = "No hay preguntas que responder en el evento";
+                                    $return = "No hay preguntas para responder en el evento";
                                 }
+                                    $return .= Html::a("Inscribir A Evento", Url::toRoute("inscripcion/inscribir-a-usuario/". $evento->nombreCortoEvento . "/" . $dataProvider->idUsuario), ['class' => 'ml-2 btn btn-outline-success mb-2']);
                                 return $return;
                             },
                             'headerOptions' => ['style' => 'width:65%;text-align:center;', 'class' => 'text-center'],

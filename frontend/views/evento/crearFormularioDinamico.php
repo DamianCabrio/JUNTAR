@@ -9,8 +9,12 @@ $this->title = "Crear Formulario";
 
 <div class="formulario-dinamico container">
 
+    <?php if($evento->idEstadoEvento != 1): ?>
         <?= Html::a("Agregar Pregunta", Url::toRoute(["eventos/crear-pregunta/" . $evento->nombreCortoEvento]),
             ['class' => 'btn btn-primary agregarPregunta mb-4', "data-id" => Url::toRoute(["eventos/crear-pregunta/" . $evento->nombreCortoEvento])]) ?>
+    <?php else: ?>
+        <h3>Los formularios no podran ser modificados una vez se publique el evento</h3>
+    <?php endif; ?>
 
         <?=
         \yii\grid\GridView::widget([
@@ -55,12 +59,18 @@ $this->title = "Crear Formulario";
                     },
                     //describe los botones de accion
                     'buttons' => [
-                        'update' => function ($url, $model) {
+                        'update' => function ($url, $model) use ($evento) {
+                            if ($evento->idEstadoEvento != 1):
 //                                                    return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn editarPresentacion']);
                             return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPregunta']);
+                            endif;
+                            return "No disponible";
                         },
-                        'delete' => function ($url, $model) {
+                        'delete' => function ($url, $model) use ($evento) {
+                            if ($evento->idEstadoEvento != 1):
                             return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta',  'data-method' => 'POST']);
+                            endif;
+                            return "No disponible";
                         }
                     ],
                     'header' => 'Acciones',
