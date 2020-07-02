@@ -225,6 +225,22 @@ CREATE TABLE `usuario_rol` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `solicitud_aval`
+--
+
+CREATE TABLE `solicitud_aval` (
+  `idSolicitudAval` bigint(20) NOT NULL,
+  `idEvento` bigint(20) NOT NULL,
+  `fechaSolicitud` datetime NOT NULL,
+  `tokenSolicitud` varchar(200) NOT NULL,
+  `fechaRevision` datetime DEFAULT NULL,
+  `avalado` tinyint(1) DEFAULT NULL,
+  `validador` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `pregunta`
 --
 
@@ -366,6 +382,14 @@ ALTER TABLE `respuesta`
   ADD KEY `idpregunta` (`idpregunta`),
   ADD KEY `idinscripcion` (`idinscripcion`);
 
+--
+-- Indices de la tabla `solicitud_aval`
+--
+ALTER TABLE `solicitud_aval`
+  ADD PRIMARY KEY (`idSolicitudAval`) USING BTREE,
+  ADD UNIQUE KEY `idEvento` (`idEvento`) USING BTREE,
+  ADD KEY `validador` (`validador`) USING BTREE;
+
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -426,6 +450,12 @@ ALTER TABLE `pregunta`
 --
 ALTER TABLE `respuesta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `solicitud_aval`
+--
+ALTER TABLE `solicitud_aval`
+  MODIFY `idSolicitudAval` bigint(20) NOT NULL AUTO_INCREMENT;
 
 
 -- #######################################################################################################################
@@ -502,6 +532,12 @@ ALTER TABLE `respuesta`
   ADD CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`idpregunta`) REFERENCES `pregunta` (`id`),
   ADD CONSTRAINT `respuesta_ibfk_2` FOREIGN KEY (`idinscripcion`) REFERENCES `inscripcion` (`idInscripcion`);
 
+--
+-- Filtros para la tabla `solicitud_aval`
+--
+ALTER TABLE `solicitud_aval`
+  ADD CONSTRAINT `solicitud_aval_ibfk_1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`),
+  ADD CONSTRAINT `solicitud_aval_ibfk_2` FOREIGN KEY (`validador`) REFERENCES `usuario` (`idUsuario`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 -- #######################################################################################################################
 -- #######################################################################################################################

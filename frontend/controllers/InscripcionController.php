@@ -82,11 +82,12 @@ class InscripcionController extends Controller
         }
     }
 
-    public function actionAnularInscripcion($idUsuario, $idEvento){
-        $esDueño = $this->verificarDueño($idEvento);
+    public function actionAnularInscripcion($id, $slug){
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        $esDueño = $this->verificarDueño($evento->idEvento);
 
-        if($esDueño){
-            $inscripcion = Inscripcion::find()->where(["idEvento" => $idEvento, "idUsuario" => $idUsuario])->one();
+        if($esDueño) {
+            $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => $id])->one();
             $inscripcion->estado = 0;
             $inscripcion->save();
 
@@ -96,12 +97,12 @@ class InscripcionController extends Controller
         }
     }
 
-    public function actionInscribirAUsuario($idUsuario, $idEvento){
-
-        $esDueño = $this->verificarDueño($idEvento);
+    public function actionInscribirAUsuario($slug,$id){
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        $esDueño = $this->verificarDueño($evento->idEvento);
 
         if($esDueño) {
-            $inscripcion = Inscripcion::find()->where(["idEvento" => $idEvento, "idUsuario" => $idUsuario])->one();
+            $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => $id])->one();
             $inscripcion->estado = 1;
             $inscripcion->save();
             return $this->redirect(Yii::$app->request->referrer);

@@ -8,9 +8,9 @@ $this->title = 'Sobre Nosotros';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about container">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p><br>Equipo de desarrollo </p>
+	<h1><?= Html::encode($this->title) ?></h1>
+	<div class="section_padding">
+		<p><b>Equipo de desarrollo</b> </p>
 		<ul>
 			<li>Damian Cabrio</li>
 			<li>Felipe Bastidas</li>
@@ -23,5 +23,17 @@ $this->params['breadcrumbs'][] = $this->title;
 			<li>Maximiliano Bajamon</li>
 			<li>Kevin Espinoza</li>
 		</ul>
-	<p class="text-white">素晴らしいチーム、これは10/10です</p>
+		<p><b>Programación Web Avanzada - 2020</b></p>
+		<p>Plantel Docente</p>
+		<ul>
+			<li>Natalia Baeza</li>
+			<li>Valeria Zoratto</li>
+		</ul>
+		<p><b><a class="link" href="https://github.com/DamianCabrio/JUNTAR" target="_blank">Link a repositorio Juntar</a></b></p>
+	</div>
+
 </div>
+    <!-- 冠状病毒团伙 !-->
+	<!-- 素晴らしいチーム、これは10/10です !-->
+	<!-- Von hier zu den Sternen ★★★★★ -->
+

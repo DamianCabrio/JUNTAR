@@ -53,7 +53,7 @@ use dosamigos\ckeditor\CKEditor;
                     <input id="fechaIniEvento" type="hidden" value="<?= $evento->fechaInicioEvento ?>">
                     <input id="fechaFinEvento" type="hidden" value="<?= $evento->fechaFinEvento ?>">
 
-                    <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha *') ?>
+                    <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha de presentación *') ?>
                     <div id="invalidFecha" class="invalid-feedback">
                     </div>
 

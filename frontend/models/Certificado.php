@@ -12,6 +12,19 @@ class Certificado extends Model
     public $presentations;
     public $inscription;
 
+    public function setEvent($newEvent)
+    {
+      $this->event = $newEvent;
+    }
+    public function setPresentations($newPresentations)
+    {
+      $this->presentations = $newPresentations;
+    }
+    public function setInscription($newInscription)
+    {
+      $this->inscription = $newInscription;
+    }
+
     public function verifyOrganizer($id)
     {
 
@@ -23,7 +36,7 @@ class Certificado extends Model
         return false;
       }
     }
-	
+
 	public function verifyAccreditation()
     {
 

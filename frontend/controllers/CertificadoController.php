@@ -120,9 +120,9 @@ class CertificadoController extends Controller
         ->all();
 
       $certificate = New Certificado();
-      $certificate->event = $event;
-      $certificate->presentations = $presentation;
-      $certificate->inscription = $inscription;
+      $certificate->setEvent($event);
+      $certificate->setPresentations($presentation);
+      $certificate->setInscription($inscription);
 
       return $certificate;
     }
@@ -138,7 +138,7 @@ class CertificadoController extends Controller
       $userData = Usuario::findOne(Yii::$app->user->identity->id);
       $eventData = $certificate->event;
 
-      if ($eventData[0]->avalado == 1) {
+      if ($eventData[0]->solicitudAval['avalado'] == 1) {
         $footer = 'Facultad de Informática - UNComa';
         $isOficial = true;
       } else {

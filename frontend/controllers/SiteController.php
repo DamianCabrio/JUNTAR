@@ -104,21 +104,22 @@ class SiteController extends Controller {
         $orden = $request->get("orden", "");
 
         if ($orden != "") {
-            $ordenSQL = $orden == "0" ? "fechaCreacionEvento DESC" : "fechaInicioEvento DESC";
+            $ordenSQL = $orden == "0" ? "fechaInicioEvento DESC" : "fechaCreacionEvento DESC";
         } else {
-            $ordenSQL = "fechaCreacionEvento DESC";
+            $ordenSQL = "fechaInicioEvento DESC";
         }
 
         if ($busqueda != "") {
             $eventos = Evento::find()
-                    ->innerJoin('usuario', 'usuario.idUsuario=evento.idUsuario')
-                    ->orderBy($ordenSQL)
-                    ->where(["idEstadoEvento" => 1])
-                    ->andwhere(["like", "nombre", $busqueda])
-                    ->orwhere(["like", "apellido", $busqueda])
-                    ->orWhere(["like", "nombreEvento", $busqueda]);
+                ->innerJoin('usuario', 'usuario.idUsuario=evento.idUsuario')
+                ->orderBy($ordenSQL)
+                ->where(["idEstadoEvento" => 1])
+                ->orwhere(["idEstadoEvento" => 3])
+                ->andwhere(["like", "nombre", $busqueda])
+                ->andwhere(["like", "apellido", $busqueda])
+                ->andwhere(["like", "nombreEvento", $busqueda]);
         } else {
-            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1]);
+            $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1])->orwhere(["idEstadoEvento" => 3]);
         }
 
         //Paginación para 6 eventos por pagina
@@ -132,18 +133,6 @@ class SiteController extends Controller {
 
 
         return $this->render('index', ["eventos" => $models, 'pages' => $pages,]);
-    }
-
-    /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
-    public function actionProfile() {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        return $this->render('profile');
     }
 
     /**

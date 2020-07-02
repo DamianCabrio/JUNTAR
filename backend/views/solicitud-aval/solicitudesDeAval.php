@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card">
                 <h1 class="card-header text-center darkish_bg text-white"><?= Html::encode($this->title) ?></h1>
                 <!--<div class="row justify-content-center m-3">-->
-                <div class="d-flex justify-content-center m-3">
+                <div class="row d-flex justify-content-center m-3">
                     <div class="card text-center p-0 col-md-4 col-sm-12 border-0">
                         <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto" href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'selected' => 'activas'])) ?>">
                             <h5 class="card-header <?php echo $fondoClassActivas; ?>">
@@ -97,14 +97,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'attribute' => 'avalado',
                                     'label' => 'Aval FAI',
                                     'value' => function ($dataProvider) {
-                                        return ($dataProvider->avalado == 0 ? 'Denegado' : 'Concedido');
+                                        if ($dataProvider->avalado === 0) {
+                                            return "Denegado";
+                                        } else if ($dataProvider->avalado === 1) {
+                                            return "Concedido";
+                                        } else {
+                                            return "Pendiente";
+                                        }
                                     },
                                 ],
                                 [
                                     'attribute' => 'validador',
                                     'label' => 'Revisado por',
                                     'value' => function ($dataProvider) {
-                                        return ($dataProvider->validador0->nombre . ' ' . $dataProvider->validador0->apellido);
+                                        if ($dataProvider->validador0 != null && $dataProvider->validador0 != '') {
+                                            return ($dataProvider->validador0->nombre . ' ' . $dataProvider->validador0->apellido);
+                                        } else {
+                                            return "-";
+                                        }
                                     },
                                 ],
                                 ['class' => 'yii\grid\ActionColumn',
@@ -115,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             ['class' => 'btn btn-pink']);
                                         },
                                     ],
-                                                'header' => 'Accion',
+                                    'header' => 'Accion',
                                 ],
                             ],
                         ]);
