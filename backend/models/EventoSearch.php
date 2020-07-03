@@ -9,24 +9,25 @@ use backend\models\Evento;
 /**
  * EventoSearch represents the model behind the search form of `backend\models\Evento`.
  */
-class EventoSearch extends Evento
-{
+class EventoSearch extends Evento {
+
+    public $nombreUsuario;
+
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['idEvento', 'idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
-            [['nombreEvento', 'nombreCortoEvento', 'descripcionEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'imgFlyer', 'imgLogo', 'fechaLimiteInscripcion', 'codigoAcreditacion', 'fechaCreacionEvento'], 'safe'],
+//            [['idEvento', 'idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
+            [['nombreEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'fechaCreacionEvento'], 'safe'],
+            [['nombreUsuario'], 'safe'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,47 +39,86 @@ class EventoSearch extends Evento
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Evento::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
-        $this->load($params);
+        $dataProvider->setSort([
+            'attributes' => [
+                'nombreEvento',
+                'nombreCortoEvento',
+                'lugar',
+                'fechaCreacionEvento',
+                'fechaInicioEvento',
+                'fechaFinEvento',
+                'capacidad',
+                'avalado',
+                'preInscripcion',
+                'nombreUsuario' => [
+                    'asc' => ['usuario.nombre' => SORT_ASC],
+                    'desc' => ['usuario.nombre' => SORT_DESC],
+                ],
+            ]
+        ]);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
+            /**
+             * The following line will allow eager loading with country data 
+             * to enable sorting by country on initial loading of the grid.
+             */
+//            $query->where('0=1');
             return $dataProvider;
         }
+        if ($this->nombreUsuario != null && $this->nombreUsuario != '') {
+            $query->joinWith(['idUsuario0']);
+        }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'idEvento' => $this->idEvento,
-            'idUsuario' => $this->idUsuario,
-            'idCategoriaEvento' => $this->idCategoriaEvento,
-            'idEstadoEvento' => $this->idEstadoEvento,
-            'idModalidadEvento' => $this->idModalidadEvento,
-            'fechaInicioEvento' => $this->fechaInicioEvento,
-            'fechaFinEvento' => $this->fechaFinEvento,
-            'capacidad' => $this->capacidad,
-            'preInscripcion' => $this->preInscripcion,
-            'fechaLimiteInscripcion' => $this->fechaLimiteInscripcion,
-            'fechaCreacionEvento' => $this->fechaCreacionEvento,
-        ]);
+        $query->joinWith(['idAval0']);
 
-        $query->andFilterWhere(['like', 'nombreEvento', $this->nombreEvento])
-            ->andFilterWhere(['like', 'nombreCortoEvento', $this->nombreCortoEvento])
-            ->andFilterWhere(['like', 'descripcionEvento', $this->descripcionEvento])
-            ->andFilterWhere(['like', 'lugar', $this->lugar])
-            ->andFilterWhere(['like', 'imgFlyer', $this->imgFlyer])
-            ->andFilterWhere(['like', 'imgLogo', $this->imgLogo])
-            ->andFilterWhere(['like', 'codigoAcreditacion', $this->codigoAcreditacion]);
+        //busca capacidad evento
+        if ($this->capacidad != null && $this->capacidad != '') {
+            $query->andFilterWhere([
+                'capacidad' => $this->capacidad,
+            ]);
+        }
+        //busca fecha inicio evento
+        if ($this->fechaInicioEvento != null && $this->fechaInicioEvento != '') {
+            $query->andFilterWhere([
+                'fechaInicioEvento' => date("Y-m-d", strtotime($this->fechaInicioEvento)),
+            ]);
+        }
+        //busca fecha fin evento
+        if ($this->fechaFinEvento != null && $this->fechaFinEvento != '') {
+            $query->andFilterWhere([
+                'fechaFinEvento' => date("Y-m-d", strtotime($this->fechaFinEvento)),
+            ]);
+        }
+        //busca fecha creacion evento
+        if ($this->fechaCreacionEvento != null && $this->fechaCreacionEvento != '') {
+            $query->andFilterWhere([
+                'fechaCreacionEvento' => date("Y-m-d", strtotime($this->fechaCreacionEvento)),
+            ]);
+        }
+        //busca nombre evento
+        if ($this->nombreEvento != null && $this->nombreEvento != '') {
+            $query->andFilterWhere(['like', 'nombreEvento', $this->nombreEvento]);
+        }
+        //busca lugar evento
+        if ($this->lugar != null && $this->lugar != '') {
+            $query->andFilterWhere(['like', 'lugar', $this->lugar]);
+        }
+        //busca nombre organizador
+        if ($this->nombreUsuario != null && $this->nombreUsuario != '') {
+            $query->andFilterWhere(['like', 'usuario.nombre', $this->nombreUsuario]);
+        }
 
         return $dataProvider;
     }
+
 }
