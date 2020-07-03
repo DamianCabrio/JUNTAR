@@ -132,38 +132,38 @@ class RolController extends Controller {
      *
      * @return string
      */
-    public function actionRemoveRol() {
-        $model = new Rol();
-        if (Yii::$app->request->get('name') != null) {
-            $nombreRol = Yii::$app->request->get('name');
-            $model = $this->findModel($nombreRol);
-        }
-//        $model = $this->findModel($name);
-
-        //verifica si fue enviada informacion por POST
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //consideramos como resultado el peor de los casos
-            $result = false;
-            //comprobamos si existe el permiso
-            if (yii::$app->authManager->getRole($model->name) != null) {
-                //si existe obtenemos el resultado de remover el registro del permiso
-                $result = yii::$app->authManager->remove($model->name);
-            }
-            //generamos un mensaje en base al resultado
-            if ($result) {
-                Yii::$app->session->setFlash('success', '<p> Se eliminó el rol <strong>' . $model->name . '</strong> </p>');
-                return $this->redirect(['remove-rol']);
-            } else {
-                Yii::$app->session->setFlash('error', '<p> No es posible eliminar el rol <strong>' . $model->name . '</strong> </p>');
-            }
-        }
-
-        $roles = ArrayHelper::map(Yii::$app->AuthManager->getRoles(), 'name', 'name');
-        return $this->render('removeRol', [
-                    'model' => $model,
-                    'item' => $roles,
-        ]);
-    }
+//    public function actionRemoveRol() {
+//        $model = new Rol();
+//        if (Yii::$app->request->get('name') != null) {
+//            $nombreRol = Yii::$app->request->get('name');
+//            $model = $this->findModel($nombreRol);
+//        }
+////        $model = $this->findModel($name);
+//
+//        //verifica si fue enviada informacion por POST
+//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            //consideramos como resultado el peor de los casos
+//            $result = false;
+//            //comprobamos si existe el permiso
+//            if (yii::$app->authManager->getRole($model->name) != null) {
+//                //si existe obtenemos el resultado de remover el registro del permiso
+//                $result = yii::$app->authManager->remove($model->name);
+//            }
+//            //generamos un mensaje en base al resultado
+//            if ($result) {
+//                Yii::$app->session->setFlash('success', '<p> Se eliminó el rol <strong>' . $model->name . '</strong> </p>');
+//                return $this->redirect(['remove-rol']);
+//            } else {
+//                Yii::$app->session->setFlash('error', '<p> No es posible eliminar el rol <strong>' . $model->name . '</strong> </p>');
+//            }
+//        }
+//
+//        $roles = ArrayHelper::map(Yii::$app->AuthManager->getRoles(), 'name', 'name');
+//        return $this->render('removeRol', [
+//                    'model' => $model,
+//                    'item' => $roles,
+//        ]);
+//    }
 
     /**
      * Finds the Permiso model based on its primary key value.

@@ -51,23 +51,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                         if ($action == "view") {
                                             return Url::to(['/rol/ver-rol', 'name' => $key]);
                                         }
-                                        if ($action == "delete") {
-                                            return Url::to(['/rol/remove-rol', 'name' => $key]);
-                                        }
+//                                        if ($action == "delete") {
+//                                            return Url::to(['/rol/remove-rol', 'name' => $key]);
+//                                        }
                                     },
                                     'buttons' => [
                                         'view' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        'delete' => function ($url, $model) {
-                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, [
-                                                        'class' => 'btn btn-pink',
-                                                        'data' => [
-                                                            'confirm' => '¿Está seguro de querer eliminar este Rol?',
-                                                            'method' => 'post',
-                                                        ],
-                                            ]);
-                                        },
+//                                        'delete' => function ($url, $model) {
+//                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, [
+//                                                        'class' => 'btn btn-pink',
+//                                                        'data' => [
+//                                                            'confirm' => '¿Está seguro de querer eliminar este Rol?',
+//                                                            'method' => 'post',
+//                                                        ],
+//                                            ]);
+//                                        },
                                     ],
                                     'header' => 'Acciones',
                                 ],
