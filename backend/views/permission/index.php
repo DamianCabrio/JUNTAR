@@ -46,13 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return date("Y-m-d H:i:s", $dataProvider->created_at);
                                     },
                                 ],
-//                                [
-//                                    'attribute' => 'updated_at',
-//                                    'label' => 'Fecha Updated',
-//                                    'value' => function ($dataProvider) {
-//                                        return date("Y-m-d H:i:s", $dataProvider->updated_at);
-//                                    },
-//                                ],
                                 [
                                     'class' => 'yii\grid\ActionColumn',
                                     'urlCreator' => function ($action, $model, $key, $index) {
