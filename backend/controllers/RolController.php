@@ -73,13 +73,7 @@ class RolController extends Controller {
     public function actionIndex() {
         $searchModel = new RolSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find()->where(['type' => 1]),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-//            'sort' => ['attributes' => ['name']]
-        ]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
@@ -179,7 +173,7 @@ class RolController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = Rol::findOne($id)) !== null) {
+        if (($model = Rol::findOne(['name' => $id, 'type' => 1])) !== null) {
             return $model;
         }
 

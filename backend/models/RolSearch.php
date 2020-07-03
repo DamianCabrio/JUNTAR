@@ -17,8 +17,8 @@ class RolSearch extends Permiso
     public function rules()
     {
         return [
-            [['name', 'description', 'rule_name', 'data'], 'safe'],
-            [['type', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'description'], 'safe'],
+//            [['type', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -46,27 +46,24 @@ class RolSearch extends Permiso
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'type' => $this->type,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'rule_name', $this->rule_name])
-            ->andFilterWhere(['like', 'data', $this->data]);
+        
+        //busca nombre rol
+        if ($this->name != null && $this->name != '') {
+            $query->andFilterWhere(['like', 'name', $this->name]);
+        }
+        
+        //busca descripcion rol
+        if ($this->description != null && $this->description != '') {
+            $query->andFilterWhere(['like', 'description', $this->description]);
+        }
 
         return $dataProvider;
     }
