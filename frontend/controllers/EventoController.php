@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\models\SolicitudAval;
 use Da\QrCode\QrCode;
-use frontend\components\validateEmail;
 use frontend\models\CategoriaEvento;
 use frontend\models\Evento;
 use frontend\models\FormularioForm;
@@ -12,18 +12,17 @@ use frontend\models\InscripcionSearch;
 use frontend\models\ModalidadEvento;
 use frontend\models\Pregunta;
 use frontend\models\PreguntaSearch;
-use frontend\models\RespuestaCorta;
-use frontend\models\RespuestaFile;
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use frontend\models\PresentacionSearch;
+use frontend\models\RespuestaCorta;
+use frontend\models\RespuestaFile;
 use frontend\models\RespuestaLarga;
 use frontend\models\RespuestaSearch;
 use frontend\models\RespuestaTest;
+use frontend\models\UploadFormFlyer;
+use frontend\models\UploadFormLogo;
 use frontend\models\Usuario;
-use common\models\SolicitudAval;
-use frontend\models\UploadFormLogo;     //Para contener la instacion de la imagen logo
-use frontend\models\UploadFormFlyer;    //Para contener la instacion de la imagen flyer
 use UI\Controls\Label;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -33,6 +32,9 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+
+//Para contener la instacion de la imagen logo
+//Para contener la instacion de la imagen flyer
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -418,31 +420,31 @@ class EventoController extends Controller
 
             $model = new RespuestaTest();
             if ($model->load(Yii::$app->request->post())){
-                    foreach ($respuestaYaHechas as $i => $respuestaYaHecha){
-                        if($preguntas[$i]->tipo == 1){
-                            $modeloRespuesta = new RespuestaCorta();
-                            $modeloRespuesta->respuesta = $model->respuestaCorta[$i];
-                        }else if($preguntas[$i]->tipo == 2){
-                            $modeloRespuesta = new RespuestaLarga();
-                            $modeloRespuesta->respuesta = $model->respuesta[$i];
-                        }else{
-                          
-                            $modeloRespuesta = new RespuestaFile();
-                            $modeloRespuesta->file = UploadedFile::getInstance($model, "file[$i]");
-                            $modeloRespuesta->respuesta = "/eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
-                            $saved = $modeloRespuesta->upload();
-                        }
+                    foreach ($respuestaYaHechas as $i => $respuestaYaHecha) {
+                        if ($respuestaYaHecha == false) {
+                            if ($preguntas[$i]->tipo == 1) {
+                                $modeloRespuesta = new RespuestaCorta();
+                                $modeloRespuesta->respuesta = $model->respuestaCorta[$i];
+                            } else if ($preguntas[$i]->tipo == 2) {
+                                $modeloRespuesta = new RespuestaLarga();
+                                $modeloRespuesta->respuesta = $model->respuesta[$i];
+                            } else if ($preguntas[$i]->tipo == 3) {
+                                $modeloRespuesta = new RespuestaFile();
+                                $modeloRespuesta->file = UploadedFile::getInstance($model, "file[$i]");
+                                $modeloRespuesta->respuesta = "/eventos/formularios/archivos/" . $modeloRespuesta->file->baseName . '.' . $modeloRespuesta->file->extension;
+                                $modeloRespuesta->upload();
+                            }
+                            $modeloRespuesta->idinscripcion = $inscripcion->idInscripcion;
+                            $modeloRespuesta->idpregunta = $preguntas[$i]->id;
 
-                        $modeloRespuesta->idinscripcion = $inscripcion->idInscripcion;
-                        $modeloRespuesta->idpregunta = $preguntas[$i]->id;
-
-                        if($preguntas[$i]->tipo == 3){
-                            $modeloRespuesta->save(false);
-                        }else{
-                            if($modeloRespuesta->validate()){
-                                $modeloRespuesta->save();
-                            }else{
-                                return "Errores:" . print_r($modeloRespuesta->errors);
+                            if ($preguntas[$i]->tipo == 3) {
+                                $modeloRespuesta->save(false);
+                            } else {
+                                if ($modeloRespuesta->validate()) {
+                                    $modeloRespuesta->save();
+                                } else {
+                                    return "Errores:" . print_r($modeloRespuesta->errors);
+                                }
                             }
                         }
                 }

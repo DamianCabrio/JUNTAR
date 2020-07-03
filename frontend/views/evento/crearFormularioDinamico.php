@@ -70,7 +70,7 @@ $this->title = "Crear Formulario";
                             if ($evento->idEstadoEvento != 1):
                             return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta',  'data-method' => 'POST']);
                             endif;
-                            return "No disponible";
+                            return "";
                         }
                     ],
                     'header' => 'Acciones',
