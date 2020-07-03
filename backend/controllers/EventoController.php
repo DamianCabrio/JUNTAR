@@ -8,9 +8,7 @@ use backend\models\EventoSearch;
 use common\models\SolicitudAval;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -63,11 +61,9 @@ class EventoController extends Controller {
     public function actionIndex() {
         $searchModel = new EventoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//        $aval = SolicitudAval::findOne(['idEvento' => $id]);
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-//                    'aval' => $aval,
         ]);
     }
 

@@ -56,12 +56,7 @@ class UsuarioController extends Controller {
      */
     public function actionIndex() {
         $searchModel = new UsuarioSearch();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find(),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
