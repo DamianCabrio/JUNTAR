@@ -84,9 +84,8 @@ class Evento extends \yii\db\ActiveRecord
             [['idModalidadEvento'], 'exist', 'skipOnError' => true, 'targetClass' => ModalidadEvento::className(), 'targetAttribute' => ['idModalidadEvento' => 'idModalidadEvento']],
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
             ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
-            ['fechaLimiteInscripcion','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'<'],
+            ['fechaLimiteInscripcion','compare','compareAttribute'=>'fechaFinEvento','operator'=>'<='],
             ['nombreCortoEvento','match','pattern'=> "/^[A-Z|a-z|0-9-_]+$/","message" => "El campo contiene caracteres inválidos"],
-           // ['nombreEvento', 'match', 'pattern'=> "/^[A-Z|a-z|0-9- -+]+$/","message" => "El campo contiene caracteres inválidos"],
         ];
     }
 
