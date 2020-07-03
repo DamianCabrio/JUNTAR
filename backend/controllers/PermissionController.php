@@ -69,13 +69,7 @@ class PermissionController extends Controller {
     public function actionIndex() {
         $searchModel = new PermisoSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find()->where(['type' => 2]),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-//            'sort' => ['attributes' => ['name']]
-        ]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

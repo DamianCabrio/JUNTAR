@@ -70,6 +70,7 @@ class EventoSearch extends Evento {
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
+        
         if ($this->nombreUsuario != null && $this->nombreUsuario != '') {
             $query->joinWith(['idUsuario0']);
         }
