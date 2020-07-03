@@ -4,10 +4,9 @@ use dosamigos\ckeditor\CKEditor;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
-
 $this->title = "Crear Email";
 ?>
-<div class="dark_light_bg">
+<div class="dark_light_bg" style="min-height: 100vh;">
     <div class="container padding_section">
         <div class="card shadow">
             <div class="card-header pinkish_bg">
@@ -51,7 +50,6 @@ $this->title = "Crear Email";
                                             ['name' => 'colors'],
                                             ['name' => 'tools'],
                                             ['name' => 'others'],
-
                                         ],
                                         'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
                                         'removePlugins' => 'elementspath',
@@ -72,3 +70,5 @@ $this->title = "Crear Email";
                 </div>
             </div>
         </div>
+    </div>
+</div>
