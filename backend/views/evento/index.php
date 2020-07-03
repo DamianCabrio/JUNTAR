@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card">
                 <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
-                <?php // echo Html::a('Crear Evento', ['create'], ['class' => 'btn btn-pink mt-3 ml-3 col-2']) ?>
+                <?php // echo Html::a('Crear Evento', ['create'], ['class' => 'btn btn-pink mt-3 ml-3 col-2'])   ?>
 
                 <div class="card-body">
                     <div class="table-responsive">
@@ -26,86 +26,61 @@ $this->params['breadcrumbs'][] = $this->title;
                         GridView::widget([
                             'dataProvider' => $dataProvider,
                             'filterModel' => $searchModel,
-                            'options' => ['style' => 'width:100%;'],
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
                                 [
-                                    'attribute' => 'idUsuario',
-                                    'label' => 'Organizador',
-                                    'value' => 'idUsuario0.nombre', //valor referenciado
-                                ],
-//            [
-//                'attribute' => 'idCategoriaEvento',
-//                'label' => 'Categoria',
-//                'value' => 'idCategoriaEvento.descripcionCategoria', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
-//            [
-//                'attribute' => 'idEstadoEvento',
-//                'label' => 'Estado',
-//                'value' => 'idEstadoEvento.descripcionEstado', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
-//            [
-//                'attribute' => 'idModalidadEvento',
-//                'label' => 'Modalidad',
-//                'value' => 'idModalidadEvento0.descripcionModalidad', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
-                                [
                                     'attribute' => 'nombreEvento',
                                     'label' => 'Título',
-                                    'value' => 'nombreEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+                                    'value' => 'nombreEvento',
                                 ],
-//            [
-//                'attribute' => 'nombreCortoEvento',
-//                'label' => 'Slug',
-//                'value' => 'nombreCortoEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
-//            [
-//                'attribute' => 'descripcionEvento',
-//                'label' => 'Descripción',
-//                'value' => 'descripcionEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
+                                [
+                                    'attribute' => 'nombreUsuario',
+                                    'label' => 'Organizador',
+                                    'format' => 'raw',
+                                    'value' => function ($dataProvider) {
+                                        return Html::a($dataProvider->idUsuario0->nombre . ' ' . $dataProvider->idUsuario0->apellido,
+                                                        ['/usuario/view', 'id' => $dataProvider->idUsuario],
+                                                        ['class' => '']);
+                                    }
+                                ],
                                 [
                                     'attribute' => 'lugar',
                                     'label' => 'Lugar',
-                                    'value' => 'lugar', //valor referenciado por ActiveQuery en el metodo idClub0
+                                    'value' => 'lugar',
+                                ],
+                                [
+                                    'attribute' => 'fechaCreacionEvento',
+                                    'label' => 'Fecha Creación',
+                                    'value' => function($dataProvider) {
+                                        if ($dataProvider->fechaCreacionEvento != null && $dataProvider->fechaCreacionEvento != '') {
+                                            return date("d-m-Y", strtotime($dataProvider->fechaCreacionEvento));
+                                        } else {
+                                            return $dataProvider->fechaCreacionEvento;
+                                        }
+                                    }
                                 ],
                                 [
                                     'attribute' => 'fechaInicioEvento',
                                     'label' => 'Fecha Inicio',
-                                    'value' => 'fechaInicioEvento', //valor referenciado por ActiveQuery en el metodo idClub0
-                                ],
-                                [
-                                    'attribute' => 'fechaFinEvento',
-                                    'label' => 'Fecha Finalizacion',
-                                    'value' => 'fechaFinEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+                                    'value' => function($dataProvider) {
+                                        if ($dataProvider->fechaInicioEvento != null && $dataProvider->fechaInicioEvento != '') {
+                                            return date("d-m-Y", strtotime($dataProvider->fechaInicioEvento));
+                                        } else {
+                                            return '';
+                                        }
+                                    }
                                 ],
                                 [
                                     'attribute' => 'capacidad',
                                     'label' => 'Capacidad',
-                                    'value' => 'capacidad', //valor referenciado por ActiveQuery en el metodo idClub0
+                                    'value' => 'capacidad',
                                 ],
                                 [
                                     'attribute' => 'preInscripcion',
                                     'label' => 'Pre-Inscripcion',
                                     'value' => function ($dataProvider) {
-//                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
                                         return ($dataProvider->preInscripcion == 0 ? 'No' : 'Si');
-                                    }, //valor referenciado por ActiveQuery en el metodo idClub0
-                                ],
-//            [
-//                'attribute' => 'fechaLimiteInscripcion',
-//                'label' => 'Fecha Limite Inscripcion',
-//                'value' => 'fechaLimiteInscripcion', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
-//            [
-//                'attribute' => 'codigoAcreditacion',
-//                'label' => 'Código Acreditación',
-//                'value' => 'codigoAcreditacion', //valor referenciado por ActiveQuery en el metodo idClub0
-//            ],
-                                [
-                                    'attribute' => 'fechaCreacionEvento',
-                                    'label' => 'Fecha Creación',
-                                    'value' => 'fechaCreacionEvento', //valor referenciado por ActiveQuery en el metodo idClub0
+                                    },
                                 ],
                                 [
                                     'attribute' => 'avalado',
@@ -116,14 +91,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         } else {
                                             return "No Solicitado";
                                         }
-                                    }, //valor referenciado por ActiveQuery en el metodo idClub0
+                                    },
                                 ],
-                                //'imgLogo',
-                                //'capacidad',
-                                //'preInscripcion',
-                                //'fechaLimiteInscripcion',
-                                //'codigoAcreditacion',
-                                //'fechaCreacionEvento',
                                 ['class' => 'yii\grid\ActionColumn',
                                     'buttons' => [
                                         'view' => function($url, $model) {
@@ -137,9 +106,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                         }
                                     ],
                                     'header' => 'Acciones',
-//                                    'contentOptions' => ['style' => 'border: none; margin-top: 10px;', 'class' => 'd-flex justify-content-center p-0 '],
-//                                    'contentOptions' => ['class' => 'd-block mx-auto'],
                                 ],
+                            ],
+                            'pager' => [
+                                'class' => '\yii\widgets\LinkPager',
+                                // Css for each options. Links
+                                'linkOptions' => ['class' => 'btn btn-light pageLink'],
+                                'disabledPageCssClass' => 'btn disabled',
+                                'options' => ['class' => 'pagination d-flex justify-content-center'],
+                                'prevPageLabel' => 'Anterior',
+                                'nextPageLabel' => 'Siguiente',
+                                //Current Active option value
+                                'activePageCssClass' => 'activePage',
                             ],
                         ]);
                         ?>
