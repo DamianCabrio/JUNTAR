@@ -2,14 +2,15 @@
 
 namespace frontend\models;
 
+use common\models\User;
 use yii;
 use yii\base\Model;
-use common\models\User;
 
 /**
  * Password reset form
  */
-class CambiarPasswordForm extends Model {
+class CambiarPasswordForm extends Model
+{
 
     public $actualPassword;
     public $newPassword;
@@ -17,14 +18,15 @@ class CambiarPasswordForm extends Model {
     public $showpw;
 
     /**
-     * @var \common\models\User
+     * @var User
      */
     private $_user;
 
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             //Reglas password
             ['newPassword', 'required', 'message' => 'Debe ingresar una contraseña'],
@@ -46,7 +48,8 @@ class CambiarPasswordForm extends Model {
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params) {
+    public function validatePassword($attribute, $params)
+    {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->actualPassword)) {
@@ -56,30 +59,32 @@ class CambiarPasswordForm extends Model {
     }
 
     /**
-     * Resets password.
-     *
-     * @return bool if password was reset.
-     */
-    public function cambiarPassword() {
-        $user = $this->_user;
-        $user->setPassword($this->newPassword);
-//        $user->removePasswordResetToken();
-
-        return $user->save(false);
-    }
-
-    /**
      * Finds user by [[email]]
      *
      * @return User|null
      */
-    protected function getUser() {
+    protected function getUser()
+    {
         if ($this->_user === null) {
 //            $this->_user = User::findByUsername($this->username);
             $this->_user = User::findIdentity(Yii::$app->user->identity->idUsuario);
         }
 
         return $this->_user;
+    }
+
+    /**
+     * Resets password.
+     *
+     * @return bool if password was reset.
+     */
+    public function cambiarPassword()
+    {
+        $user = $this->_user;
+        $user->setPassword($this->newPassword);
+//        $user->removePasswordResetToken();
+
+        return $user->save(false);
     }
 
 }

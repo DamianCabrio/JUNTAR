@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $user common\models\User */
 
@@ -22,27 +20,27 @@ $fin = date('d-m-Y', strtotime($evento->fechaFinEvento));
 <body>
 
 
-    <div class="verify-email" style="
+<div class="verify-email" style="
             text-align: center;
             padding-top: 30px;
             padding-bottom: 30px;
             padding-right: 5px;
             padding-left:5px;">
 
-            <!-- <img src="images/juntar-logo/svg/juntar-logo-w.svg" alt="Logo Juntar" height="200px" width="300px"> -->
-             <!-- <img src="<?php //Yii::$app->getAlias('@frontend/web/images/juntar-logo/png/juntar-icon-b.png') ?>" alt="Logo Juntar"> -->
-
-            
-            <p> ¡Gracias por Inscribirse al evento <b><?= $evento->nombreEvento ?></b>!</p>
-            <p> Te recordamos que la fecha de inicio es <?=  $inicio ?> y de finalización  <?= $fin ?></p>
+    <!-- <img src="images/juntar-logo/svg/juntar-logo-w.svg" alt="Logo Juntar" height="200px" width="300px"> -->
+    <!-- <img src="<?php //Yii::$app->getAlias('@frontend/web/images/juntar-logo/png/juntar-icon-b.png') ?>" alt="Logo Juntar"> -->
 
 
-           <div style="margin-top: 15px;">
-                <small><i>(Correo Generado Automáticamente)<i></small>
-           </div>
+    <p> ¡Gracias por Inscribirse al evento <b><?= $evento->nombreEvento ?></b>!</p>
+    <p> Te recordamos que la fecha de inicio es <?= $inicio ?> y de finalización <?= $fin ?></p>
+
+
+    <div style="margin-top: 15px;">
+        <small><i>(Correo Generado Automáticamente)<i></small>
     </div>
+</div>
 
-    
+
 </body>
 </html>
 

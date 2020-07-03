@@ -7,7 +7,6 @@ use frontend\models\Evento;
 use frontend\models\Presentacion;
 use frontend\models\PresentacionExpositor;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,7 +20,8 @@ class PresentacionController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -63,7 +63,8 @@ class PresentacionController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($presentacion) {
+    public function actionView($presentacion)
+    {
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
                 'model' => $this->findModel($presentacion),
@@ -75,7 +76,24 @@ class PresentacionController extends Controller
         }
     }
 
-    public function actionBorrar($presentacion) { //Ventana de confirmacion modal
+    /**
+     * Finds the Presentacion model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Presentacion the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Presentacion::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('La página solicitada no existe.');
+    }
+
+    public function actionBorrar($presentacion)
+    { //Ventana de confirmacion modal
         $idPresentacion = Presentacion::findOne($presentacion);
         $evento = Evento::findOne($idPresentacion->idEvento);
         return $this->render('borrar', [
@@ -89,7 +107,8 @@ class PresentacionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Presentacion();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -108,7 +127,8 @@ class PresentacionController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($presentacion) {
+    public function actionUpdate($presentacion)
+    {
         //busca la presentacion
         $model = $this->findModel($presentacion);
         $evento = Evento::findOne(["idEvento" => $model->idEvento]);
@@ -122,11 +142,11 @@ class PresentacionController extends Controller
         //si tiene datos cargados los almacena
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()) {
-            return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
+                return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
             }
         }
 
-        If (Yii::$app->request->isAjax) {
+        if (Yii::$app->request->isAjax) {
             //retorna renderizado para llamado en ajax
             return $this->renderAjax('editarPresentacion', [
                 'model' => $model,
@@ -147,7 +167,8 @@ class PresentacionController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($presentacion) {
+    public function actionDelete($presentacion)
+    {
         $id = $presentacion;
         $this->findModel($id)->delete();
 
@@ -155,24 +176,10 @@ class PresentacionController extends Controller
     }
 
     /**
-     * Finds the Presentacion model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Presentacion the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id) {
-        if (($model = Presentacion::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('La página solicitada no existe.');
-    }
-
-    /**
      * Carga una nueva presentacion al evento
      */
-    public function actionCargarPresentacion($slug) {
+    public function actionCargarPresentacion($slug)
+    {
 
         $idUsuario = Yii::$app->user->identity->idUsuario;
         $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
@@ -200,7 +207,7 @@ class PresentacionController extends Controller
             ->asArray()
             ->all();
 
-        If (Yii::$app->request->isAjax) {
+        if (Yii::$app->request->isAjax) {
             //retorna renderizado para llamado en ajax
             return $this->renderAjax('cargarPresentacion', [
                 'model' => $model,

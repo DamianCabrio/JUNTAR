@@ -2,31 +2,33 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\helpers\Url;
-use yii\web\UploadedFile;
-use yii\web\Controller;
-use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
 use common\models\User;
-use frontend\models\Usuario;
-use frontend\models\UploadProfileImage;
-use frontend\models\EventoSearch;
-use frontend\models\InscripcionSearch;
-use frontend\models\CambiarPasswordForm;
 use frontend\models\CambiarEmailForm;
 use frontend\models\CambiarEmailRequest;
+use frontend\models\CambiarPasswordForm;
+use frontend\models\EventoSearch;
 use frontend\models\ImagenPerfil;
+use frontend\models\InscripcionSearch;
+use frontend\models\UploadProfileImage;
+use frontend\models\Usuario;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\Controller;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
  */
-class CuentaController extends Controller {
+class CuentaController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -58,7 +60,8 @@ class CuentaController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -70,23 +73,24 @@ class CuentaController extends Controller {
         ];
     }
 
-    public function actionProfile() {
+    public function actionProfile()
+    {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $profileImageRoute = Url::base(true) . "/iconos/person-bounding-box.svg";
 
         $model = Usuario::find()
-                //campos buscados
-                ->select(['nombre, apellido, password_hash, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
-                //distintos en
-                //->distinct('jugador.posicion')
-                //tabla
-                ->from('usuario')
-                //relacion entre tablas
-                ->innerJoin('usuario_rol', 'usuario_rol.user_id = usuario.idUsuario')
-                //condicion
-                ->where(['usuario.idUsuario' => Yii::$app->user->identity->id]);
+            //campos buscados
+            ->select(['nombre, apellido, password_hash, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
+            //distintos en
+            //->distinct('jugador.posicion')
+            //tabla
+            ->from('usuario')
+            //relacion entre tablas
+            ->innerJoin('usuario_rol', 'usuario_rol.user_id = usuario.idUsuario')
+            //condicion
+            ->where(['usuario.idUsuario' => Yii::$app->user->identity->id]);
         //Agrupamiento
         //->groupBy(['jugador.posicion']);
         //obtenemos el unico usuario
@@ -103,8 +107,8 @@ class CuentaController extends Controller {
         }
 
         return $this->render('profile', [
-                    'dataUser' => $userData,
-                    'profileImage' => $profileImageRoute,
+            'dataUser' => $userData,
+            'profileImage' => $profileImageRoute,
         ]);
     }
 
@@ -113,7 +117,8 @@ class CuentaController extends Controller {
      *
      * @return mixed
      */
-    public function actionEditprofile() {
+    public function actionEditprofile()
+    {
 
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = $this->findModel(Yii::$app->user->identity->id);
@@ -136,14 +141,14 @@ class CuentaController extends Controller {
                 }
                 if ($model->save()) {
                     Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
-                            . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+                        . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
                 } else {
                     Yii::$app->session->setFlash('error', '<h2> Ha ocurrido un error ): </h2>'
-                            . '<p> Tu perfil no pudo ser actualizado </p>');
+                        . '<p> Tu perfil no pudo ser actualizado </p>');
                 }
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Ha ocurrido un error ): </h2>'
-                        . '<p> Ingreso de datos no permitido </p>');
+                    . '<p> Ingreso de datos no permitido </p>');
             }
             return $this->redirect(['/cuenta/profile']);
         }
@@ -153,13 +158,22 @@ class CuentaController extends Controller {
 //        }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('editprofile', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         } else {
             return $this->render('editprofile', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Usuario::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -167,7 +181,8 @@ class CuentaController extends Controller {
      *
      * @return mixed
      */
-    public function actionUploadProfileImage() {
+    public function actionUploadProfileImage()
+    {
         //Siempre que quieras editar data, asegurate que el modelo defina reglas de validación para todos los campos afectados
         $model = new UploadProfileImage();
 
@@ -177,14 +192,14 @@ class CuentaController extends Controller {
             if ($model->profileImage != null) {
                 if ($model->upload()) {
                     Yii::$app->session->setFlash('success', '<h2> Datos Actualizados </h2>'
-                            . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
+                        . '<p> ¡Tu perfil ha sido actualizado correctamente! </p>');
                 } else {
                     Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
-                            . '<p> No pudimos actualizar tu imagen de perfil. </p>');
+                        . '<p> No pudimos actualizar tu imagen de perfil. </p>');
                 }
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Campo vacío </h2>'
-                        . '<p> No ingresó ninguna imagen. </p>');
+                    . '<p> No ingresó ninguna imagen. </p>');
             }
 
             return $this->redirect(['profile']);
@@ -192,21 +207,13 @@ class CuentaController extends Controller {
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('uploadProfileImage', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         } else {
             return $this->render('uploadProfileImage', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
-    }
-
-    protected function findModel($id) {
-        if (($model = Usuario::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -214,7 +221,8 @@ class CuentaController extends Controller {
      * @param int $id identificador del usuario.
      * @return mixed
      */
-    public function actionDesactivarCuenta() {
+    public function actionDesactivarCuenta()
+    {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -232,7 +240,8 @@ class CuentaController extends Controller {
      * @param int $id identificador del usuario.
      * @return mixed
      */
-    public function actionMisEventosGestionados() {
+    public function actionMisEventosGestionados()
+    {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -250,8 +259,8 @@ class CuentaController extends Controller {
         ]);
 
         return $this->render('misEventosGestionados', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -260,7 +269,8 @@ class CuentaController extends Controller {
      * @param int $id identificador del usuario.
      * @return mixed
      */
-    public function actionMisInscripcionesAEventos() {
+    public function actionMisInscripcionesAEventos()
+    {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -278,23 +288,9 @@ class CuentaController extends Controller {
         ]);
 
         return $this->render('misInscripciones', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
-    }
-
-    /**
-     * Habilitar ser gestor de eventos.
-     * @param int $id identificador del usuario.
-     * @return mixed
-     */
-    private function actionChangeRol($id) {
-        $organizateRol = yii::$app->authManager->getRole('Organizador');
-        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
-            yii::$app->authManager->assign($organizateRol, $id);
-            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
-        }
-        return $this->redirect(['/cuenta/profile']);
     }
 
     /**
@@ -304,24 +300,25 @@ class CuentaController extends Controller {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionCambiarPassword() {
+    public function actionCambiarPassword()
+    {
 
         $model = new CambiarPasswordForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->cambiarPassword()) {
                 Yii::$app->session->setFlash('success', '<h2> Contraseña actualizada </h2>'
-                        . '<p> La nueva contraseña fue guardada. </p>');
+                    . '<p> La nueva contraseña fue guardada. </p>');
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Algo salió mal </h2>'
-                        . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
+                    . '<p> Es probable que haya escrito mal su contraseña actual. </p>');
             }
 
             return $this->redirect(['/cuenta/profile']);
         }
 
         return $this->render('cambiarPassword', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -332,17 +329,18 @@ class CuentaController extends Controller {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionCambiarEmailRequest() {
+    public function actionCambiarEmailRequest()
+    {
 
         if (Yii::$app->request->post()) {
             $model = new CambiarEmailRequest();
             if ($model->solicitarCambioEmail()) {
                 Yii::$app->session->setFlash('success', '<h2> ¡Ya queda poco! </h2>'
-                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu email. </p>');
+                    . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu email. </p>');
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2>'
-                        . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
-                        . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
+                    . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
+                    . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
             }
             return $this->redirect(['/cuenta/profile']);
         }
@@ -358,25 +356,41 @@ class CuentaController extends Controller {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionCambiarEmail($token) {
+    public function actionCambiarEmail($token)
+    {
 
         $model = new CambiarEmailForm($token);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->cambiarEmail()) {
                 Yii::$app->session->setFlash('success', '<h2> Email actualizado </h2>'
-                        . '<p> Su dirección de correo fue actualizada. </p>');
+                    . '<p> Su dirección de correo fue actualizada. </p>');
 
                 return $this->redirect(['/cuenta/profile']);
             } else {
                 Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
-                        . '<p> Es probable que el email ya esté registrado. </p>');
+                    . '<p> Es probable que el email ya esté registrado. </p>');
             }
         }
 
         return $this->render('cambiarEmail', [
-                    'model' => $model,
+            'model' => $model,
         ]);
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+    private function actionChangeRol($id)
+    {
+        $organizateRol = yii::$app->authManager->getRole('Organizador');
+        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
+            yii::$app->authManager->assign($organizateRol, $id);
+            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
+        }
+        return $this->redirect(['/cuenta/profile']);
     }
 
 }

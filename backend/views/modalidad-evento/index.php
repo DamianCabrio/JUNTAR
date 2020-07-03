@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ModalidadEventoSearch */
@@ -33,13 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 ['class' => 'yii\grid\ActionColumn',
                                     'buttons' => [
-                                        'update' => function($url, $model) {
+                                        'update' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        'view' => function($url, $model) {
+                                        'view' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        'delete' => function($url, $model) {
+                                        'delete' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         }
                                     ]

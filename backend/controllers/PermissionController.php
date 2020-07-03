@@ -2,27 +2,29 @@
 
 namespace backend\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\helpers\Inflector;
-use yii\helpers\FileHelper;
-use yii\helpers\ArrayHelper;
-use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
-use backend\models\PermisoSearch;
-use backend\models\PermisoQuery;
 use backend\models\Permiso;
+use backend\models\PermisoSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
+use yii\helpers\Inflector;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
  */
-class PermissionController extends Controller {
+class PermissionController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -54,7 +56,8 @@ class PermissionController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -66,7 +69,8 @@ class PermissionController extends Controller {
      * Lists all Permiso models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new PermisoSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider = new ActiveDataProvider([
@@ -79,8 +83,8 @@ class PermissionController extends Controller {
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -90,20 +94,37 @@ class PermissionController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionVerPermiso($name) {
+    public function actionVerPermiso($name)
+    {
         return $this->render('verPermiso', [
-                    'model' => $this->findModel($name),
+            'model' => $this->findModel($name),
         ]);
     }
 
     /**
-     * Metodo AsignarPermisos --> Genera un menú en el cual se pueden seleccionar roles y asignarles 
-     * los permisos registrados. Se pueden tambien se pueden asignar roles para que herede todos los 
+     * Finds the Permiso model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return Permiso the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Permiso::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('El permiso que estás intentando acceder no existe.');
+    }
+
+    /**
+     * Metodo AsignarPermisos --> Genera un menú en el cual se pueden seleccionar roles y asignarles
+     * los permisos registrados. Se pueden tambien se pueden asignar roles para que herede todos los
      * permisos de este.
      *
      * @return view
      */
-    public function actionAsignarPermisos() {
+    public function actionAsignarPermisos()
+    {
         $rolSeleccionado = null;
         //captura la seleccion de un rol
         if (Yii::$app->request->get('unRol') != null) {
@@ -142,105 +163,23 @@ class PermissionController extends Controller {
         ]);
 
         return $this->render('asignarPermisos', [
-                    'roles' => $dataRoles,
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'rolSeleccionado' => $rolSeleccionado,
-                    'permisosAsignados' => $permisosAsignadosRolSeleccionado,
-                    'rolesAsignados' => $rolesAsignadosARolSeleccionado,
+            'roles' => $dataRoles,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'rolSeleccionado' => $rolSeleccionado,
+            'permisosAsignados' => $permisosAsignadosRolSeleccionado,
+            'rolesAsignados' => $rolesAsignadosARolSeleccionado,
         ]);
     }
 
     /**
-     * Metodo getRoles --> Retorna un array con todos los registros de roles en el sistema.
-     * 
-     * @return array
-     */
-    private function actionGetRoles() {
-        $roles = null;
-        if (Yii::$app->user->can('Administrador')) {
-            $rolesQuery = (new \yii\db\Query())
-                    //campos a buscar
-                    ->select(['name', 'description'])
-                    //tabla
-                    ->from('permiso')
-                    //Condicion (rol = 1)
-                    ->where(['type' => 1]);
-
-            $roles = $rolesQuery->all();
-        }
-        return $roles;
-    }
-
-    /**
-     * Metodo getPermisosAsignados --> Busca la información necesaria sobre los permisos asignados a un rol.
-     * Retorna un arreglo conteniendo todos los permisos que el rol posee.
-     * 
-     * @param String $unRol
-     * @param Array $permisosAsignados
-     * @return Array
-     */
-    private function getPermisosAsignados($unRol, $permisosAsignados) {
-        if (Yii::$app->user->can('Administrador')) {
-            //genera la query para buscar los permisos asignados al rol
-            $permissionsRoleQuery = (new \yii\db\Query())
-                    //campos a buscar
-                    ->select(['parent', 'name', 'description'])
-                    //distict
-                    ->distinct('name')
-                    //tabla
-                    ->from('permiso')
-                    //relacion tabla permiso_rol
-                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
-                    //Condicion permisos asignados
-                    ->where(['permiso_rol.parent' => $unRol])
-                    ->andWhere(['type' => 2]);
-            //Order
-//                    ->orderBy("permiso_rol.parent");
-
-            $permisosAsignados[$unRol] = $permissionsRoleQuery->all();
-        }
-        return $permisosAsignados;
-    }
-
-    /**
-     * Metodo getRolesAsignados --> Busca la información necesaria sobre los roles asignados a un rol.
-     * Retorna un arreglo conteniendo todos los roles que el rol posee.
-     * 
-     * @param String $unRol
-     * @return Array
-     */
-    private function getRolesAsignados($unRol) {
-        $rolesAsignados = null;
-        if (Yii::$app->user->can('Administrador')) {
-            //genera la query para buscar los permisos asignados al rol
-            $permissionsRoleQuery = (new \yii\db\Query())
-                    //campos a buscar
-                    ->select(['parent', 'name', 'description', 'type'])
-                    //distict
-                    ->distinct('name')
-                    //tabla
-                    ->from('permiso')
-                    //relacion tabla permiso_rol
-                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
-                    //Condicion permisos asignados
-                    ->where(['permiso_rol.parent' => $unRol])
-                    ->andWhere(['type' => 1]);
-            //Order
-//                    ->orderBy("permiso_rol.parent");
-
-            $rolesAsignados = $permissionsRoleQuery->all();
-        }
-        return $rolesAsignados;
-    }
-
-    /**
-     * Metodo asignarPermisoARol --> Permite asignar o quitar un permiso a un rol, ambos datos recibidos 
+     * Metodo asignarPermisoARol --> Permite asignar o quitar un permiso a un rol, ambos datos recibidos
      * por parámetro. Devuelve un array si pudo realizar la operacion, false en caso contrario.
      *
      * @return boolean/array
      */
-    private function asignarPermisoARol($unRol, $unItemPermiso) {
+    private function asignarPermisoARol($unRol, $unItemPermiso)
+    {
         $respuesta = false;
         if (Yii::$app->user->can('Administrador')) {
             $rol = $unRol;
@@ -266,12 +205,99 @@ class PermissionController extends Controller {
     }
 
     /**
+     * Metodo getPermisosAsignados --> Busca la información necesaria sobre los permisos asignados a un rol.
+     * Retorna un arreglo conteniendo todos los permisos que el rol posee.
+     *
+     * @param String $unRol
+     * @param Array $permisosAsignados
+     * @return Array
+     */
+    private function getPermisosAsignados($unRol, $permisosAsignados)
+    {
+        if (Yii::$app->user->can('Administrador')) {
+            //genera la query para buscar los permisos asignados al rol
+            $permissionsRoleQuery = (new Query())
+                //campos a buscar
+                ->select(['parent', 'name', 'description'])
+                //distict
+                ->distinct('name')
+                //tabla
+                ->from('permiso')
+                //relacion tabla permiso_rol
+                ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                //Condicion permisos asignados
+                ->where(['permiso_rol.parent' => $unRol])
+                ->andWhere(['type' => 2]);
+            //Order
+//                    ->orderBy("permiso_rol.parent");
+
+            $permisosAsignados[$unRol] = $permissionsRoleQuery->all();
+        }
+        return $permisosAsignados;
+    }
+
+    /**
+     * Metodo getRolesAsignados --> Busca la información necesaria sobre los roles asignados a un rol.
+     * Retorna un arreglo conteniendo todos los roles que el rol posee.
+     *
+     * @param String $unRol
+     * @return Array
+     */
+    private function getRolesAsignados($unRol)
+    {
+        $rolesAsignados = null;
+        if (Yii::$app->user->can('Administrador')) {
+            //genera la query para buscar los permisos asignados al rol
+            $permissionsRoleQuery = (new Query())
+                //campos a buscar
+                ->select(['parent', 'name', 'description', 'type'])
+                //distict
+                ->distinct('name')
+                //tabla
+                ->from('permiso')
+                //relacion tabla permiso_rol
+                ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                //Condicion permisos asignados
+                ->where(['permiso_rol.parent' => $unRol])
+                ->andWhere(['type' => 1]);
+            //Order
+//                    ->orderBy("permiso_rol.parent");
+
+            $rolesAsignados = $permissionsRoleQuery->all();
+        }
+        return $rolesAsignados;
+    }
+
+    /**
+     * Metodo getRoles --> Retorna un array con todos los registros de roles en el sistema.
+     *
+     * @return array
+     */
+    private function actionGetRoles()
+    {
+        $roles = null;
+        if (Yii::$app->user->can('Administrador')) {
+            $rolesQuery = (new Query())
+                //campos a buscar
+                ->select(['name', 'description'])
+                //tabla
+                ->from('permiso')
+                //Condicion (rol = 1)
+                ->where(['type' => 1]);
+
+            $roles = $rolesQuery->all();
+        }
+        return $roles;
+    }
+
+    /**
      * Metodo createPermiso --> Permite crear un nuevo permiso. Utiliza una funcion que busca todas
      * las vistas del proyecto y genera un array de permisos faltantes en base a ellas.
      *
      * @return view
      */
-    public function actionCreatePermiso() {
+    public function actionCreatePermiso()
+    {
         $model = new Permiso();
 
         //captura la seleccion de un rol
@@ -317,9 +343,9 @@ class PermissionController extends Controller {
         $permisosFaltantes = array_diff($permisosSitio, $permisosRegistrados);
 
         return $this->render('createPermiso', [
-                    'model' => $model,
-                    'permisos' => $permisosFaltantes,
-                    'entorno' => $entornoSeleccionado
+            'model' => $model,
+            'permisos' => $permisosFaltantes,
+            'entorno' => $entornoSeleccionado
         ]);
     }
 
@@ -332,7 +358,8 @@ class PermissionController extends Controller {
      * @param Array $actions
      * @return array/null
      */
-    private function listarPermisosDeControladores($path, $actions) {
+    private function listarPermisosDeControladores($path, $actions)
+    {
         $files = FileHelper::findFiles(Yii::getAlias("@$path/controllers"), ["fileTypes" => ["php"]]);
 
         foreach ($files as $controllerFile) {
@@ -357,7 +384,8 @@ class PermissionController extends Controller {
      *
      * @return string
      */
-    public function actionRemovePermiso() {
+    public function actionRemovePermiso()
+    {
         $model = new Permiso();
         if (Yii::$app->request->get('name') != null) {
             $nombrePermiso = Yii::$app->request->get('name');
@@ -385,23 +413,9 @@ class PermissionController extends Controller {
 
         $permissionList = ArrayHelper::map(Yii::$app->AuthManager->getPermissions(), 'name', 'name');
         return $this->render('removePermiso', [
-                    'model' => $model,
-                    'item' => $permissionList,
+            'model' => $model,
+            'item' => $permissionList,
         ]);
-    }
-
-    /**
-     * Finds the Permiso model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Permiso the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id) {
-        if (($model = Permiso::findOne($id)) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('El permiso que estás intentando acceder no existe.');
     }
 
 }

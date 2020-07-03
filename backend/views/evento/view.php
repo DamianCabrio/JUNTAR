@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -9,7 +10,7 @@ use yii\widgets\DetailView;
 $this->title = $model->nombreEvento;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="evento-view">
     <div class="row">
@@ -33,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     ?>
                     <?php
-//                        print_r($aval);
+                    //                        print_r($aval);
                     if ($aval != null && $aval != '') {
                         if ($aval->avalado != 1) {
                             echo Html::a('Conceder aval FAI', ['solicitud-aval/conceder-aval', 'id' => $model->idEvento], [
@@ -63,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => function ($model) use ($aval) {
                                     if ($aval != null && $aval != '') {
                                         return (($aval->avalado == 1) ? "Concedido" : "Denegado");
-                                    }else{
+                                    } else {
                                         return "No fue solicitado";
                                     }
                                 },
@@ -73,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'label' => 'Organizador',
                                 //formato raw para poder crear un enlace al organizador
                                 'format' => 'raw',
-                                'value' => function($model) {
+                                'value' => function ($model) {
                                     return Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => '']);
                                 },
                             ],

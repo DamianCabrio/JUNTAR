@@ -2,26 +2,27 @@
 
 namespace backend\controllers;
 
-use Yii;
-use backend\models\Usuario;
-use backend\models\RegistrarUsuarioForm;
 use backend\models\CambiarPasswordForm;
+use backend\models\RegistrarUsuarioForm;
+use backend\models\Usuario;
 use backend\models\UsuarioSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
 
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
  */
-class UsuarioController extends Controller {
+class UsuarioController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -54,7 +55,8 @@ class UsuarioController extends Controller {
      * Lists all Usuario models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new UsuarioSearch();
         $dataProvider = new ActiveDataProvider([
             'query' => $searchModel::find(),
@@ -64,8 +66,8 @@ class UsuarioController extends Controller {
         ]);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -75,19 +77,37 @@ class UsuarioController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $roles = yii::$app->authManager->getRoles();
         return $this->render('view', [
-                    'model' => $this->findModel($id),
-                    'roles' => $roles,
+            'model' => $this->findModel($id),
+            'roles' => $roles,
         ]);
+    }
+
+    /**
+     * Finds the Usuario model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Usuario the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Usuario::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
     /**
      * Assign rol to user.
      * Metodo para asignar un rol a un usuario a partir del ID
      */
-    public function actionAssign($id, $rol) {
+    public function actionAssign($id, $rol)
+    {
         $auth = Yii::$app->authManager;
         $authRol = yii::$app->authManager->getRole($rol);
         if ($auth->getAssignment($rol, $id)) {
@@ -103,7 +123,8 @@ class UsuarioController extends Controller {
      *
      * @return mixed
      */
-    public function actionCrearUsuario() {
+    public function actionCrearUsuario()
+    {
         //obtiene datos paises
         $model = new RegistrarUsuarioForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->registrar()) {
@@ -112,7 +133,7 @@ class UsuarioController extends Controller {
         }
 
         return $this->render('crearUsuario', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -123,7 +144,8 @@ class UsuarioController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         $modelCambiarPw = null;
 //        $modifyPw = null;
@@ -143,8 +165,8 @@ class UsuarioController extends Controller {
         }
 
         return $this->render('update', [
-                    'model' => $model,
-                    'modelCambiarPw' => $modelCambiarPw,
+            'model' => $model,
+            'modelCambiarPw' => $modelCambiarPw,
         ]);
     }
 
@@ -155,7 +177,8 @@ class UsuarioController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDeshabilitar($id) {
+    public function actionDeshabilitar($id)
+    {
         $this->findModel($id)->deshabilitar();
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -168,25 +191,11 @@ class UsuarioController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionHabilitar($id) {
+    public function actionHabilitar($id)
+    {
         $this->findModel($id)->habilitar();
 
         return $this->redirect(Yii::$app->request->referrer);
-    }
-
-    /**
-     * Finds the Usuario model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Usuario the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id) {
-        if (($model = Usuario::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
 }

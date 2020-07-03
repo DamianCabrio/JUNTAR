@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
@@ -10,7 +10,6 @@ $this->title = 'Actualizar Información: ';
 
 $this->params['breadcrumbs'][] = 'Actualizar información';
 ?>
-
 
 
 <div class="profile-update container">

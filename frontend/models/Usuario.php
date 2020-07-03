@@ -2,9 +2,9 @@
 
 namespace frontend\models;
 
-use Yii;
-use frontend\models\Evento;
 use frontend\models\Expositor;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "usuario".
@@ -22,19 +22,31 @@ use frontend\models\Expositor;
  * @property Inscripcion[] $inscripcions
  * @property UsuarioRol[] $usuarioRols
  */
-class Usuario extends \yii\db\ActiveRecord {
+class Usuario extends ActiveRecord
+{
 
     /**
      * {@inheritdoc}
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'usuario';
     }
 
     /**
      * {@inheritdoc}
+     * @return UsuarioQuery the active query used by this AR class.
      */
-    public function rules() {
+    public static function find()
+    {
+        return new UsuarioQuery(get_called_class());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
         return [
             //Obligatorio
             [['nombre', 'apellido', 'pais', 'provincia', 'localidad', 'dni'], 'required'],
@@ -58,9 +70,9 @@ class Usuario extends \yii\db\ActiveRecord {
             //Reglas localidad
             ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de localidades argentinas solo si el pais es argentina
-            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
+            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) {
                 return ($model->pais == 'Argentina');
-                }, 'whenClient' => "function (attribute, value) {
+            }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
@@ -70,7 +82,7 @@ class Usuario extends \yii\db\ActiveRecord {
             //validamos con la api de provincias argentinas solo si el pais es argentina
             ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) {
                 return ($model->pais == 'Argentina');
-                }, 'whenClient' => "function (attribute, value) {
+            }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
@@ -83,7 +95,8 @@ class Usuario extends \yii\db\ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'idUsuario' => 'Id Usuario',
             'nombre' => 'Nombre',
@@ -98,45 +111,41 @@ class Usuario extends \yii\db\ActiveRecord {
     /**
      * Gets query for [[Eventos]].
      *
-     * @return \yii\db\ActiveQuery|EventoQuery
+     * @return ActiveQuery|EventoQuery
      */
-    public function getEventos() {
+    public function getEventos()
+    {
         return $this->hasMany(Evento::className(), ['idUsuario' => 'idUsuario']);
     }
 
     /**
      * Gets query for [[Expositors]].
      *
-     * @return \yii\db\ActiveQuery|ExpositorQuery
+     * @return ActiveQuery|ExpositorQuery
      */
-    public function getExpositors() {
+    public function getExpositors()
+    {
         return $this->hasMany(Expositor::className(), ['idUsuario' => 'idUsuario']);
     }
 
     /**
      * Gets query for [[Inscripcions]].
      *
-     * @return \yii\db\ActiveQuery|InscripcionQuery
+     * @return ActiveQuery|InscripcionQuery
      */
-    public function getInscripcions() {
+    public function getInscripcions()
+    {
         return $this->hasMany(Inscripcion::className(), ['idUsuario' => 'idUsuario']);
     }
 
     /**
      * Gets query for [[UsuarioRols]].
      *
-     * @return \yii\db\ActiveQuery|UsuarioRolQuery
+     * @return ActiveQuery|UsuarioRolQuery
      */
-    public function getUsuarioRols() {
+    public function getUsuarioRols()
+    {
         return $this->hasMany(UsuarioRol::className(), ['user_id' => 'idUsuario']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return UsuarioQuery the active query used by this AR class.
-     */
-    public static function find() {
-        return new UsuarioQuery(get_called_class());
     }
 
 }

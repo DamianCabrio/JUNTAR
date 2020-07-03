@@ -4,7 +4,6 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Evento;
 
 /**
  * EventoSearch represents the model behind the search form of `backend\models\Evento`.

@@ -2,7 +2,8 @@
 
 namespace backend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "permiso".
@@ -23,7 +24,7 @@ use Yii;
  * @property Usuario[] $users
  * @property UsuarioRol[] $usuarioRols
  */
-class Permiso extends \yii\db\ActiveRecord
+class Permiso extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -31,6 +32,15 @@ class Permiso extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'permiso';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return PermisoQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PermisoQuery(get_called_class());
     }
 
     /**
@@ -60,7 +70,7 @@ class Permiso extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Children]].
      *
-     * @return \yii\db\ActiveQuery|PermisoQuery
+     * @return ActiveQuery|PermisoQuery
      */
     public function getChildren()
     {
@@ -70,7 +80,7 @@ class Permiso extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Parents]].
      *
-     * @return \yii\db\ActiveQuery|PermisoQuery
+     * @return ActiveQuery|PermisoQuery
      */
     public function getParents()
     {
@@ -80,7 +90,7 @@ class Permiso extends \yii\db\ActiveRecord
     /**
      * Gets query for [[PermisoRols]].
      *
-     * @return \yii\db\ActiveQuery|PermisoRolQuery
+     * @return ActiveQuery|PermisoRolQuery
      */
     public function getPermisoRols()
     {
@@ -90,7 +100,7 @@ class Permiso extends \yii\db\ActiveRecord
     /**
      * Gets query for [[PermisoRols0]].
      *
-     * @return \yii\db\ActiveQuery|PermisoRolQuery
+     * @return ActiveQuery|PermisoRolQuery
      */
     public function getPermisoRols0()
     {
@@ -100,7 +110,7 @@ class Permiso extends \yii\db\ActiveRecord
     /**
      * Gets query for [[RuleName]].
      *
-     * @return \yii\db\ActiveQuery|ReglaQuery
+     * @return ActiveQuery|ReglaQuery
      */
     public function getRuleName()
     {
@@ -110,7 +120,7 @@ class Permiso extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Users]].
      *
-     * @return \yii\db\ActiveQuery|UsuarioQuery
+     * @return ActiveQuery|UsuarioQuery
      */
     public function getUsers()
     {
@@ -120,19 +130,10 @@ class Permiso extends \yii\db\ActiveRecord
     /**
      * Gets query for [[UsuarioRols]].
      *
-     * @return \yii\db\ActiveQuery|UsuarioRolQuery
+     * @return ActiveQuery|UsuarioRolQuery
      */
     public function getUsuarioRols()
     {
         return $this->hasMany(UsuarioRol::className(), ['item_name' => 'name']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return PermisoQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PermisoQuery(get_called_class());
     }
 }

@@ -2,12 +2,14 @@
 
 namespace backend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[Permiso]].
  *
  * @see Permiso
  */
-class RolQuery extends \yii\db\ActiveQuery
+class RolQuery extends ActiveQuery
 {
     /*public function active()
     {

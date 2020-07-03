@@ -4,7 +4,6 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Inscripcion;
 
 /**
  * InscripcionSearch represents the model behind the search form of `common\models\Inscripcion`.

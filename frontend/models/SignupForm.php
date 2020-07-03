@@ -2,14 +2,15 @@
 
 namespace frontend\models;
 
+use common\models\User;
 use Yii;
 use yii\base\Model;
-use common\models\User;
 
 /**
  * Signup form
  */
-class SignupForm extends Model {
+class SignupForm extends Model
+{
 
     public $nombre;
     public $apellido;
@@ -26,7 +27,8 @@ class SignupForm extends Model {
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             //Obligatorio
             [['nombre', 'apellido', 'email', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
@@ -50,9 +52,9 @@ class SignupForm extends Model {
             //Reglas localidad
             ['localidad', 'match', 'pattern' => '/^[a-zA-Z ]/', 'message' => 'El campo contiene caracteres inválidos'],
             //validamos con la api de localidades argentinas solo si el pais es argentina
-            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) { 
+            ['localidad', 'common\components\LocationValidator', 'when' => function ($model) {
                 return ($model->pais == 'Argentina');
-                }, 'whenClient' => "function (attribute, value) {
+            }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
@@ -62,7 +64,7 @@ class SignupForm extends Model {
             //validamos con la api de provincias argentinas solo si el pais es argentina
             ['provincia', 'common\components\ProvinceValidator', 'when' => function ($model) {
                 return ($model->pais == 'Argentina');
-                }, 'whenClient' => "function (attribute, value) {
+            }, 'whenClient' => "function (attribute, value) {
                     return $('#signupform-pais').val() == 'Argentina';
                 }"
             ],
@@ -90,7 +92,8 @@ class SignupForm extends Model {
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup() {
+    public function signup()
+    {
         if (!$this->validate()) {
             return null;
         }
@@ -116,18 +119,18 @@ class SignupForm extends Model {
      * @param User $user user model to with email should be send
      * @return bool whether the email was sent
      */
-    protected function sendEmail($user) {
+    protected function sendEmail($user)
+    {
         return Yii::$app
-
-                        ->mailer
-                        ->compose(
-                                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                                ['user' => $user]
-                        )
-                        ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-                        ->setTo($this->email)
-                        ->setSubject('Registro de cuenta en ' . Yii::$app->name)
-                        ->send();
+            ->mailer
+            ->compose(
+                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                ['user' => $user]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($this->email)
+            ->setSubject('Registro de cuenta en ' . Yii::$app->name)
+            ->send();
     }
 
 }

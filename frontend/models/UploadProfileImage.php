@@ -2,25 +2,27 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
-use Yii;
-use frontend\models\ImagenPerfil;
 
-class UploadProfileImage extends Model {
+class UploadProfileImage extends Model
+{
 
     /**
      * @var UploadedFile
      */
     public $profileImage;
 
-    public function rules() {
+    public function rules()
+    {
         return [
             [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
 
-    public function upload() {
+    public function upload()
+    {
         $imagenGuardada = false;
         if ($this->validate()) {
 //            $this->profileImage->saveAs('../web/profile/images/' . Yii::$app->user->identity->idUsuario. '-'. Yii::$app->user->identity->nombre . '.' . $this->profileImage->extension);
@@ -30,7 +32,8 @@ class UploadProfileImage extends Model {
         return $imagenGuardada;
     }
 
-    private function guardarImagenPerfil() {
+    private function guardarImagenPerfil()
+    {
         $model = ImagenPerfil::findOne(['idUsuario' => Yii::$app->user->identity->idUsuario]);
 
         //si no encuentra registro, crea un registro para la imagen de perfil del usuario
