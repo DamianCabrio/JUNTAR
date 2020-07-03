@@ -121,7 +121,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
 
                     <!-- calendar -->
                     <div id="fechaLimite">
-                        <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto'])->label('Fecha límite de pre-inscripción *') ?>
+                        <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto'])->label('Fecha límite de preinscripción *') ?>
                     </div>
                     <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
 
