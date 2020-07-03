@@ -13,7 +13,8 @@ $this->params['breadcrumbs'][] = 'Actualizar información';
 <div class="profile-update container">
 
     <h1 class="text-center"> Desactivar Mi cuenta </h1>
-    <p> ¿Está seguro que desea desactivar su cuenta? Esta opción no le permitirá acceder al sitio hasta que pida un mail de activación. </p>
+    <p> ¿Está seguro que desea desactivar su cuenta? Esta opción no le permitirá acceder al sitio hasta que pida un mail
+        de activación. </p>
 
     <div class="row">
         <div class="col-lg-5 m-auto profileForm">

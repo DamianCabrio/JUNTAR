@@ -2,12 +2,14 @@
 
 namespace backend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[EstadoEvento]].
  *
  * @see EstadoEvento
  */
-class EstadoEventoQuery extends \yii\db\ActiveQuery
+class EstadoEventoQuery extends ActiveQuery
 {
     /*public function active()
     {

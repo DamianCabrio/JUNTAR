@@ -1,8 +1,8 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Usuario */
@@ -16,14 +16,14 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <div class="card">
         <div class="card-header darkish_bg text-white text-center">
-            <h1><?= Html::encode($this->title) ?></h1>  
+            <h1><?= Html::encode($this->title) ?></h1>
         </div>
         <?php Pjax::begin(); ?>
         <div class="row">
             <div class="col-md-7 col-sm-12">
                 <div class="card">
                     <div class="card-header darkish_bg text-white text-center mt-3">
-                        <h4> Datos Usuario</h4>  
+                        <h4> Datos Usuario</h4>
                     </div>
                     <div class="card-body">
                         <?=
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = 'Update';
                 <?php if ($modelCambiarPw != null) { ?>
                     <div class="card">
                         <div class="card-header darkish_bg text-white text-center mt-3">
-                            <h4> Editar </h4>  
+                            <h4> Editar </h4>
                         </div>
                         <div class="card-body">
                             <?php $form = ActiveForm::begin(['id' => 'cambiarPwBack']); ?>

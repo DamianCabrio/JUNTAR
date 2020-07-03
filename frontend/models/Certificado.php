@@ -2,9 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
 use yii\base\Model;
-use frontend\models\PresentacionExpositor;
 
 class Certificado extends Model
 {
@@ -14,58 +12,61 @@ class Certificado extends Model
 
     public function setEvent($newEvent)
     {
-      $this->event = $newEvent;
+        $this->event = $newEvent;
     }
+
     public function setPresentations($newPresentations)
     {
-      $this->presentations = $newPresentations;
+        $this->presentations = $newPresentations;
     }
+
     public function setInscription($newInscription)
     {
-      $this->inscription = $newInscription;
+        $this->inscription = $newInscription;
     }
 
     public function verifyOrganizer($id)
     {
 
-      if (count($this->event) > 0) {
-        if ($this->event[0]->idUsuario == $id) {
-          return true;
+        if (count($this->event) > 0) {
+            if ($this->event[0]->idUsuario == $id) {
+                return true;
+            }
+        } else {
+            return false;
         }
-      } else {
-        return false;
-      }
     }
 
-	public function verifyAccreditation()
+    public function verifyAccreditation()
     {
 
-      if ($this->inscription[0]->acreditacion == 1) {
-        return true;
-      } else {
-        return false;
-      }
+        if ($this->inscription[0]->acreditacion == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
     public function verifyExhibitor($id)
     {
-      $presentationsExhibitor = [];
-      $status = false;
-      if ($this->presentations > 0) {
-        foreach ($this->presentations as $presentation) {
-          if (PresentacionExpositor::findOne([
-            'idPresentacion' => $presentation->idPresentacion,
-            'idExpositor' => $id,
-            ])) {
-            array_push($presentationsExhibitor, $presentation);
-            $status = true;
-          }
+        $presentationsExhibitor = [];
+        $status = false;
+        if ($this->presentations > 0) {
+            foreach ($this->presentations as $presentation) {
+                if (PresentacionExpositor::findOne([
+                    'idPresentacion' => $presentation->idPresentacion,
+                    'idExpositor' => $id,
+                ])) {
+                    array_push($presentationsExhibitor, $presentation);
+                    $status = true;
+                }
+            }
         }
-      }
-      if ($status) {
-        return $presentationsExhibitor;
-      } else {
-        return false;
-      }
+        if ($status) {
+            return $presentationsExhibitor;
+        } else {
+            return false;
+        }
     }
 
 }

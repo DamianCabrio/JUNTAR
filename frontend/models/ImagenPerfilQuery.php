@@ -2,12 +2,14 @@
 
 namespace frontend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[ImagenPerfil]].
  *
  * @see ImagenPerfil
  */
-class ImagenPerfilQuery extends \yii\db\ActiveQuery
+class ImagenPerfilQuery extends ActiveQuery
 {
     /*public function active()
     {

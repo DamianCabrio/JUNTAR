@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -42,18 +43,22 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 't
             color: #fff;
             border-color: #FE1355">
 
-            <!-- <img src="images/juntar-logo/svg/juntar-logo-w.svg" alt="Logo Juntar" height="200px" width="300px"> -->
-             <!-- <img src="<?php //Yii::$app->getAlias('@frontend/web/images/juntar-logo/png/juntar-icon-b.png') ?>" alt="Logo Juntar"> -->
+    <!-- <img src="images/juntar-logo/svg/juntar-logo-w.svg" alt="Logo Juntar" height="200px" width="300px"> -->
+    <!-- <img src="<?php //Yii::$app->getAlias('@frontend/web/images/juntar-logo/png/juntar-icon-b.png') ?>" alt="Logo Juntar"> -->
 
-            <p><b> Hola <?= Html::encode($user->nombre." ". $user->apellido) ?>.<b><p>  <br>
-            
-            <p> Hemos recibido una solicitud para reestablecer tu contraseña en la plataforma <?= Html::encode(Yii::$app->name) ?>. </p>
-            <p> Si tu no pediste el cambio de contraseña y crees que fue un error, por favor, ignora este correo y contactanos lo antes posible. </p>
+    <p><b> Hola <?= Html::encode($user->nombre . " " . $user->apellido) ?>.<b>
+    <p><br>
 
-            <p style="margin-bottom: 50px"> Para reestablecer tu contraseña, clickea sobre el botón "Reestablecer contraseña": </p>
+    <p> Hemos recibido una solicitud para reestablecer tu contraseña en la
+        plataforma <?= Html::encode(Yii::$app->name) ?>. </p>
+    <p> Si tu no pediste el cambio de contraseña y crees que fue un error, por favor, ignora este correo y contactanos
+        lo antes posible. </p>
 
-            <!-- Botón -->
-            <p style="margin-top: 15px;"> <a href="<?= Html::encode($resetLink) ?>" style="border: 1px solid #ccc;
+    <p style="margin-bottom: 50px"> Para reestablecer tu contraseña, clickea sobre el botón "Reestablecer
+        contraseña": </p>
+
+    <!-- Botón -->
+    <p style="margin-top: 15px;"><a href="<?= Html::encode($resetLink) ?>" style="border: 1px solid #ccc;
             margin-top: 20px;
             padding: 12px 12px;
             text-align: center;
@@ -67,10 +72,10 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 't
 
             color: #fff;
             background-color: #FE1355;
-            border-color: #FE1355;"> Reestablecer contraseña </a> </p>
+            border-color: #FE1355;"> Reestablecer contraseña </a></p>
 
 
-        <div style="margin-top: 15px;">
-            <small><i>(Correo Generado Automáticamente)<i></small>
-        </div>
+    <div style="margin-top: 15px;">
+        <small><i>(Correo Generado Automáticamente)<i></small>
     </div>
+</div>

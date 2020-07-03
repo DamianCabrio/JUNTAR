@@ -15,10 +15,10 @@ class UploadFormFlyer extends Model
     public function rules()
     {
         return [
-            [['imageFlyer'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize'=> 1024*1024*10, 'tooBig' => 'Debe ingresar una imagen menor a 10MB'],
+            [['imageFlyer'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Debe ingresar una imagen menor a 10MB'],
         ];
     }
-    
+
     public function upload()
     {
         if ($this->validate()) {

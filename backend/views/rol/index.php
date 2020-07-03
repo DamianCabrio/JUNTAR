@@ -1,8 +1,8 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PermisoSearch */
@@ -83,11 +83,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         //                    },
                                         'delete' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, [
-                                                        'class' => 'btn btn-pink',
-                                                        'data' => [
-                                                            'confirm' => '¿Está seguro de querer eliminar este Rol?',
-                                                            'method' => 'post',
-                                                        ],
+                                                'class' => 'btn btn-pink',
+                                                'data' => [
+                                                    'confirm' => '¿Está seguro de querer eliminar este Rol?',
+                                                    'method' => 'post',
+                                                ],
                                             ]);
                                         },
                                     ],

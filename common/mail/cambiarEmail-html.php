@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -42,14 +43,16 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/cuenta/cambiar-email/',
             color: #fff;
             border-color: #FE1355">
 
-    <p><b> Hola <?= Html::encode($user->nombre." ". $user->apellido) ?>.<b><p>  <br>
+    <p><b> Hola <?= Html::encode($user->nombre . " " . $user->apellido) ?>.<b>
+    <p><br>
     <p> Hemos recibido una solicitud para cambiar tu dirección de correo en <?= Html::encode(Yii::$app->name) ?>. </p>
-    <p> Si tu no pediste el cambio de email y crees que hubo un error, por favor, ignora este correo y contactanos lo antes posible. </p>
-    
+    <p> Si tu no pediste el cambio de email y crees que hubo un error, por favor, ignora este correo y contactanos lo
+        antes posible. </p>
+
     <p style="margin-bottom: 50px"> Para cambiar tu email, clickea sobre el botón "Cambiar dirección de correo" </p>
 
     <!-- Botón -->
-    <p style="margin-top: 15px;"> <a href="<?= Html::encode($resetLink) ?>" style="border: 1px solid #ccc;
+    <p style="margin-top: 15px;"><a href="<?= Html::encode($resetLink) ?>" style="border: 1px solid #ccc;
             margin-top: 20px;
             padding: 12px 12px;
             text-align: center;
@@ -63,7 +66,7 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/cuenta/cambiar-email/',
 
             color: #fff;
             background-color: #FE1355;
-            border-color: #FE1355;"> Cambiar dirección de correo </a> </p>
+            border-color: #FE1355;"> Cambiar dirección de correo </a></p>
 
     <div style="margin-top: 15px;">
         <small><i>(Correo Generado Automáticamente)<i></small>

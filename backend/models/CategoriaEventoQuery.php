@@ -2,12 +2,14 @@
 
 namespace backend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[CategoriaEvento]].
  *
  * @see CategoriaEvento
  */
-class CategoriaEventoQuery extends \yii\db\ActiveQuery
+class CategoriaEventoQuery extends ActiveQuery
 {
     /*public function active()
     {

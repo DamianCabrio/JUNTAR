@@ -2,8 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
-use frontend\models\Usuario;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "presentacion_expositor".
@@ -14,7 +14,7 @@ use frontend\models\Usuario;
  * @property Usuario $idExpositor0
  * @property Presentacion $idPresentacion0
  */
-class PresentacionExpositor extends \yii\db\ActiveRecord
+class PresentacionExpositor extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -52,7 +52,7 @@ class PresentacionExpositor extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdExpositor0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdExpositor0()
     {
@@ -62,7 +62,7 @@ class PresentacionExpositor extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdPresentacion0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdPresentacion0()
     {

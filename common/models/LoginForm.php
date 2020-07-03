@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -51,20 +52,6 @@ class LoginForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     *
-     * @return bool whether the user is logged in successfully
-     */
-    public function login()
-    {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        }
-
-        return false;
-    }
-
-    /**
      * Finds user by [[email]]
      *
      * @return User|null
@@ -78,11 +65,26 @@ class LoginForm extends Model
 
         return $this->_user;
     }
+
+    /**
+     * Logs in a user using the provided username and password.
+     *
+     * @return bool whether the user is logged in successfully
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        }
+
+        return false;
+    }
+
     public function attributeLabels()
     {
-       return [
-           'email' => 'Dirección de Correo',
-           'password' => 'Contraseña',
-       ];
+        return [
+            'email' => 'Dirección de Correo',
+            'password' => 'Contraseña',
+        ];
     }
 }

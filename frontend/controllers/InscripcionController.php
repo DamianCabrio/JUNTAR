@@ -2,12 +2,12 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Pregunta;
-use yii\filters\AccessControl;
-use \yii\helpers\Url;
-use Yii;
-use frontend\models\Inscripcion;
 use frontend\models\Evento;
+use frontend\models\Inscripcion;
+use frontend\models\Pregunta;
+use Yii;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -49,11 +49,28 @@ class InscripcionController extends Controller
         return $behaviors;
     }
 
-    public function verificarDueño($idEvento) {
+    public function actionAnularInscripcion($id, $slug)
+    {
+        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
+        $esDueño = $this->verificarDueño($evento->idEvento);
+
+        if ($esDueño) {
+            $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => $id])->one();
+            $inscripcion->estado = 0;
+            $inscripcion->save();
+
+            return $this->redirect(Yii::$app->request->referrer);
+        } else {
+            return $this->goHome();
+        }
+    }
+
+    public function verificarDueño($idEvento)
+    {
 
         $evento = Evento::find()->where(["idEvento" => $idEvento])->one();
 
-        if($evento != null){
+        if ($evento != null) {
             if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $evento->idUsuario0->idUsuario) {
                 return true;
             } else {
@@ -62,53 +79,19 @@ class InscripcionController extends Controller
         }
     }
 
-    public function calcularCupos($evento){
-        if(!is_null($evento->capacidad)){
-            //Cantidad de inscriptos al evento
-            $cantInscriptos = Inscripcion::find()
-                ->where(["idEvento" => $evento->idEvento, 'estado'=>1])
-                ->count();
-
-            $cupoMaximo = $evento->capacidad;
-
-            if ($cantInscriptos >= $cupoMaximo) {
-                $cupos = 0;
-            } else {
-                $cupos = $cupoMaximo - $cantInscriptos;
-            }
-            return $cupos;
-        }else {
-            return null;
-        }
-    }
-
-    public function actionAnularInscripcion($id, $slug){
+    public function actionInscribirAUsuario($slug, $id)
+    {
         $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
         $esDueño = $this->verificarDueño($evento->idEvento);
 
-        if($esDueño) {
-            $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => $id])->one();
-            $inscripcion->estado = 0;
-            $inscripcion->save();
-
-            return $this->redirect(Yii::$app->request->referrer);
-        }else{
-            return $this->goHome();
-        }
-    }
-
-    public function actionInscribirAUsuario($slug,$id){
-        $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
-        $esDueño = $this->verificarDueño($evento->idEvento);
-
-        if($esDueño) {
+        if ($esDueño) {
             $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => $id])->one();
             $inscripcion->estado = 1;
             $inscripcion->save();
             return $this->redirect(Yii::$app->request->referrer);
-        }else{
-                return $this->goHome();
-            }
+        } else {
+            return $this->goHome();
+        }
     }
 
     public function actionPreinscripcion()
@@ -134,13 +117,13 @@ class InscripcionController extends Controller
                 ->one();
 
 
-            if($inscripcion != null){
-                if($inscripcion->estado == 1 || $inscripcion->estado == 0) {
+            if ($inscripcion != null) {
+                if ($inscripcion->estado == 1 || $inscripcion->estado == 0) {
                     Yii::$app->session->setFlash('error', '<h2> Error </h2>'
                         . '<p> Ya se encuentra inscripto a este evento </p>');
                     return $this->redirect(['eventos/ver-evento/' . $slug]);
                 }
-            }else {
+            } else {
                 //Si no existe creo un nueva instancia de inscripcion
                 $inscripcion = new Inscripcion();
                 $inscripcion->idUsuario = Yii::$app->user->identity->id;
@@ -167,9 +150,9 @@ class InscripcionController extends Controller
                     . '<p> Buena suerte </p>');
 
                 $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->asArray()->all();
-                if(count($preguntas) != 0){
+                if (count($preguntas) != 0) {
                     return $this->redirect(['eventos/responder-formulario/' . $slug]);
-                }else{
+                } else {
                     return $this->redirect(['eventos/ver-evento/' . $slug]);
                 }
             } else {
@@ -177,18 +160,40 @@ class InscripcionController extends Controller
                     . '<p> Por favor vuelva a intentar </p>');
                 return $this->redirect(['eventos/ver-evento/' . $slug]);
             }
-        }else{
+        } else {
             Yii::$app->session->setFlash('error', '<h2> No hay mas cupos </h2>'
                 . '<p> Lo sentimos, no hay mas cupos. Intente con otro evento </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }
     }
 
-    public function actionEliminarInscripcion(){
-        if ( Yii::$app->user->isGuest ){
+    public function calcularCupos($evento)
+    {
+        if (!is_null($evento->capacidad)) {
+            //Cantidad de inscriptos al evento
+            $cantInscriptos = Inscripcion::find()
+                ->where(["idEvento" => $evento->idEvento, 'estado' => 1])
+                ->count();
+
+            $cupoMaximo = $evento->capacidad;
+
+            if ($cantInscriptos >= $cupoMaximo) {
+                $cupos = 0;
+            } else {
+                $cupos = $cupoMaximo - $cantInscriptos;
+            }
+            return $cupos;
+        } else {
+            return null;
+        }
+    }
+
+    public function actionEliminarInscripcion()
+    {
+        if (Yii::$app->user->isGuest) {
             $request = Yii::$app->request;
             $slug = $request->get('slug');
-            return Yii::$app->getResponse()->redirect(Url::to(['evento/verEvento' . $slug],302));
+            return Yii::$app->getResponse()->redirect(Url::to(['evento/verEvento' . $slug], 302));
         }
 
         $request = Yii::$app->request;
@@ -196,10 +201,10 @@ class InscripcionController extends Controller
         $evento = Evento::find()->where(["nombreCortoEvento" => $slug])->one();
 
         $inscripcion = Inscripcion::find()
-                        ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])
-                        ->one();
+            ->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])
+            ->one();
 
-        if($inscripcion == null || $inscripcion->estado == 2){
+        if ($inscripcion == null || $inscripcion->estado == 2) {
             Yii::$app->session->setFlash('error', '<h2> Error</h2>'
                 . '<p> Usted no esta inscripto en este evento </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
@@ -211,12 +216,12 @@ class InscripcionController extends Controller
 
         $esPreInscripcion = $inscripcion->estado == 1 ? true : false;
 
-        if($seElimino){
+        if ($seElimino) {
             $texto = $esPreInscripcion ? "Se ha anulado su pre-inscripto con éxito" : "Se ha anulado su inscripción con éxito";
-            Yii::$app->session->setFlash('success', '<h2>'. $texto .'</h2>'
+            Yii::$app->session->setFlash('success', '<h2>' . $texto . '</h2>'
                 . '<p> Vuelva otro día </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);
-        }else{
+        } else {
             Yii::$app->session->setFlash('error', '<h2> Ocurrió un error </h2>'
                 . '<p> Por favor vuelva a intentar </p>');
             return $this->redirect(['eventos/ver-evento/' . $slug]);

@@ -1,8 +1,8 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -38,25 +38,34 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!--<div class="row justify-content-center m-3">-->
                 <div class="row d-flex justify-content-center m-3">
                     <div class="card text-center p-0 col-md-4 col-sm-12 border-0">
-                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto" href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'selected' => 'activas'])) ?>">
+                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto"
+                           href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'selected' => 'activas'])) ?>">
                             <h5 class="card-header <?php echo $fondoClassActivas; ?>">
-                                <img class="<?php echo $imageClassActivas; ?>" src="<?php echo Yii::getAlias('@web/iconos/list-unordered.svg') ?>" alt="backend" title="backend" width="40" height="40" role="img">
+                                <img class="<?php echo $imageClassActivas; ?>"
+                                     src="<?php echo Yii::getAlias('@web/iconos/list-unordered.svg') ?>" alt="backend"
+                                     title="backend" width="40" height="40" role="img">
                                 Solicitudes Activas
                             </h5>
                         </a>
                     </div>
                     <div class="card text-center p-0 col-md-4 col-sm-12 border-0">
-                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto" href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'selected' => 'denegadas'])) ?>">
+                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto"
+                           href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'selected' => 'denegadas'])) ?>">
                             <h5 class="card-header <?php echo $fondoClassDenegadas; ?>">
-                                <img class="<?php echo $imageClassDenegadas; ?>" src="<?php echo Yii::getAlias('@web/iconos/denegarAval.svg') ?>" alt="backend" title="backend" width="40" height="40" role="img">
+                                <img class="<?php echo $imageClassDenegadas; ?>"
+                                     src="<?php echo Yii::getAlias('@web/iconos/denegarAval.svg') ?>" alt="backend"
+                                     title="backend" width="40" height="40" role="img">
                                 Denegadas
                             </h5>
                         </a>
                     </div>
                     <div class="card text-center p-0 col-md-4 col-sm-12 border-0">
-                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto" href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'selected' => 'aprobadas'])) ?>">
+                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto"
+                           href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'selected' => 'aprobadas'])) ?>">
                             <h5 class="card-header <?php echo $fondoClassAprobadas; ?>">
-                                <img class="<?php echo $imageClassAprobadas; ?>" src="<?php echo Yii::getAlias('@web/iconos/concederAval.svg') ?>" alt="backend" title="backend" width="40" height="40" role="img">
+                                <img class="<?php echo $imageClassAprobadas; ?>"
+                                     src="<?php echo Yii::getAlias('@web/iconos/concederAval.svg') ?>" alt="backend"
+                                     title="backend" width="40" height="40" role="img">
                                 Aprobadas
                             </h5>
                         </a>
@@ -119,10 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 ['class' => 'yii\grid\ActionColumn',
                                     'buttons' => [
-                                        'view' => function($url, $model) {
+                                        'view' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar Evento" title="Visualizar Evento" width="20" height="20" role="img">',
-                                                            ['/evento/view', 'id' => $model->idEvento],
-                                                            ['class' => 'btn btn-pink']);
+                                                ['/evento/view', 'id' => $model->idEvento],
+                                                ['class' => 'btn btn-pink']);
                                         },
                                     ],
                                     'header' => 'Accion',

@@ -24,7 +24,8 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface {
+class User extends ActiveRecord implements IdentityInterface
+{
 
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
@@ -33,42 +34,54 @@ class User extends ActiveRecord implements IdentityInterface {
     /**
      * {@inheritdoc}
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return '{{%usuario}}';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules() {
-        return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-//            [['nombre', 'apellido', 'dni', 'fecha_nacimiento', 'telefono', 'localidad', 'email'], 'required'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentity($id) {
+    public static function findIdentity($id)
+    {
         return static::findOne(['idUsuario' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function findIdentityByAccessToken($token, $type = null) {
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $email
+     * @return static|null
+     */
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    /**
+     * Finds user by password reset token
+     *
+     * @param string $token password reset token
+     * @return static|null
+     */
+    public static function findByPasswordResetToken($token)
+    {
+        if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+
+        return static::findOne([
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
+        ]);
     }
 
     /**
@@ -83,30 +96,20 @@ class User extends ActiveRecord implements IdentityInterface {
 //    }
 
     /**
-     * Finds user by username
-     *
-     * @param string $email
-     * @return static|null
-     */
-    public static function findByEmail($email) {
-        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
-    }
-
-    /**
-     * Finds user by password reset token
+     * Finds out if password reset token is valid
      *
      * @param string $token password reset token
-     * @return static|null
+     * @return bool
      */
-    public static function findByPasswordResetToken($token) {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
+    public static function isPasswordResetTokenValid($token)
+    {
+        if (empty($token)) {
+            return false;
         }
 
-        return static::findOne([
-                    'password_reset_token' => $token,
-                    'status' => self::STATUS_ACTIVE,
-        ]);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
+        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        return $timestamp + $expire >= time();
     }
 
     /**
@@ -115,48 +118,58 @@ class User extends ActiveRecord implements IdentityInterface {
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
-                    'verification_token' => $token,
-                    'status' => self::STATUS_INACTIVE
+            'verification_token' => $token,
+            'status' => self::STATUS_INACTIVE
         ]);
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return bool
-     */
-    public static function isPasswordResetTokenValid($token) {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getId() {
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+//            [['nombre', 'apellido', 'dni', 'fecha_nacimiento', 'telefono', 'localidad', 'email'], 'required'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId()
+    {
         return $this->getPrimaryKey();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAuthKey() {
-        return $this->auth_key;
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function validateAuthKey($authKey) {
-        return $this->getAuthKey() === $authKey;
+    public function getAuthKey()
+    {
+        return $this->auth_key;
     }
 
     /**
@@ -165,7 +178,8 @@ class User extends ActiveRecord implements IdentityInterface {
      * @param string $password password to validate
      * @return bool if password provided is valid for current user
      */
-    public function validatePassword($password) {
+    public function validatePassword($password)
+    {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
@@ -174,56 +188,65 @@ class User extends ActiveRecord implements IdentityInterface {
      *
      * @param string $password
      */
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
      * Generates "remember me" authentication key
      */
-    public function generateAuthKey() {
+    public function generateAuthKey()
+    {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
     /**
      * Generates new password reset token
      */
-    public function generatePasswordResetToken() {
+    public function generatePasswordResetToken()
+    {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
      * Generates new token for email verification
      */
-    public function generateEmailVerificationToken() {
+    public function generateEmailVerificationToken()
+    {
         $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
      * Removes password reset token
      */
-    public function removePasswordResetToken() {
+    public function removePasswordResetToken()
+    {
         $this->password_reset_token = null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setInactive() {
+    public function setInactive()
+    {
         $this->status = 9;
         self::save();
     }
 
-    public function generateCambiarEmailToken() {
+    public function generateCambiarEmailToken()
+    {
 //        $this->newEmailToken = Yii::$app->security->generateRandomString() . '_' . time();
         Yii::$app->session->set('newEmailToken', Yii::$app->security->generateRandomString() . '_' . time());
     }
 
-    public function getNewEmailToken() {
+    public function getNewEmailToken()
+    {
         return Yii::$app->session->get('newEmailToken');
     }
 
-    public function removeNewEmailToken() {
+    public function removeNewEmailToken()
+    {
         Yii::$app->session->set('newEmailToken', null);
     }
 

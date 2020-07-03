@@ -1,8 +1,8 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
-use \yii\helpers\Url;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\JugadorSearch */
@@ -55,9 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //            ],
 //            'Fecha',
             ['class' => 'yii\grid\ActionColumn',
-                'urlCreator' => function($action, $model, $key, $index ) {
+                'urlCreator' => function ($action, $model, $key, $index) {
                     if ($action == "view") {
-                        return Url::to(['/eventos/ver-evento/'.$model->nombreCortoEvento, ]);
+                        return Url::to(['/eventos/ver-evento/' . $model->nombreCortoEvento,]);
                     }
                     if ($action == "update") {
                         return Url::to(['', 'name' => $key]);
@@ -67,13 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
                 'buttons' => [
-                    'update' => function($url, $model) {
+                    'update' => function ($url, $model) {
                         return null;
                     },
-                    'view' => function($url, $model) {
+                    'view' => function ($url, $model) {
                         return Html::a('<img src="' . Yii::getAlias('@web/iconos/eye.svg') . '" class="filter-white" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn']);
                     },
-                    'delete' => function($url, $model) {
+                    'delete' => function ($url, $model) {
                         return null;
                     }
                 ]
