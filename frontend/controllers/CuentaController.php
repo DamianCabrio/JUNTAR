@@ -210,8 +210,7 @@ class CuentaController extends Controller {
     }
 
     /**
-     * Habilitar ser gestor de eventos.
-     * @param int $id identificador del usuario.
+     * 
      * @return mixed
      */
     public function actionDesactivarCuenta() {
@@ -228,8 +227,7 @@ class CuentaController extends Controller {
     }
 
     /**
-     * Habilitar ser gestor de eventos.
-     * @param int $id identificador del usuario.
+     * 
      * @return mixed
      */
     public function actionMisEventosGestionados() {
@@ -256,8 +254,7 @@ class CuentaController extends Controller {
     }
 
     /**
-     * Habilitar ser gestor de eventos.
-     * @param int $id identificador del usuario.
+     * 
      * @return mixed
      */
     public function actionMisInscripcionesAEventos() {
@@ -288,21 +285,20 @@ class CuentaController extends Controller {
      * @param int $id identificador del usuario.
      * @return mixed
      */
-    private function actionChangeRol($id) {
-        $organizateRol = yii::$app->authManager->getRole('Organizador');
-        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
-            yii::$app->authManager->assign($organizateRol, $id);
-            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
-        }
-        return $this->redirect(['/cuenta/profile']);
-    }
+//    private function actionChangeRol($id) {
+//        $organizateRol = yii::$app->authManager->getRole('Organizador');
+//        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
+//            yii::$app->authManager->assign($organizateRol, $id);
+//            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
+//        }
+//        return $this->redirect(['/cuenta/profile']);
+//    }
 
     /**
      * Resets password.
      *
      * @param string $token
      * @return mixed
-     * @throws BadRequestHttpException
      */
     public function actionCambiarPassword() {
 
@@ -326,57 +322,51 @@ class CuentaController extends Controller {
     }
 
     /**
-     * Resets password.
+     * solicita cambio de email
      *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
      */
-    public function actionCambiarEmailRequest() {
-
-        if (Yii::$app->request->post()) {
-            $model = new CambiarEmailRequest();
-            if ($model->solicitarCambioEmail()) {
-                Yii::$app->session->setFlash('success', '<h2> ¡Ya queda poco! </h2>'
-                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu email. </p>');
-            } else {
-                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2>'
-                        . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
-                        . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
-            }
-            return $this->redirect(['/cuenta/profile']);
-        }
-        return $this->render('cambiarEmailRequest', [
-//                    'model' => $model,
-        ]);
-    }
+//    public function actionCambiarEmailRequest() {
+//
+//        if (Yii::$app->request->post()) {
+//            $model = new CambiarEmailRequest();
+//            if ($model->solicitarCambioEmail()) {
+//                Yii::$app->session->setFlash('success', '<h2> ¡Ya queda poco! </h2>'
+//                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu email. </p>');
+//            } else {
+//                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2>'
+//                        . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
+//                        . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
+//            }
+//            return $this->redirect(['/cuenta/profile']);
+//        }
+//        return $this->render('cambiarEmailRequest', [
+////                    'model' => $model,
+//        ]);
+//    }
 
     /**
-     * Resets password.
+     * cambia el email
      *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
      */
-    public function actionCambiarEmail($token) {
-
-        $model = new CambiarEmailForm($token);
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->cambiarEmail()) {
-                Yii::$app->session->setFlash('success', '<h2> Email actualizado </h2>'
-                        . '<p> Su dirección de correo fue actualizada. </p>');
-
-                return $this->redirect(['/cuenta/profile']);
-            } else {
-                Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
-                        . '<p> Es probable que el email ya esté registrado. </p>');
-            }
-        }
-
-        return $this->render('cambiarEmail', [
-                    'model' => $model,
-        ]);
-    }
+//    public function actionCambiarEmail($token) {
+//
+//        $model = new CambiarEmailForm($token);
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            if ($model->cambiarEmail()) {
+//                Yii::$app->session->setFlash('success', '<h2> Email actualizado </h2>'
+//                        . '<p> Su dirección de correo fue actualizada. </p>');
+//
+//                return $this->redirect(['/cuenta/profile']);
+//            } else {
+//                Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
+//                        . '<p> Es probable que el email ya esté registrado. </p>');
+//            }
+//        }
+//
+//        return $this->render('cambiarEmail', [
+//                    'model' => $model,
+//        ]);
+//    }
 
 }
