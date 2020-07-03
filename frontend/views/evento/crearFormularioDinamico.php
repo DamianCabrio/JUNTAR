@@ -69,7 +69,26 @@ $this->title = "Crear Formulario";
                     },
                     'delete' => function ($url, $model) use ($evento) {
                         if ($evento->idEstadoEvento != 1):
-                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPregunta', 'data-method' => 'POST']);
+                            return Html::button('<i class="material-icons">remove_circle_outline</i>', ['class' => 'btn btn_icon btn-outline-success borrarPregunta', 'data-toggle' => "modal", "data-target" => "#modalEliminar"])
+                                . '<div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="modalEliminarLabel">¿Esta seguro que quiere eliminar esta pregunta?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Al eliminar una pregunta todas las respuestas de la misma tambien seran eliminadas
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>'.
+                                            Html::a("Eliminar", $url, ["class" => "btn btn-outline-success borrarPregunta", "data-method" => "POST"])
+                                          .'</div>
+                                        </div>
+                                      </div>
+                                    </div>';
                         endif;
                         return "";
                     }
