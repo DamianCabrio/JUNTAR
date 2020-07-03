@@ -392,7 +392,8 @@ class PermissionController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = Permiso::findOne($id)) !== null) {
+//        if (($model = Permiso::findOne($id)) !== null) {
+        if (($model = Permiso::findOne(['name' => $id, 'type' => 2])) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('El permiso que estás intentando acceder no existe.');
