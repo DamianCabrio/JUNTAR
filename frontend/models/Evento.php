@@ -110,7 +110,7 @@ class Evento extends \yii\db\ActiveRecord
             'imgLogo' => 'Img Logo',
             'capacidad' => 'Capacidad',
             'preInscripcion' => 'Preinscripción',
-            'fechaLimiteInscripcion' => 'Fecha Limite Inscripción',
+            'fechaLimiteInscripcion' => 'Fecha Limite de Preinscripción',
             'codigoAcreditacion' => 'Código Acreditación',
             'fechaCreacionEvento' => 'Fecha Creación Evento',
         ];
