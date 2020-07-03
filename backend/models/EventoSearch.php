@@ -68,11 +68,6 @@ class EventoSearch extends Evento {
         ]);
 
         if (!($this->load($params) && $this->validate())) {
-            /**
-             * The following line will allow eager loading with country data 
-             * to enable sorting by country on initial loading of the grid.
-             */
-//            $query->where('0=1');
             return $dataProvider;
         }
         if ($this->nombreUsuario != null && $this->nombreUsuario != '') {
