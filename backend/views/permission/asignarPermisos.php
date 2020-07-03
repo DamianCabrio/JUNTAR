@@ -31,17 +31,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a class="btn col-12 p-0 mb-3" href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rol['name']])) ?>">
                             <div class="card text-center bg-light d-block p-0">
                                 <h5 class="card-header <?php
-                                                        if ($rolSeleccionado == $rol['name']) {
-                                                            //distinguimos el rol seleccionado coloreando su card
-                                                            echo "pinkish_bg text-white";
-                                                        }
-                                                        ?>">
+                                if ($rolSeleccionado == $rol['name']) {
+                                    //distinguimos el rol seleccionado coloreando su card
+                                    echo "pinkish_bg text-white";
+                                }
+                                ?>">
                                     <img class="<?php
-                                                if ($rolSeleccionado == $rol['name']) {
-                                                    echo "filter-white";
-                                                }
-                                                ?>" src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
-                                    <?= Html::encode($rol['name']) ?>
+                                    if ($rolSeleccionado == $rol['name']) {
+                                        echo "filter-white";
+                                    }
+                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
+                                         <?= Html::encode($rol['name']) ?>
                                 </h5>
                                 <div class="card-body">
                                     <p class="card-text"> <?= Html::encode($rol['description']) ?> </p>
@@ -62,14 +62,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!-- Card asignar rol -->
                 <div class="card text-center">
                     <h4 class="card-header text-center lightblue_bg text-white"> Asignar Rol </h4>
-                    <div class="card-body p-0 m-2">
+                    <div class="row card-body p-0 m-2 d-flex justify-content-center">
                         <?php
                         foreach ($roles as $rol) :
                             if ($rol['name'] != "Administrador" && $rol['name'] != $rolSeleccionado) {
-                        ?>
+                                ?>
                                 <!-- inicio card unRol -->
-                                <a class="btn col-md-5 col-sm-12 p-0 m-auto mb-3" href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rolSeleccionado, 'asignarPermiso' => $rol['name']])) ?>">
-                                    <div class="card text-center bg-light p-0">
+                                <div class="card text-center col-md-6 col-sm-12 border-0 p-0 mt-2 mb-2">
+                                    <a class="btn btn-light col-md-11 col-sm-12 p-0 m-auto border" href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rolSeleccionado, 'asignarPermiso' => $rol['name']])) ?>">
                                         <h5 class="card-header">
                                             <img src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
                                             <?= Html::encode($rol['name']) ?>
@@ -92,10 +92,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ?>
                                             <img class="ml-3 <?= $nombreAccion ?>" src="<?= Html::encode($rutaImagen) ?>" alt="<?= Html::encode($nombreAccion) ?>" title="<?= Html::encode($nombreAccion) ?>" width="40" height="40" role="img">
                                         </h5>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
                                 <!-- fin card unRol -->
-                        <?php
+                                <?php
                             }
                         endforeach;
                         ?>
@@ -108,103 +108,103 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h4 class="card-header text-center lightblue_bg text-white"> Asignar Permiso </h4>
                 <div class="col-md-12 col-sm-12 p-0 table-responsive" id="permissionDiv">
                     <?=
-                        GridView::widget([
-                            'dataProvider' => $dataProvider,
-                            'summary' => '',
-                            //                        'filterModel' => $searchModel,
-                            'columns' => [
-                                //                            ['class' => 'yii\grid\SerialColumn'],
-                                //                            'name',
-                                [
-                                    'attribute' => 'name',
-                                    'label' => 'Permiso',
-                                    'value' => 'name',
-                                    'headerOptions' => ['style' => 'width:40%;'],
-                                ],
-                                [
-                                    'attribute' => 'description',
+                    GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'summary' => '',
+                        //                        'filterModel' => $searchModel,
+                        'columns' => [
+                            //                            ['class' => 'yii\grid\SerialColumn'],
+                            //                            'name',
+                            [
+                                'attribute' => 'name',
+                                'label' => 'Permiso',
+                                'value' => 'name',
+                                'headerOptions' => ['style' => 'width:40%;'],
+                            ],
+                            [
+                                'attribute' => 'description',
 //                                    'format' => 'html',
-                                    'label' => 'Descripcion',
-                                    'value' => 'description',
-                                    //                                'value' => function ($data) {
-                                    //                                    return Html::tag('dfn', Html::tag('abbr',
-                                    //                                                            Html::img('iconos/question-circle.svg' . '', ['class' => 'd-none d-md-inline-block filter-blue', 'width' => '26px', 'height' => '26px'])
-                                    //                                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
-                                    //                                            Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
-                                    //                                },
+                                'label' => 'Descripcion',
+                                'value' => 'description',
+                            //                                'value' => function ($data) {
+                            //                                    return Html::tag('dfn', Html::tag('abbr',
+                            //                                                            Html::img('iconos/question-circle.svg' . '', ['class' => 'd-none d-md-inline-block filter-blue', 'width' => '26px', 'height' => '26px'])
+                            //                                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
+                            //                                            Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
+                            //                                },
 //                                    'headerOptions' => ['style' => 'width:50%;', 'class' => 'text-center'],
-                                ],
-                                [
-                                    //genera una url para cada boton de accion
-                                    'class' => 'yii\grid\ActionColumn',
-                                    'urlCreator' => function ($action, $model, $key, $index) use ($rolSeleccionado) {
-                                        if ($action == "update") {
-                                            return Url::to(['/permission/asignar-permisos', 'unRol' => $rolSeleccionado, 'asignarPermiso' => $model['name']]);
+                            ],
+                            [
+                                //genera una url para cada boton de accion
+                                'class' => 'yii\grid\ActionColumn',
+                                'urlCreator' => function ($action, $model, $key, $index) use ($rolSeleccionado) {
+                                    if ($action == "update") {
+                                        return Url::to(['/permission/asignar-permisos', 'unRol' => $rolSeleccionado, 'asignarPermiso' => $model['name']]);
+                                    }
+                                },
+                                //describe los botones de accion
+                                'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        return "";
+                                    },
+                                    'delete' => function ($url, $model) {
+                                        return "";
+                                    },
+                                    'update' => function ($url, $model) use ($rolSeleccionado, $permisosAsignados) {
+                                        if ($rolSeleccionado != null) {
+                                            //bandera utilizada para evitar sobreescribir el resultado necesario
+                                            //comprueba si tiene el permiso asignado o si lo hereda de algun otro rol
+                                            $sobreescribir = true;
+
+                                            foreach ($permisosAsignados as $clave => $permisosRol) :
+                                                //comprobacion para saber si tiene el permiso
+                                                if (in_array($model['name'], array_column($permisosRol, 'name'))) {
+                                                    if ($clave == $rolSeleccionado && $sobreescribir) {
+                                                        $nombreAccion = "Quitar";
+                                                        $sobreescribir = false;
+                                                    } else {
+                                                        $nombreAccion = $clave;
+                                                        $sobreescribir = false;
+                                                    }
+                                                } else {
+                                                    if ($sobreescribir) {
+                                                        $nombreAccion = "Agregar";
+                                                    }
+                                                }
+                                            endforeach;
+
+                                            //genera la imagen final a mostrar
+                                            $rutaImagen = Yii::getAlias("@web/iconos/" . $nombreAccion . ".svg");
+                                            $imagen = '<img src="' . $rutaImagen . '" alt="' . $nombreAccion . '" title="' . $nombreAccion . '" width="30" height="30" role="img">';
+
+                                            if ($nombreAccion != "Quitar" && $nombreAccion != "Agregar") {
+                                                //si el permiso lo tiene por un rol, se agrega la imagen del rol sin enlace
+                                                return $imagen;
+                                            } else {
+                                                //si no viene por rol, se agrega el enlace para quitar el permiso
+                                                return Html::a($imagen, $url, ['class' => "btn btn_icon $nombreAccion"]);
+                                            }
+                                        } else {
+                                            return "";
                                         }
                                     },
-                                    //describe los botones de accion
-                                    'buttons' => [
-                                        'view' => function ($url, $model) {
-                                            return "";
-                                        },
-                                        'delete' => function ($url, $model) {
-                                            return "";
-                                        },
-                                        'update' => function ($url, $model) use ($rolSeleccionado, $permisosAsignados) {
-                                            if ($rolSeleccionado != null) {
-                                                //bandera utilizada para evitar sobreescribir el resultado necesario
-                                                //comprueba si tiene el permiso asignado o si lo hereda de algun otro rol
-                                                $sobreescribir = true;
-
-                                                foreach ($permisosAsignados as $clave => $permisosRol) :
-                                                    //comprobacion para saber si tiene el permiso
-                                                    if (in_array($model['name'], array_column($permisosRol, 'name'))) {
-                                                        if ($clave == $rolSeleccionado && $sobreescribir) {
-                                                            $nombreAccion = "Quitar";
-                                                            $sobreescribir = false;
-                                                        } else {
-                                                            $nombreAccion = $clave;
-                                                            $sobreescribir = false;
-                                                        }
-                                                    } else {
-                                                        if ($sobreescribir) {
-                                                            $nombreAccion = "Agregar";
-                                                        }
-                                                    }
-                                                endforeach;
-
-                                                //genera la imagen final a mostrar
-                                                $rutaImagen = Yii::getAlias("@web/iconos/" . $nombreAccion . ".svg");
-                                                $imagen = '<img src="' . $rutaImagen . '" alt="' . $nombreAccion . '" title="' . $nombreAccion . '" width="30" height="30" role="img">';
-
-                                                if ($nombreAccion != "Quitar" && $nombreAccion != "Agregar") {
-                                                    //si el permiso lo tiene por un rol, se agrega la imagen del rol sin enlace
-                                                    return $imagen;
-                                                } else {
-                                                    //si no viene por rol, se agrega el enlace para quitar el permiso
-                                                    return Html::a($imagen, $url, ['class' => "btn btn_icon $nombreAccion"]);
-                                                }
-                                            } else {
-                                                return "";
-                                            }
-                                        },
-                                    ],
-                                    'header' => 'Accion',
-                                    'headerOptions' => ['style' => 'width:10%;'],
                                 ],
+                                'header' => 'Accion',
+                                'headerOptions' => ['style' => 'width:10%;'],
                             ],
-                            'pager' => [
-                                'class' => '\yii\widgets\LinkPager',
-                                // Css for each options. Links
-                                'linkOptions' => ['class' => 'btn btn-light pageLink'],
-                                'disabledPageCssClass' => 'btn disabled',
-                                'options' => ['class' => 'pagination d-flex justify-content-center'],
-                                'prevPageLabel' => 'Anterior',
-                                'nextPageLabel' => 'Siguiente',
-                                //                            Current Active option value
-                                'activePageCssClass' => 'activePage',
-                            ],
-                        ]);
+                        ],
+                        'pager' => [
+                            'class' => '\yii\widgets\LinkPager',
+                            // Css for each options. Links
+                            'linkOptions' => ['class' => 'btn btn-light pageLink'],
+                            'disabledPageCssClass' => 'btn disabled',
+                            'options' => ['class' => 'pagination d-flex justify-content-center'],
+                            'prevPageLabel' => 'Anterior',
+                            'nextPageLabel' => 'Siguiente',
+                            //                            Current Active option value
+                            'activePageCssClass' => 'activePage',
+                        ],
+                    ]);
                     ?>
                 </div>
             </div>
