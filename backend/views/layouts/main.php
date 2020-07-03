@@ -99,6 +99,8 @@ AppAsset::register($this);
                     ];
                     //ABM ModalidadEventos
                     $menuItems[] = ['label' => 'Modalidades', 'url' => ['/modalidad-evento/index']];
+                    //ABM ModalidadEventos
+                    $menuItems[] = ['label' => 'Categorias', 'url' => ['/categoria-evento/index']];
                     //MenuItems ABM Permisos
                     $menuItems[] = [
                         'label' => 'Permisos',
