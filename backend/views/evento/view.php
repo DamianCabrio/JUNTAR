@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
+use yii\bootstrap4\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Evento */
@@ -16,10 +17,10 @@ YiiAsset::register($this);
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card">
-                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?></h1>
+                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
                 <div class="m-3">
-                    <?= Html::a('Actualizar', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-pink mb-2 col-md-2 col-sm-12']) ?>
+                    <?= Html::a('Actualizar', ['/evento/editar-evento/', 'id' => $model->idEvento], ['class' => 'btn btn-pink mb-2 col-md-2 col-sm-12']) ?>
                     <?php
                     if ($model->idEstadoEvento0->descripcionEstado == "Activo") {
                         echo Html::a('Deshabilitar', ['deshabilitar', 'id' => $model->idEvento], [
@@ -51,7 +52,7 @@ YiiAsset::register($this);
                     ?>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body table-responsive">
 
                     <?=
                     DetailView::widget([
@@ -74,9 +75,17 @@ YiiAsset::register($this);
                                 'label' => 'Organizador',
                                 //formato raw para poder crear un enlace al organizador
                                 'format' => 'raw',
-                                'value' => function ($model) {
-                                    return Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => '']);
+
+                                'value' => function($model) {
+                                    $string = Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => 'mr-4 mb-4']);
+//                                    $string .= Html::tag('br');
+//                                    $string .= Html::tag('br');
+//                                    $string .= Html::tag('br');
+                                    $string .= Html::a('Modificar Organizador', ['/evento/modificar-organizador/', 'idEvento' => $model->idEvento], ['class' => 'mt-2 btn btn-pink col-md-3 col-sm-2 popUpModifyOrganizer']);
+                                    return $string;
+
                                 },
+                                'headerOptions' => ['class' => 'd-flex justify-content-end'],
                             ],
                             [
                                 'attribute' => 'idCategoriaEvento',
@@ -117,6 +126,14 @@ YiiAsset::register($this);
                     ])
                     ?>
                 </div>
+                <?php
+                Modal::begin([
+                    'id' => 'modalModifyOrganizer',
+                    'size' => 'modal-lg'
+                ]);
+                Modal::end();
+                //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS
+                ?>
             </div>
         </div>
     </div>

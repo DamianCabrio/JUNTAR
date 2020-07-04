@@ -110,7 +110,7 @@ class EventoSearch extends Evento {
         }
         //busca nombre organizador
         if ($this->nombreUsuario != null && $this->nombreUsuario != '') {
-            $query->andFilterWhere(['like', 'usuario.nombre', $this->nombreUsuario]);
+            $query->andFilterWhere(['like', 'CONCAT(usuario.nombre," ",usuario.apellido)', $this->nombreUsuario]);
         }
 
         return $dataProvider;

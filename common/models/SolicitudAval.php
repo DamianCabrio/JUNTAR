@@ -79,7 +79,7 @@ class SolicitudAval extends ActiveRecord
         $this->avalado = 0;
         $this->fechaRevision = date("Y/m/d h:i:s");
         $this->validador = Yii::$app->user->identity->idUsuario;
-//        $this->quitarToken();
+        $this->quitarToken();
         $this->save(false);
     }
 
@@ -88,7 +88,7 @@ class SolicitudAval extends ActiveRecord
         $this->avalado = 1;
         $this->fechaRevision = date("Y/m/d h:i:s");
         $this->validador = Yii::$app->user->identity->idUsuario;
-//        $this->quitarToken();
+        $this->quitarToken();
         $this->save(false);
     }
 
