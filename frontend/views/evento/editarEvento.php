@@ -30,10 +30,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                     <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
                     <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
 
-                    <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre',
-                     'data-title' => 'Requisitos',
-                     'data-toggle' => 'popover',
-                     'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales. Ejemplo Mi Evento.',])->label(false) ?>
+                    <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label(false) ?>
                 
                 <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
                 <div class="row">
