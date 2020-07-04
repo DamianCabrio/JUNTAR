@@ -704,6 +704,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 											<!--</div>-->
 											<!--<div class="col-12">-->
 												<?php
+												$verExpositores = " - ";
 												if (count($unaPresentacion->presentacionExpositors) == 0) {
 													if (!Yii::$app->user->isGuest && $unaPresentacion->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
 														$cargarExpositores = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/' . $unaPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success cargarExpositores', 'style' => 'background:#007bff;']);
