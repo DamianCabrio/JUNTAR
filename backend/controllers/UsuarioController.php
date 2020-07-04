@@ -142,26 +142,12 @@ class UsuarioController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelCambiarPw = null;
-//        $modifyPw = null;
-        if (Yii::$app->request->get('modifyPw') != null) {
-            $modelCambiarPw = new CambiarPasswordForm();
-            if ($modelCambiarPw->load(Yii::$app->request->post()) && $modelCambiarPw->validate() && $modelCambiarPw->cambiarPassword(Yii::$app->request->get('id'))) {
-                Yii::$app->session->setFlash('success', '<h2> Contraseña modificada con éxito </h2>');
-                return $this->redirect(['update', 'id' => $model->idUsuario]);
-            }
-        }
-//        if (Yii::$app->request->get('newPassword') != null) {
-//            if ($modelCambiarPw->load(Yii::$app->request->post()) && $modelCambiarPw->validate() && $modelCambiarPw->cambiarPassword($model->idUsuario)) {
-//        }
-
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idUsuario]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'modelCambiarPw' => $modelCambiarPw,
         ]);
     }
 
@@ -192,5 +178,19 @@ class UsuarioController extends Controller
 
         return $this->redirect(Yii::$app->request->referrer);
     }
-
+    /**
+     * Recibe por parámetro el Id del usuario y se envía un correo con el token
+     * para cambiar la contraseña del mismo.
+     *
+     */
+    public function actionRestorePassword($id)
+    {
+      $user = User::findOne(['idUsuario' => $id]);
+      if ($user->sendEmailRestorePassword()) {
+        Yii::$app->session->setFlash('success', 'Correo enviardo');
+      } else {
+        Yii::$app->session->setFlash('error', 'Se ha producido un error, intente nuevamente.');
+      }
+      return $this->redirect(Yii::$app->request->referrer);
+    }
 }
