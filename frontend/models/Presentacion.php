@@ -2,7 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "presentacion".
@@ -20,7 +21,7 @@ use Yii;
  * @property Usuario[] $idExpositors
  * @property PresentacionExpositor[] $presentacionExpositors
  */
-class Presentacion extends \yii\db\ActiveRecord
+class Presentacion extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -34,7 +35,7 @@ class Presentacion extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-    {   
+    {
         return [
             [['idEvento', 'tituloPresentacion', 'descripcionPresentacion', 'horaInicioPresentacion', 'horaFinPresentacion'], 'required'],
             [['idEvento'], 'integer'],
@@ -43,8 +44,8 @@ class Presentacion extends \yii\db\ActiveRecord
             [['descripcionPresentacion'], 'string', 'max' => 2000],
             [['linkARecursos'], 'string', 'max' => 300],
             [['idEvento'], 'exist', 'skipOnError' => true, 'targetClass' => Evento::className(), 'targetAttribute' => ['idEvento' => 'idEvento']],
-            ['horaFinPresentacion','compare','compareAttribute'=>'horaInicioPresentacion','operator'=>'>'],
-            ['diaPresentacion','required'],
+            ['horaFinPresentacion', 'compare', 'compareAttribute' => 'horaInicioPresentacion', 'operator' => '>'],
+            ['diaPresentacion', 'required'],
             [['tituloPresentacion'], 'unique', 'targetAttribute' => ['tituloPresentacion', 'idEvento'], 'message' => 'El nombre de la presentación ya fue registrado.'],
 
         ];
@@ -70,7 +71,7 @@ class Presentacion extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdEvento0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdEvento0()
     {
@@ -80,7 +81,7 @@ class Presentacion extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdExpositors]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdExpositors()
     {
@@ -90,7 +91,7 @@ class Presentacion extends \yii\db\ActiveRecord
     /**
      * Gets query for [[PresentacionExpositors]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPresentacionExpositors()
     {

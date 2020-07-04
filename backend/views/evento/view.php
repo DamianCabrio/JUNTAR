@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 use yii\bootstrap4\Modal;
 
@@ -10,7 +11,7 @@ use yii\bootstrap4\Modal;
 $this->title = $model->nombreEvento;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="evento-view">
     <div class="row">
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     ?>
                     <?php
-//                        print_r($aval);
+                    //                        print_r($aval);
                     if ($aval != null && $aval != '') {
                         if ($aval->avalado != 1) {
                             echo Html::a('Conceder aval FAI', ['solicitud-aval/conceder-aval', 'id' => $model->idEvento], [
@@ -74,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'label' => 'Organizador',
                                 //formato raw para poder crear un enlace al organizador
                                 'format' => 'raw',
+
                                 'value' => function($model) {
                                     $string = Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => 'mr-4 mb-4']);
 //                                    $string .= Html::tag('br');
@@ -81,6 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                    $string .= Html::tag('br');
                                     $string .= Html::a('Modificar Organizador', ['/evento/modificar-organizador/', 'idEvento' => $model->idEvento], ['class' => 'mt-2 btn btn-pink col-md-3 col-sm-2 popUpModifyOrganizer']);
                                     return $string;
+
                                 },
                                 'headerOptions' => ['class' => 'd-flex justify-content-end'],
                             ],

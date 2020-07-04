@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $user common\models\User */
 ?>
@@ -16,15 +14,15 @@ use yii\helpers\Html;
 
 <body>
 
-     <div class="verify-email" style="padding-top: 30px; padding-bottom: 30px; padding-right: 5px; padding-left:5px;">
+<div class="verify-email" style="padding-top: 30px; padding-bottom: 30px; padding-right: 5px; padding-left:5px;">
 
-        <p>  <?= $mensaje?></p>
+    <p>  <?= $mensaje ?></p>
 
-        <div style="margin-top: 15px;">
-            <small><i>(Correo Generado Automáticamente)<i></small>
-        </div>
+    <div style="margin-top: 15px;">
+        <small><i>(Correo Generado Automáticamente)<i></small>
     </div>
-  
+</div>
+
 </body>
 </html>
 

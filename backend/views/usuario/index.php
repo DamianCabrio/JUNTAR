@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\UsuarioSearch */
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'nombre',
                                     'label' => 'Nombre',
-                                    'value' => function($model) {
+                                    'value' => function ($model) {
                                         return $model->nombre . " " . $model->apellido;
                                     },
                                 ],
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'status',
                                     'label' => 'Estado',
-                                    'value' => function($model) {
+                                    'value' => function ($model) {
                                         $estado = "";
                                         switch ($model->status) {
                                             case 0:
@@ -69,20 +69,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'created_at',
                                     'label' => 'Fecha Registro',
-                                    'value' => function($dataProvider) {
-//                                        echo
-                                        return date("d-m-Y H:i:s", $dataProvider->created_at);
+                                    'value' => function ($dataProvider) {
+                                        return date("Y-m-d H:i:s", $dataProvider->created_at);
                                     },
                                 ],
                                 ['class' => 'yii\grid\ActionColumn',
                                     'buttons' => [
-                                        'update' => function($url, $model) {
+                                        'update' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        'view' => function($url, $model) {
+                                        'view' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        'delete' => function($url, $model) {
+                                        'delete' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', ['/usuario/deshabilitar', 'id' => $model->idUsuario], ['class' => 'btn btn-pink']);
                                         }
                                     ]
@@ -107,4 +106,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-

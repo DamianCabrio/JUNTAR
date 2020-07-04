@@ -1,10 +1,12 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\ResetPasswordForm */
 
-use yii\helpers\Html;
+/* @var $model ResetPasswordForm */
+
+use frontend\models\ResetPasswordForm;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 $this->title = 'Cambiar email';
 $this->params['breadcrumbs'][] = $this->title;

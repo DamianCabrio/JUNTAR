@@ -2,12 +2,14 @@
 
 namespace backend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[Regla]].
  *
  * @see Regla
  */
-class ReglaQuery extends \yii\db\ActiveQuery
+class ReglaQuery extends ActiveQuery
 {
     /*public function active()
     {

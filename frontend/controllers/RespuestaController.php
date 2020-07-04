@@ -3,20 +3,14 @@
 namespace frontend\controllers;
 
 use frontend\models\Evento;
-use frontend\models\Inscripcion;
 use frontend\models\Pregunta;
 use frontend\models\Respuesta;
-
-use frontend\models\RespuestaCorta;
 use frontend\models\RespuestaFile;
-use frontend\models\RespuestaLarga;
 use frontend\models\RespuestaSearch;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
 /**
  * RespuestaController implements the CRUD actions for Respuesta model.
@@ -71,19 +65,20 @@ class RespuestaController extends Controller
         return $behaviors;
     }
 
-    public function actionVer($slug, $id){
+    public function actionVer($slug, $id)
+    {
 
         $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
-        if($this->verificarDueño($evento->idEvento)) {
+        if ($this->verificarDueño($evento->idEvento)) {
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
 
-            if($preguntas != null){
+            if ($preguntas != null) {
                 $respuestas = [];
-                foreach ($preguntas as $pregunta){
+                foreach ($preguntas as $pregunta) {
                     $respuesta = RespuestaSearch::find()->where(["idpregunta" => $pregunta->id, "idinscripcion" => $id])->one();
-                    if($respuesta == null){
+                    if ($respuesta == null) {
                         array_push($respuestas, null);
-                    }else{
+                    } else {
                         array_push($respuestas, $respuesta);
                     }
                 }
@@ -102,7 +97,7 @@ class RespuestaController extends Controller
                     "esAjax" => false,
                 ]);
             }
-        }else{
+        } else {
             return $this->goHome();
         }
     }
@@ -174,7 +169,8 @@ class RespuestaController extends Controller
 //        }
 //    }
 
-    public function verificarDueño($id) {
+    public function verificarDueño($id)
+    {
 
         $evento = Evento::find()->where(["idEvento" => $id])->one();
 

@@ -11,7 +11,7 @@ return [
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
-        ],'assetManager' => [
+        ], 'assetManager' => [
             'appendTimestamp' => true,
         ],
         //configuramos el nombre modificado de las tablas que utilizará authManager
@@ -19,10 +19,10 @@ return [
             'class' => 'yii\rbac\DbManager',
 //            'class' => 'vendor\yourVenderName\auth\models\DbManager',
 
-              // uncomment if you want to cache RBAC items hierarchy
+            // uncomment if you want to cache RBAC items hierarchy
 //            'cache' => 'cache',
 
-            
+
             //renombramos las tablas auth  
             'itemTable' => 'permiso',
             'assignmentTable' => 'usuario_rol',

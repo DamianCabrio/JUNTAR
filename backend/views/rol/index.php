@@ -1,8 +1,8 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PermisoSearch */
@@ -31,12 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'name',
                                     'label' => 'Permiso',
-                                    'value' => 'name',     
+                                    'value' => 'name',
                                 ],
                                 [
                                     'attribute' => 'description',
                                     'label' => 'Descripción',
-                                    'value' => 'description',     
+                                    'value' => 'description',
                                 ],
                                 [
                                     'attribute' => 'created_at',

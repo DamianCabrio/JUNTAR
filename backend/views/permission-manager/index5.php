@@ -1,12 +1,9 @@
 <?php
 
-use yii\helpers\Html;
 use yii\bootstrap\NavBar;
-use yii\bootstrap4\Nav;
 use yii\grid\GridView;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
-use yii\widgets\LinkPager;
-use \yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioSearch */
@@ -31,8 +28,9 @@ $this->title = 'Asignación de Roles';
         <div class="col-md-4 col-sm-12">
             <h1 class="text-center"> Roles </h1>
             <?php foreach ($roles as $rol): ?>
-                <a class="btn col-12 buttonRol nav-link" data-toggle="pill" data-id="<?php echo Html::encode($rol['name']) ?>" href="#"> 
-                    <?php echo $rol['name'] ?> 
+                <a class="btn col-12 buttonRol nav-link" data-toggle="pill"
+                   data-id="<?php echo Html::encode($rol['name']) ?>" href="#">
+                    <?php echo $rol['name'] ?>
                 </a>
             <?php endforeach; ?>
 
@@ -49,14 +47,15 @@ $this->title = 'Asignación de Roles';
                     foreach ($roles as $index => $rol) {
                         if ($rol['name'] != "Administrador") {
                             ?>
-                            <div class="<?php echo'order-' . Html::encode($index); ?> roles col-md-6 col-sm-12 border" id="<?php echo Html::encode($rol['name']); ?>"> 
+                            <div class="<?php echo 'order-' . Html::encode($index); ?> roles col-md-6 col-sm-12 border"
+                                 id="<?php echo Html::encode($rol['name']); ?>">
                                 <p class="text-center"> <?php echo Html::encode($rol['name']); ?> </p>
                                 <div class="roleActionDiv d-flex justify-content-center"></div>
                             </div>
                             <?php
                         }
                     }
-//                    endforeach;
+                    //                    endforeach;
                     ?>
                 </div>
 
@@ -78,15 +77,15 @@ $this->title = 'Asignación de Roles';
                                 'label' => 'Descripcion',
                                 'value' => function ($data) {
                                     return Html::tag('dfn', Html::tag('abbr',
-                                                            Html::img('iconos/question-circle.svg' . '', ['class' => 'd-none d-md-inline-block filter-blue', 'width' => '26px', 'height' => '26px'])
-                                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
-                                            Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
+                                            Html::img('iconos/question-circle.svg' . '', ['class' => 'd-none d-md-inline-block filter-blue', 'width' => '26px', 'height' => '26px'])
+                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
+                                        Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
                                 },
                             ],
                             'columns' => [
                                 'format' => 'raw',
                                 'label' => '',
-                                'value' => function($model, $key, $index, $column) {
+                                'value' => function ($model, $key, $index, $column) {
                                     return Html::tag('div', '', ['class' => 'actionDiv d-flex justify-content-center']);
                                 }
                             ],
@@ -106,11 +105,11 @@ $this->title = 'Asignación de Roles';
                     ?>
                     <?php
                     // display pagination
-//                    LinkPager::widget([
-//                        'pagination' => $pages,
-//                        // Css for each options. Links
-//                        'linkOptions' => ['class' => 'btn btn-light'],
-//                    ]);
+                    //                    LinkPager::widget([
+                    //                        'pagination' => $pages,
+                    //                        // Css for each options. Links
+                    //                        'linkOptions' => ['class' => 'btn btn-light'],
+                    //                    ]);
                     ?>
                     <?php Pjax::end(); ?>
                 </div>

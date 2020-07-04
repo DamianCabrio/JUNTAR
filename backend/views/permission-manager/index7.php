@@ -1,9 +1,9 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
+use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioSearch */
@@ -23,7 +23,8 @@ $this->title = 'Asignar Permisos';
                 <div class="card-body ">
                     <?php foreach ($roles as $rol): ?>
                         <!-- inicio card unRol -->
-                        <a class="btn col-12 p-0 mb-3" href="<?= Html::encode(Url::to(['permission-manager/index7', 'unRol' => $rol['name']])) ?>">
+                        <a class="btn col-12 p-0 mb-3"
+                           href="<?= Html::encode(Url::to(['permission-manager/index7', 'unRol' => $rol['name']])) ?>">
                             <div class="card text-center bg-light d-block p-0">
                                 <h5 class="card-header <?php
                                 if ($rolSeleccionado == $rol['name']) {
@@ -35,8 +36,10 @@ $this->title = 'Asignar Permisos';
                                     if ($rolSeleccionado == $rol['name']) {
                                         echo "filter-white";
                                     }
-                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
-                                         <?= Html::encode($rol['name']) ?> 
+                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>"
+                                         alt="<?= Html::encode($rol['name']) ?>"
+                                         title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
+                                    <?= Html::encode($rol['name']) ?>
                                 </h5>
                                 <div class="card-body">
                                     <p class="card-text"> <?= Html::encode($rol['description']) ?> </p>
@@ -63,10 +66,14 @@ $this->title = 'Asignar Permisos';
                             if ($rol['name'] != "Administrador" && $rol['name'] != $rolSeleccionado) {
                                 ?>
                                 <!-- inicio card unRol -->
-                                <a class="btn col-md-5 col-sm-12 p-0 m-auto mb-3" href="<?= Html::encode(Url::to(['permission-manager/index7', 'unRol' => $rolSeleccionado, 'asignarRol' => $rol['name']])) ?>">
+                                <a class="btn col-md-5 col-sm-12 p-0 m-auto mb-3"
+                                   href="<?= Html::encode(Url::to(['permission-manager/index7', 'unRol' => $rolSeleccionado, 'asignarRol' => $rol['name']])) ?>">
                                     <div class="card text-center bg-light p-0">
                                         <h5 class="card-header">
-                                            <img src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
+                                            <img src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>"
+                                                 alt="<?= Html::encode($rol['name']) ?>"
+                                                 title="<?= Html::encode($rol['name']) ?>" width="40" height="40"
+                                                 role="img">
                                             <?= Html::encode($rol['name']) ?>
                                             <?php
                                             if ($rolSeleccionado != null && $rolSeleccionado != '') {
@@ -85,7 +92,11 @@ $this->title = 'Asignar Permisos';
                                                 $nombreAccion = "";
                                             }
                                             ?>
-                                            <img class="ml-3 <?= $nombreAccion ?>" src="<?= Html::encode($rutaImagen) ?>" alt="<?= Html::encode($nombreAccion) ?>" title="<?= Html::encode($nombreAccion) ?>" width="40" height="40" role="img">
+                                            <img class="ml-3 <?= $nombreAccion ?>"
+                                                 src="<?= Html::encode($rutaImagen) ?>"
+                                                 alt="<?= Html::encode($nombreAccion) ?>"
+                                                 title="<?= Html::encode($nombreAccion) ?>" width="40" height="40"
+                                                 role="img">
                                         </h5>
                                     </div>
                                 </a>

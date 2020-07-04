@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\Evento;
 use backend\models\Usuario;
 use backend\models\EventoSearch;
@@ -10,6 +9,8 @@ use backend\models\CategoriaEvento;
 use backend\models\ModalidadEvento;
 use backend\models\CambiarOrganizadorForm;
 use common\models\SolicitudAval;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
@@ -18,12 +19,14 @@ use yii\helpers\ArrayHelper;
 /**
  * EventoController implements the CRUD actions for Evento model.
  */
-class EventoController extends Controller {
+class EventoController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -63,7 +66,8 @@ class EventoController extends Controller {
      * Lists all Evento models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new EventoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
@@ -78,11 +82,12 @@ class EventoController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $aval = SolicitudAval::findOne(['idEvento' => $id]);
         return $this->render('view', [
-                    'model' => $this->findModel($id),
-                    'aval' => $aval,
+            'model' => $this->findModel($id),
+            'aval' => $aval,
         ]);
     }
 
@@ -104,12 +109,29 @@ class EventoController extends Controller {
 //    }
 
     /**
+     * Finds the Evento model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Evento the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Evento::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('La página solicitada no existe.');
+    }
+
+    /**
      * Updates an existing Evento model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+
 //    public function actionUpdate($id) {
 //        $model = $this->findModel($id);
 //
@@ -121,6 +143,7 @@ class EventoController extends Controller {
 //                    'model' => $model,
 //        ]);
 //    }
+
 
     public function actionEditarEvento($id) {
 //        $model = new Evento($id);
@@ -139,6 +162,7 @@ class EventoController extends Controller {
             $model->save();
             return $this->redirect(['/evento/view/', 'id' => $id]);
         }
+
         $categoriasEventos = CategoriaEvento::find()
                 ->select(['descripcionCategoria'])
                 ->indexBy('idCategoriaEvento')
@@ -152,6 +176,7 @@ class EventoController extends Controller {
                     'model' => $model,
                     'categoriasEventos' => $categoriasEventos,
                     'modalidadEvento' => $modalidadEvento,
+
         ]);
     }
 
@@ -203,7 +228,8 @@ class EventoController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDeshabilitar($id) {
+    public function actionDeshabilitar($id)
+    {
         $this->findModel($id)->deshabilitar();
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -216,25 +242,11 @@ class EventoController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionHabilitar($id) {
+    public function actionHabilitar($id)
+    {
         $this->findModel($id)->habilitar();
 
         return $this->redirect(Yii::$app->request->referrer);
-    }
-
-    /**
-     * Finds the Evento model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Evento the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id) {
-        if (($model = Evento::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
 }

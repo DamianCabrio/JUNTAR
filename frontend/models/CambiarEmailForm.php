@@ -2,21 +2,22 @@
 
 namespace frontend\models;
 
-use yii;
-use yii\base\Model;
 use common\models\User;
+use yii;
 use yii\base\InvalidArgumentException;
+use yii\base\Model;
 
 /**
  * Password reset form
  */
-class CambiarEmailForm extends Model {
+class CambiarEmailForm extends Model
+{
 
     public $email;
     public $repeatNewEmail;
 
     /**
-     * @var \common\models\User
+     * @var User
      */
     private $_user;
 
@@ -27,7 +28,8 @@ class CambiarEmailForm extends Model {
      * @param array $config name-value pairs that will be used to initialize the object properties
      * @throws InvalidArgumentException if token is empty or not valid
      */
-    public function __construct($token, $config = []) {
+    public function __construct($token, $config = [])
+    {
         if (empty($token) || !is_string($token)) {
             throw new InvalidArgumentException('Password reset token cannot be blank.');
         }
@@ -35,7 +37,7 @@ class CambiarEmailForm extends Model {
         if (Yii::$app->user->identity->getNewEmailToken() == $token) {
             $this->_user = Yii::$app->user->identity;
         } else {
-            throw new InvalidArgumentException('Wrong password reset token. Actual token: '.Yii::$app->user->identity->getNewEmailToken() . ", Token received: ".$token);
+            throw new InvalidArgumentException('Wrong password reset token. Actual token: ' . Yii::$app->user->identity->getNewEmailToken() . ", Token received: " . $token);
         }
         parent::__construct($config);
     }
@@ -43,7 +45,8 @@ class CambiarEmailForm extends Model {
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             //Reglas password
             ['email', 'trim'],
@@ -60,7 +63,8 @@ class CambiarEmailForm extends Model {
      *
      * @return bool if password was reset.
      */
-    public function cambiarEmail() {
+    public function cambiarEmail()
+    {
         if (!$this->validate()) {
             return null;
         } else {

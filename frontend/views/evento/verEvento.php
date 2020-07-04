@@ -4,8 +4,6 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Url;
-use frontend\models\PresentacionExpositor;
-use frontend\models\Usuario;
 
 $this->title = $evento->nombreEvento . " - Juntar";
 
@@ -88,7 +86,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
             <h1 class="text-white text-uppercase"><?= $evento->nombreEvento ?></h1>
             <div class="row padding_section">
                 <div class="col text-center">
-                    <h4 class="text-white"><i class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></h4>
+                    <h4 class="text-white"><i
+                                class="material-icons large align-middle">date_range</i> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?>
+                    </h4>
                     <h4><i class="material-icons large align-middle">location_on</i> <?= $evento->lugar ?></h4>
                     <?php if ($esFai == 1) : ?>
                         <h5 class="text-white">Evento organizado por la FAI</h5>
@@ -103,51 +103,62 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
     <div class="container-fluid darkish_bg">
         <div id="evento" class="dark_light_bg padding_hero">
             <div class="container">
-                <?php if ($evento->fechaFinEvento < date("Y-m-d") || $evento->idEstadoEvento == 3){?>
-                <div class="alert alert-warning text-center" role="alert">
-                    <b>EL EVENTO SE ENCUENTRA FINALIZADO</b>
-                </div>
-                <?php }?>
+                <?php if ($evento->fechaFinEvento < date("Y-m-d") || $evento->idEstadoEvento == 3) { ?>
+                    <div class="alert alert-warning text-center" role="alert">
+                        <b>EL EVENTO SE ENCUENTRA FINALIZADO</b>
+                    </div>
+                <?php } ?>
                 <div class="card bg-white">
                     <?php
                     if ($esDueño) {
-                    ?>
+                        ?>
                         <div class="card-header pinkish_bg">
                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group mr-2  clearfix" role="group" aria-label="First group">
                                     <?= Html::a(' <i class="material-icons" style="padding-top:7px">edit</i>', ['/eventos/editar-evento/' . $evento->nombreCortoEvento], ['class' => 'text-light btn']) ?>
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Second group">
-                                    <button type="button" class="btn btn-txt">Evento <?php echo $estadoEvento ?></button>
+                                    <button type="button" class="btn btn-txt">
+                                        Evento <?php echo $estadoEvento ?></button>
                                 </div>
 
                                 <?php
                                 if (($evento->idEstadoEvento) == 4) {
-                                ?>
+                                    ?>
                                     <div class="btn-group" role="group" aria-label="Third group">
-                                        <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
-                                        <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#publicar">Publicar</button>
+                                        <button type="button" class="btn  estado_negrita float-right"
+                                                data-toggle="modal" data-target="#finalizar">Finalizar
+                                        </button>
+                                        <button type="button" class="btn  estado_negrita float-right"
+                                                data-toggle="modal" data-target="#publicar">Publicar
+                                        </button>
                                     </div>
                                     <!-- Button trigger modal -->
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="finalizar" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Atención</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>¿Está seguro de querer finalizar su evento?</p>
-                                                    <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
+                                                    <p>No será visible en los lanzamientos de la plataforma, dejará de
+                                                        estar disponible para las inscripciones y no podrá volver a
+                                                        publicarlo</p>
                                                     <span class="float-right font-weight-bold">Juntar</span>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <?= Html::a('Si', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">No
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,84 +167,104 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <!-- Button trigger modal -->
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="publicar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="publicar" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Atención</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>¿Está seguro de querer publicar su evento?</p>
-                                                    <p>Será visible en los lanzamientos de la plataforma y pasará a estar disponible para las inscripciones</p>
+                                                    <p>Será visible en los lanzamientos de la plataforma y pasará a
+                                                        estar disponible para las inscripciones</p>
                                                     <span class="float-right font-weight-bold">Juntar</span>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <?= Html::a('Si', ['eventos/publicar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">No
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <?php
+                                    <?php
                                 } elseif (($evento->idEstadoEvento) == 1) {
-                                ?>
+                                    ?>
                                     <div class="btn-group" role="group" aria-label="Fourth group">
-                                        <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#finalizar">Finalizar</button>
+                                        <button type="button" class="btn  estado_negrita float-right"
+                                                data-toggle="modal" data-target="#finalizar">Finalizar
+                                        </button>
                                         <?php if ($evento->fechaFinEvento > date("Y-m-d")) : ?>
-                                            <button type="button" class="btn  estado_negrita float-right" data-toggle="modal" data-target="#publicar">Suspender</button>
+                                            <button type="button" class="btn  estado_negrita float-right"
+                                                    data-toggle="modal" data-target="#publicar">Suspender
+                                            </button>
                                         <?php endif; ?>
                                     </div>
                                     <!-- Button trigger modal -->
 
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="finalizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="finalizar" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Atención</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>¿Está seguro de querer finalizar su evento?</p>
-                                                    <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y no podrá volver a publicarlo</p>
+                                                    <p>No será visible en los lanzamientos de la plataforma, dejará de
+                                                        estar disponible para las inscripciones y no podrá volver a
+                                                        publicarlo</p>
                                                     <span class="float-right font-weight-bold">Juntar</span>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <?= Html::a('Si', ['eventos/finalizar-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">No
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                                 <!-- Button trigger modal -->
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="publicar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="publicar" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Atención</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
                                                 <p>¿Está seguro de querer suspender su evento?</p>
-                                                <p>No será visible en los lanzamientos de la plataforma, dejará de estar disponible para las inscripciones y podrá seguir editando</p>
+                                                <p>No será visible en los lanzamientos de la plataforma, dejará de estar
+                                                    disponible para las inscripciones y podrá seguir editando</p>
                                                 <span class="float-right font-weight-bold">Juntar</span>
                                             </div>
                                             <div class="modal-footer">
                                                 <?= Html::a('Si', ['eventos/suspender-evento/' . $evento->nombreCortoEvento], ['class' => 'btn']) ?>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    No
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -248,21 +279,28 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <?php else : ?>
                                         <?php if ($estadoAval->avalado != '0' && $estadoAval->avalado != '1') : ?>
                                             <div class="btn-group" role="group" aria-label="Sixth group">
-                                                <button type="button" class="btn float-right disabled" data-toggle="modal" data-target="#aval-solicitado">Solicitar aval</button>
+                                                <button type="button" class="btn float-right disabled"
+                                                        data-toggle="modal" data-target="#aval-solicitado">Solicitar
+                                                    aval
+                                                </button>
                                             </div>
 
                                             <!-- modal aval-->
-                                            <div class="modal fade" id="aval-solicitado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="aval-solicitado" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Usted ya ha solicitado el aval el día <?= Yii::$app->formatter->asDatetime($estadoAval->fechaSolicitud, 'dd/MM/yyyy') ?></h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title">Usted ya ha solicitado el aval el
+                                                                día <?= Yii::$app->formatter->asDatetime($estadoAval->fechaSolicitud, 'dd/MM/yyyy') ?></h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <p class="text-">Un representante de la Facultad de Informática está evaluando su evento.</p>
+                                                            <p class="text-">Un representante de la Facultad de
+                                                                Informática está evaluando su evento.</p>
                                                             <p></p>
                                                             <hr>
                                                             <span class="float-right font-weight-bold">Juntar</span>
@@ -275,13 +313,14 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 <?php endif; ?>
                                 <?php if ($estadoAval != 'no solicitado' && $estadoAval->avalado == '0') : ?>
                                     <div class="btn-group" role="group" aria-label="Seventh group">
-                                        <button class="btn float-right disabled"><b>Solicitud de Aval Rechazado</b></button>
+                                        <button class="btn float-right disabled"><b>Solicitud de Aval Rechazado</b>
+                                        </button>
                                     </div>
 
                                 <?php endif; ?>
                             </div>
                         </div>
-                    <?php
+                        <?php
                     } elseif (Yii::$app->user->isGuest || !Yii::$app->user->isGuest) { // Para mostrar a los user invitados
 
                         echo '<div class="card-header pinkish_bg text-center">';
@@ -312,7 +351,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                 }
                                 ?>
                                 <div class="padding_section">
-                                    <i class="material-icons align-middle">today</i><span class=" align-middle"> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></span>
+                                    <i class="material-icons align-middle">today</i><span
+                                            class=" align-middle"> <?= date("d-m-Y", strtotime($evento->fechaInicioEvento)) ?></span>
                                     <br>
                                     <?php if ($esDueño || $esAdministrador) { ?>
                                         <i class="material-icons align-middle">email</i>
@@ -410,7 +450,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <?php endif; ?>
                                     <!-- Validar evento - Usuario Validador-->
                                     <?php if ($estadoAval != 'no solicitado' && Yii::$app->user->can('Validador')) : ?>
-                                        <?php if ($estadoAval->avalado != '0' &&  $estadoAval->avalado != '1') : ?>
+                                        <?php if ($estadoAval->avalado != '0' && $estadoAval->avalado != '1') : ?>
                                             <?= Html::a('Denegar Aval <i class="material-icons align-middle">highlight_off</i>', ['denegar-solicitud', 'id' => $evento->idEvento], [
                                                 'class' => 'btn m-2 float-right',
                                             ]); ?>
@@ -447,11 +487,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <li class="list-group-item darkish_bg text-white">
                                         <p><b>Fecha Límite de Inscripción: </b></p>
                                         <span><?php
-                                                if ($evento->fechaLimiteInscripcion == null || $evento->fechaLimiteInscripcion == '1969-12-31') {
-                                                    echo   "Sin fecha límite"; ////
-                                                } else {
-                                                    echo  date("d-m-Y", strtotime($evento->fechaLimiteInscripcion));
-                                                } ?></span>
+                                            if ($evento->fechaLimiteInscripcion == null || $evento->fechaLimiteInscripcion == '1969-12-31') {
+                                                echo "Sin fecha límite"; ////
+                                            } else {
+                                                echo date("d-m-Y", strtotime($evento->fechaLimiteInscripcion));
+                                            } ?></span>
                                     </li>
                                     <li class="list-group-item darkish_bg text-white">
                                         <p><b>Lugar: </b></p>
@@ -509,114 +549,114 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                 <div class="table table-responsive">
                                     <?=
-                                        GridView::widget([
-                                            'dataProvider' => $presentacionDataProvider,
-                                            'summary' => '',
-                                            //                        'filterModel' => $searchModel,
-                                            'options' => ['style' => 'width:100%;'],
-                                            'columns' => [
-                                                ['class' => 'yii\grid\SerialColumn'],
-                                                //'idPresentacion',
-                                                //'tituloPresentacion',
-                                                [
-                                                    'attribute' => 'Título',
-                                                    'format' => 'raw',
-                                                    'value' => function ($dataProvider) {
-                                                        //return $dataProvider->tituloPresentacion . ' <br/><small>' . Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']) . '</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
-                                                        return $dataProvider->tituloPresentacion . ' <br/><small>' . Html::a('(Más información)', ['/presentacion/view', 'presentacion' => $dataProvider->idPresentacion], ['class' => 'verPresentacion']) . '</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>
-                                                    },
-                                                    'headerOptions' => ['style' => 'width:30%;text-align:center;'],
-                                                ],
-                                                //'diaPresentacion',
-                                                [
-                                                    'attribute' => 'Día',
-                                                    'value' => function ($dataProvider) {
-                                                        $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
-                                                        return $fechaConBarras;
-                                                    },
-                                                    'headerOptions' => ['style' => 'text-align:center;'],
-                                                    'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                                ],
-                                                //'horaInicioPresentacion',
-                                                [
-                                                    'attribute' => 'Inicio',
-                                                    'value' => function ($dataProvider) {
-                                                        $horaSinSegundos = date('H:i', strtotime($dataProvider->horaInicioPresentacion));
-                                                        return $horaSinSegundos;
-                                                    },
-                                                    'headerOptions' => ['style' => 'text-align:center;'],
-                                                    'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                                ],
-                                                //'linkARecursos',
-                                                [
-                                                    'attribute' => 'Recursos',
-                                                    'format' => 'raw',
-                                                    'value' => function ($dataProvider) {
-                                                        //HACER IF
-                                                        if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
-                                                            $retorno = 'No hay recursos para mostrar';
-                                                        } else {
-                                                            $retorno = '<a target="_blank" href="' . $dataProvider->linkARecursos . '"><i class="material-icons">attachment</i></a>';
-                                                        }
-                                                        return $retorno;
-                                                    },
-                                                    'headerOptions' => ['style' => 'text-align:center;'],
-                                                    'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                                ],
-                                                [
-                                                    'attribute' => 'Expositores',
-                                                    'format' => 'raw',
-                                                    'value' => function ($dataProvider) {
-
-                                                        if (count($dataProvider->presentacionExpositors) == 0) {
-                                                            $string = "No hay expositores";
-
-                                                            if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
-                                                                $string .= ' ' . Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/' . $dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
-                                                            }
-                                                        } else {
-                                                            $string = "";
-                                                            if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
-                                                                $string = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/' . $dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
-                                                            }
-                                                            $string .= '&nbsp;&nbsp;&nbsp;&nbsp;' . Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores/' . $dataProvider->idPresentacion], ['class' => 'verExpositores']);
-                                                        }
-                                                        return $string;
-                                                    },
-                                                    'headerOptions' => ['style' => 'text-align:center;'],
-                                                    'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                                ],
-                                                //'expositores',
-
-                                                [
-                                                    'class' => 'yii\grid\ActionColumn',
-                                                    //genera una url para cada boton de accion
-                                                    'urlCreator' => function ($action, $model, $key, $index) {
-                                                        if ($action == "update") {
-                                                            return Url::to(['/presentacion/update', 'presentacion' => $key]);
-                                                        }
-                                                        if ($action == "delete") {
-                                                            return Url::to(['/presentacion/borrar', 'presentacion' => $key]);
-                                                        }
-                                                    },
-                                                    //describe los botones de accion
-                                                    'buttons' => [
-                                                        'update' => function ($url, $model) {
-                                                            //                                                    return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn editarPresentacion']);
-                                                            return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPresentacion']);
-                                                        },
-                                                        'delete' => function ($url, $model) {
-                                                            return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPresentacion']);
-                                                        }
-                                                    ],
-                                                    'header' => 'Acciones',
-                                                    'headerOptions' => ['style' => 'text-align:center;'],
-                                                    'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
-                                                    'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 || $evento->idEstadoEvento == 3),
-                                                ],
-                                                //
+                                    GridView::widget([
+                                        'dataProvider' => $presentacionDataProvider,
+                                        'summary' => '',
+                                        //                        'filterModel' => $searchModel,
+                                        'options' => ['style' => 'width:100%;'],
+                                        'columns' => [
+                                            ['class' => 'yii\grid\SerialColumn'],
+                                            //'idPresentacion',
+                                            //'tituloPresentacion',
+                                            [
+                                                'attribute' => 'Título',
+                                                'format' => 'raw',
+                                                'value' => function ($dataProvider) {
+                                                    //return $dataProvider->tituloPresentacion . ' <br/><small>' . Html::a('(Más información)', [Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion])], ['class' => 'verPresentacion']) . '</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>                                            },
+                                                    return $dataProvider->tituloPresentacion . ' <br/><small>' . Html::a('(Más información)', ['/presentacion/view', 'presentacion' => $dataProvider->idPresentacion], ['class' => 'verPresentacion']) . '</small>'; //<a href="' . Url::to(['presentacion/view', 'presentacion' => $dataProvider->idPresentacion, 'class' => 'verPresentacion']) . '">(Más información)</a>
+                                                },
+                                                'headerOptions' => ['style' => 'width:30%;text-align:center;'],
                                             ],
-                                        ]);
+                                            //'diaPresentacion',
+                                            [
+                                                'attribute' => 'Día',
+                                                'value' => function ($dataProvider) {
+                                                    $fechaConBarras = date('d/m/Y', strtotime($dataProvider->diaPresentacion));
+                                                    return $fechaConBarras;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            //'horaInicioPresentacion',
+                                            [
+                                                'attribute' => 'Inicio',
+                                                'value' => function ($dataProvider) {
+                                                    $horaSinSegundos = date('H:i', strtotime($dataProvider->horaInicioPresentacion));
+                                                    return $horaSinSegundos;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            //'linkARecursos',
+                                            [
+                                                'attribute' => 'Recursos',
+                                                'format' => 'raw',
+                                                'value' => function ($dataProvider) {
+                                                    //HACER IF
+                                                    if ($dataProvider->linkARecursos == null || $dataProvider->linkARecursos == "") {
+                                                        $retorno = 'No hay recursos para mostrar';
+                                                    } else {
+                                                        $retorno = '<a target="_blank" href="' . $dataProvider->linkARecursos . '"><i class="material-icons">attachment</i></a>';
+                                                    }
+                                                    return $retorno;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            [
+                                                'attribute' => 'Expositores',
+                                                'format' => 'raw',
+                                                'value' => function ($dataProvider) {
+
+                                                    if (count($dataProvider->presentacionExpositors) == 0) {
+                                                        $string = "No hay expositores";
+
+                                                        if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
+                                                            $string .= ' ' . Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/' . $dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
+                                                        }
+                                                    } else {
+                                                        $string = "";
+                                                        if (!Yii::$app->user->isGuest && $dataProvider->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
+                                                            $string = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/' . $dataProvider->idPresentacion], ['class' => 'cargarExpositores']);
+                                                        }
+                                                        $string .= '&nbsp;&nbsp;&nbsp;&nbsp;' . Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores/' . $dataProvider->idPresentacion], ['class' => 'verExpositores']);
+                                                    }
+                                                    return $string;
+                                                },
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                            ],
+                                            //'expositores',
+
+                                            [
+                                                'class' => 'yii\grid\ActionColumn',
+                                                //genera una url para cada boton de accion
+                                                'urlCreator' => function ($action, $model, $key, $index) {
+                                                    if ($action == "update") {
+                                                        return Url::to(['/presentacion/update', 'presentacion' => $key]);
+                                                    }
+                                                    if ($action == "delete") {
+                                                        return Url::to(['/presentacion/borrar', 'presentacion' => $key]);
+                                                    }
+                                                },
+                                                //describe los botones de accion
+                                                'buttons' => [
+                                                    'update' => function ($url, $model) {
+                                                        //                                                    return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn editarPresentacion']);
+                                                        return Html::a('<i class="material-icons">edit</i>', $url, ['class' => 'btn btn_icon btn-outline-success editarPresentacion']);
+                                                    },
+                                                    'delete' => function ($url, $model) {
+                                                        return Html::a('<i class="material-icons">remove_circle_outline</i>', $url, ['class' => 'btn btn_icon btn-outline-success borrarPresentacion']);
+                                                    }
+                                                ],
+                                                'header' => 'Acciones',
+                                                'headerOptions' => ['style' => 'text-align:center;'],
+                                                'contentOptions' => ['style' => 'text-align:center; vertical-align:middle;'],
+                                                'visible' => $esDueño && ($evento->idEstadoEvento == 1 || $evento->idEstadoEvento == 4 || $evento->idEstadoEvento == 3),
+                                            ],
+                                            //
+                                        ],
+                                    ]);
                                     ?>
                                 </div>
                             </div>
@@ -628,7 +668,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel" aria-hidden="true">
+<div class="modal fade" id="flyerModal" tabindex="-1" role="dialog" aria-labelledby="flyerModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

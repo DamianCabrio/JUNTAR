@@ -5,6 +5,8 @@ namespace common\models;
 use frontend\models\Evento;
 use frontend\models\Usuario;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "solicitud_aval".
@@ -20,19 +22,31 @@ use Yii;
  * @property Evento $idEvento0
  * @property Usuario $validador0
  */
-class SolicitudAval extends \yii\db\ActiveRecord {
+class SolicitudAval extends ActiveRecord
+{
 
     /**
      * {@inheritdoc}
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'solicitud_aval';
     }
 
     /**
      * {@inheritdoc}
+     * @return SolicitudAvalQuery the active query used by this AR class.
      */
-    public function rules() {
+    public static function find()
+    {
+        return new SolicitudAvalQuery(get_called_class());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
         return [
             [['idEvento', 'fechaSolicitud'], 'required'],
             [['idEvento', 'avalado', 'validador'], 'integer'],
@@ -47,7 +61,8 @@ class SolicitudAval extends \yii\db\ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'idSolicitudAval' => 'Id Solicitud Aval',
             'idEvento' => 'Id Evento',
@@ -59,7 +74,8 @@ class SolicitudAval extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function denegar() {
+    public function denegar()
+    {
         $this->avalado = 0;
         $this->fechaRevision = date("Y/m/d h:i:s");
         $this->validador = Yii::$app->user->identity->idUsuario;
@@ -67,7 +83,8 @@ class SolicitudAval extends \yii\db\ActiveRecord {
         $this->save(false);
     }
 
-    public function aprobar() {
+    public function aprobar()
+    {
         $this->avalado = 1;
         $this->fechaRevision = date("Y/m/d h:i:s");
         $this->validador = Yii::$app->user->identity->idUsuario;
@@ -75,67 +92,63 @@ class SolicitudAval extends \yii\db\ActiveRecord {
         $this->save(false);
     }
 
-    private function quitarToken() {
-        $this->tokenSolicitud = null;
-    }
-
     /**
-    * Generar y actualizar token en el modelo Evento
-    */
+     * Generar y actualizar token en el modelo Evento
+     */
     public function generateRequestToken()
     {
-      $this->tokenSolicitud = Yii::$app->security->generateRandomString() . '_' . time();
+        $this->tokenSolicitud = Yii::$app->security->generateRandomString() . '_' . time();
     }
+
     /**
-    * Envió de correo con la solicitud a los usuarios con el rol Verificador.
-    */
+     * Envió de correo con la solicitud a los usuarios con el rol Verificador.
+     */
     public function sendEmail()
     {
-      $idUsers = Yii::$app->authManager->getUserIdsByRole('Validador');
-      $usersEmails = [];
-      foreach ($idUsers as $key => $id) {
-        $user = User::findOne(['idUsuario' => $id]);
-        array_push($usersEmails, $user->email);
-      }
-      $event = Evento::findOne(['idEvento' => $this->idEvento]);
-      $organizer = User::findOne(['idUsuario' => $event->idUsuario]);
+        $idUsers = Yii::$app->authManager->getUserIdsByRole('Validador');
+        $usersEmails = [];
+        foreach ($idUsers as $key => $id) {
+            $user = User::findOne(['idUsuario' => $id]);
+            array_push($usersEmails, $user->email);
+        }
+        $event = Evento::findOne(['idEvento' => $this->idEvento]);
+        $organizer = User::findOne(['idUsuario' => $event->idUsuario]);
 
 
-      return Yii::$app->mailer
-        ->compose(
-          ['html' => 'solicitudAval-html', 'text' => 'solicitudAval-text'],
-          ['event' => $event, 'organizer' => $organizer, 'token' => $this->tokenSolicitud]
-        )
-        ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-        ->setTo($usersEmails)
-        ->setSubject('Aprobación del Evento: ' . $event->nombreEvento)
-        ->send();
+        return Yii::$app->mailer
+            ->compose(
+                ['html' => 'solicitudAval-html', 'text' => 'solicitudAval-text'],
+                ['event' => $event, 'organizer' => $organizer, 'token' => $this->tokenSolicitud]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($usersEmails)
+            ->setSubject('Aprobación del Evento: ' . $event->nombreEvento)
+            ->send();
     }
 
     /**
      * Gets query for [[IdEvento0]].
      *
-     * @return \yii\db\ActiveQuery|EventoQuery
+     * @return ActiveQuery|EventoQuery
      */
-    public function getIdEvento0() {
+    public function getIdEvento0()
+    {
         return $this->hasOne(Evento::className(), ['idEvento' => 'idEvento']);
     }
 
     /**
      * Gets query for [[Validador0]].
      *
-     * @return \yii\db\ActiveQuery|UsuarioQuery
+     * @return ActiveQuery|UsuarioQuery
      */
-    public function getValidador0() {
+    public function getValidador0()
+    {
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'validador']);
     }
 
-    /**
-     * {@inheritdoc}
-     * @return SolicitudAvalQuery the active query used by this AR class.
-     */
-    public static function find() {
-        return new SolicitudAvalQuery(get_called_class());
+    private function quitarToken()
+    {
+        $this->tokenSolicitud = null;
     }
 
 }

@@ -2,7 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "respuesta".
@@ -15,14 +16,8 @@ use Yii;
  * @property Inscripcion $idinscripcion0
  * @property Pregunta $idpregunta0
  */
-class RespuestaTest extends \yii\db\ActiveRecord {
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName() {
-        return 'respuesta';
-    }
+class RespuestaTest extends ActiveRecord
+{
 
     public $file;
     public $respuestaCorta;
@@ -30,7 +25,16 @@ class RespuestaTest extends \yii\db\ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public static function tableName()
+    {
+        return 'respuesta';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
         return [
             [['idpregunta', 'idinscripcion', 'respuesta', "respuestaCorta"], 'required', "message" => "Esta campo no puede estar vacio"],
             [['idpregunta', 'idinscripcion'], 'integer'],
@@ -42,7 +46,8 @@ class RespuestaTest extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function upload() {
+    public function upload()
+    {
         if ($this->validate()) {
             $this->file->saveAs("../web/eventos/formularios/archivos/" . $this->file->baseName . '.' . $this->file->extension);
             return true;
@@ -54,7 +59,8 @@ class RespuestaTest extends \yii\db\ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'idpregunta' => 'Idpregunta',
@@ -66,18 +72,20 @@ class RespuestaTest extends \yii\db\ActiveRecord {
     /**
      * Gets query for [[Idinscripcion0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getIdinscripcion0() {
+    public function getIdinscripcion0()
+    {
         return $this->hasOne(Inscripcion::className(), ['idInscripcion' => 'idinscripcion']);
     }
 
     /**
      * Gets query for [[Idpregunta0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getIdpregunta0() {
+    public function getIdpregunta0()
+    {
         return $this->hasOne(Pregunta::className(), ['id' => 'idpregunta']);
     }
 

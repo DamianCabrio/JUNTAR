@@ -1,9 +1,9 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
+use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioSearch */
@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-body ">
                     <?php foreach ($roles as $rol) : ?>
                         <!-- inicio card unRol -->
-                        <a class="btn col-12 p-0 mb-3" href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rol['name']])) ?>">
+                        <a class="btn col-12 p-0 mb-3"
+                           href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rol['name']])) ?>">
                             <div class="card text-center bg-light d-block p-0">
                                 <h5 class="card-header <?php
                                 if ($rolSeleccionado == $rol['name']) {
@@ -40,8 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     if ($rolSeleccionado == $rol['name']) {
                                         echo "filter-white";
                                     }
+
                                     ?>" src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
                                          <?= Html::encode($rol['name']) ?>
+
                                 </h5>
                                 <div class="card-body">
                                     <p class="card-text"> <?= Html::encode($rol['description']) ?> </p>
@@ -68,10 +71,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             if ($rol['name'] != "Administrador" && $rol['name'] != $rolSeleccionado) {
                                 ?>
                                 <!-- inicio card unRol -->
+
                                 <div class="card text-center col-md-6 col-sm-12 border-0 p-0 mt-2 mb-2">
                                     <a class="btn btn-light col-md-11 col-sm-12 p-0 m-auto border" href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rolSeleccionado, 'asignarPermiso' => $rol['name']])) ?>">
+
                                         <h5 class="card-header">
-                                            <img src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
+                                            <img src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>"
+                                                 alt="<?= Html::encode($rol['name']) ?>"
+                                                 title="<?= Html::encode($rol['name']) ?>" width="40" height="40"
+                                                 role="img">
                                             <?= Html::encode($rol['name']) ?>
                                             <?php
                                             if ($rolSeleccionado != null && $rolSeleccionado != '') {
@@ -90,7 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 $nombreAccion = "";
                                             }
                                             ?>
-                                            <img class="ml-3 <?= $nombreAccion ?>" src="<?= Html::encode($rutaImagen) ?>" alt="<?= Html::encode($nombreAccion) ?>" title="<?= Html::encode($nombreAccion) ?>" width="40" height="40" role="img">
+                                            <img class="ml-3 <?= $nombreAccion ?>"
+                                                 src="<?= Html::encode($rutaImagen) ?>"
+                                                 alt="<?= Html::encode($nombreAccion) ?>"
+                                                 title="<?= Html::encode($nombreAccion) ?>" width="40" height="40"
+                                                 role="img">
                                         </h5>
                                     </a>
                                 </div>
@@ -126,12 +138,14 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                    'format' => 'html',
                                 'label' => 'Descripcion',
                                 'value' => 'description',
+
                             //                                'value' => function ($data) {
                             //                                    return Html::tag('dfn', Html::tag('abbr',
                             //                                                            Html::img('iconos/question-circle.svg' . '', ['class' => 'd-none d-md-inline-block filter-blue', 'width' => '26px', 'height' => '26px'])
                             //                                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
                             //                                            Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
                             //                                },
+
 //                                    'headerOptions' => ['style' => 'width:50%;', 'class' => 'text-center'],
                             ],
                             [
