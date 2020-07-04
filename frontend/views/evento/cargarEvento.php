@@ -97,7 +97,8 @@ $this->title = "Cargar Evento";
                 <button type="button" id="quitarFlyer" class="btn btn-sm btn-outline">Quitar</button> 
                 <br>
                 <br>
-                <div class="form-group">
+		    
+               <div class="form-group">
                     <label>¿Posee límite de participantes?</label><br>
 
                     <div role="radiogroup" aria-required="true">
@@ -105,6 +106,12 @@ $this->title = "Cargar Evento";
                             <input class="custom-control-input" type="radio" id="espectadores-no" name="posee-espectadores" value="-1" checked required>
                             <label class="custom-control-label" for="espectadores-no">No</label>
                         </div>
+                        <div class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" id="espectadores-si" name="posee-espectadores" value="2">
+                            <label class="custom-control-label" for="espectadores-si">Si</label><br>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="mostrarCapacidad">
                     <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número de participantes *')  ?>
