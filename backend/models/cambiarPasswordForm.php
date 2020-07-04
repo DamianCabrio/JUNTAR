@@ -2,28 +2,29 @@
 
 namespace backend\models;
 
-use yii;
-use yii\base\Model;
 use common\models\User;
+use yii\base\Model;
 
 /**
  * Password reset form
  */
-class CambiarPasswordForm extends Model {
+class CambiarPasswordForm extends Model
+{
 
     public $newPassword;
     public $repeatNewPassword;
 //    public $showpw;
 
     /**
-     * @var \common\models\User
+     * @var User
      */
     private $_user;
 
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             //Reglas password
             ['newPassword', 'required', 'message' => 'Debe ingresar una contraseña'],
@@ -40,7 +41,8 @@ class CambiarPasswordForm extends Model {
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'newPassword' => 'Nueva contraseña',
             'repeatNewPassword' => 'Repita nueva contraseña',
@@ -52,7 +54,8 @@ class CambiarPasswordForm extends Model {
      *
      * @return bool if password was reset.
      */
-    public function cambiarPassword($idUsuario) {
+    public function cambiarPassword($idUsuario)
+    {
         if ($this->validate()) {
             $user = $this->getUser($idUsuario);
             $user->setPassword($this->newPassword);
@@ -70,7 +73,8 @@ class CambiarPasswordForm extends Model {
      *
      * @return User|null
      */
-    protected function getUser($idUsuario) {
+    protected function getUser($idUsuario)
+    {
         if ($this->_user === null) {
             $this->_user = User::findIdentity($idUsuario);
         }

@@ -1,10 +1,12 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\SignupForm */
 
-use yii\helpers\Html;
+/* @var $model SignupForm */
+
+use frontend\models\SignupForm;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 

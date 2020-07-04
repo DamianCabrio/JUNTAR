@@ -2,7 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "pregunta".
@@ -15,7 +16,7 @@ use Yii;
  * @property Evento $idevento0
  * @property RespuestaFile[] $respuestas
  */
-class Pregunta extends \yii\db\ActiveRecord
+class Pregunta extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -56,7 +57,7 @@ class Pregunta extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Idevento0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdevento0()
     {
@@ -66,7 +67,7 @@ class Pregunta extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Respuestas]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getRespuestas()
     {

@@ -2,7 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "estado_evento".
@@ -12,7 +13,7 @@ use Yii;
  *
  * @property Evento[] $eventos
  */
-class EstadoEvento extends \yii\db\ActiveRecord
+class EstadoEvento extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -47,7 +48,7 @@ class EstadoEvento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Eventos]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEventos()
     {

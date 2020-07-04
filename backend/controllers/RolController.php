@@ -2,24 +2,26 @@
 
 namespace backend\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\helpers\ArrayHelper;
-use yii\filters\AccessControl;
-use backend\models\RolSearch;
 use backend\models\Rol;
+use backend\models\RolSearch;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
  */
-class RolController extends Controller {
+class RolController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -58,7 +60,8 @@ class RolController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -70,14 +73,15 @@ class RolController extends Controller {
      * Lists all Permiso models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new RolSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -87,10 +91,27 @@ class RolController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionVerRol($name) {
+    public function actionVerRol($name)
+    {
         return $this->render('verRol', [
-                    'model' => $this->findModel($name),
+            'model' => $this->findModel($name),
         ]);
+    }
+
+    /**
+     * Finds the Permiso model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return Permiso the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Rol::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('El rol buscado no existe.');
     }
 
     /**
@@ -99,7 +120,8 @@ class RolController extends Controller {
      *
      * @return view
      */
-    public function actionCreateRol() {
+    public function actionCreateRol()
+    {
         //creamos un modelo dinamico para representar los campos del permiso
         $model = new Rol();
 
@@ -123,7 +145,7 @@ class RolController extends Controller {
         }
 
         return $this->render('createRol', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 

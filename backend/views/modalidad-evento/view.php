@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -9,7 +10,7 @@ use yii\widgets\DetailView;
 $this->title = $model->descripcionModalidad;
 $this->params['breadcrumbs'][] = ['label' => 'Modalidad Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="modalidad-evento-view">
     <div class="col-12 mb-4 p-0">

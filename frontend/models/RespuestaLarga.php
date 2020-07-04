@@ -2,7 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "respuesta".
@@ -15,7 +16,7 @@ use Yii;
  * @property Inscripcion $idinscripcion0
  * @property Pregunta $idpregunta0
  */
-class RespuestaLarga extends \yii\db\ActiveRecord
+class RespuestaLarga extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -33,7 +34,7 @@ class RespuestaLarga extends \yii\db\ActiveRecord
         return [
             [['idpregunta', 'idinscripcion', "respuesta"], 'required', "message" => "Esta campo es obligatorio"],
             [['idpregunta', 'idinscripcion'], 'integer'],
-            [['respuesta'], 'string', 'max' => 500 , "message" => "Esta campo no debe tener mas de 500 caracteres"],
+            [['respuesta'], 'string', 'max' => 500, "message" => "Esta campo no debe tener mas de 500 caracteres"],
             [['idpregunta'], 'exist', 'skipOnError' => true, 'targetClass' => Pregunta::className(), 'targetAttribute' => ['idpregunta' => 'id']],
             [['idinscripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscripcion::className(), 'targetAttribute' => ['idinscripcion' => 'idInscripcion']],
         ];
@@ -55,7 +56,7 @@ class RespuestaLarga extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Idinscripcion0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdinscripcion0()
     {
@@ -65,7 +66,7 @@ class RespuestaLarga extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Idpregunta0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdpregunta0()
     {

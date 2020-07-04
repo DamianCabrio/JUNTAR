@@ -1,8 +1,8 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PermisoSearch */

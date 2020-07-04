@@ -2,7 +2,8 @@
 
 namespace backend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "regla".
@@ -14,7 +15,7 @@ use Yii;
  *
  * @property Permiso[] $permisos
  */
-class Regla extends \yii\db\ActiveRecord
+class Regla extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -22,6 +23,15 @@ class Regla extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'regla';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return ReglaQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ReglaQuery(get_called_class());
     }
 
     /**
@@ -54,19 +64,10 @@ class Regla extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Permisos]].
      *
-     * @return \yii\db\ActiveQuery|PermisoQuery
+     * @return ActiveQuery|PermisoQuery
      */
     public function getPermisos()
     {
         return $this->hasMany(Permiso::className(), ['rule_name' => 'name']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return ReglaQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ReglaQuery(get_called_class());
     }
 }

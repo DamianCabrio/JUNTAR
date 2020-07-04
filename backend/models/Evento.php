@@ -2,8 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
 use common\models\SolicitudAval;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "evento".
@@ -34,7 +35,7 @@ use common\models\SolicitudAval;
  * @property Inscripcion[] $inscripcions
  * @property Presentacion[] $presentacions
  */
-class Evento extends \yii\db\ActiveRecord
+class Evento extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -42,6 +43,15 @@ class Evento extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'evento';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return EventoQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new EventoQuery(get_called_class());
     }
 
     /**
@@ -92,12 +102,14 @@ class Evento extends \yii\db\ActiveRecord
         ];
     }
 
-    public function deshabilitar(){
+    public function deshabilitar()
+    {
         $this->idEstadoEvento = 2;
         $this->save();
     }
 
-    public function habilitar(){
+    public function habilitar()
+    {
         $this->idEstadoEvento = 4;
         $this->save();
     }
@@ -105,7 +117,7 @@ class Evento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdCategoriaEvento0]].
      *
-     * @return \yii\db\ActiveQuery|CategoriaEventoQuery
+     * @return ActiveQuery|CategoriaEventoQuery
      */
     public function getIdCategoriaEvento0()
     {
@@ -115,7 +127,7 @@ class Evento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdEstadoEvento0]].
      *
-     * @return \yii\db\ActiveQuery|EstadoEventoQuery
+     * @return ActiveQuery|EstadoEventoQuery
      */
     public function getIdEstadoEvento0()
     {
@@ -125,7 +137,7 @@ class Evento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdModalidadEvento0]].
      *
-     * @return \yii\db\ActiveQuery|ModalidadEventoQuery
+     * @return ActiveQuery|ModalidadEventoQuery
      */
     public function getIdModalidadEvento0()
     {
@@ -135,7 +147,7 @@ class Evento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdUsuario0]].
      *
-     * @return \yii\db\ActiveQuery|UsuarioQuery
+     * @return ActiveQuery|UsuarioQuery
      */
     public function getIdUsuario0()
     {
@@ -145,7 +157,7 @@ class Evento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Inscripcions]].
      *
-     * @return \yii\db\ActiveQuery|InscripcionQuery
+     * @return ActiveQuery|InscripcionQuery
      */
     public function getInscripcions()
     {
@@ -155,23 +167,15 @@ class Evento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Presentacions]].
      *
-     * @return \yii\db\ActiveQuery|PresentacionQuery
+     * @return ActiveQuery|PresentacionQuery
      */
     public function getPresentacions()
     {
         return $this->hasMany(Presentacion::className(), ['idEvento' => 'idEvento']);
     }
-    
-    public function getIdAval0(){
-        return $this->hasOne(SolicitudAval::className(), ['idEvento' => 'idEvento']);
-    }
 
-    /**
-     * {@inheritdoc}
-     * @return EventoQuery the active query used by this AR class.
-     */
-    public static function find()
+    public function getIdAval0()
     {
-        return new EventoQuery(get_called_class());
+        return $this->hasOne(SolicitudAval::className(), ['idEvento' => 'idEvento']);
     }
 }

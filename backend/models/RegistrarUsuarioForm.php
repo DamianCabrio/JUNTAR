@@ -2,25 +2,26 @@
 
 namespace backend\models;
 
+use common\models\User;
 use Yii;
 use yii\base\Model;
-use common\models\User;
 
 /**
  * Signup form
  */
-class RegistrarUsuarioForm extends Model {
+class RegistrarUsuarioForm extends Model
+{
 
-    private $idUsuario;
     public $nombre;
     public $apellido;
+    public $pais;
 //    public $dni;
 //    public $telefono;
-    public $pais;
+    public $email;
 //    public $provincia;
 //    public $localidad;
 //    public $fecha_nacimiento;
-    public $email;
+    private $idUsuario;
 
 //    public $password;
 //    public $showpw;
@@ -28,7 +29,8 @@ class RegistrarUsuarioForm extends Model {
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             //Obligatorio
             [['nombre', 'apellido', 'email', 'pais'], 'required'],
@@ -51,7 +53,7 @@ class RegistrarUsuarioForm extends Model {
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'La dirección de correo electrónico que ha ingresado ya está registrada.'],
-                //Reglas password
+            //Reglas password
 //            ['password', 'match', 'pattern' => '/\d/', 'message' => 'La contraseña debe tener al menos un número.'],
 //            ['password', 'match', 'pattern' => '/\w*[A-Z]/', 'message' => 'La contraseña debe tener al menos una mayúscula.'],
 //            ['password', 'string', 'min' => 6, 'max' => 50, 'message' => 'La contraseña ingresada no es válida.',
@@ -65,7 +67,8 @@ class RegistrarUsuarioForm extends Model {
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function registrar() {
+    public function registrar()
+    {
         if (!$this->validate()) {
             return null;
         }
@@ -83,7 +86,7 @@ class RegistrarUsuarioForm extends Model {
         $resultado = $user->save() && $this->sendEmail($user);
         if ($resultado) {
             $this->idUsuario = $user->getId();
-            if($this->idUsuario != null || is_numeric($this->idUsuario)){
+            if ($this->idUsuario != null || is_numeric($this->idUsuario)) {
                 //iniciamos authManager
                 $auth = Yii::$app->authManager;
                 //indicamos el rol que deseamos asignarle al usuario
@@ -99,26 +102,28 @@ class RegistrarUsuarioForm extends Model {
         return $resultado;
     }
 
-    public function obtenerIdInsercion() {
-        return $this->idUsuario;
-    }
-
     /**
      * Sends confirmation email to user
      * @param User $user user model to with email should be send
      * @return bool whether the email was sent
      */
-    protected function sendEmail($user) {
+    protected function sendEmail($user)
+    {
         return Yii::$app
-                        ->mailer
-                        ->compose(
-                                ['html' => 'emailVerifyBackend-html', 'text' => 'emailVerifyBackend-text'],
-                                ['user' => $user]
-                        )
-                        ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
-                        ->setTo($this->email)
-                        ->setSubject('Te han registrado en ' . Yii::$app->name)
-                        ->send();
+            ->mailer
+            ->compose(
+                ['html' => 'emailVerifyBackend-html', 'text' => 'emailVerifyBackend-text'],
+                ['user' => $user]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($this->email)
+            ->setSubject('Te han registrado en ' . Yii::$app->name)
+            ->send();
+    }
+
+    public function obtenerIdInsercion()
+    {
+        return $this->idUsuario;
     }
 
 }

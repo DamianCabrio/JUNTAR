@@ -2,7 +2,8 @@
 
 namespace backend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "usuario".
@@ -30,7 +31,7 @@ use Yii;
  * @property PresentacionExpositor[] $presentacionExpositors
  * @property UsuarioRol[] $usuarioRols
  */
-class Usuario extends \yii\db\ActiveRecord
+class Usuario extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -38,6 +39,15 @@ class Usuario extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'usuario';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return UsuarioQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UsuarioQuery(get_called_class());
     }
 
     /**
@@ -82,13 +92,15 @@ class Usuario extends \yii\db\ActiveRecord
             'verification_token' => 'Verification Token',
         ];
     }
-    
-    public function deshabilitar(){
+
+    public function deshabilitar()
+    {
         $this->status = 0;
         $this->save(false);
     }
-    
-    public function habilitar(){
+
+    public function habilitar()
+    {
         $this->status = 10;
         $this->save(false);
     }
@@ -96,7 +108,7 @@ class Usuario extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Eventos]].
      *
-     * @return \yii\db\ActiveQuery|EventoQuery
+     * @return ActiveQuery|EventoQuery
      */
     public function getEventos()
     {
@@ -106,7 +118,7 @@ class Usuario extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdPresentacions]].
      *
-     * @return \yii\db\ActiveQuery|PresentacionQuery
+     * @return ActiveQuery|PresentacionQuery
      */
     public function getIdPresentacions()
     {
@@ -116,7 +128,7 @@ class Usuario extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Inscripcions]].
      *
-     * @return \yii\db\ActiveQuery|InscripcionQuery
+     * @return ActiveQuery|InscripcionQuery
      */
     public function getInscripcions()
     {
@@ -126,7 +138,7 @@ class Usuario extends \yii\db\ActiveRecord
     /**
      * Gets query for [[ItemNames]].
      *
-     * @return \yii\db\ActiveQuery|PermisoQuery
+     * @return ActiveQuery|PermisoQuery
      */
     public function getItemNames()
     {
@@ -136,7 +148,7 @@ class Usuario extends \yii\db\ActiveRecord
     /**
      * Gets query for [[PresentacionExpositors]].
      *
-     * @return \yii\db\ActiveQuery|PresentacionExpositorQuery
+     * @return ActiveQuery|PresentacionExpositorQuery
      */
     public function getPresentacionExpositors()
     {
@@ -146,19 +158,10 @@ class Usuario extends \yii\db\ActiveRecord
     /**
      * Gets query for [[UsuarioRols]].
      *
-     * @return \yii\db\ActiveQuery|UsuarioRolQuery
+     * @return ActiveQuery|UsuarioRolQuery
      */
     public function getUsuarioRols()
     {
         return $this->hasMany(UsuarioRol::className(), ['user_id' => 'idUsuario']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return UsuarioQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new UsuarioQuery(get_called_class());
     }
 }

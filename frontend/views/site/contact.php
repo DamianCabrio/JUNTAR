@@ -2,11 +2,13 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\ContactForm */
 
-use yii\helpers\Html;
+/* @var $model ContactForm */
+
+use frontend\models\ContactForm;
 use yii\bootstrap4\ActiveForm;
 use yii\captcha\Captcha;
+use yii\helpers\Html;
 
 $this->title = 'Contacto';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,7 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h2 class="text-center text-white"><?= Html::encode($this->title) ?></h2>
             </div>
             <div class="card-body">
-                <p class="text-center"> Por cualquier consulta, complete el siguiente formulario para contactarnos. Muchas gracias. </p>
+                <p class="text-center"> Por cualquier consulta, complete el siguiente formulario para contactarnos.
+                    Muchas gracias. </p>
 
                 <div class="row">
                     <div class="col-lg-8 col-12 m-auto">

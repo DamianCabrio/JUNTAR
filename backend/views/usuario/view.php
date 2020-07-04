@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -9,7 +10,7 @@ use yii\widgets\DetailView;
 $this->title = "Usuario: " . $model->nombre . " " . $model->apellido;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="usuario-view">
     <div class="col-12 mb-4 p-0">
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'attribute' => 'status',
                                             'label' => 'Estado',
-                                            'value' => function($model) {
+                                            'value' => function ($model) {
                                                 $estado = "";
                                                 switch ($model->status) {
                                                     case 0:
@@ -64,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'attribute' => 'rol',
                                             'label' => 'Rol',
-                                            'value' => function($model) {
+                                            'value' => function ($model) {
                                                 $array = Yii::$app->authManager->getRolesByUser($model->idUsuario);
                                                 return array_shift($array)->name;
                                             },
@@ -109,8 +110,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <h4><?= $rol->name ?>
                                                         <?=
                                                         Html::a($assigned ? "Quitar" : "Agregar",
-                                                                ['usuario/assign', 'id' => $model->idUsuario, 'rol' => $rol->name],
-                                                                ['class' => $assigned ? "btn btn-sm btn-danger " : "btn btn-sm btn-primary"])
+                                                            ['usuario/assign', 'id' => $model->idUsuario, 'rol' => $rol->name],
+                                                            ['class' => $assigned ? "btn btn-sm btn-danger " : "btn btn-sm btn-primary"])
                                                         ?>
                                                         <small>
                                                             <p class="mt-2"><?= $rol->description ?></p>

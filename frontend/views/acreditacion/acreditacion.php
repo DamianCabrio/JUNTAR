@@ -2,6 +2,7 @@
 
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 
 ?>
 <?php
@@ -11,13 +12,13 @@ use yii\helpers\Html;
 $this->title = "Acreditación";
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="acreditacion-view container">
 
     <?php $form = ActiveForm::begin(['id' => 'acreditacion-form']); ?>
 
-    <?php if($acrPreg == false): ?>
+    <?php if ($acrPreg == false): ?>
         <?= $form->field($model, 'codigoAcreditacion')->textInput(['autofocus' => true])->label("Ingrese el codigo de acreditacion: ") ?>
     <?php else: ?>
         <?= $form->field($model, 'codigoAcreditacion')->textInput(['autofocus' => true])->label($acrPreg->pregunta) ?>
