@@ -99,7 +99,7 @@ use yii\helpers\Url;
             ]);
             Modal::begin([
                 'id' => 'modalEvento',
-                'size' => 'modal-lg'
+                'size' => 'modal-lg',
             ]);
             Modal::end();
             ?>

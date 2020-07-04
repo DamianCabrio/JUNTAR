@@ -133,7 +133,7 @@ YiiAsset::register($this);
                     <?php
                     Modal::begin([
                         'id' => 'modalModifyOrganizer',
-                        'size' => 'modal-lg'
+                        'size' => 'modal-lg',
                     ]);
                     Modal::end();
                     //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS
