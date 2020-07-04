@@ -547,7 +547,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
 
                                 </div>
 
-                                <div class="table table-responsive">
+                                <div class="table table-responsive d-none d-md-block">
                                     <?=
                                     GridView::widget([
                                         'dataProvider' => $presentacionDataProvider,
@@ -659,6 +659,104 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     ]);
                                     ?>
                                 </div>
+                                <div class="tabla-celulares d-md-none d-block m-auto">
+								<?php
+								$celularPresentaciones = $evento->presentacions;
+								foreach($celularPresentaciones as $unaPresentacion){
+								?>
+									<div class="card border my-2">
+										<div class="card-header dark_bg text-light rounded">
+											<div class="col-12 d-flex justify-content-center align-items-center">
+												<div class="col-12 d-flex align-items-center"><?= $unaPresentacion->tituloPresentacion; ?>
+													<?= '&nbsp;&nbsp;&nbsp;&nbsp;'. Html::a('<i class="material-icons">info_outline</i>', ['/presentacion/view', 'presentacion' => $unaPresentacion->idPresentacion], ['class' => 'verPresentacion']); ?>
+												</div>
+											</div>
+										</div>
+										<div class="card-body">
+											<table class="table table-bordered">
+											<!--<div class="col-6 d-flex align-items-center">-->
+											<tr>
+												<td class="align-middle">
+													<span class="d-flex justify-content-center align-items-center"><i class="material-icons">today</i>&nbsp;&nbsp;<?= date('d/m/Y', strtotime($unaPresentacion->diaPresentacion)); ?><span>
+												</td>
+												<!--</div>-->
+												
+												<!--<div class="col-6 d-flex align-items-center">-->
+												<td class="align-middle">
+													<span class="d-flex justify-content-center align-items-center"><i class="material-icons">access_time</i>&nbsp;&nbsp;<?= date('H:i', strtotime($unaPresentacion->horaInicioPresentacion)); ?></span>
+												</td>
+											</tr>
+											<!--</div>-->
+											
+											<!--<div class="col-12">-->
+												<?php
+												if ($unaPresentacion->linkARecursos == null || $unaPresentacion->linkARecursos == "") {
+													$recursos = ' - ';
+												} else {
+													$recursos = '<a class="btn btn_icon btn-outline-success" style="background:#007bff;" target="_blank" href="' . $unaPresentacion->linkARecursos . '"><i class="material-icons">attachment</i></a>';
+												}
+												?>
+											<tr>
+												<td class="align-middle">Recursos:</td>
+												<td class="align-middle text-center"><?= $recursos; ?></td>
+											</tr>
+												
+											<!--</div>-->
+											<!--<div class="col-12">-->
+												<?php
+												if (count($unaPresentacion->presentacionExpositors) == 0) {
+													if (!Yii::$app->user->isGuest && $unaPresentacion->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
+														$cargarExpositores = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/' . $unaPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success cargarExpositores', 'style' => 'background:#007bff;']);
+													}
+												} else {
+													if (!Yii::$app->user->isGuest && $unaPresentacion->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
+														$cargarExpositores = Html::a('<i class="material-icons">person_add</i>', ['/evento/cargar-expositor/' . $unaPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success cargarExpositores', 'style' => 'background:#007bff;']);
+													}
+													$verExpositores = Html::a('<i class="material-icons">remove_red_eye</i>', ['/presentacion-expositor/ver-expositores/' . $unaPresentacion->idPresentacion], ['class' => 'btn btn_icon btn-outline-success verExpositores', 'style' => 'background:#007bff;']);
+												}
+												?>
+												<?php 
+													$rowspanExpositor = "";
+													if (!Yii::$app->user->isGuest && $unaPresentacion->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
+														$rowspanExpositor = 'rowspan="2"';
+													}
+												?>
+												<tr>
+													<td <?= $rowspanExpositor ?> class="align-middle">Expositores:</td>
+													<td class="align-middle text-center"><?= $verExpositores; ?></td>
+													<?php if (!Yii::$app->user->isGuest && $unaPresentacion->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) { ?>
+													<tr>
+														<td class="align-middle text-center"><?= $cargarExpositores; ?></td>
+													</tr>
+													<?php } ?>
+												</tr>
+											
+											<!--</div>-->
+											<!--<div class="col-6">-->
+												<?php
+												//$acciones = "Acciones: &nbsp;&nbsp;&nbsp;&nbsp;";
+												?>
+											<!--</div>-->
+											<!--<div class="col-6">-->
+												<?php if (!Yii::$app->user->isGuest && $unaPresentacion->idEvento0->idUsuario == Yii::$app->user->identity->idUsuario) {
+													$accionEditar = Html::a('<i class="material-icons">edit</i>', Url::to(['/presentacion/update', 'presentacion' => $unaPresentacion->idPresentacion]), ['class' => 'btn btn_icon btn-outline-success editarPresentacion']);
+													$accionBorrar = Html::a('<i class="material-icons">remove_circle_outline</i>', Url::to(['/presentacion/borrar', 'presentacion' => $unaPresentacion->idPresentacion]), ['class' => 'btn btn_icon btn-outline-success borrarPresentacion']);
+													?>
+													<tr>
+														<td rowspan="2" class="align-middle">Acciones:</td>
+														<td class="align-middle text-center"><?= $accionEditar; ?></td>
+														<tr>
+															<td class="align-middle text-center"><?= $accionBorrar; ?></td>
+														</tr>
+													</tr>
+												<?php } ?>
+												
+											<!--</div>-->
+											</table>
+										</div>
+									</div>
+									<?php } ?>
+								</div>
                             </div>
                         </div>
                     </div>
