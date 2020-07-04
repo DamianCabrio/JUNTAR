@@ -28,10 +28,7 @@ $this->title = "Cargar Evento";
                 <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
                 <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
 
-                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre',
-                 'data-title' => 'Requisitos',
-                 'data-toggle' => 'popover',
-                 'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales. Ejemplo Mi Evento.',])->label(false) ?>
+                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label(false) ?>
                 
               
 
@@ -137,4 +134,6 @@ $this->title = "Cargar Evento";
             </div>
         </div>
     </div>
+   </div>
+ </div>
 </div>
