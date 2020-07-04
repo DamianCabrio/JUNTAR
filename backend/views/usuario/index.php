@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filterModel' => $searchModel,
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
-//            'idUsuario',
                                 [
                                     'attribute' => 'nombre',
                                     'label' => 'Nombre',
@@ -37,22 +36,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return $model->nombre . " " . $model->apellido;
                                     },
                                 ],
-//            'nombre',
-//            'apellido',
                                 'dni',
                                 'pais',
                                 'provincia',
                                 'localidad',
-//            'email',
                                 [
                                     'attribute' => 'email',
                                     'label' => 'Email',
                                     'value' => 'email',
                                 ],
-                                //'auth_key',
-                                //'password_hash',
-                                //'password_reset_token',
-//            'status',
                                 [
                                     'attribute' => 'status',
                                     'label' => 'Estado',
@@ -81,9 +73,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return date("Y-m-d H:i:s", $dataProvider->created_at);
                                     },
                                 ],
-                                //'created_at',
-                                //'updated_at',
-                                //'verification_token',
                                 ['class' => 'yii\grid\ActionColumn',
                                     'buttons' => [
                                         'update' => function ($url, $model) {
@@ -117,4 +106,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-

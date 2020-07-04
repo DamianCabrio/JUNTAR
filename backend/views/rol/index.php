@@ -31,19 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'name',
                                     'label' => 'Permiso',
-                                    'value' => 'name', //valor referenciado
-                                ],
-                                [
-                                    'attribute' => 'type',
-                                    'label' => 'Tipo',
-                                    'value' => function ($dataProvider) {
-                                        return (($dataProvider->type == 2) ? "Permiso" : "Rol");
-                                    },
+                                    'value' => 'name',
                                 ],
                                 [
                                     'attribute' => 'description',
                                     'label' => 'Descripción',
-                                    'value' => 'description', //valor referenciado
+                                    'value' => 'description',
                                 ],
                                 [
                                     'attribute' => 'created_at',
@@ -53,43 +46,28 @@ $this->params['breadcrumbs'][] = $this->title;
                                     },
                                 ],
                                 [
-                                    'attribute' => 'updated_at',
-                                    'label' => 'Fecha Updated',
-                                    'value' => function ($dataProvider) {
-                                        return date("Y-m-d H:i:s", $dataProvider->updated_at);
-                                    },
-                                ],
-                                //'created_at',
-                                //'updated_at',
-                                [
                                     'class' => 'yii\grid\ActionColumn',
                                     'urlCreator' => function ($action, $model, $key, $index) {
                                         if ($action == "view") {
                                             return Url::to(['/rol/ver-rol', 'name' => $key]);
                                         }
-                                        //                    if ($action == "update") {
-                                        //                        return Url::to(['update-rol', 'name' => $key]);
-                                        //                    }
-                                        if ($action == "delete") {
-                                            return Url::to(['/rol/remove-rol', 'name' => $key]);
-                                        }
+//                                        if ($action == "delete") {
+//                                            return Url::to(['/rol/remove-rol', 'name' => $key]);
+//                                        }
                                     },
                                     'buttons' => [
                                         'view' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        //                    'update' => function($url, $model) {
-                                        //                        return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn']);
-                                        //                    },
-                                        'delete' => function ($url, $model) {
-                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, [
-                                                'class' => 'btn btn-pink',
-                                                'data' => [
-                                                    'confirm' => '¿Está seguro de querer eliminar este Rol?',
-                                                    'method' => 'post',
-                                                ],
-                                            ]);
-                                        },
+//                                        'delete' => function ($url, $model) {
+//                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, [
+//                                                        'class' => 'btn btn-pink',
+//                                                        'data' => [
+//                                                            'confirm' => '¿Está seguro de querer eliminar este Rol?',
+//                                                            'method' => 'post',
+//                                                        ],
+//                                            ]);
+//                                        },
                                     ],
                                     'header' => 'Acciones',
                                 ],

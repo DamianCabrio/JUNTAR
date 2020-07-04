@@ -42,4 +42,48 @@ $(document).ready(function () {
         }
     });
 
+    //funcionalidad modificar organizador
+    $('.popUpModifyOrganizer').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        popUpModifyOrganizer($(this).attr('href'), 'Modificar organizador del evento');
+    });
+    //funcionalidad cambiar contraseña
+    $('.popUpChangePassword').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        popUpChangePassword($(this).attr('href'), 'Modificar contraseña del usuario');
+    });
+
 });
+
+function popUpModifyOrganizer(unaUrl, titulo) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+                //        data: {data: data}
+    }).done(function (data) {
+        $('#modalModifyOrganizer').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalModifyOrganizer').find('.modal-header')
+                .html("<h3> " + titulo + " </h3>");
+    });
+}
+function popUpChangePassword(unaUrl, titulo) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+                //        data: {data: data}
+    }).done(function (data) {
+        $('#modalChangePassword').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#modalChangePassword').find('.modal-header')
+                .html("<h3> " + titulo + " </h3>");
+    });
+}

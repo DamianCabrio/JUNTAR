@@ -249,5 +249,28 @@ class User extends ActiveRecord implements IdentityInterface
     {
         Yii::$app->session->set('newEmailToken', null);
     }
+    /**
+     * Sends an email with a link, for resetting the password.
+     *
+     * @return bool whether the email was send
+     */
+    public function sendEmailRestorePassword()
+    {
+        if (!$this->isPasswordResetTokenValid($this->password_reset_token)) {
+            $this->generatePasswordResetToken();
+            if (!$this->save()) {
+                return false;
+            }
+        }
 
+        return Yii::$app->mailer
+            ->compose(
+                ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
+                ['user' => $this]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
+            ->setTo($this->email)
+            ->setSubject('Reestablecer contraseña en ' . Yii::$app->name)
+            ->send();
+    }
 }

@@ -60,16 +60,23 @@ class Evento extends ActiveRecord
     public function rules()
     {
         return [
-            [['idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'nombreEvento', 'nombreCortoEvento', 'descripcionEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'capacidad', 'preInscripcion'], 'required'],
+            [['idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'nombreEvento', 'nombreCortoEvento', 'descripcionEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'preInscripcion'], 'required'],
             [['idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
             [['fechaInicioEvento', 'fechaFinEvento', 'fechaLimiteInscripcion', 'fechaCreacionEvento'], 'safe'],
             [['nombreEvento', 'lugar', 'imgFlyer', 'imgLogo'], 'string', 'max' => 200],
+            ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
             [['nombreCortoEvento', 'codigoAcreditacion'], 'string', 'max' => 100],
-            [['descripcionEvento'], 'string', 'max' => 800],
+            //['nombreCortoEvento', 'match', 'pattern' => '/^[a-z0-9]+(?:-[a-z0-9]+)*$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['nombreCortoEvento', 'unique', 'message' => 'El nombre corto ya fue registrado.'],
+            ['nombreEvento', 'unique','message' => 'El nombre del evento ya se encuentra registrado'],
+            [['descripcionEvento'], 'string', 'max' => 2000],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
             [['idCategoriaEvento'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaEvento::className(), 'targetAttribute' => ['idCategoriaEvento' => 'idCategoriaEvento']],
             [['idModalidadEvento'], 'exist', 'skipOnError' => true, 'targetClass' => ModalidadEvento::className(), 'targetAttribute' => ['idModalidadEvento' => 'idModalidadEvento']],
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
+            ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
+            ['fechaLimiteInscripcion','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'<'],
+            ['nombreCortoEvento','match','pattern'=> "/^[A-Z|a-z|0-9-_]+$/","message" => "El campo contiene caracteres inválidos"],
         ];
     }
 

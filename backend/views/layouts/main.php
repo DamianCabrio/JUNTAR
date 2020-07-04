@@ -89,35 +89,37 @@ AppAsset::register($this);
 //                            ['label' => 'Asignar Permisos7', 'url' => ['/permission-manager/index7']],
 //                            ],
 //                        ];
-            //ABM Usuario
-            $menuItems[] = ['label' => 'Usuarios', 'url' => ['/usuario/index']];
-            //ABM Eventos
-            $menuItems[] = [
-                'label' => 'Eventos',
-                'items' => [
-                    ['label' => 'Listado Eventos', 'url' => ['/evento/index']],
-                    ['label' => 'Solicitudes de Aval', 'url' => ['/solicitud-aval/solicitudes-de-aval']],
-                ],
-            ];
-            //ABM ModalidadEventos
-            $menuItems[] = ['label' => 'Modalidades', 'url' => ['/modalidad-evento/index']];
-            //MenuItems ABM Permisos
-            $menuItems[] = [
-                'label' => 'Permisos',
-                'items' => [
-                    ['label' => 'Crear Permiso', 'url' => ['/permission/create-permiso']],
-                    ['label' => 'Asignar Permisos', 'url' => ['/permission/asignar-permisos']],
-                    ['label' => 'Listado Permisos', 'url' => ['/permission/index']],
-                    ['label' => 'Eliminar Permiso', 'url' => ['/permission/remove-permiso']],
-                ],
-            ];
-            $menuItems[] = [
-                'label' => 'Roles',
-                'items' => [
-                    ['label' => 'Crear Rol', 'url' => ['/rol/create-rol']],
-                    ['label' => 'Listado Roles', 'url' => ['/rol/index']],
-                ],
-            ];
+                    //ABM Usuario
+                    $menuItems[] = ['label' => 'Usuarios', 'url' => ['/usuario/index']];
+                    //ABM Eventos
+                    $menuItems[] = [
+                        'label' => 'Eventos',
+                        'items' => [
+                            ['label' => 'Listado Eventos', 'url' => ['/evento/index']],
+                            ['label' => 'Solicitudes de Aval', 'url' => ['/solicitud-aval/solicitudes-de-aval']],
+                        ],
+                    ];
+                    //ABM ModalidadEventos
+                    $menuItems[] = ['label' => 'Modalidades', 'url' => ['/modalidad-evento/index']];
+                    //ABM ModalidadEventos
+                    $menuItems[] = ['label' => 'Categorias', 'url' => ['/categoria-evento/index']];
+                    //MenuItems ABM Permisos
+                    $menuItems[] = [
+                        'label' => 'Permisos',
+                        'items' => [
+                            ['label' => 'Crear Permiso', 'url' => ['/permission/create-permiso']],
+                            ['label' => 'Asignar Permisos', 'url' => ['/permission/asignar-permisos']],
+                            ['label' => 'Listado Permisos', 'url' => ['/permission/index']],
+                            ['label' => 'Eliminar Permiso', 'url' => ['/permission/remove-permiso']],
+                        ],
+                    ];
+                    $menuItems[] = [
+                        'label' => 'Roles',
+                        'items' => [
+                            ['label' => 'Crear Rol', 'url' => ['/rol/create-rol']],
+                            ['label' => 'Listado Roles', 'url' => ['/rol/index']],
+                        ],
+                    ];
 
 
 //                $menuItems[] = ['label' => 'Gestionar Eventos', 'url' => ['/evento/index']];

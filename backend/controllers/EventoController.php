@@ -3,12 +3,18 @@
 namespace backend\controllers;
 
 use backend\models\Evento;
+use backend\models\Usuario;
 use backend\models\EventoSearch;
+use backend\models\CategoriaEvento;
+use backend\models\ModalidadEvento;
+use backend\models\CambiarOrganizadorForm;
 use common\models\SolicitudAval;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+//use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 
 /**
  * EventoController implements the CRUD actions for Evento model.
@@ -64,11 +70,9 @@ class EventoController extends Controller
     {
         $searchModel = new EventoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//        $aval = SolicitudAval::findOne(['idEvento' => $id]);
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-//                    'aval' => $aval,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -127,17 +131,94 @@ class EventoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idEvento]);
+//    public function actionUpdate($id) {
+//        $model = $this->findModel($id);
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->idEvento]);
+//        }
+//
+//        return $this->render('update', [
+//                    'model' => $model,
+//        ]);
+//    }
+
+
+    public function actionEditarEvento($id) {
+//        $model = new Evento($id);
+        $model = Evento::findOne(['idEvento' => $id]);
+
+        $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
+        $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            //necesita variables, porque sino hace referencia al objeto model y la referencia pierde el valor si crea una nueva instancia
+//            if ($model->codigoAcreditacion != null) {
+//                $nombreCortoEvento = $model->nombreCortoEvento;
+//                $codAcre = $model->codigoAcreditacion;
+////                $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
+//            }
+            $model->save();
+            return $this->redirect(['/evento/view/', 'id' => $id]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
+        $categoriasEventos = CategoriaEvento::find()
+                ->select(['descripcionCategoria'])
+                ->indexBy('idCategoriaEvento')
+                ->column();
+
+        $modalidadEvento = modalidadEvento::find()
+                ->select(['descripcionModalidad'])
+                ->indexBy('idModalidadEvento')
+                ->column();
+        return $this->render('editarEvento', [
+                    'model' => $model,
+                    'categoriasEventos' => $categoriasEventos,
+                    'modalidadEvento' => $modalidadEvento,
+
         ]);
+    }
+
+    public function actionModificarOrganizador($idEvento) {
+        $model = new CambiarOrganizadorForm();
+        $usersQuery = Usuario::find()->select(['idUsuario', 'email'])->all();
+        $users = ArrayHelper::map($usersQuery, 'idUsuario', 'email');
+        $users = $this->conversionAutocomplete($users);
+        $alert = Yii::$app->request->post();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->cambiarOrganizadorEvento($idEvento)) {
+                return $this->redirect(['/evento/view/', 'id' => $idEvento]);
+            }
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('modificarOrganizador', [
+                        'model' => $model,
+                        'usuarios' => $users,
+                        'alert' => $alert
+            ]);
+        } else {
+            return $this->render('modificarOrganizador', [
+                        'model' => $model,
+                        'usuarios' => $users,
+                        'alert' => $alert
+            ]);
+        }
+    }
+
+    /**
+     * Conversion del datos para autocompletar en campos
+     *
+     * @return mixed
+     */
+    public function conversionAutocomplete($array) {
+        $autocomplete = array();
+        foreach ($array as $id => $nombre) {
+            array_push($autocomplete, ['value' => $nombre, 'label' => $nombre]);
+        }
+        return $autocomplete;
     }
 
     /**

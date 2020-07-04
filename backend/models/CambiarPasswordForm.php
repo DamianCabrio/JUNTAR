@@ -28,11 +28,6 @@ class CambiarPasswordForm extends Model
         return [
             //Reglas password
             ['newPassword', 'required', 'message' => 'Debe ingresar una contraseña'],
-//            ['newPassword', 'match', 'pattern' => '/\d/', 'message' => 'La contraseña debe tener al menos un número.'],
-//            ['newPassword', 'match', 'pattern' => '/\w*[A-Z]/', 'message' => 'La contraseña debe tener al menos una mayúscula.'],
-//            ['newPassword', 'string', 'min' => 6, 'max' => 20, 'message' => 'La contraseña ingresada no es válida.',
-//                'tooShort' => 'La contraseña debe tener como mínimo 6 caracteres.', //comentario para minlenght
-//                'tooLong' => 'La contraseña debe tener como máximo 20 caracteres.'], //comentario para maxlenght
             ['repeatNewPassword', 'required', 'message' => 'Debe repetir la contraseña.'],
             ['repeatNewPassword', 'compare', 'compareAttribute' => 'newPassword', 'skipOnEmpty' => false, 'message' => "Las contraseñas no coinciden."],
         ];

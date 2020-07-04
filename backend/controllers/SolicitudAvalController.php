@@ -53,42 +53,47 @@ class SolicitudAvalController extends Controller
      * Lists all SolicitudAval models.
      * @return mixed
      */
-    public function actionSolicitudesDeAval()
-    {
-        $seleccionado = "activas";
-        $searchModel = new SolicitudAvalSearch();
-        if (Yii::$app->request->get('selected') != null && Yii::$app->request->get('selected') != '') {
-            $seleccionado = Yii::$app->request->get('selected');
-        }
-        switch ($seleccionado) {
-            case "activas":
-                //activas
-                $querySearchModel = $searchModel::find()->where(['not', ['tokenSolicitud' => null]])->andWhere(['is', 'avalado', null]);
-                break;
-            case "denegadas":
-//                $querySearchModel = $searchModel::find()->where(['is', 'tokenSolicitud', null])->andWhere(['avalado' => 0]);
-                $querySearchModel = $searchModel::find()->where(['avalado' => 0]);
-                break;
-            case "aprobadas":
-//                $querySearchModel = $searchModel::find()->where(['is', 'tokenSolicitud', null])->andWhere(['avalado' => 1]);
-                $querySearchModel = $searchModel::find()->where(['avalado' => 1]);
-                break;
-            default:
-                //activas
-                $querySearchModel = $searchModel::find()->where(['not', ['tokenSolicitud' => null]])->andWhere(['is', 'avalado', null]);
-                break;
-        }
-        $dataProvider = new ActiveDataProvider([
-            'query' => $querySearchModel,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
 
+    public function actionSolicitudesDeAval() {
+        $estadoSolicitudes = "activas";
+        $searchModel = new SolicitudAvalSearch();
+        if(Yii::$app->request->get('estado') != null && Yii::$app->request->get('estado') != ''){
+            $estadoSolicitudes = Yii::$app->request->get('estado');
+        }
+//        switch ($estadoSolicitudes){
+//            case "activas":
+//                //activas
+//                $querySearchModel = $searchModel::find()->where(['not', ['tokenSolicitud' => null]])->andWhere(['is', 'avalado', null]);
+//                break;
+//            case "denegadas":
+////                $querySearchModel = $searchModel::find()->where(['is', 'tokenSolicitud', null])->andWhere(['avalado' => 0]);
+//                $querySearchModel = $searchModel::find()->where(['avalado' => 0]);
+//                break;
+//            case "aprobadas":
+////                $querySearchModel = $searchModel::find()->where(['is', 'tokenSolicitud', null])->andWhere(['avalado' => 1]);
+//                $querySearchModel = $searchModel::find()->where(['avalado' => 1]);
+//                break;
+//            default:
+//                //activas
+//                $querySearchModel = $searchModel::find()->where(['not', ['tokenSolicitud' => null]])->andWhere(['is', 'avalado', null]);
+//                break;
+//        }
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => $querySearchModel,
+//            'pagination' => [
+//                'pageSize' => 20,
+//            ],
+//        ]);
+
+
+        $dataProvider = $searchModel->search($estadoSolicitudes, Yii::$app->request->queryParams);
+        
         return $this->render('solicitudesDeAval', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'selected' => $seleccionado
+
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'selected' => $estadoSolicitudes
+
         ]);
     }
 
