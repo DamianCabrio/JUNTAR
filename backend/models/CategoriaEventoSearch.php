@@ -4,11 +4,12 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use backend\models\CategoriaEvento;
 
 /**
- * PermisoSearch represents the model behind the search form of `backend\models\Permiso`.
+ * CategoriaEventoSearch represents the model behind the search form of `backend\models\CategoriaEvento`.
  */
-class RolSearch extends Permiso
+class CategoriaEventoSearch extends CategoriaEvento
 {
     /**
      * {@inheritdoc}
@@ -16,8 +17,8 @@ class RolSearch extends Permiso
     public function rules()
     {
         return [
-            [['name', 'description'], 'safe'],
-//            [['type', 'created_at', 'updated_at'], 'integer'],
+//            [['idCategoriaEvento'], 'integer'],
+            [['descripcionCategoria'], 'safe'],
         ];
     }
 
@@ -39,30 +40,28 @@ class RolSearch extends Permiso
      */
     public function search($params)
     {
-        $query = Permiso::find()->where(['type' => 1]);
+        $query = CategoriaEvento::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
-        
-        //busca nombre rol
-        if ($this->name != null && $this->name != '') {
-            $query->andFilterWhere(['like', 'name', $this->name]);
-        }
-        
-        //busca descripcion rol
-        if ($this->description != null && $this->description != '') {
-            $query->andFilterWhere(['like', 'description', $this->description]);
-        }
+
+        // grid filtering conditions
+//        $query->andFilterWhere([
+//            'idCategoriaEvento' => $this->idCategoriaEvento,
+//        ]);
+
+        $query->andFilterWhere(['like', 'descripcionCategoria', $this->descripcionCategoria]);
 
         return $dataProvider;
     }

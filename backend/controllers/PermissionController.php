@@ -73,13 +73,7 @@ class PermissionController extends Controller
     {
         $searchModel = new PermisoSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find()->where(['type' => 2]),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-//            'sort' => ['attributes' => ['name']]
-        ]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -416,6 +410,21 @@ class PermissionController extends Controller
             'model' => $model,
             'item' => $permissionList,
         ]);
+    }
+
+    /**
+     * Finds the Permiso model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return Permiso the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id) {
+//        if (($model = Permiso::findOne($id)) !== null) {
+        if (($model = Permiso::findOne(['name' => $id, 'type' => 2])) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('El permiso que estás intentando acceder no existe.');
     }
 
 }
