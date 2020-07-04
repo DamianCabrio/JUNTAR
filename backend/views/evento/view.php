@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap4\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Evento */
@@ -15,10 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card">
-                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?></h1>
+                <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
 
                 <div class="m-3">
-                    <?= Html::a('Actualizar', ['update', 'id' => $model->idEvento], ['class' => 'btn btn-pink mb-2 col-md-2 col-sm-12']) ?>
+                    <?= Html::a('Actualizar', ['/evento/editar-evento/', 'id' => $model->idEvento], ['class' => 'btn btn-pink mb-2 col-md-2 col-sm-12']) ?>
                     <?php
                     if ($model->idEstadoEvento0->descripcionEstado == "Activo") {
                         echo Html::a('Deshabilitar', ['deshabilitar', 'id' => $model->idEvento], [
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body table-responsive">
 
                     <?=
                     DetailView::widget([
@@ -63,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => function ($model) use ($aval) {
                                     if ($aval != null && $aval != '') {
                                         return (($aval->avalado == 1) ? "Concedido" : "Denegado");
-                                    }else{
+                                    } else {
                                         return "No fue solicitado";
                                     }
                                 },
@@ -74,8 +75,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 //formato raw para poder crear un enlace al organizador
                                 'format' => 'raw',
                                 'value' => function($model) {
-                                    return Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => '']);
+                                    $string = Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => 'mr-4 mb-4']);
+//                                    $string .= Html::tag('br');
+//                                    $string .= Html::tag('br');
+//                                    $string .= Html::tag('br');
+                                    $string .= Html::a('Modificar Organizador', ['/evento/modificar-organizador/', 'idEvento' => $model->idEvento], ['class' => 'mt-2 btn btn-pink col-md-3 col-sm-2 popUpModifyOrganizer']);
+                                    return $string;
                                 },
+                                'headerOptions' => ['class' => 'd-flex justify-content-end'],
                             ],
                             [
                                 'attribute' => 'idCategoriaEvento',
@@ -116,6 +123,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     ])
                     ?>
                 </div>
+                <?php
+                Modal::begin([
+                    'id' => 'modalModifyOrganizer',
+                    'size' => 'modal-lg'
+                ]);
+                Modal::end();
+                //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS
+                ?>
             </div>
         </div>
     </div>

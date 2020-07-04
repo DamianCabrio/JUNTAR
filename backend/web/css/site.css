@@ -254,3 +254,8 @@ a.desc:after {
 .tarjetaIndex:hover{
     background-color: #ddd;
 }
+
+.modal-header{
+    background:#FE1355;
+    color:white;
+}
