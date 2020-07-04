@@ -54,19 +54,22 @@ $this->title = "Cargar Evento";
                     "options" => ['rows' => '8'],
                     "preset" => "custom",
                     "clientOptions" => [
+                        'extraPlugins' => 'justify,font',
                         'toolbarGroups' => [
                             ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
                             ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
-                            '/',
                             ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
                             ['name' => 'colors'],
-                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
                             ['name' => 'links'],
-                            ['name' => 'styles'],
-                            ['name' => 'colors'],
                             ['name' => 'tools'],
-                            ['name' => 'others'],
+                            '/',
+                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+                            ['name' => 'styles','groups' => ['Styles', 'Format', 'Font', 'FontSize']],
+                            ['name' => 'font',],
+                            ['name' => 'styles'],
                             
+                            
+
                         ],
                         'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
                         'removePlugins' => 'elementspath',
