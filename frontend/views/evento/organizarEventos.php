@@ -26,6 +26,7 @@ $this->title = 'Proyecto Juntar';
                     <div class="form-group row">
 
                         <div class="col-sm-12 col-md-4 mb-3">
+
                             <select name="estadoEvento" class="custom-select custom-select-lg"
                                     onchange="this.form.submit()">
                                 <option <?= (isset($_GET["estadoEvento"]) && $_GET["estadoEvento"] == 0) ? "selected" : "" ?>

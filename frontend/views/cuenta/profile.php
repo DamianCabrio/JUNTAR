@@ -135,7 +135,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         Modal::begin([
                             'id' => 'profileModal',
                             'size' => 'modal-lg',
-                            'closeButton' => ['id' => 'close-button'],
                         ]);
                         Modal::end();
                         //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS

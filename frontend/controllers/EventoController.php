@@ -46,6 +46,7 @@ class EventoController extends Controller
     /**
      * {@inheritdoc}
      */
+    //Funcion automatica para detectar los permisos
     public function behaviors()
     {
         $behaviors['access'] = [
@@ -86,53 +87,6 @@ class EventoController extends Controller
         return $behaviors;
     }
 
-    public function actionRespuestasFormulario($slug)
-    {
-        $evento = $this->findModel("", $slug);
-
-        $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
-        $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])
-            ->andWhere(["=", "estado", 1])
-            ->andWhere(["=", "acreditacion", 0])->count();
-
-
-        if ($this->verificarDueño($evento)) {
-            $hayPreguntas = false;
-            if ($cantidadPreguntas != 0) {
-                $hayPreguntas = true;
-            }
-            $usuariosSearchModel = new InscripcionSearch();
-            $usuariosPreinscriptosDataProvider = new ActiveDataProvider([
-                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 0])->andWhere(["<>", "acreditacion", 1]),
-                'pagination' => false,
-                'sort' => ['attributes' => ['name', 'description']]
-            ]);
-            $usuariosInscriptosDataProvider = new ActiveDataProvider([
-                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 1])->andWhere(["<>", "acreditacion", 1]),
-                'pagination' => false,
-                'sort' => ['attributes' => ['name', 'description']]
-            ]);
-            return $this->render('respuestasFormulario',
-                ["preinscriptos" => $usuariosPreinscriptosDataProvider,
-                    "inscriptos" => $usuariosInscriptosDataProvider,
-                    "evento" => $evento, 'cantidadInscriptos' => $cantidadInscriptos,
-                    "hayPreguntas" => $hayPreguntas]);
-        } else {
-            if ($this->verificarDueño($evento)) {
-                $usuariosInscriptosSearchModel = new InscripcionSearch();
-                $usuariosInscriptosDataProvider = new ActiveDataProvider([
-                    'query' => $usuariosInscriptosSearchModel::find()->where(["idEvento" => $evento->idEvento])->andWhere(["estado" => 0]),
-                    'pagination' => false,
-                    'sort' => ['attributes' => ['name', 'description']]
-                ]);
-                return $this->render('respuestasFormulario',
-                    ["inscriptos" => $usuariosInscriptosDataProvider,
-                        "evento" => $evento]);
-            } else {
-                throw new NotFoundHttpException('La página solicitada no existe.');
-            }
-        }
-    }
 
     /**
      * Finds the Evento model based on its primary key value.
@@ -157,12 +111,60 @@ class EventoController extends Controller
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
+    //Funcion para verificar si la persona que ingresa a un url es dueño del evento que quiere ver
     public function verificarDueño($model)
     {
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $model->idUsuario0->idUsuario) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    //Funcion para mostrar las respuestas de un formulario de un evento
+    public function actionRespuestasFormulario($slug)
+    {
+        //Se busca el evento
+        $evento = $this->findModel("", $slug);
+
+        //Se verifica si la persona ingresando a esta pagina es el dueño del evento cuyas respuestas quiere ver
+        if ($this->verificarDueño($evento)) {
+
+            //Se busca la tantidad de preguntas para verificar si hay preguntas para mostrar, si no hay preguntas la funcionalidad se desactiva
+            $cantidadPreguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->count();
+            //Se busca la cantidad de inscriptos al evento para verificar si se muestra boton para enviar mail avisando de su inscripcion a esos inscriptos
+            $cantidadInscriptos = Inscripcion::find()->where(["idEvento" => $evento->idEvento])
+                ->andWhere(["=", "estado", 1])
+                ->andWhere(["=", "acreditacion", 0])->count();
+
+            //Seteo de variable que muestra si hay preguntas en el evento
+            $hayPreguntas = false;
+            if ($cantidadPreguntas != 0) {
+                $hayPreguntas = true;
+            }
+
+            //Se crea el searchModel de los usuarios preinscriptos
+            $usuariosSearchModel = new InscripcionSearch();
+            $usuariosPreinscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 0])->andWhere(["<>", "acreditacion", 1]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+
+            //Se crea el searchModel de los usuarios inscriptos
+            $usuariosInscriptosDataProvider = new ActiveDataProvider([
+                'query' => $usuariosSearchModel::find()->where(["idEvento" => $evento->idEvento, "estado" => 1])->andWhere(["<>", "acreditacion", 1]),
+                'pagination' => false,
+                'sort' => ['attributes' => ['name', 'description']]
+            ]);
+            //Se retorna los datos a la vista
+            return $this->render('respuestasFormulario',
+                ["preinscriptos" => $usuariosPreinscriptosDataProvider,
+                    "inscriptos" => $usuariosInscriptosDataProvider,
+                    "evento" => $evento, 'cantidadInscriptos' => $cantidadInscriptos,
+                    "hayPreguntas" => $hayPreguntas]);
+        } else {
+                throw new NotFoundHttpException('La página solicitada no existe.');
         }
     }
 
@@ -223,20 +225,11 @@ class EventoController extends Controller
 
     private function actionGenerarQRAcreditacion($codigoAcreditacion, $slug)
     {
-//        $label = (new Label($slug))
         $label = ($slug);
-//                ->setFont(__DIR__ . '/../resources/fonts/monsterrat.otf')
-//                ->setFontSize(14);
 
         $qrCode = (new QrCode((Url::base(true) . Url::to(['/acreditacion']) . '?slug=' . $slug . '&codigoAcreditacion=' . $codigoAcreditacion)))
             ->useLogo("../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
-//                ->useForegroundColor(51, 153, 255)
-//                ->useBackgroundColor(200, 220, 210)
-//                //white and black (se ve horrendo
-//                ->useForegroundColor(255,255,255)
-//                ->useBackgroundColor(0,0,0)
             ->useEncoding('UTF-8')
-//                ->setErrorCorrectionLevel(ErrorCorrectionLevelInterface::HIGH)
             ->setLogoWidth(40)
             ->setSize(400)
             ->setMargin(5)
