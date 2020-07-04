@@ -6,6 +6,7 @@ use backend\models\CambiarPasswordForm;
 use backend\models\RegistrarUsuarioForm;
 use backend\models\Usuario;
 use backend\models\UsuarioSearch;
+use common\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
