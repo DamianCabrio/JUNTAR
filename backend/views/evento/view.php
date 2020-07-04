@@ -75,7 +75,6 @@ YiiAsset::register($this);
                                 'label' => 'Organizador',
                                 //formato raw para poder crear un enlace al organizador
                                 'format' => 'raw',
-
                                 'value' => function($model) {
                                     $string = Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => 'mr-4 mb-4']);
 //                                    $string .= Html::tag('br');
@@ -83,7 +82,6 @@ YiiAsset::register($this);
 //                                    $string .= Html::tag('br');
                                     $string .= Html::a('Modificar Organizador', ['/evento/modificar-organizador/', 'idEvento' => $model->idEvento], ['class' => 'mt-2 btn btn-pink col-md-3 col-sm-2 popUpModifyOrganizer']);
                                     return $string;
-
                                 },
                                 'headerOptions' => ['class' => 'd-flex justify-content-end'],
                             ],
@@ -104,7 +102,13 @@ YiiAsset::register($this);
                             ],
                             'nombreEvento',
                             'nombreCortoEvento',
-                            'descripcionEvento',
+                            [
+                                'attribute' => 'descripcionEvento',
+                                'label' => 'Descripción Evento',
+                                'format' => 'raw',
+                                'value' => 'descripcionEvento', //valor referenciado por ActiveQuery
+                            ],
+//                            'descripcionEvento',
                             'lugar',
                             'fechaInicioEvento',
                             'fechaFinEvento',
@@ -126,14 +130,14 @@ YiiAsset::register($this);
                     ])
                     ?>
                 </div>
-                <?php
-                Modal::begin([
-                    'id' => 'modalModifyOrganizer',
-                    'size' => 'modal-lg'
-                ]);
-                Modal::end();
-                //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS
-                ?>
+                    <?php
+                    Modal::begin([
+                        'id' => 'modalModifyOrganizer',
+                        'size' => 'modal-lg'
+                    ]);
+                    Modal::end();
+                    //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS
+                    ?>
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\AccessControl;
+//use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -154,11 +154,11 @@ class EventoController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             //necesita variables, porque sino hace referencia al objeto model y la referencia pierde el valor si crea una nueva instancia
-            if ($model->codigoAcreditacion != null) {
-                $nombreCortoEvento = $model->nombreCortoEvento;
-                $codAcre = $model->codigoAcreditacion;
-                $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
-            }
+//            if ($model->codigoAcreditacion != null) {
+//                $nombreCortoEvento = $model->nombreCortoEvento;
+//                $codAcre = $model->codigoAcreditacion;
+////                $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
+//            }
             $model->save();
             return $this->redirect(['/evento/view/', 'id' => $id]);
         }

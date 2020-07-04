@@ -99,22 +99,6 @@ class RolController extends Controller
     }
 
     /**
-     * Finds the Permiso model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Permiso the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Rol::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('El rol buscado no existe.');
-    }
-
-    /**
      * Metodo createPermiso --> Permite crear un nuevo permiso. Utiliza una funcion que busca todas
      * las vistas del proyecto y genera un array de permisos faltantes en base a ellas.
      *

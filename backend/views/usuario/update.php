@@ -3,6 +3,7 @@
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use yii\bootstrap4\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Usuario */
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = 'Update';
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
         <div class="row">
-            <div class="col-md-7 col-sm-12">
+            <div class="col-md-8 col-sm-12 m-auto">
                 <div class="card">
                     <div class="card-header darkish_bg text-white text-center mt-3">
                         <h4> Datos Usuario</h4>
@@ -30,6 +31,13 @@ $this->params['breadcrumbs'][] = 'Update';
                             'model' => $model,
                         ])
                         ?>
+                        <?php
+                    Modal::begin([
+                        'id' => 'modalChangePassword',
+                        'size' => 'modal-lg'
+                    ]);
+                    Modal::end();
+                    ?>
                     </div>
                 </div>
             </div>

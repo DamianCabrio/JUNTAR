@@ -96,21 +96,6 @@ class PermissionController extends Controller
     }
 
     /**
-     * Finds the Permiso model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Permiso the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Permiso::findOne($id)) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('El permiso que estás intentando acceder no existe.');
-    }
-
-    /**
      * Metodo AsignarPermisos --> Genera un menú en el cual se pueden seleccionar roles y asignarles
      * los permisos registrados. Se pueden tambien se pueden asignar roles para que herede todos los
      * permisos de este.
@@ -420,7 +405,6 @@ class PermissionController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-//        if (($model = Permiso::findOne($id)) !== null) {
         if (($model = Permiso::findOne(['name' => $id, 'type' => 2])) !== null) {
             return $model;
         }
