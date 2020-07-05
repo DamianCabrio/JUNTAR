@@ -232,14 +232,17 @@ class EventoController extends Controller {
         if (Yii::$app->request->get('slug')) {
             //captura el slug
             $slug = Yii::$app->request->get('slug');
+            $rutaImagenEventoQR = "";
             //busca el qr del evento
             $eventoQR = ImagenEvento::find()
-                    ->innerJoin('evento', 'evento.idEvento=imagen_evento.idEvento')
-                    ->where(['nombreCortoEvento' => $slug])
-                    ->andWhere(['categoriaImagen' => 3])->one();
+                            ->innerJoin('evento', 'evento.idEvento=imagen_evento.idEvento')
+                            ->where(['nombreCortoEvento' => $slug])
+                            ->andWhere(['categoriaImagen' => 3])->one();
             //genera el enlace
-            $rutaImagenEventoQR = Url::base(true) ."/". $eventoQR->rutaArchivoImagen;
-            
+            if ($eventoQR != null) {
+                $rutaImagenEventoQR = Url::base(true) . "/" . $eventoQR->rutaArchivoImagen;
+            }
+
             //setea nulo el enlace de acreditacion
             $rutaImagenAcreditacionEventoQR = "";
             $algoFeo = Evento::findOne(['nombreCortoEvento' => $slug]);
@@ -247,11 +250,13 @@ class EventoController extends Controller {
                 if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $algoFeo->idUsuario) {
                     //si es el dueño del evento busca el qr de acreditacion
                     $eventoQR = ImagenEvento::find()
-                    ->innerJoin('evento', 'evento.idEvento=imagen_evento.idEvento')
-                    ->where(['nombreCortoEvento' => $slug])
-                    ->andWhere(['categoriaImagen' => 4])->one();
+                                    ->innerJoin('evento', 'evento.idEvento=imagen_evento.idEvento')
+                                    ->where(['nombreCortoEvento' => $slug])
+                                    ->andWhere(['categoriaImagen' => 4])->one();
                     //genera la ruta del enlace al qr de acreditacion
-                    $rutaImagenAcreditacionEventoQR = Url::base(true) ."/". $eventoQR->rutaArchivoImagen;
+                    if ($eventoQR != null) {
+                        $rutaImagenAcreditacionEventoQR = Url::base(true) . "/" . $eventoQR->rutaArchivoImagen;
+                    }
                 }
             }
             if (Yii::$app->request->isAjax) {
