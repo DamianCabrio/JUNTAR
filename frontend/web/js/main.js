@@ -616,13 +616,20 @@ function autocompleteLocalidades(nombreProvincia) {
 // random order para las cards en about us
 var cards = $(".randomcards");
 for (var i = 0; i < cards.length; i++) {
-    var target = Math.floor(Math.random() * cards.length - 1) + 1;
-    var target2 = Math.floor(Math.random() * cards.length - 1) + 1;
+    var target = Math.floor(Math.random() * cards.length ) ;
+    var target2 = Math.floor(Math.random() * cards.length ) ;
     cards.eq(target).before(cards.eq(target2));
 }
 var cards = $(".randomcardsProfes");
 for (var i = 0; i < cards.length; i++) {
-    var target = Math.floor(Math.random() * cards.length - 1) + 1;
-    var target2 = Math.floor(Math.random() * cards.length - 1) + 1;
+    var target = Math.floor(Math.random() * cards.length);
+    var target2 = Math.floor(Math.random() * cards.length);
     cards.eq(target).before(cards.eq(target2));
 }
+
+// arrays para descripciones de cada uno (si se quiere) en el about us
+$(document).ready(function() {
+    var quotesNS = new Array("We aim above the mark to hit the mark.", "Ich esse gern Brot mit warmem Käse.", "私はビールを飲み、チップを食べるのが好きです。"),
+    random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
+    $('#descriptionNS').text( random );
+});

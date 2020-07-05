@@ -10,14 +10,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <section class="" style="min-height: 100vh;">
 	<div class="site-about container">
 		<div class="">
-
-
 			<p>Equipo Programación Web Avanzada - 2020</p>
-			<p>Universidad Nacional del Comahue</p>
 			<hr>
 		</div>
-		<div class="">
-			<div class="" style="padding-top:5vh;padding-bottom:5vh">
+			<div class="">
 				<div class="row">
 					<div class="randomcards col-sm-12 col-md-3 mb-4">
 						<div class="card shadow">
@@ -70,11 +66,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 							<div class="card-body darkish_bg text-light">
-								<p>Metimos cuchara en verEvento.php</p>
+								<p id="descriptionNS"></p>
 
 							</div>
 							<div class="card-footer darkish_bg text-center">
-								<a href="" class="text-light link"><i class="material-icons">contact_mail</i></a>
+								<a href="mailto:norbert@stange.com.ar" class="text-light link"><i class="material-icons">contact_mail</i></a>
 							</div>
 						</div>
 					</div>
@@ -195,10 +191,11 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 
 			</div>
-		</div>
+
 		<div>
 			<hr>
-			<p><b><a class="link" href="https://github.com/DamianCabrio/JUNTAR" target="_blank">Link a repositorio Juntar</a></b></p>
+			<p><b><a class="link" href="https://github.com/DamianCabrio/JUNTAR" target="_blank">Link a repositorio Juntar</a></b> Licencia GNU GPL version 3</p>
+			<p>Universidad Nacional del Comahue</p>
 			<hr>
 		</div>
 		<!-- Button trigger modal -->
