@@ -139,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 							<div class="card-body darkish_bg text-light">
-								<p>Metimos cuchara en verEvento.php</p>
+								<p>A la grande le puse Cuca</p>
 
 							</div>
 							<div class="card-footer darkish_bg text-center">
