@@ -672,3 +672,10 @@ $(document).ready(function() {
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descripcionDC').text( random );
 });
+
+// arrays para descripciones de cada uno (si se quiere) en el about us
+$(document).ready(function() {
+    var quotesNS = new Array("Mira mamá!!! Aparezco en los créditos :D!", "omae wa mou shindeiru", "Hacer una página web es como comer una naranja (...)"),
+        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
+    $('#KevinMekuruTheBassistAndGamer-ahre').text( random );
+});

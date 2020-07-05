@@ -153,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 							<div class="card-body darkish_bg text-light">
-								<p>Metimos cuchara en verEvento.php</p>
+								<p id="KevinMekuruTheBassistAndGamer-ahre"></p>
 
 							</div>
 							<div class="card-footer darkish_bg text-center">
