@@ -270,6 +270,20 @@ CREATE TABLE `solicitud_aval` (
   `validador` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imagen_evento`
+--
+
+CREATE TABLE `imagen_evento` (
+  `idImagenEvento` bigint(20) NOT NULL,
+  `idEvento` bigint(20) NOT NULL,
+  `categoriaImagen` tinyint(4) NOT NULL,
+  `rutaArchivoImagen` varchar(200) NOT NULL,
+  `fechaCreacionImagen` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -396,12 +410,12 @@ ALTER TABLE `solicitud_aval`
   ADD UNIQUE KEY `idEvento` (`idEvento`) USING BTREE,
   ADD KEY `validador` (`validador`) USING BTREE;
 
-
-
-ALTER TABLE `solicitud_aval`
-  ADD PRIMARY KEY (`idSolicitudAval`) USING BTREE,
-  ADD UNIQUE KEY `idEvento` (`idEvento`) USING BTREE,
-  ADD KEY `validador` (`validador`) USING BTREE;
+--
+-- Indices de la tabla `imagen_evento`
+--
+ALTER TABLE `imagen_evento`
+  ADD PRIMARY KEY (`idImagenEvento`),
+  ADD KEY `idEvento` (`idEvento`);
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -463,8 +477,17 @@ ALTER TABLE `pregunta`
 ALTER TABLE `respuesta`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
+--
+-- AUTO_INCREMENT de la tabla `respuesta`
+--
 ALTER TABLE `solicitud_aval`
-  MODIFY `idSolicitudAval` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idSolicitudAval` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `imagen_evento`
+--
+ALTER TABLE `imagen_evento`
+  MODIFY `idImagenEvento` bigint(20) NOT NULL AUTO_INCREMENT;
 
 -- #######################################################################################################################
 -- #######################################################################################################################
@@ -539,14 +562,21 @@ ALTER TABLE `respuesta`
   ADD CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`idpregunta`) REFERENCES `pregunta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `respuesta_ibfk_2` FOREIGN KEY (`idinscripcion`) REFERENCES `inscripcion` (`idInscripcion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Filtros para la tabla `solicitud_aval`
+--
 ALTER TABLE `solicitud_aval`
   ADD CONSTRAINT `solicitud_aval_ibfk_1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`),
   ADD CONSTRAINT `solicitud_aval_ibfk_2` FOREIGN KEY (`validador`) REFERENCES `usuario` (`idUsuario`) ON DELETE SET NULL ON UPDATE SET NULL;
-COMMIT;
--- #######################################################################################################################
--- #######################################################################################################################
 
+--
+-- Filtros para la tabla `imagen_evento`
+--
+ALTER TABLE `imagen_evento`
+  ADD CONSTRAINT `imagen_evento_ibfk_1` FOREIGN KEY (`idEvento`) REFERENCES `evento` (`idEvento`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
+-- #######################################################################################################################
+-- #######################################################################################################################
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
