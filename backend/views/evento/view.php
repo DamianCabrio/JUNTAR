@@ -21,6 +21,7 @@ YiiAsset::register($this);
 
                 <div class="m-3">
                     <?= Html::a('Actualizar', ['/evento/editar-evento/', 'id' => $model->idEvento], ['class' => 'btn btn-pink mb-2 col-md-2 col-sm-12']) ?>
+					<?= Html::a('Presentaciones', ['/presentacion/list-of-presentation/', 'id' => $model->idEvento], ['class' => 'btn btn-pink mb-2 col-md-2 col-sm-12']) ?>
                     <?php
                     if ($model->idEstadoEvento0->descripcionEstado == "Activo") {
                         echo Html::a('Deshabilitar', ['deshabilitar', 'id' => $model->idEvento], [
