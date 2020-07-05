@@ -120,7 +120,7 @@ $(document).ready(function () {
         agregarPreguntaModal($(this).attr('href'), 'Agregar Pregunta');
     });
 
-    //funcionalidad agregar pregunta
+    //funcionalidad ver respuesta
     $('.verRespuesta').click(function (link) {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
@@ -135,6 +135,15 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editarPreguntaModal($(this).attr('href'), 'Editar Pregunta');
     });
+    
+    //funcionalidad ver QR
+    $('.visualizarQR').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        visualizarQrModal($(this).attr('href'), 'QR:');
+    });
+    
     //funcionalidad editar perfil
     $('.editProfile').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -522,6 +531,21 @@ function responderRespuestaModal(unaUrl, titulo) {
                 .find('.modal-body')
                 .html(data);
         $('#modalPregunta').find('.modal-header')
+                .html("<h3> " + titulo + " </h3>");
+    });
+}
+
+function visualizarQrModal(unaUrl, titulo) {
+    //hace la petición a la url
+    //si para cargar el formulario necesita enviarle data, se especifica
+    $.ajax({
+        url: unaUrl
+                //        data: {data: data}
+    }).done(function (data) {
+        $('#QRModal').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#QRModal').find('.modal-header')
                 .html("<h3> " + titulo + " </h3>");
     });
 }

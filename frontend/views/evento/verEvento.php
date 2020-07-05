@@ -370,6 +370,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     <br>
                                     <p>Organizado por <?= $organizadorEvento ?></p>
                                     <br>
+                                    <!--<span>-->
                                     <?PHP
                                     if ($evento->imgFlyer != null) {
                                         echo Html::button('<i class="material-icons align-middle">file_download</i> Flyer', [
@@ -385,6 +386,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ]);
                                     }
                                     ?>
+                                        <?= Html::a('Visualizar QR', ['/evento/mostrar-qr-evento/', 'slug' => $evento->nombreCortoEvento], ['class' => 'btn btn-secondary ml-2 visualizarQR']); ?>
+                                    <!--</span>-->
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -787,4 +790,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
         </div>
     </div>
 </div>
+<?php
+                        Modal::begin([
+                            'id' => 'QRModal',
+                            'size' => 'modal-lg',
+                        ]);
+                        Modal::end();
+                        ?>
 </div>
