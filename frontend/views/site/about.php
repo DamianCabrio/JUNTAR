@@ -198,21 +198,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			<p>Universidad Nacional del Comahue</p>
 			<hr>
 		</div>
-		<!-- Button trigger modal -->
-		<a class="float-right" data-toggle="modal" data-target="#exampleModalLong">
-			<small>la verdá</small>
+
+		<a class="float-right link" href="https://www.youtube.com/embed/upL2HCdkBSc" target="_blank">
+			<small>.</small>
 		</a>
 
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<iframe width="560" height="315" src="https://www.youtube.com/embed/upL2HCdkBSc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-					</div>
-				</div>
-			</div>
-		</div>
 		<!--
 			<h1> /* Html::encode($this->title) ?></h1>
 		<div class="section_padding">
