@@ -20,25 +20,25 @@ use yii\helpers\HtmlPurifier;
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-3">
+                      <div class="col-12 col-sm-3">
                         <label><b>Día de Presentacion</b></label>
                         <p><?= Html::encode(date('d-m-Y', strtotime($model->diaPresentacion))) ?></p>
                       </div>
-                      <div class="col-3">
+                      <div class="col-12 col-sm-3">
                         <label><b>Hora de Inicio</b></label>
                         <p><?= Html::encode($model->horaInicioPresentacion) ?></p>
                       </div>
-                      <div class="col-3">
+                      <div class="col-12 col-sm-3">
                         <label><b>Hora de Finalización</b></label>
                         <p><?= Html::encode($model->horaFinPresentacion) ?></p>
                       </div>
-                      <div class="col-3">
+                      <div class="col-12 col-sm-3">
                         <label><b>Link de Recursos</b></label>
                         <p><?= Html::encode($model->linkARecursos) ?></p>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-12 col-sm-6">
                         <?= Html::a('Modificar', ['update', 'id' => $model->idPresentacion], ['class' => 'btn btn-pink']) ?>
                         <?= Html::a('Eliminar', ['delete', 'id' => $model->idPresentacion], [
                             'class' => 'btn btn-pink',
@@ -48,9 +48,9 @@ use yii\helpers\HtmlPurifier;
                             ],
                         ])?>
                         <?php if ($model->idExpositors['dni'] == null): ?>
-                          <?= Html::a('Asignar Expositor', ['/presentacion-expositor/create', 'id' => $model->idPresentacion], ['class' => 'btn btn-pink']) ?>
+                          <?= Html::a('Asignar Expositor', ['/presentacion-expositor/create', 'id' => $model->idPresentacion], ['class' => 'btn btn-pink mt-2']) ?>
                         <?php else: ?>
-                          <?= Html::a('Modificar Expositor', ['/presentacion-expositor/update', 'idExpositor' => $model->idExpositors['idUsuario'], 'idPresentacion' => $model->idPresentacion], ['class' => 'btn btn-pink']) ?>
+                          <?= Html::a('Modificar Expositor', ['/presentacion-expositor/update', 'idExpositor' => $model->idExpositors['idUsuario'], 'idPresentacion' => $model->idPresentacion], ['class' => 'btn btn-pink mt-1']) ?>
                         <?php endif; ?>
                       </div>
                     </div>
