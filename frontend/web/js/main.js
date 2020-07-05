@@ -225,12 +225,13 @@ $(document).ready(function () {
         verExpositoresModal($(this).attr('href'));
     });
     //prueba
-    $('#cargarPresentacion').submit(function () {
+    /*$('#cargarPresentacion').submit(function () {
         $('#presentacion-diapresentacion').attr('required', true);
         $('#presentacion-diapresentacion').addClass('is-invalid');
         $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
         $('#invalidFecha').show();
     });
+    
     $('#editarPresentacion').submit(function () {
         $('#presentacion-diapresentacion').attr('required', true);
         $('#presentacion-diapresentacion').addClass('is-invalid');
@@ -259,7 +260,7 @@ $(document).ready(function () {
             $('#invalidFecha').show();
         }
 
-    });
+    });*/
     //funcionalidad mostrar certificdos
     $('.viewCertification').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -289,7 +290,7 @@ function verExpositoresModal(link) {
                 .find('.modal-body')
                 .html(data);
         $('#modalEvento').find('.modal-header')
-                .html("<h3> Lista de expositores </h3>");
+                .html("<h3> Lista de expositores </h3><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
     });
 }
 
@@ -319,7 +320,7 @@ function editPresentacionModal(link) {
                 .find('.modal-body')
                 .html(data);
         $('#modalEvento').find('.modal-header')
-                .html("<h3> Editar presentación </h3>");
+                .html("<h3> Editar presentación </h3><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
     });
 }
 
@@ -355,7 +356,7 @@ function agregarPresentacionModal(link) {
                 .find('.modal-body')
                 .html(data);
         $('#modalEvento').find('.modal-header')
-                .html("<h3> Cargar presentación </h3>");
+                .html("<h3> Cargar presentación </h3><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
     });
 }
 
@@ -370,7 +371,7 @@ function verPresentacionModal(link) {
                 .find('.modal-body')
                 .html(data);
         $('#modalEvento').find('.modal-header')
-                .html("<h3> Información de la Presentación </h3>");
+                .html("<h3> Información de la Presentación </h3><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
     });
 }
 /*$('.cargarExpositores').click(function (link) {

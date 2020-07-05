@@ -64,7 +64,10 @@ AppAsset::register($this);
                 $imgPerfil = '@web/iconos/person-circle-w.svg';
             }
             $menuItems[] = [
-                'label' => Html::img($imgPerfil, ['class' => 'ml-1', "alt" => "Cuenta", "width" => "35", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0;"]),
+                'label' => Html::img($imgPerfil, ['class' => 'ml-1', "alt" => "Cuenta", "width" => "35", "height" => "30", "title" => "Cuenta", "role" => "img", "style" => "margin: -4px 8px 0 0; border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;"]),
                 'items' => [
                     ['label' => Yii::$app->user->identity->nombre . ' ' . Yii::$app->user->identity->apellido],
                     ['label' => 'Mi Perfil', 'url' => ['/cuenta/profile'], 'linkOptions' => ['class' => 'yolo']],

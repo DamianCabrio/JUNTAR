@@ -82,9 +82,9 @@ class Evento extends ActiveRecord
             [['idCategoriaEvento'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaEvento::className(), 'targetAttribute' => ['idCategoriaEvento' => 'idCategoriaEvento']],
             [['idModalidadEvento'], 'exist', 'skipOnError' => true, 'targetClass' => ModalidadEvento::className(), 'targetAttribute' => ['idModalidadEvento' => 'idModalidadEvento']],
             [['idEstadoEvento'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoEvento::className(), 'targetAttribute' => ['idEstadoEvento' => 'idEstadoEvento']],
-            ['fechaFinEvento', 'compare', 'compareAttribute' => 'fechaInicioEvento', 'operator' => '>='],
-            ['fechaLimiteInscripcion', 'compare', 'compareAttribute' => 'fechaInicioEvento', 'operator' => '<'],
-            ['nombreCortoEvento', 'match', 'pattern' => "/^[A-Z|a-z|0-9-_]+$/", "message" => "El campo contiene caracteres inválidos"],
+            ['fechaFinEvento','compare','compareAttribute'=>'fechaInicioEvento','operator'=>'>='],
+            ['fechaLimiteInscripcion','compare','compareAttribute'=>'fechaFinEvento','operator'=>'<='],
+            ['nombreCortoEvento','match','pattern'=> "/^[A-Z|a-z|0-9-_]+$/","message" => "El campo contiene caracteres inválidos"],
         ];
     }
 
@@ -109,7 +109,7 @@ class Evento extends ActiveRecord
             'imgLogo' => 'Img Logo',
             'capacidad' => 'Capacidad',
             'preInscripcion' => 'Preinscripción',
-            'fechaLimiteInscripcion' => 'Fecha Limite Inscripción',
+            'fechaLimiteInscripcion' => 'Fecha Limite de Preinscripción',
             'codigoAcreditacion' => 'Código Acreditación',
             'fechaCreacionEvento' => 'Fecha Creación Evento',
         ];

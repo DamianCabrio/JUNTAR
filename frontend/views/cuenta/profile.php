@@ -41,46 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </ul>
             </div>
             <!-- Profile Sidebar Menu-->
-
-                <div class='row'>
-                    <!-- Profile Sidebar Menu-->
-                    <div class="col-sm-3 mt-4 bg-profile-sidebar">
-                        <ul class="nav nav-tabs mt-2 text-center">
-                            <li class="nav-item profile-sidebar col-12">
-                                <a class="nav-link active" href="profile"> Información de la Cuenta </a>
-                            </li>
-                            <li class="nav-item profile-sidebar col-12">
-                                <?= Html::a('Cambiar Contraseña', ['cuenta/cambiar-password'], ['class' => 'nav-link']); ?>
-                            </li>
-                            <!-- a futuro -->
-                            <li class="nav-item profile-sidebar col-12">
-                                <?= Html::a('Cambiar dirección de correo', ['cuenta/cambiar-email-request'], ['class' => 'nav-link']); ?>
-                            </li>
-                            <!-- a futuro -->
-                            <!--                <li class="nav-item profile-sidebar col-12">
-                            <a class="nav-link" href=""> Preferencias de Email </a>
-                        </li>-->
-                            <li class="nav-item profile-sidebar col-12">
-                                <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>">
-                                    Desactivar mi Cuenta </a>
-                            </li>
-                            <!--<li class="nav-item mt-2 profile-sidebar col-12">-->
-                            <?php // $assigned = yii::$app->authManager->getAssignment('Organizador', Yii::$app->user->identity->id);
-                            ?>
-                            <?php // if (!$assigned):
-                            ?>
-                            <?php // echo
-                            //                        Html::a("Ser un Gestor de Eventos",
-                            //                                ['cuenta/change-rol', 'id' => Yii::$app->user->identity->id],
-                            //                                ['class' => $assigned ? "btn btn-sm btn-outline-info" : "btn btn-sm btn-outline-info"])
-                            ?>
-                            <?php // endif;
-                            ?>
-                            <!--</li>-->
-                        </ul>
-                    </div>
-                    <!-- Profile Sidebar Menu-->
-
                     <!-- Profile Card Content -->
                     <div class="col-md-9 col-sm-4 mt-4 ">
                         <div class="card">
@@ -150,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <?= Html::encode($dataUser['email']); ?>
                                             </div>
                                             <div class="col-md-4 col-sm-3">
-                                                <h5> Pais: </h5>
+                                                <h5> País: </h5>
                                                 <?= Html::encode($dataUser['pais']); ?>
                                             </div>
                                             <div class="col-md-4 col-sm-3">
@@ -174,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php
                         Modal::begin([
                             'id' => 'profileModal',
-                            'size' => 'modal-lg'
+                            'size' => 'modal-lg',
                         ]);
                         Modal::end();
                         //Este es un comentario del señor yii modales: DAMIÁN, DEJÁ DE BORRAR COSAS

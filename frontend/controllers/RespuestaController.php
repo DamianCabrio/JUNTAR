@@ -67,7 +67,6 @@ class RespuestaController extends Controller
 
     public function actionVer($slug, $id)
     {
-
         $evento = Evento::findOne(["nombreCortoEvento" => $slug]);
         if ($this->verificarDueño($evento->idEvento)) {
             $preguntas = Pregunta::find()->where(["idEvento" => $evento->idEvento])->all();
@@ -107,7 +106,7 @@ class RespuestaController extends Controller
 //     * If creation is successful, the browser will be redirected to the 'view' page.
 //     * @return mixed
 //     */
-//    public function actionCreate($id, $id2)
+//    private function actionCreate($id, $id2)
 //    {
 //        $inscripcionAEvento = Inscripcion::find()->where(["idInscripcion" => $id2])
 //            ->andWhere(["<>", "estado", 1])
