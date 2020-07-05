@@ -457,6 +457,7 @@ class EventoController extends Controller {
                     "cantidadPreguntas" => $cantidadPreguntas,
                     'verificacionSolicitud' => $solicitud,
                     'estadoAval' => $estadoAval,
+                    "inscripcion" => $inscripcion,
         ]);
     }
 
@@ -613,6 +614,10 @@ class EventoController extends Controller {
                     //generamos el codigo QR para visualizar el evento
                     $QrEvento = new ImagenQR();
                     $QrEvento->updateQREvento($nombreCortoEvento, $idEvento);
+
+                    $codAcre = $model->codigoAcreditacion;
+                    $QrAcreditacion = new ImagenQR();
+                    $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
                 }
 //                $this->actionGenerarQREvento($nombreCortoEvento);
                 if ($model->codigoAcreditacion != null && $codigoAcredInicial != $model->codigoAcreditacion) {

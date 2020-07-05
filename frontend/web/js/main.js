@@ -658,3 +658,10 @@ $(document).ready(function() {
     random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descriptionNS').text( random );
 });
+
+// arrays para descripciones de cada uno (si se quiere) en el about us
+$(document).ready(function() {
+    var quotesNS = new Array("We aim above the mark to hit the mark.", "Ich esse gern Brot mit warmem Käse.", "私はビールを飲み、チップを食べるのが好きです。"),
+        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
+    $('#descriptionNS').text( random );
+});

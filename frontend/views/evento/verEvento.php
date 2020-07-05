@@ -434,7 +434,11 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             echo Html::label('No se puede inscribir, período de inscripciones cerrado');
                                             break;
                                         case "puedeAcreditarse":
-                                            echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            if($inscripcion != null && $inscripcion->estado == 1) {
+                                                echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                            }else{
+                                                echo "El evento ha finalizado";
+                                            }
                                             break;
                                     }
                                     Modal::begin([
