@@ -153,6 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 							<div class="card-body darkish_bg text-light">
+								<!-- Izi pizi-->
 								<p id="KevinMekuruTheBassistAndGamer-ahre"></p>
 
 							</div>
