@@ -133,9 +133,11 @@ a.desc:after {
 .pinkish_bg {
     background-color: #FE1355;
 }
-.pinkish_text{
+
+.pinkish_text {
     color: #FE1355;
 }
+
 .dark_light_bg {
     background: -webkit-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
     background: -o-linear-gradient(0deg, #DDDDDD 55%, #0B0D19 55%);
@@ -146,18 +148,22 @@ a.desc:after {
 .full_width {
     width: 100%;
 }
-.height_100vh{
+
+.height_100vh {
     min-height: 100vh;
 }
+
 .card {
     border: none;
     color: black;
     background-color: #EFEFEF;
 }
-.btn-txt:hover{
+
+.btn-txt:hover {
     background-color: transparent!important;
     cursor: context-menu!important;
 }
+
 .btn_icon {
     color: white;
     padding: 6px 6px 0px 6px;
@@ -167,10 +173,12 @@ a.desc:after {
     padding-left: 0px;
     padding-right: 0px;
 }
-.noVpadding{
+
+.noVpadding {
     padding-top: 0px;
     padding-bottom: 0px;
 }
+
 .padding_section {
     padding-top: 3vh;
     padding-bottom: 3vh;
@@ -180,6 +188,7 @@ a.desc:after {
     padding-top: 1vh;
     padding-bottom: 4vh;
 }
+
 .padding_hero {
     padding-top: 7vh;
     padding-bottom: 7vh;
@@ -189,6 +198,7 @@ a.desc:after {
     padding-top: 15vh;
     padding-bottom: 15vh;
 }
+
 .pagination_center {
     justify-content: center;
 }
@@ -238,14 +248,15 @@ a.desc:after {
     z-index: 2;
 }
 
-
-.respuesta-form input{
+.respuesta-form input {
     width: 100%;
 }
-.respuesta-form textarea{
+
+.respuesta-form textarea {
     width: 100%;
     min-height: 150px;
 }
+
 .alert {
     margin-bottom: 0px;
 }
@@ -278,7 +289,6 @@ a.desc:after {
     background-color: transparent!important;
     color: #FFFFFF!important;
     font-weight: bold;
-  
 }
 
 .btn_publish:hover {
@@ -338,6 +348,50 @@ section {
 .clip_circle {
     -webkit-mask-image: radial-gradient(circle at 50% 60%, black 50%, rgba(0, 0, 0, 0.6) 50%);
     mask-image: radial-gradient(circle at 50% 60%, black 50%, rgba(0, 0, 0, 0.6) 50%);
+}
+
+.super_bg {
+    background: linear-gradient(270deg, #15c1ca, #f32676);
+    background-size: 600% 600%;
+    -webkit-animation: super_bg 11s ease infinite;
+    -moz-animation: super_bg 11s ease infinite;
+    animation: super_bg 11s ease infinite;
+}
+
+@-webkit-keyframes super_bg {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes super_bg {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes super_bg {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }
 
 @media(max-width:767px) {
@@ -409,15 +463,16 @@ section {
         padding-left: 5px;
     }
 }
-.modal-header{
-    background:#FE1355;
-    color:white;
+
+.modal-header {
+    background: #FE1355;
+    color: white;
 }
 
-.estado_negrita{
+.estado_negrita {
     font-weight: bold;
 }
 
-.expositor-center{
-    margin-top:12%;
+.expositor-center {
+    margin-top: 12%;
 }

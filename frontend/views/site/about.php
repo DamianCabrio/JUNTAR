@@ -41,13 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 							<div class="card-body darkish_bg text-light">
 								<p>"pero-que-a-pasao.mp3" fixes nocturnos.</p>
-								<figure style="transform:scale(0.7)">
-									<figcaption></figcaption>
-									<audio controls src="https://cdn.discordapp.com/attachments/718540792121262151/728816662060728370/pero-que-a-pasao.mp3">
-										Your browser does not support the
-										<code>audio</code> element.
-									</audio>
-								</figure>
 
 							</div>
 							<div class="card-footer darkish_bg text-center">
