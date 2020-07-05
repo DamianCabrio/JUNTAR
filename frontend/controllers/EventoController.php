@@ -23,6 +23,9 @@ use frontend\models\RespuestaTest;
 use frontend\models\UploadFormFlyer;
 use frontend\models\UploadFormLogo;
 use frontend\models\Usuario;
+use frontend\models\ImagenQR;
+use frontend\models\ImagenEvento;
+use frontend\models\ImagenEventoSearch;
 use UI\Controls\Label;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -200,12 +203,15 @@ class EventoController extends Controller {
 
             if ($model->save()) {
                 $nombreCortoEvento = $model->nombreCortoEvento;
+                $idEvento = $model->idEvento;
                 //generamos el codigo QR para visualizar el evento
-                $this->actionGenerarQREvento($nombreCortoEvento);
+                $QrEvento = new ImagenQR();
+                $QrEvento->generarQREvento($nombreCortoEvento, $idEvento);
                 //si se ingreso codigo de acreditación, se genera el correspondiente codigo qr para acreditarse
                 if ($model->codigoAcreditacion != null) {
                     $codAcre = $model->codigoAcreditacion;
-                    $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
+                    $QrAcreditacion = new ImagenQR();
+                    $QrAcreditacion->generarQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
                 }
             }
             return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
@@ -222,43 +228,30 @@ class EventoController extends Controller {
         return $this->render('cargarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
     }
 
-    private function actionGenerarQRAcreditacion($codigoAcreditacion, $slug) {
-        $label = ($slug);
-
-        $qrCode = (new QrCode((Url::base(true) . Url::to(['/acreditacion']) . '?slug=' . $slug . '&codigoAcreditacion=' . $codigoAcreditacion)))
-                ->useLogo("../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
-                ->useEncoding('UTF-8')
-                ->setLogoWidth(45)
-                ->setSize(400)
-                ->setMargin(5)
-                ->setLabel($label);
-
-        $qrCode->writeFile('../web/eventos/images/qrcodes/' . $slug . 'Acreditacion.png');
-    }
-
-    private function actionGenerarQREvento($slug) {
-        $label = ($slug);
-
-        $qrCode = (new QrCode((Url::base(true) . Url::to(['/eventos/ver-evento']) . "/" . $slug)))
-                ->useLogo("../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
-                ->useEncoding('UTF-8')
-                ->setLogoWidth(45)
-                ->setSize(400)
-                ->setMargin(5)
-                ->setLabel($label);
-
-        $qrCode->writeFile('../web/eventos/images/qrcodes/' . $slug . '.png');
-    }
-
     public function actionMostrarQrEvento() {
         if (Yii::$app->request->get('slug')) {
+            //captura el slug
             $slug = Yii::$app->request->get('slug');
-            $rutaImagenEventoQR = Url::base(true) . "/eventos/images/qrcodes/" . $slug . '.png';
+            //busca el qr del evento
+            $eventoQR = ImagenEvento::find()
+                    ->innerJoin('evento', 'evento.idEvento=imagen_evento.idEvento')
+                    ->where(['nombreCortoEvento' => $slug])
+                    ->andWhere(['categoriaImagen' => 3])->one();
+            //genera el enlace
+            $rutaImagenEventoQR = Url::base(true) ."/". $eventoQR->rutaArchivoImagen;
+            
+            //setea nulo el enlace de acreditacion
             $rutaImagenAcreditacionEventoQR = "";
             $algoFeo = Evento::findOne(['nombreCortoEvento' => $slug]);
             if ($algoFeo != null) {
                 if (!Yii::$app->user->isGuest && Yii::$app->user->identity->idUsuario == $algoFeo->idUsuario) {
-                    $rutaImagenAcreditacionEventoQR = Url::base(true) . "/eventos/images/qrcodes/" . $slug . 'Acreditacion.png';
+                    //si es el dueño del evento busca el qr de acreditacion
+                    $eventoQR = ImagenEvento::find()
+                    ->innerJoin('evento', 'evento.idEvento=imagen_evento.idEvento')
+                    ->where(['nombreCortoEvento' => $slug])
+                    ->andWhere(['categoriaImagen' => 4])->one();
+                    //genera la ruta del enlace al qr de acreditacion
+                    $rutaImagenAcreditacionEventoQR = Url::base(true) ."/". $eventoQR->rutaArchivoImagen;
                 }
             }
             if (Yii::$app->request->isAjax) {
@@ -604,25 +597,24 @@ class EventoController extends Controller {
                     $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
                 }
             }
-//            if ($model->codigoAcreditacion != null) {
-//                $nombreCortoEvento = $model->nombreCortoEvento;
-//                $codAcre = $model->codigoAcreditacion;
-//                $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
-//            }
-//            $model->save();
+
             if ($model->save()) {
                 //asignamos el nombreCorto para enviar un valor al metodo
                 $nombreCortoEvento = $slug;
+                $idEvento = $model->idEvento;
                 if ($model->nombreCortoEvento != $slug) {
                     //si el nombreCorto cargado en el model es disinto al slug que teniamos, se asigna el nuevo nombreCorto
                     $nombreCortoEvento = $model->nombreCortoEvento;
+                    //generamos el codigo QR para visualizar el evento
+                    $QrEvento = new ImagenQR();
+                    $QrEvento->updateQREvento($nombreCortoEvento, $idEvento);
                 }
-                //generamos el codigo QR para visualizar el evento
-                $this->actionGenerarQREvento($nombreCortoEvento);
+//                $this->actionGenerarQREvento($nombreCortoEvento);
                 if ($model->codigoAcreditacion != null && $codigoAcredInicial != $model->codigoAcreditacion) {
                     //si se ingreso codigo de acreditación, se genera el correspondiente codigo qr para acreditarse
                     $codAcre = $model->codigoAcreditacion;
-                    $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
+                    $QrAcreditacion = new ImagenQR();
+                    $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
                 }
             }
             return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);

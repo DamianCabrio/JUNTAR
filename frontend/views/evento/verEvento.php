@@ -386,7 +386,9 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                         ]);
                                     }
                                     ?>
+                                    <?php if($esDueño): ?>
                                         <?= Html::a('Visualizar QR', ['/evento/mostrar-qr-evento/', 'slug' => $evento->nombreCortoEvento], ['class' => 'btn btn-secondary ml-2 visualizarQR']); ?>
+                                    <?php endif; ?>
                                     <!--</span>-->
                                 </div>
                             </div>
