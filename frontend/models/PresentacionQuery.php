@@ -2,12 +2,14 @@
 
 namespace frontend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[Usuario]].
  *
  * @see Usuario
  */
-class PresentacionQuery extends \yii\db\ActiveQuery
+class PresentacionQuery extends ActiveQuery
 {
     /*public function active()
     {

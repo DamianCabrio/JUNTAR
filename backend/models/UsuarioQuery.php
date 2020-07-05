@@ -2,12 +2,14 @@
 
 namespace backend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[Usuario]].
  *
  * @see Usuario
  */
-class UsuarioQuery extends \yii\db\ActiveQuery
+class UsuarioQuery extends ActiveQuery
 {
     /*public function active()
     {

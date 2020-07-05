@@ -1,10 +1,12 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\PasswordResetRequestForm */
 
-use yii\helpers\Html;
+/* @var $model PasswordResetRequestForm */
+
+use frontend\models\PasswordResetRequestForm;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 $this->title = 'Solicitar cambio de contraseña';
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-            <div  class="form-advice">
+            <div class="form-advice">
                 <p class=""> Se le enviará un correo a su cuenta para reestablecer la contraseña </p>
             </div>
             <div class="form-group">

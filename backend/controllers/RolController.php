@@ -2,24 +2,26 @@
 
 namespace backend\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\helpers\ArrayHelper;
-use yii\filters\AccessControl;
-use backend\models\RolSearch;
 use backend\models\Rol;
+use backend\models\RolSearch;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
  */
-class RolController extends Controller {
+class RolController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -58,7 +60,8 @@ class RolController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -70,20 +73,15 @@ class RolController extends Controller {
      * Lists all Permiso models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new RolSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $searchModel::find()->where(['type' => 1]),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-//            'sort' => ['attributes' => ['name']]
-        ]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -93,9 +91,10 @@ class RolController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionVerRol($name) {
+    public function actionVerRol($name)
+    {
         return $this->render('verRol', [
-                    'model' => $this->findModel($name),
+            'model' => $this->findModel($name),
         ]);
     }
 
@@ -105,7 +104,8 @@ class RolController extends Controller {
      *
      * @return view
      */
-    public function actionCreateRol() {
+    public function actionCreateRol()
+    {
         //creamos un modelo dinamico para representar los campos del permiso
         $model = new Rol();
 
@@ -129,7 +129,7 @@ class RolController extends Controller {
         }
 
         return $this->render('createRol', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -138,38 +138,38 @@ class RolController extends Controller {
      *
      * @return string
      */
-    public function actionRemoveRol() {
-        $model = new Rol();
-        if (Yii::$app->request->get('name') != null) {
-            $nombreRol = Yii::$app->request->get('name');
-            $model = $this->findModel($nombreRol);
-        }
-//        $model = $this->findModel($name);
-
-        //verifica si fue enviada informacion por POST
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //consideramos como resultado el peor de los casos
-            $result = false;
-            //comprobamos si existe el permiso
-            if (yii::$app->authManager->getRole($model->name) != null) {
-                //si existe obtenemos el resultado de remover el registro del permiso
-                $result = yii::$app->authManager->remove($model->name);
-            }
-            //generamos un mensaje en base al resultado
-            if ($result) {
-                Yii::$app->session->setFlash('success', '<p> Se eliminó el rol <strong>' . $model->name . '</strong> </p>');
-                return $this->redirect(['remove-rol']);
-            } else {
-                Yii::$app->session->setFlash('error', '<p> No es posible eliminar el rol <strong>' . $model->name . '</strong> </p>');
-            }
-        }
-
-        $roles = ArrayHelper::map(Yii::$app->AuthManager->getRoles(), 'name', 'name');
-        return $this->render('removeRol', [
-                    'model' => $model,
-                    'item' => $roles,
-        ]);
-    }
+//    public function actionRemoveRol() {
+//        $model = new Rol();
+//        if (Yii::$app->request->get('name') != null) {
+//            $nombreRol = Yii::$app->request->get('name');
+//            $model = $this->findModel($nombreRol);
+//        }
+////        $model = $this->findModel($name);
+//
+//        //verifica si fue enviada informacion por POST
+//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            //consideramos como resultado el peor de los casos
+//            $result = false;
+//            //comprobamos si existe el permiso
+//            if (yii::$app->authManager->getRole($model->name) != null) {
+//                //si existe obtenemos el resultado de remover el registro del permiso
+//                $result = yii::$app->authManager->remove($model->name);
+//            }
+//            //generamos un mensaje en base al resultado
+//            if ($result) {
+//                Yii::$app->session->setFlash('success', '<p> Se eliminó el rol <strong>' . $model->name . '</strong> </p>');
+//                return $this->redirect(['remove-rol']);
+//            } else {
+//                Yii::$app->session->setFlash('error', '<p> No es posible eliminar el rol <strong>' . $model->name . '</strong> </p>');
+//            }
+//        }
+//
+//        $roles = ArrayHelper::map(Yii::$app->AuthManager->getRoles(), 'name', 'name');
+//        return $this->render('removeRol', [
+//                    'model' => $model,
+//                    'item' => $roles,
+//        ]);
+//    }
 
     /**
      * Finds the Permiso model based on its primary key value.
@@ -179,7 +179,7 @@ class RolController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = Rol::findOne($id)) !== null) {
+        if (($model = Rol::findOne(['name' => $id, 'type' => 1])) !== null) {
             return $model;
         }
 

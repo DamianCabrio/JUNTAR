@@ -1,10 +1,12 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\ResetPasswordForm */
 
-use yii\helpers\Html;
+/* @var $model ResetPasswordForm */
+
+use frontend\models\ResetPasswordForm;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 $this->title = 'Confirmación de correo';
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-            <div  class="form-advice">
+            <div class="form-advice">
                 <p class=""> El correo de activación será enviado a dicha cuenta. </p>
             </div>
 

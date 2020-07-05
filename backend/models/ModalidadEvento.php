@@ -2,7 +2,8 @@
 
 namespace backend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "modalidad_evento".
@@ -12,7 +13,7 @@ use Yii;
  *
  * @property Evento[] $eventos
  */
-class ModalidadEvento extends \yii\db\ActiveRecord
+class ModalidadEvento extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -20,6 +21,15 @@ class ModalidadEvento extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'modalidad_evento';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return ModalidadEventoQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ModalidadEventoQuery(get_called_class());
     }
 
     /**
@@ -47,19 +57,10 @@ class ModalidadEvento extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Eventos]].
      *
-     * @return \yii\db\ActiveQuery|EventoQuery
+     * @return ActiveQuery|EventoQuery
      */
     public function getEventos()
     {
         return $this->hasMany(Evento::className(), ['idModalidadEvento' => 'idModalidadEvento']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return ModalidadEventoQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ModalidadEventoQuery(get_called_class());
     }
 }

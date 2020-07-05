@@ -1,8 +1,8 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PermisoSearch */
@@ -26,25 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?=
                         GridView::widget([
                             'dataProvider' => $dataProvider,
-                            //        'filterModel' => $searchModel,
+                            'filterModel' => $searchModel,
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
                                 [
                                     'attribute' => 'name',
                                     'label' => 'Permiso',
-                                    'value' => 'name', //valor referenciado
-                                ],
-                                [
-                                    'attribute' => 'type',
-                                    'label' => 'Tipo',
-                                    'value' => function ($dataProvider) {
-                                        return (($dataProvider->type == 2) ? "Permiso" : "Rol");
-                                    },
+                                    'value' => 'name',    
                                 ],
                                 [
                                     'attribute' => 'description',
                                     'label' => 'Descripción',
-                                    'value' => 'description', //valor referenciado
+                                    'value' => 'description',    
                                 ],
                                 [
                                     'attribute' => 'created_at',
@@ -54,21 +47,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     },
                                 ],
                                 [
-                                    'attribute' => 'updated_at',
-                                    'label' => 'Fecha Updated',
-                                    'value' => function ($dataProvider) {
-                                        return date("Y-m-d H:i:s", $dataProvider->updated_at);
-                                    },
-                                ],
-                                [
                                     'class' => 'yii\grid\ActionColumn',
                                     'urlCreator' => function ($action, $model, $key, $index) {
                                         if ($action == "view") {
                                             return Url::to(['/permission/ver-permiso', 'name' => $key]);
                                         }
-                                        //                    if ($action == "update") {
-                                        //                        return Url::to(['update-permiso', 'name' => $key]);
-                                        //                    }
                                         if ($action == "delete") {
                                             return Url::to(['/permission/remove-permiso', 'name' => $key]);
                                         }
@@ -77,9 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'view' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        //                    'update' => function($url, $model) {
-                                        //                        return Html::a('<img src="' . Yii::getAlias('@web/icons/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn']);
-                                        //                    },
                                         'delete' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
@@ -95,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'options' => ['class' => 'pagination d-flex justify-content-center'],
                                 'prevPageLabel' => 'Anterior',
                                 'nextPageLabel' => 'Siguiente',
-                                //                            Current Active option value
+                                //Current Active option value
                                 'activePageCssClass' => 'activePage',
                             ],
                         ]);

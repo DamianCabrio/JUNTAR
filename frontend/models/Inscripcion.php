@@ -2,8 +2,8 @@
 
 namespace frontend\models;
 
-use frontend\models\Usuario;
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "inscripcion".
@@ -20,7 +20,7 @@ use Yii;
  * @property Evento $idEvento0
  * @property Usuario $idUsuario0
  */
-class Inscripcion extends \yii\db\ActiveRecord
+class Inscripcion extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -65,7 +65,7 @@ class Inscripcion extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdEvento0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdEvento0()
     {
@@ -75,7 +75,7 @@ class Inscripcion extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdUsuario0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getIdUsuario0()
     {

@@ -1,10 +1,9 @@
 <?php
 
 use dosamigos\ckeditor\CKEditor;
-use yii\helpers\Html;
-use frontend\models\CategoriaEvento;
-use frontend\models\ModalidadEvento;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Evento */
 /* @var $form yii\widgets\ActiveForm */
@@ -29,7 +28,9 @@ $this->title = "Cargar Evento";
                 <!-- Oculto, se carga con el id del usuario logueado que esta crendo el evento (usuario organizador) -->
                 <?= $form->field($model, 'idUsuario')->hiddenInput(['value' => Yii::$app->user->identity->idUsuario])->label(false); ?>
 
-                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
+                <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label(false) ?>
+                
+              
 
                 <label for="evento-nombrecortoevento"> Nombre corto del evento: * </label>
                 <div class="row">
@@ -53,19 +54,22 @@ $this->title = "Cargar Evento";
                     "options" => ['rows' => '8'],
                     "preset" => "custom",
                     "clientOptions" => [
+                        'extraPlugins' => 'justify,font',
                         'toolbarGroups' => [
                             ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
                             ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
-                            '/',
                             ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
                             ['name' => 'colors'],
-                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
                             ['name' => 'links'],
-                            ['name' => 'styles'],
-                            ['name' => 'colors'],
                             ['name' => 'tools'],
-                            ['name' => 'others'],
+                            '/',
+                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+                            ['name' => 'styles','groups' => ['Styles', 'Format', 'Font', 'FontSize']],
+                            ['name' => 'font',],
+                            ['name' => 'styles'],
                             
+                            
+
                         ],
                         'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
                         'removePlugins' => 'elementspath',
@@ -93,7 +97,8 @@ $this->title = "Cargar Evento";
                 <button type="button" id="quitarFlyer" class="btn btn-sm btn-outline">Quitar</button> 
                 <br>
                 <br>
-                <div class="form-group">
+		    
+               <div class="form-group">
                     <label>¿Posee límite de participantes?</label><br>
 
                     <div role="radiogroup" aria-required="true">
@@ -108,16 +113,15 @@ $this->title = "Cargar Evento";
                     </div>
                 </div>
 
-
                 <div id="mostrarCapacidad">
-                    <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número espectadores *')  ?>
+                    <?= $form->field($model, 'capacidad')->input('number', ['min' => 1, 'max' => 10000])->label('Ingrese número de participantes *')  ?>
                 </div>
                 <!-- select requiere preInscripcion -->
                 <?= $form->field($model, 'preInscripcion')->radioList([0 => 'No', 1 => 'Si'])->label('¿Requiere preinscripción? *') ?>
 
                 <!-- calendar -->
                 <div id="fechaLimite">
-                    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto', 'required'])->label('Fecha limite de inscripción *') ?>
+                    <?= $form->field($model, 'fechaLimiteInscripcion')->input('date', ['style' => 'width:auto', 'required'])->label('Fecha límite de preinscripción *') ?>
                 </div>
                 <?= $form->field($model, 'codigoAcreditacion')->textInput(['placeholder' => 'Ingrese código de acreditación'], ['maxlength' => true]) ?>
 
@@ -130,8 +134,9 @@ $this->title = "Cargar Evento";
 
                 <?php ActiveForm::end(); ?>
                 </div>
-
-             </div>
-         </div>               
+            </div>
+        </div>
     </div>
+   </div>
+ </div>
 </div>

@@ -3,8 +3,8 @@
 
 namespace frontend\models;
 
-use Yii;
 use common\models\User;
+use Yii;
 use yii\base\Model;
 
 class ResendVerificationEmailForm extends Model
@@ -54,7 +54,7 @@ class ResendVerificationEmailForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ '.Yii::$app->name])
+            ->setFrom([Yii::$app->params['supportEmail'] => 'No-reply @ ' . Yii::$app->name])
             ->setTo($this->email)
             ->setSubject('Verifica tu cuenta en ' . Yii::$app->name)
             ->send();

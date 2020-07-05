@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -9,7 +10,7 @@ use yii\widgets\DetailView;
 $this->title = "Usuario: " . $model->nombre . " " . $model->apellido;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="usuario-view">
     <div class="col-12 mb-4 p-0">
@@ -24,12 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             echo Html::a('Deshabilitar', ['/usuario/deshabilitar', 'id' => $model->idUsuario], [
                                 'class' => 'btn btn-pink mb-2 col-md-2 col-sm-12',
                                 'data' => ['confirm' => '¿Está seguro de querer deshabilitar este usuario?',],]);
-                        } else {
-                            if ($model->status == 0) {
-                                echo Html::a('Habilitar', ['/usuario/habilitar', 'id' => $model->idUsuario], [
-                                    'class' => 'btn btn-primary mb-2 col-md-2 col-sm-12',
-                                    'data' => ['confirm' => '¿Está seguro de querer habilitar este usuario?',],]);
-                            }
+                        } else if ($model->status == 0 || $model->status == 9) {
+                            echo Html::a('Habilitar', ['/usuario/habilitar', 'id' => $model->idUsuario], [
+                                'class' => 'btn btn-primary mb-2 col-md-2 col-sm-12',
+                                'data' => ['confirm' => '¿Está seguro de querer habilitar este usuario?',],]);
                         }
                         ?>
                     </p>
@@ -42,25 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'model' => $model,
                                     'attributes' => [
                                         'idUsuario',
-                                        'nombre',
-                                        'apellido',
-                                        [
-                                            'attribute' => 'rol',
-                                            'label' => 'Rol',
-                                            'value' => function($model) {
-                                                $array = Yii::$app->authManager->getRolesByUser($model->idUsuario);
-                                                return array_shift($array)->name;
-                                            },
-                                        ],
-                                        'dni',
-                                        'pais',
-                                        'provincia',
-                                        'localidad',
-                                        'email:email',
                                         [
                                             'attribute' => 'status',
                                             'label' => 'Estado',
-                                            'value' => function($model) {
+                                            'value' => function ($model) {
                                                 $estado = "";
                                                 switch ($model->status) {
                                                     case 0:
@@ -78,6 +62,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 return $estado;
                                             },
                                         ],
+                                        [
+                                            'attribute' => 'rol',
+                                            'label' => 'Rol',
+                                            'value' => function ($model) {
+                                                $array = Yii::$app->authManager->getRolesByUser($model->idUsuario);
+                                                return array_shift($array)->name;
+                                            },
+                                        ],
+                                        'nombre',
+                                        'apellido',
+                                        'dni',
+                                        'pais',
+                                        'provincia',
+                                        'localidad',
+                                        'email:email',
                                         [
                                             'attribute' => 'created_at',
                                             'label' => 'Fecha Creación',
@@ -111,15 +110,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <h4><?= $rol->name ?>
                                                         <?=
                                                         Html::a($assigned ? "Quitar" : "Agregar",
-                                                                ['usuario/assign', 'id' => $model->idUsuario, 'rol' => $rol->name],
-                                                                ['class' => $assigned ? "btn btn-sm btn-danger " : "btn btn-sm btn-primary"])
+                                                            ['usuario/assign', 'id' => $model->idUsuario, 'rol' => $rol->name],
+                                                            ['class' => $assigned ? "btn btn-sm btn-danger " : "btn btn-sm btn-primary"])
                                                         ?>
                                                         <small>
                                                             <p class="mt-2"><?= $rol->description ?></p>
                                                         </small>
                                                     </h4>
                                                 </li>
-                                            <?php
+                                                <?php
                                             }
                                         endforeach;
                                         ?>

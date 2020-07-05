@@ -2,12 +2,14 @@
 
 namespace backend\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[ModalidadEvento]].
  *
  * @see ModalidadEvento
  */
-class ModalidadEventoQuery extends \yii\db\ActiveQuery
+class ModalidadEventoQuery extends ActiveQuery
 {
     /*public function active()
     {

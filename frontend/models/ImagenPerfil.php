@@ -2,7 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "imagen_perfil".
@@ -12,7 +13,7 @@ use Yii;
  *
  * @property Usuario $idUsuario0
  */
-class ImagenPerfil extends \yii\db\ActiveRecord
+class ImagenPerfil extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -20,6 +21,15 @@ class ImagenPerfil extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'imagen_perfil';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return ImagenPerfilQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ImagenPerfilQuery(get_called_class());
     }
 
     /**
@@ -51,19 +61,10 @@ class ImagenPerfil extends \yii\db\ActiveRecord
     /**
      * Gets query for [[IdUsuario0]].
      *
-     * @return \yii\db\ActiveQuery|UsuarioQuery
+     * @return ActiveQuery|UsuarioQuery
      */
     public function getIdUsuario0()
     {
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuario']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return ImagenPerfilQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ImagenPerfilQuery(get_called_class());
     }
 }

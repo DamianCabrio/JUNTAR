@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\UsuarioSearch */
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card">
                 <h1 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h1>
                 <p class="m-3">
-                    <?= Html::a('Crear Usuario', ['/usuario/create'], ['class' => 'btn btn-pink col-md-2 col-sm-12']) ?>
+                    <?= Html::a('Crear Usuario', ['/usuario/crear-usuario'], ['class' => 'btn btn-pink col-md-2 col-sm-12']) ?>
                 </p>
 
                 <div class="card-body">
@@ -29,34 +29,26 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filterModel' => $searchModel,
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
-//            'idUsuario',
                                 [
                                     'attribute' => 'nombre',
                                     'label' => 'Nombre',
-                                    'value' => function($model) {
+                                    'value' => function ($model) {
                                         return $model->nombre . " " . $model->apellido;
                                     },
                                 ],
-//            'nombre',
-//            'apellido',
                                 'dni',
                                 'pais',
                                 'provincia',
                                 'localidad',
-//            'email',
                                 [
                                     'attribute' => 'email',
                                     'label' => 'Email',
                                     'value' => 'email',
                                 ],
-                                //'auth_key',
-                                //'password_hash',
-                                //'password_reset_token',
-//            'status',
                                 [
                                     'attribute' => 'status',
                                     'label' => 'Estado',
-                                    'value' => function($model) {
+                                    'value' => function ($model) {
                                         $estado = "";
                                         switch ($model->status) {
                                             case 0:
@@ -77,23 +69,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'created_at',
                                     'label' => 'Fecha Registro',
-                                    'value' => function($dataProvider) {
+                                    'value' => function ($dataProvider) {
                                         return date("Y-m-d H:i:s", $dataProvider->created_at);
                                     },
                                 ],
-                                //'created_at',
-                                //'updated_at',
-                                //'verification_token',
                                 ['class' => 'yii\grid\ActionColumn',
                                     'buttons' => [
-                                        'update' => function($url, $model) {
+                                        'update' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        'view' => function($url, $model) {
+                                        'view' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
-                                        'delete' => function($url, $model) {
-                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', ['/usuario/deshabilitar'], ['class' => 'btn btn-pink']);
+                                        'delete' => function ($url, $model) {
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', ['/usuario/deshabilitar', 'id' => $model->idUsuario], ['class' => 'btn btn-pink']);
                                         }
                                     ]
                                 ],
@@ -117,4 +106,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-

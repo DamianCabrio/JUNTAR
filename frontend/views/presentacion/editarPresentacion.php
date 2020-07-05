@@ -1,12 +1,9 @@
 <?php
 
-use frontend\models\Usuario;
-use yii\helpers\Html;
-use frontend\models\Evento;
-use yii\jui\AutoComplete;
-use yii\web\JsExpression;
-use yii\bootstrap4\ActiveForm;
 use dosamigos\ckeditor\CKEditor;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Presentacion */
 /* @var $form yii\widgets\ActiveForm */
@@ -28,32 +25,34 @@ use dosamigos\ckeditor\CKEditor;
                     <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true]) ?>
 
                     <?= $form->field($model, 'descripcionPresentacion')->widget(CKEditor::className(), [
-                    "options" => ['rows' => '8'],
-                    "preset" => "custom",
-                    "clientOptions" => [
-                        'toolbarGroups' => [
-                            ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
-                            ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
-                            '/',
-                            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
-                            ['name' => 'colors'],
-                            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
-                            ['name' => 'links'],
-                            ['name' => 'styles'],
-                            ['name' => 'colors'],
-                            ['name' => 'tools'],
-                            ['name' => 'others'],
-                            
+                        "options" => ['rows' => '8'],
+                        "preset" => "custom",
+                        "clientOptions" => [
+                            'extraPlugins' => 'justify,font',
+                            'toolbarGroups' => [
+                                ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+                                ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
+                                ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                                ['name' => 'colors'],
+                                ['name' => 'links'],
+                                ['name' => 'tools'],
+                                ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
+                                ['name' => 'styles','groups' => ['Styles', 'Format', 'Font', 'FontSize']],
+                                ['name' => 'font',],
+                                ['name' => 'styles'],
+                                
+                                
+
+                            ],
+                            'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
+                            'removePlugins' => 'elementspath',
+                            'resize_enabled' => false
                         ],
-                        'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
-                        'removePlugins' => 'elementspath',
-                        'resize_enabled' => false
-                    ],
-                ])->label('Descripción *') ?>
+                    ])->label('Descripción *') ?>
                     <input id="fechaIniEvento" type="hidden" value="<?= $evento->fechaInicioEvento ?>">
                     <input id="fechaFinEvento" type="hidden" value="<?= $evento->fechaFinEvento ?>">
 
-                    <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha *') ?>
+                    <?= $form->field($model, 'diaPresentacion')->input('date', ['style' => 'width: auto'])->label('Ingrese fecha de presentación *') ?>
                     <div id="invalidFecha" class="invalid-feedback">
                     </div>
 
@@ -63,7 +62,7 @@ use dosamigos\ckeditor\CKEditor;
 
                     <?= $form->field($model, 'linkARecursos')->textInput(['placeholder' => 'https//ejemplo.com o http://ejemplo.com'], ['maxlength' => true]) ?>
                     <p class="font-italic">
-                        Los campos marcados con (*) son obligatorios. 
+                        Los campos marcados con (*) son obligatorios.
                     <p>
                     <div class="form-group">
                         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
