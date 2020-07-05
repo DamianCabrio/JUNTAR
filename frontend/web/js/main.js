@@ -612,3 +612,17 @@ function autocompleteLocalidades(nombreProvincia) {
                 }
             });
 }
+
+// random order para las cards en about us
+var cards = $(".randomcards");
+for (var i = 0; i < cards.length; i++) {
+    var target = Math.floor(Math.random() * cards.length - 1) + 1;
+    var target2 = Math.floor(Math.random() * cards.length - 1) + 1;
+    cards.eq(target).before(cards.eq(target2));
+}
+var cards = $(".randomcardsProfes");
+for (var i = 0; i < cards.length; i++) {
+    var target = Math.floor(Math.random() * cards.length - 1) + 1;
+    var target2 = Math.floor(Math.random() * cards.length - 1) + 1;
+    cards.eq(target).before(cards.eq(target2));
+}
