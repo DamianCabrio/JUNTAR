@@ -665,3 +665,10 @@ $(document).ready(function() {
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descriptionNS').text( random );
 });
+
+$(document).ready(function() {
+    var quotesNS = new Array("Si encuentran algún error, yo no fui..", "你在浪费你的时间来翻译这个", "Pase días haciendo los formularios dinámicos, espero que les gusten."
+        ,"Si estás leyendo esto, espero que tengas un lindo día.", "Si nosotros pudimos, todos pueden."),
+        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
+    $('#descripcionDC').text( random );
+});

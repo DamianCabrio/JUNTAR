@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 							<div class="card-body darkish_bg text-light">
-								<p>Forrrrrrmulario dinámico. Cuchara en verEvento.php</p>
+								<p id="descripcionDC"></p>
 
 							</div>
 							<div class="card-footer darkish_bg text-center">
