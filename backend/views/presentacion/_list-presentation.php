@@ -38,7 +38,7 @@ use yii\helpers\HtmlPurifier;
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-12 col-sm-6">
                         <?= Html::a('Modificar', ['update', 'id' => $model->idPresentacion], ['class' => 'btn btn-pink']) ?>
                         <?= Html::a('Eliminar', ['delete', 'id' => $model->idPresentacion], [
                             'class' => 'btn btn-pink',
@@ -50,7 +50,7 @@ use yii\helpers\HtmlPurifier;
                         <?php if ($model->idExpositors['dni'] == null): ?>
                           <?= Html::a('Asignar Expositor', ['/presentacion-expositor/create', 'id' => $model->idPresentacion], ['class' => 'btn btn-pink mt-2']) ?>
                         <?php else: ?>
-                          <?= Html::a('Modificar Expositor', ['/presentacion-expositor/update', 'idExpositor' => $model->idExpositors['idUsuario'], 'idPresentacion' => $model->idPresentacion], ['class' => 'btn btn-pink mt-2']) ?>
+                          <?= Html::a('Modificar Expositor', ['/presentacion-expositor/update', 'idExpositor' => $model->idExpositors['idUsuario'], 'idPresentacion' => $model->idPresentacion], ['class' => 'btn btn-pink mt-1']) ?>
                         <?php endif; ?>
                       </div>
                     </div>
