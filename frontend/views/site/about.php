@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							<div class="card-header super_bg">Laura Murillo</div>
 
 							<div class="card-body darkish_bg text-light">
-								<p id="descripcionLM"></p>
+								<p id="descriptionLM"></p>
 							</div>
 							<div class="card-footer darkish_bg text-center">
 								<a href="mailto:lauradejaramillo@gmail.com" class="text-light link"><i class="material-icons">contact_mail</i></a>
