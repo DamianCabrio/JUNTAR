@@ -642,6 +642,15 @@ function abrirContactoModal(title) {
     $('#aboutUsModal').modal('show');
 }
 
+$(document).ready(function() {
+    $('.linkAbout').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        abrirContactoModal("Información de contacto");
+    });
+});
+
 // random order para las cards en about us
 var cards = $(".randomcards");
 for (var i = 0; i < cards.length; i++) {
