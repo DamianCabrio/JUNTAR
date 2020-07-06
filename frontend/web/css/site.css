@@ -272,7 +272,16 @@ a.desc:after {
     background-color: #050714;
     color: aliceblue!important;
 }
-
+.btn_contact{
+    background-color: #050714!important;
+    color: aliceblue!important;
+    border: none;
+}
+.btn_contact:hover{
+    background-color: #090b18;
+    color: aliceblue!important;
+    border: none;
+}
 .btn_event {
     width: 100%;
     background-color: #FE1355;

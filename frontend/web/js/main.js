@@ -135,7 +135,7 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editarPreguntaModal($(this).attr('href'), 'Editar Pregunta');
     });
-    
+
     //funcionalidad ver QR
     $('.visualizarQR').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -143,7 +143,7 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         visualizarQrModal($(this).attr('href'), 'QR:');
     });
-    
+
     //funcionalidad editar perfil
     $('.editProfile').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -235,41 +235,41 @@ $(document).ready(function () {
     });
     //prueba
     /*$('#cargarPresentacion').submit(function () {
-        $('#presentacion-diapresentacion').attr('required', true);
-        $('#presentacion-diapresentacion').addClass('is-invalid');
-        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
-        $('#invalidFecha').show();
-    });
-    
-    $('#editarPresentacion').submit(function () {
-        $('#presentacion-diapresentacion').attr('required', true);
-        $('#presentacion-diapresentacion').addClass('is-invalid');
-        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
-        $('#invalidFecha').show();
-    });
-
-    $('#presentacion-diapresentacion').change(function () {
-        var fechaIni = $('#fechaIniEvento').val();
-        var fechaFin = $('#fechaFinEvento').val();
-        var fechaPre = $(this).val();
-        //console.log(fechaPre);
-        //console.log(fechaIni);
-        //console.log(fechaFin);
-
-        if (fechaIni <= fechaPre && fechaFin >= fechaPre) {
-            //console.log("bien");
-            $(this).addClass('is-valid');
-            $(this).removeClass('is-invalid');
-            $('#invalidFecha').hide();
-        } else {
-            //console.log("Mal");
-            $(this).removeClass('is-valid');
-            $(this).addClass('is-invalid');
-            $('#invalidFecha').html('El Dia de la Presentacion debe estar entre la fecha inicio y la fecha fin del evento.<br> Fecha Inicio Evento: ' + fechaIni + '<br>Fecha Fin Evento: ' + fechaFin);
-            $('#invalidFecha').show();
-        }
-
-    });*/
+     $('#presentacion-diapresentacion').attr('required', true);
+     $('#presentacion-diapresentacion').addClass('is-invalid');
+     $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+     $('#invalidFecha').show();
+     });
+     
+     $('#editarPresentacion').submit(function () {
+     $('#presentacion-diapresentacion').attr('required', true);
+     $('#presentacion-diapresentacion').addClass('is-invalid');
+     $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+     $('#invalidFecha').show();
+     });
+     
+     $('#presentacion-diapresentacion').change(function () {
+     var fechaIni = $('#fechaIniEvento').val();
+     var fechaFin = $('#fechaFinEvento').val();
+     var fechaPre = $(this).val();
+     //console.log(fechaPre);
+     //console.log(fechaIni);
+     //console.log(fechaFin);
+     
+     if (fechaIni <= fechaPre && fechaFin >= fechaPre) {
+     //console.log("bien");
+     $(this).addClass('is-valid');
+     $(this).removeClass('is-invalid');
+     $('#invalidFecha').hide();
+     } else {
+     //console.log("Mal");
+     $(this).removeClass('is-valid');
+     $(this).addClass('is-invalid');
+     $('#invalidFecha').html('El Dia de la Presentacion debe estar entre la fecha inicio y la fecha fin del evento.<br> Fecha Inicio Evento: ' + fechaIni + '<br>Fecha Fin Evento: ' + fechaFin);
+     $('#invalidFecha').show();
+     }
+     
+     });*/
     //funcionalidad mostrar certificdos
     $('.viewCertification').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -638,11 +638,114 @@ function autocompleteLocalidades(nombreProvincia) {
             });
 }
 
+//link about us
+//$(document).ready(function () {
+//    $('.linkAbout').click(function (link) {
+//        //impedimos que el cambio de pestaña se active
+//        link.preventDefault();
+//        //llamamos a la funcion que se encargue de mostrar el formulario
+////        alert();
+////        abrirContactoModal(($(this).attr('data-id')));
+//        buscarDataUser(($(this).attr('data-id')));
+//    });
+//});
+
+function buscarDataUser(unUsuario) {
+    $.ajax('../json/dataContacto.json', {
+        dataType: 'json',
+        contentType: 'application/json'
+    })
+            .done(function (response) {
+                //buscamos la data del user relacionado
+                var datosUsuario = (response.filter(p => p.name === unUsuario));
+
+                //llamamos a la funcion que se encargue de todo xdxdxDxd
+                abrirContactoModal(unUsuario, datosUsuario);
+            })
+            .fail(function () {
+                alert("Algo salió tan mal que deprimí");
+            });
+}
+function abrirContactoModal(usuario, datosUsuario) {
+    //creamos las opciones que podran salir como display y seleccionamos una al azar
+//    var opcionesDisplay = new Array("tabla", "botones", "enlace", "broma"),
+    var opcionesDisplay = new Array("tabla", "broma"),
+            opcionDisplayRandom = opcionesDisplay[Math.floor(Math.random() * opcionesDisplay.length)];
+
+    alert(opcionDisplayRandom);
+
+    $('#aboutUsModal').modal('show');
+    $('#aboutUsModal').find('.modal-title')
+            .html(usuario);
+    $('#aboutUsModal').find('.modal-body')
+            .html(cargarContenidoModalAboutUs(opcionDisplayRandom, datosUsuario));
+}
+
+//function cargarContenidoModalAboutUs(opcion, arrayOpcionesContacto, usuario) {
+function cargarContenidoModalAboutUs(opcion, arrayContacto) {
+    var content = "";
+
+    switch (opcion) {
+        case "broma":
+            //insertar pero-que-a-pasao.mp3
+            content = '<div class="row">';
+            content += '<div class="col-12">';
+            content += '<p class="text-center text-white"> <strong> ¿Otro error? <strong> </p>';
+            content += '<div class="d-flex justify-content-center"> <audio controls controlsList="nodownload">';
+//            content += '<source src="../audio/pero-que-a-pasao.ogg" type="audio/ogg">';
+            content += '<source src="../audio/pero-que-a-pasao.mp3" type="audio/mpeg">';
+            content += 'Your browser does not support the audio element.';
+            content += '</audio> </div>';
+            content += '</div>';
+            content += '</div>';
+            break;
+
+            //        case "enlace":
+//
+//            $.each(arrayContacto[0]['contacto'], function (indice) {
+//            content += '<div class="text-white col-md-6 col-sm-12 m-auto">';
+////            arrayOpcionesContacto.contacto.forEach(function (indice) {
+////                console.log(indice);
+////                if (arrayContacto[0]['contacto'][indice].content !== null && arrayContacto[0]['contacto'][indice].content != '') {
+////                    content += '<tr> <th scope="col">' + arrayContacto[0]['contacto'][indice].titulo + '</th> <td> ' + arrayContacto[0]['contacto'][indice].content + '</td> </th> </tr>';
+//                    content += '<a class="nav-link" href="'+arrayContacto[0]['contacto'][indice].content+'">' + arrayContacto[0]['contacto'][indice].titulo + '</a>';
+////                }
+//            content += "</div>";
+//            });
+////            arrayContacto.forEach(function (indice) {
+////                content += '<a href="'++'">' + indice + '</a>';
+////            });
+//
+//            break;
+//        case "botones":
+//break;
+
+        case "tabla":
+//            break;
+        default: //tabla
+            content = '<div class="row">';
+            content += '<div class="col-12">';
+            content += '<div class="d-flex justify-content-center">';
+            content += '<table class="table table-hover col-md-8 col-sm-12"> <tbody class="text-white">';
+
+            $.each(arrayContacto[0]['contacto'], function (indice) {
+                content += '<tr> <th scope="col">' + arrayContacto[0]['contacto'][indice].titulo + '</th> <td> ' + arrayContacto[0]['contacto'][indice].content + '</td> </th> </tr>';
+            });
+
+            content += "</tbody> </table>";
+            content += "</div>";
+            content += "</div>";
+            content += "</div>";
+            break;
+    }
+    return content;
+}
+
 // random order para las cards en about us
 var cards = $(".randomcards");
 for (var i = 0; i < cards.length; i++) {
-    var target = Math.floor(Math.random() * cards.length ) ;
-    var target2 = Math.floor(Math.random() * cards.length ) ;
+    var target = Math.floor(Math.random() * cards.length);
+    var target2 = Math.floor(Math.random() * cards.length);
     cards.eq(target).before(cards.eq(target2));
 }
 var cards = $(".randomcardsProfes");
@@ -653,24 +756,26 @@ for (var i = 0; i < cards.length; i++) {
 }
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("We aim above the mark to hit the mark.",
-        "Ich esse gern Brot mit warmem Käse.",
-        "私はビールを飲み、チップを食べるのが好きです。"),
-    random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#descriptionNS').text( random );
+            "Ich esse gern Brot mit warmem Käse.",
+            "私はビールを飲み、チップを食べるのが好きです。"),
+            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+    $('#descriptionNS').text(random);
 });
 // arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.",
-        "Este grupo es el mas perseverante. ",
-        "Nunca dudes de un grupo de entusiastas.",
-        "¡Proyecto exitoso realizado en cuarentena!."),
-        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#descriptionLM').text( random );
+            "Este equipo es lo más. ",
+            "Programado 100% en modo remoto - casita.",
+            "¿Sabes todo el helado que necesité para hacer este proyecto?",
+            "Nunca dudes de un grupo de entusiastas.",
+            "¡Proyecto exitoso realizado en cuarentena!."),
+            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+    $('#descriptionLM').text(random);
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("Si encuentran algún error, yo no fui..",
         "你在浪费你的时间来翻译这个",
         "Pase días haciendo los formularios dinámicos, espero que les gusten."
@@ -690,10 +795,30 @@ $(document).ready(function() {
 
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("Mira mamá!!! Aparezco en los créditos :D!",
-        "omae wa mou shindeiru",
-        "Hacer una página web es como comer una naranja (...)"),
-        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#KevinMekuruTheBassistAndGamer-ahre').text( random );
+            "omae wa mou shindeiru",
+            "Hacer una página web es como comer una naranja (...)"),
+            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+    $('#KevinMekuruTheBassistAndGamer-ahre').text(random);
+});
+
+// arrays para descripciones de Yii Modales
+$(document).ready(function () {
+    var quotesFB = new Array("Yii Modales tiene modales",
+            "Me dijeron que era único, pero nunca me validaron",
+            "Más allá del bien y del mal.",
+            "Smile while it's free :-)",
+            "Si no funcionó con un foreach, puede que funcione con dos",
+            "Fixer nocturno",
+            "Me llama usted, entonces voy. Don Yii Modales es quien yo soy",
+            "O sea sí. Pero no.",
+//            "100% real no fake, 1 link juntar",
+//            "Si los leés, te entretenés xD",
+            "Tienes que hacerlo por mi Pipo, por Yii Modales",
+            "Cuatro lineas más y termino el código..",
+            "OIGA! Estoy tratando de terminar mi código espaguetti.",
+            ),
+            random = quotesFB[Math.floor(Math.random() * quotesFB.length)];
+    $('#descripcionFB').text(random);
 });

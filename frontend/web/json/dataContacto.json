@@ -1,0 +1,197 @@
+[
+    {
+        "name": "Felipe Bastidas",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": "https://www.github.com/hidrawarx"
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": "Fbastidas_94@hotmail.com"
+            }
+        ]
+    },
+    {
+        "name": "Laura Murillo",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Damian Cabrio",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Damian Cabrio",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Leandro Casanova",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Marcos Benitez",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Norbert Strange",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Emanuel Araya",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Maximiliano Bajamon",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Mauro Saracini",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Kevin Espinoza",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Natalia Baeza",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "name": "Valeria Zoratto",
+        "contacto": [
+            {
+                "tipo": "repositorio",
+                "titulo": "Github",
+                "content": ""
+            },
+            {
+                "tipo": "email",
+                "titulo": "Email",
+                "content": ""
+            }
+        ]
+    }
+]
