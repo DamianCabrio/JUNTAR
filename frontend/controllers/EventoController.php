@@ -401,6 +401,7 @@ class EventoController extends Controller {
         $yaInscripto = false;
         $yaAcreditado = false;
 
+        $inscripcion = null;
         if (!Yii::$app->user->getIsGuest()) {
 
             $inscripcion = Inscripcion::find()

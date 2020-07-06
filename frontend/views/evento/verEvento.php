@@ -450,7 +450,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 echo "El evento ha finalizado";
                                             }
                                         }else{
-                                            echo $estadoEventoInscripcion;
+                                            echo "El evento ya ha finalizado";
                                         }
                                     }
                                     Modal::begin([
