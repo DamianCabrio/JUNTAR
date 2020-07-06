@@ -638,6 +638,10 @@ function autocompleteLocalidades(nombreProvincia) {
             });
 }
 
+function abrirContactoModal(title) {
+    $('#aboutUsModal').modal('show');
+}
+
 // random order para las cards en about us
 var cards = $(".randomcards");
 for (var i = 0; i < cards.length; i++) {
@@ -694,4 +698,11 @@ $(document).ready(function() {
         "Hacer una página web es como comer una naranja (...)"),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#KevinMekuruTheBassistAndGamer-ahre').text( random );
+});
+
+// arrays para descripciones de Yii Modales
+$(document).ready(function () {
+    var quotesFB = new Array("Yii Modales tiene modales", "Me dijeron que era único pero nunca me validaron", "Más allá del bien y del mal. Yii Modales", "Smile while it's free :)"),
+            random = quotesFB[Math.floor(Math.random() * quotesFB.length)];
+    $('#descripcionFB').text(random);
 });
