@@ -202,40 +202,29 @@ $this->params['breadcrumbs'][] = $this->title;
         </a>
 
         
-        <!-- Modal -->
-        <div class="modal fade" id="aboutUsModal" tabindex="-1" role="dialog" aria-labelledby="labelAboutUsModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="text">
-                <div class="modal-content">
-                    <div class="super_bg text-center text-white ">
-                        <h2 class="modal-title p-2" id="aboutUsTitle"> Información de Contacto </h2>
-                    </div>
-                    <div class="modal-body">
-                        <!--<div class="row">-->
-                        <div class="col-md-7 col-sm-12 m-auto">
-                            <div class="card">
-                                <h4 class="card-header text-center darkish_bg text-white"> Felipo Bastido </h4>
-                                <div class="row card-body">
-                                    <!--<div class="">-->
-                                    <div class="col-12">
-                                        <a href="btn btn-pink"> Hola soy un link </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <a href="btn btn-pink"> Hola soy otro link </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <a href="btn btn-pink"> Hola soy una copia :smile: </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--</div>-->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<!-- Modal -->
+		<div class="modal fade" id="aboutUsModal" tabindex="-1" role="dialog" aria-labelledby="labelAboutUsModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal" role="text">
+				<div class="modal-content super_bg">
+
+					<div class="modal-body">
+						<!--<div class="row">-->
+						<p class="col-12 text-center text-light">Felipo Bastido</p>
+						<hr>
+						<div class="col-12 text-center mb-5 mt-5">
+							<a href="#" class="text-light"> Hola soy un link </a>
+						</div>
+						<div class="col-12 text-center mb-5 mt-5">
+							<a href="#" class="text-light"> Hola soy otro link </a>
+						</div>
+						<div class="col-12 text-center mb-5 mt-5">
+							<a href="#" class="text-light"> Hola soy una copia :smile: </a>
+						</div>
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
         
         <!--
                 <h1> /* Html::encode($this->title) ?></h1>
