@@ -658,6 +658,12 @@ $(document).ready(function() {
     random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descriptionNS').text( random );
 });
+// arrays para descripciones de cada uno (si se quiere) en el about us
+$(document).ready(function() {
+    var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.", "Este grupo es el mas perseverante. ", "Nunca dudes de un grupo de entusiastas.", "¡Proyecto exitoso realizado en cuarentena!."),
+        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
+    $('#descriptionLM').text( random );
+});
 
 $(document).ready(function() {
     var quotesNS = new Array("Si encuentran algún error, yo no fui..", "你在浪费你的时间来翻译这个", "Pase días haciendo los formularios dinámicos, espero que les gusten."
@@ -667,6 +673,7 @@ $(document).ready(function() {
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descripcionDC').text( random );
 });
+
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
 $(document).ready(function() {
