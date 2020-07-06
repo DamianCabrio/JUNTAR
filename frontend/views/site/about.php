@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="card-header super_bg">Felipe Bastidas</div>
 
                         <div class="card-body darkish_bg text-light">
-                            <p>"pero-que-a-pasao.mp3" fixes nocturnos.</p>
+                            <p id="descripcionFB"></p>
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
