@@ -809,11 +809,13 @@ $(document).ready(function () {
             "Smile while it's free :-)",
             "Si no funcionó con un foreach, puede que funcione con dos",
             "Fixer nocturno",
+            "Me llama usted, entonces voy. Don Yii Modales es quien yo soy",
             "O sea sí. Pero no.",
-            "100% real no fake, 1 link juntar",
-            "Si los leés, te entretenés xD",
+//            "100% real no fake, 1 link juntar",
+//            "Si los leés, te entretenés xD",
+            "Tienes que hacerlo por mi Pipo, por Yii Modales",
             "Cuatro lineas más y termino el código..",
-            "HEY! Estoy tratando de terminar mi código espaguetti.",
+            "OIGA! Estoy tratando de terminar mi código espaguetti.",
             ),
             random = quotesFB[Math.floor(Math.random() * quotesFB.length)];
     $('#descripcionFB').text(random);
