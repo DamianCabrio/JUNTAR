@@ -661,9 +661,9 @@ $(document).ready(function() {
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
 $(document).ready(function() {
-    var quotesNS = new Array("We aim above the mark to hit the mark.", "Ich esse gern Brot mit warmem Käse.", "私はビールを飲み、チップを食べるのが好きです。"),
+    var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.", "Este grupo es el mas perseverante. ", "Nunca dudes de un grupo de entusiastas.", "¡Proyecto exitoso realizado en cuarentena!."),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#descriptionNS').text( random );
+    $('#descriptionLM').text( random );
 });
 
 $(document).ready(function() {
@@ -672,6 +672,7 @@ $(document).ready(function() {
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descripcionDC').text( random );
 });
+
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
 $(document).ready(function() {
