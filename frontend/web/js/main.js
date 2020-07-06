@@ -777,19 +777,18 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     var quotesNS = new Array("Si encuentran algún error, yo no fui..",
-        //"你在浪费你的时间来翻译这个",
+        "你在浪费你的时间来翻译这个",
         "Pase días haciendo los formularios dinámicos, espero que les gusten."
         ,"Si estás leyendo esto, espero que tengas un lindo día.",
         "Si nosotros pudimos, todos pueden.",
-        //"La persona de al lado tiene olor a pata",
+        "La persona de al lado tiene olor a pata",
         "Campeón mundial de borrar archivos en los commits",
-        //"No busquen mensajes secretos, porque no los van a encontrar...",
+        "No busquen mensajes secretos, porque no los van a encontrar...",
         "Hola persona del futuro, ¿Cómo te va?",
         "Fire, Walk with me",
         "Nos esforzamos mucho en hacer la página, no la rompan por favor",
-        //"Rompe paga",
-        //"Era penal",
-        ""),
+        "Rompe paga",
+        "Era penal"),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descripcionDC').text( random );
 });
