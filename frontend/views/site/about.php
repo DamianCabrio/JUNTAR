@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="https://github.com/DamianCabrio" target="_blank" class="text-light linkAbout" data-id="Borra Módulos"><i class="material-icons">contact_mail</i></a>
+                            <a href="https://github.com/DamianCabrio" target="_blank" class="text-light linkAbout" data-id="Damián Cabrio"><i class="material-icons">contact_mail</i></a>
                         </div>
 
                     </div>
@@ -140,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout" data-id="Maximiliano Bajamón"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Maximiliano Bajamon"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -182,7 +182,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout" data-id="Valeria Soratto"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Valeria Zoratto"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -209,19 +209,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <h2 class="modal-title p-2 text-white text-center" id="aboutUsTitle"></h2>
                                     <hr class="text-white">
 					<div class="modal-body">
-						<!--<div class="row">-->
-<!--						<p class="col-12 text-center text-light">Felipo Bastido</p>
-						<hr>
-						<div class="col-12 text-center mb-5 mt-5">
-							<a href="#" class="text-light"> Hola soy un link </a>
-						</div>
-						<div class="col-12 text-center mb-5 mt-5">
-							<a href="#" class="text-light"> Hola soy otro link </a>
-						</div>
-						<div class="col-12 text-center mb-5 mt-5">
-							<a href="#" class="text-light"> Hola soy una copia :smile: </a>
-						</div>-->
-						<!--</div>-->
+
 					</div>
 				</div>
 			</div>
