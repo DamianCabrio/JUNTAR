@@ -639,16 +639,16 @@ function autocompleteLocalidades(nombreProvincia) {
 }
 
 //link about us
-$(document).ready(function () {
-    $('.linkAbout').click(function (link) {
-        //impedimos que el cambio de pestaña se active
-        link.preventDefault();
-        //llamamos a la funcion que se encargue de mostrar el formulario
-//        alert();
-//        abrirContactoModal(($(this).attr('data-id')));
-        buscarDataUser(($(this).attr('data-id')));
-    });
-});
+//$(document).ready(function () {
+//    $('.linkAbout').click(function (link) {
+//        //impedimos que el cambio de pestaña se active
+//        link.preventDefault();
+//        //llamamos a la funcion que se encargue de mostrar el formulario
+////        alert();
+////        abrirContactoModal(($(this).attr('data-id')));
+//        buscarDataUser(($(this).attr('data-id')));
+//    });
+//});
 
 function buscarDataUser(unUsuario) {
     $.ajax('../json/dataContacto.json', {
