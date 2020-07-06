@@ -654,21 +654,33 @@ for (var i = 0; i < cards.length; i++) {
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
 $(document).ready(function() {
-    var quotesNS = new Array("We aim above the mark to hit the mark.", "Ich esse gern Brot mit warmem Käse.", "私はビールを飲み、チップを食べるのが好きです。"),
+    var quotesNS = new Array("We aim above the mark to hit the mark.",
+        "Ich esse gern Brot mit warmem Käse.",
+        "私はビールを飲み、チップを食べるのが好きです。"),
     random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descriptionNS').text( random );
 });
 // arrays para descripciones de cada uno (si se quiere) en el about us
 $(document).ready(function() {
-    var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.", "Este grupo es el mas perseverante. ", "Nunca dudes de un grupo de entusiastas.", "¡Proyecto exitoso realizado en cuarentena!."),
+    var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.",
+        "Este grupo es el mas perseverante. ",
+        "Nunca dudes de un grupo de entusiastas.",
+        "¡Proyecto exitoso realizado en cuarentena!."),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descriptionLM').text( random );
 });
 
 $(document).ready(function() {
-    var quotesNS = new Array("Si encuentran algún error, yo no fui..", "你在浪费你的时间来翻译这个", "Pase días haciendo los formularios dinámicos, espero que les gusten."
-        ,"Si estás leyendo esto, espero que tengas un lindo día.", "Si nosotros pudimos, todos pueden.", "La persona de al lado tiene olor a pata", "Campeón mundial de borrar archivos en los commits",
-        "No busquen mensajes secretos, porque no los van a encontrar...", "Hola persona del futuro, ¿Cómo te va?", "Fire, Walk with me", "Nos esforzamos mucho en hacer la página, no la rompan por favor",
+    var quotesNS = new Array("Si encuentran algún error, yo no fui..",
+        "你在浪费你的时间来翻译这个",
+        "Pase días haciendo los formularios dinámicos, espero que les gusten."
+        ,"Si estás leyendo esto, espero que tengas un lindo día.",
+        "Si nosotros pudimos, todos pueden.",
+        "La persona de al lado tiene olor a pata",
+        "Campeón mundial de borrar archivos en los commits",
+        "No busquen mensajes secretos, porque no los van a encontrar...",
+        "Hola persona del futuro, ¿Cómo te va?", "Fire, Walk with me",
+        "Nos esforzamos mucho en hacer la página, no la rompan por favor",
         "Rompe paga"),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descripcionDC').text( random );
@@ -677,7 +689,9 @@ $(document).ready(function() {
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
 $(document).ready(function() {
-    var quotesNS = new Array("Mira mamá!!! Aparezco en los créditos :D!", "omae wa mou shindeiru", "Hacer una página web es como comer una naranja (...)"),
+    var quotesNS = new Array("Mira mamá!!! Aparezco en los créditos :D!",
+        "omae wa mou shindeiru",
+        "Hacer una página web es como comer una naranja (...)"),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#KevinMekuruTheBassistAndGamer-ahre').text( random );
 });
