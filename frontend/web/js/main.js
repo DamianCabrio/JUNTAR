@@ -135,7 +135,7 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         editarPreguntaModal($(this).attr('href'), 'Editar Pregunta');
     });
-    
+
     //funcionalidad ver QR
     $('.visualizarQR').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -143,7 +143,7 @@ $(document).ready(function () {
         //llamamos a la funcion que se encargue de mostrar el formulario
         visualizarQrModal($(this).attr('href'), 'QR:');
     });
-    
+
     //funcionalidad editar perfil
     $('.editProfile').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -235,41 +235,41 @@ $(document).ready(function () {
     });
     //prueba
     /*$('#cargarPresentacion').submit(function () {
-        $('#presentacion-diapresentacion').attr('required', true);
-        $('#presentacion-diapresentacion').addClass('is-invalid');
-        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
-        $('#invalidFecha').show();
-    });
-    
-    $('#editarPresentacion').submit(function () {
-        $('#presentacion-diapresentacion').attr('required', true);
-        $('#presentacion-diapresentacion').addClass('is-invalid');
-        $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
-        $('#invalidFecha').show();
-    });
-
-    $('#presentacion-diapresentacion').change(function () {
-        var fechaIni = $('#fechaIniEvento').val();
-        var fechaFin = $('#fechaFinEvento').val();
-        var fechaPre = $(this).val();
-        //console.log(fechaPre);
-        //console.log(fechaIni);
-        //console.log(fechaFin);
-
-        if (fechaIni <= fechaPre && fechaFin >= fechaPre) {
-            //console.log("bien");
-            $(this).addClass('is-valid');
-            $(this).removeClass('is-invalid');
-            $('#invalidFecha').hide();
-        } else {
-            //console.log("Mal");
-            $(this).removeClass('is-valid');
-            $(this).addClass('is-invalid');
-            $('#invalidFecha').html('El Dia de la Presentacion debe estar entre la fecha inicio y la fecha fin del evento.<br> Fecha Inicio Evento: ' + fechaIni + '<br>Fecha Fin Evento: ' + fechaFin);
-            $('#invalidFecha').show();
-        }
-
-    });*/
+     $('#presentacion-diapresentacion').attr('required', true);
+     $('#presentacion-diapresentacion').addClass('is-invalid');
+     $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+     $('#invalidFecha').show();
+     });
+     
+     $('#editarPresentacion').submit(function () {
+     $('#presentacion-diapresentacion').attr('required', true);
+     $('#presentacion-diapresentacion').addClass('is-invalid');
+     $('#invalidFecha').html('Dia Presentacion no puede estar Vacio');
+     $('#invalidFecha').show();
+     });
+     
+     $('#presentacion-diapresentacion').change(function () {
+     var fechaIni = $('#fechaIniEvento').val();
+     var fechaFin = $('#fechaFinEvento').val();
+     var fechaPre = $(this).val();
+     //console.log(fechaPre);
+     //console.log(fechaIni);
+     //console.log(fechaFin);
+     
+     if (fechaIni <= fechaPre && fechaFin >= fechaPre) {
+     //console.log("bien");
+     $(this).addClass('is-valid');
+     $(this).removeClass('is-invalid');
+     $('#invalidFecha').hide();
+     } else {
+     //console.log("Mal");
+     $(this).removeClass('is-valid');
+     $(this).addClass('is-invalid');
+     $('#invalidFecha').html('El Dia de la Presentacion debe estar entre la fecha inicio y la fecha fin del evento.<br> Fecha Inicio Evento: ' + fechaIni + '<br>Fecha Fin Evento: ' + fechaFin);
+     $('#invalidFecha').show();
+     }
+     
+     });*/
     //funcionalidad mostrar certificdos
     $('.viewCertification').click(function (link) {
         //impedimos que el cambio de pestaña se active
@@ -638,24 +638,79 @@ function autocompleteLocalidades(nombreProvincia) {
             });
 }
 
-function abrirContactoModal(title) {
-    $('#aboutUsModal').modal('show');
-}
-
-$(document).ready(function() {
+//link about us
+$(document).ready(function () {
     $('.linkAbout').click(function (link) {
         //impedimos que el cambio de pestaña se active
         link.preventDefault();
         //llamamos a la funcion que se encargue de mostrar el formulario
-        abrirContactoModal("Información de contacto");
+//        alert();
+        abrirContactoModal(($(this).attr('data-id')));
     });
 });
+function abrirContactoModal(usuario) {
+//    alert(usuario);
+    var opcionesDisplay = new Array("tabla", "botones", "enlace", "broma"),
+            opcionDisplayRandom = opcionesDisplay[Math.floor(Math.random() * opcionesDisplay.length)];
+    alert(opcionDisplayRandom);
+
+    var arrayLindoYQuerido = new Array("Hola soy un enlace jaja", "hola soy otro enlace jaja", "hola, yo que soy? xdxdxDxd");
+    $('#aboutUsModal').modal('show');
+    $('#aboutUsModal').find('.modal-title')
+            .html(usuario);
+    var algo = cargarContenidoModalAboutUs(opcionDisplayRandom, arrayLindoYQuerido);
+    console.log(algo);
+    $('#aboutUsModal').find('.modal-body')
+            .html(algo);
+}
+
+function cargarContenidoModalAboutUs(opcion, arrayOpcionesContacto) {
+    var content = "";
+    switch (opcion) {
+        case "tabla":
+            content = '<table class="table table-responsive"> <tbody>';
+
+            arrayOpcionesContacto.forEach(function (indice) {
+                content += '<tr> <th scope="col">' + indice + '</th> <td> ' + indice + '</td> </th> </tr>';
+            });
+
+            content += "</tbody> </table>";
+            break;
+
+        case "enlace":
+            content = '<div class="col-md-6 col-sm-12">';
+
+            arrayOpcionesContacto.forEach(function (indice) {
+                content += '<a href="">' + indice + '</a>';
+            });
+
+            content += "</div>";
+            break;
+
+        case "broma":
+            //insertar pero-que-a-pasao.mp3
+            content = ""
+            break;
+
+        case "botones":
+        default: //botones
+            content = '<div class="col-md-6 col-sm-12">';
+
+            arrayOpcionesContacto.forEach(function (indice) {
+                content += '<a href="" class="btn btn-secondary">' + indice + '</a>';
+            });
+
+            content += "</div>";
+            break;
+    }
+    return content;
+}
 
 // random order para las cards en about us
 var cards = $(".randomcards");
 for (var i = 0; i < cards.length; i++) {
-    var target = Math.floor(Math.random() * cards.length ) ;
-    var target2 = Math.floor(Math.random() * cards.length ) ;
+    var target = Math.floor(Math.random() * cards.length);
+    var target2 = Math.floor(Math.random() * cards.length);
     cards.eq(target).before(cards.eq(target2));
 }
 var cards = $(".randomcardsProfes");
@@ -666,49 +721,49 @@ for (var i = 0; i < cards.length; i++) {
 }
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("We aim above the mark to hit the mark.",
-        "Ich esse gern Brot mit warmem Käse.",
-        "私はビールを飲み、チップを食べるのが好きです。"),
-    random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#descriptionNS').text( random );
+            "Ich esse gern Brot mit warmem Käse.",
+            "私はビールを飲み、チップを食べるのが好きです。"),
+            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+    $('#descriptionNS').text(random);
 });
 // arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.",
-        "Este equipo es lo más. ",
-        "Programado 100% en modo remoto - casita.",
-        "¿Sabes todo el helado que necesité para hacer este proyecto?",
-        "Nunca dudes de un grupo de entusiastas.",
-        "¡Proyecto exitoso realizado en cuarentena!."),
-        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#descriptionLM').text( random );
+            "Este equipo es lo más. ",
+            "Programado 100% en modo remoto - casita.",
+            "¿Sabes todo el helado que necesité para hacer este proyecto?",
+            "Nunca dudes de un grupo de entusiastas.",
+            "¡Proyecto exitoso realizado en cuarentena!."),
+            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+    $('#descriptionLM').text(random);
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("Si encuentran algún error, yo no fui..",
-        "你在浪费你的时间来翻译这个",
-        "Pase días haciendo los formularios dinámicos, espero que les gusten."
-        ,"Si estás leyendo esto, espero que tengas un lindo día.",
-        "Si nosotros pudimos, todos pueden.",
-        "La persona de al lado tiene olor a pata",
-        "Campeón mundial de borrar archivos en los commits",
-        "No busquen mensajes secretos, porque no los van a encontrar...",
-        "Hola persona del futuro, ¿Cómo te va?", "Fire, Walk with me",
-        "Nos esforzamos mucho en hacer la página, no la rompan por favor",
-        "Rompe paga"),
-        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#descripcionDC').text( random );
+            "你在浪费你的时间来翻译这个",
+            "Pase días haciendo los formularios dinámicos, espero que les gusten."
+            , "Si estás leyendo esto, espero que tengas un lindo día.",
+            "Si nosotros pudimos, todos pueden.",
+            "La persona de al lado tiene olor a pata",
+            "Campeón mundial de borrar archivos en los commits",
+            "No busquen mensajes secretos, porque no los van a encontrar...",
+            "Hola persona del futuro, ¿Cómo te va?", "Fire, Walk with me",
+            "Nos esforzamos mucho en hacer la página, no la rompan por favor",
+            "Rompe paga"),
+            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+    $('#descripcionDC').text(random);
 });
 
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function() {
+$(document).ready(function () {
     var quotesNS = new Array("Mira mamá!!! Aparezco en los créditos :D!",
-        "omae wa mou shindeiru",
-        "Hacer una página web es como comer una naranja (...)"),
-        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#KevinMekuruTheBassistAndGamer-ahre').text( random );
+            "omae wa mou shindeiru",
+            "Hacer una página web es como comer una naranja (...)"),
+            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+    $('#KevinMekuruTheBassistAndGamer-ahre').text(random);
 });
 
 // arrays para descripciones de Yii Modales

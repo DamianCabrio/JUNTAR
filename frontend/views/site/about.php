@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="https://github.com/DamianCabrio" target="_blank" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="https://github.com/DamianCabrio" target="_blank" class="text-light linkAbout" data-id="Borra Módulos"><i class="material-icons">contact_mail</i></a>
                         </div>
 
                     </div>
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Felipe Bastidas"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Leandro Casanova"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="mailto:norbert@stange.com.ar" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="mailto:norbert@stange.com.ar" class="text-light linkAbout" data-id="Norbert Strange"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Emanuel Araya"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <p id="descriptionLM"></p>
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="mailto:lauradejaramillo@gmail.com" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="mailto:lauradejaramillo@gmail.com" class="text-light linkAbout" data-id="Laura Murillo"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Marcos Benitez"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Mauro Saracini"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Maximiliano Bajamón"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Kevin Espinoza"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Natalia Baeza"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -182,7 +182,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Valeria Soratto"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -206,10 +206,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="modal fade" id="aboutUsModal" tabindex="-1" role="dialog" aria-labelledby="labelAboutUsModal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal" role="text">
 				<div class="modal-content super_bg">
-
+                                    <h2 class="modal-title p-2 text-white text-center" id="aboutUsTitle"></h2>
+                                    <hr class="text-white">
 					<div class="modal-body">
 						<!--<div class="row">-->
-						<p class="col-12 text-center text-light">Felipo Bastido</p>
+<!--						<p class="col-12 text-center text-light">Felipo Bastido</p>
 						<hr>
 						<div class="col-12 text-center mb-5 mt-5">
 							<a href="#" class="text-light"> Hola soy un link </a>
@@ -219,7 +220,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						</div>
 						<div class="col-12 text-center mb-5 mt-5">
 							<a href="#" class="text-light"> Hola soy una copia :smile: </a>
-						</div>
+						</div>-->
 						<!--</div>-->
 					</div>
 				</div>
