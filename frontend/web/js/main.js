@@ -681,7 +681,9 @@ $(document).ready(function() {
         "No busquen mensajes secretos, porque no los van a encontrar...",
         "Hola persona del futuro, ¿Cómo te va?", "Fire, Walk with me",
         "Nos esforzamos mucho en hacer la página, no la rompan por favor",
-        "Rompe paga"),
+        "Rompe paga",
+        "Era penal",
+        ""),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
     $('#descripcionDC').text( random );
 });

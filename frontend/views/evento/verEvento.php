@@ -405,41 +405,53 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <div class="col-sm-12 col-md-4">
                                 <div class="align-middle">
                                     <?php
-                                    switch ($estadoEventoInscripcion) {
-                                        case "puedeInscripcion":
-                                            echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-                                            break;
-                                        case "puedePreinscripcion":
-                                            echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-                                            break;
-                                        case "sinCupos":
-                                            echo Html::label('Sin cupos');
-                                            break;
-                                        case "yaAcreditado":
-                                            echo Html::label("Usted ya se acreditó en este evento");
-                                            break;
-                                        case "inscriptoYEventoIniciado":
-                                            echo Html::label("El evento ya inició, pasela bien");
-                                            break;
-                                        case "yaPreinscripto":
-                                            echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width mb-3']);
-                                            if ($cantidadPreguntas != 0) {
-                                                echo Html::a('Formulario de Preinscripcion', ['eventos/responder-formulario/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-                                            }
-                                            break;
-                                        case "yaInscripto":
-                                            echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-                                            break;
-                                        case "noInscriptoYFechaLimiteInscripcionPasada":
-                                            echo Html::label('No se puede inscribir, período de inscripciones cerrado');
-                                            break;
-                                        case "puedeAcreditarse":
-                                            if($inscripcion != null && $inscripcion->estado == 1) {
+                                    if ($evento->fechaFinEvento > date("Y-m-d") && $evento->idEstadoEvento != 3) {
+                                        switch ($estadoEventoInscripcion) {
+                                            case "puedeInscripcion":
+                                                echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                break;
+                                            case "puedePreinscripcion":
+                                                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                break;
+                                            case "sinCupos":
+                                                echo Html::label('Sin cupos');
+                                                break;
+                                            case "yaAcreditado":
+                                                echo Html::label("Usted ya se acreditó en este evento");
+                                                break;
+                                            case "inscriptoYEventoIniciado":
+                                                echo Html::label("El evento ya inició, pasela bien");
+                                                break;
+                                            case "yaPreinscripto":
+                                                echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width mb-3']);
+                                                if ($cantidadPreguntas != 0) {
+                                                    echo Html::a('Formulario de Preinscripcion', ['eventos/responder-formulario/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                }
+                                                break;
+                                            case "yaInscripto":
+                                                echo Html::a('Anular Inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                break;
+                                            case "noInscriptoYFechaLimiteInscripcionPasada":
+                                                echo Html::label('No se puede inscribir, período de inscripciones cerrado');
+                                                break;
+                                            case "puedeAcreditarse":
+                                                if ($inscripcion != null && $inscripcion->estado == 1) {
+                                                    echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                } else {
+                                                    echo "El evento ha finalizado";
+                                                }
+                                                break;
+                                        }
+                                    }else{
+                                        if($estadoEventoInscripcion == "puedeAcreditarse"){
+                                            if ($inscripcion != null && $inscripcion->estado == 1) {
                                                 echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
-                                            }else{
+                                            } else {
                                                 echo "El evento ha finalizado";
                                             }
-                                            break;
+                                        }else{
+                                            echo $estadoEventoInscripcion;
+                                        }
                                     }
                                     Modal::begin([
                                         'id' => 'modalEvento',
