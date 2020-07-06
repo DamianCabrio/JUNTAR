@@ -663,7 +663,9 @@ $(document).ready(function() {
 // arrays para descripciones de cada uno (si se quiere) en el about us
 $(document).ready(function() {
     var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.",
-        "Este grupo es el mas perseverante. ",
+        "Este equipo es lo más. ",
+        "Programado 100% en modo remoto - casita.",
+        "¿Sabes todo el helado que necesité para hacer este proyecto?",
         "Nunca dudes de un grupo de entusiastas.",
         "¡Proyecto exitoso realizado en cuarentena!."),
         random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
