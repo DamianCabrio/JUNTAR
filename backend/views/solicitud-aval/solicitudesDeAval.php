@@ -43,8 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <h5 class="card-header <?php echo $fondoClassActivas; ?>">
                                 <img class="<?php echo $imageClassActivas; ?>"
-                                     src="<?php echo Yii::getAlias('@web/iconos/list-unordered.svg') ?>" alt="backend"
-                                     title="backend" width="40" height="40" role="img">
+                                     src="<?php echo Yii::getAlias('@web/iconos/list-unordered.svg') ?>" alt="Activas"
+                                     title="Activas" width="40" height="40" role="img">
                                 Solicitudes Activas
                             </h5>
                         </a>
@@ -55,8 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <h5 class="card-header <?php echo $fondoClassDenegadas; ?>">
                                 <img class="<?php echo $imageClassDenegadas; ?>"
-                                     src="<?php echo Yii::getAlias('@web/iconos/denegarAval.svg') ?>" alt="backend"
-                                     title="backend" width="40" height="40" role="img">
+                                     src="<?php echo Yii::getAlias('@web/iconos/denegarAval.svg') ?>" alt="Denegadas"
+                                     title="Denegadas" width="40" height="40" role="img">
                                 Denegadas
                             </h5>
                         </a>
@@ -67,8 +67,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <h5 class="card-header <?php echo $fondoClassAprobadas; ?>">
                                 <img class="<?php echo $imageClassAprobadas; ?>"
-                                     src="<?php echo Yii::getAlias('@web/iconos/concederAval.svg') ?>" alt="backend"
-                                     title="backend" width="40" height="40" role="img">
+                                     src="<?php echo Yii::getAlias('@web/iconos/concederAval.svg') ?>" alt="Aprobadas"
+                                     title="Aprobadas" width="40" height="40" role="img">
                                 Aprobadas
                             </h5>
                         </a>
