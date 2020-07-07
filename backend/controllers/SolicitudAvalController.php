@@ -147,7 +147,7 @@ class SolicitudAvalController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionQuitarAval($id)
+    public function actionDenegarAval($id)
     {
         $this->findModel($id)->denegar();
         return $this->redirect(Yii::$app->request->referrer);

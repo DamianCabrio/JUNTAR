@@ -106,7 +106,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                         },
                                         'delete' => function ($url, $model) {
-                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn btn-pink']);
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', 
+                                                    ['/evento/deshabilitar/', 'id' => $model->idEvento], 
+                                                    ['class' => 'btn btn-pink']);
                                         }
                                     ],
                                     'header' => 'Acciones',
