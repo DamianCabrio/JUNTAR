@@ -57,7 +57,7 @@ class ImagenQR extends Model {
             $url = (Url::base(true) . Url::to(['/eventos/ver-evento']) . "/" . $slug);
             $path = 'eventos/images/qrcodes/' . $slug . '.png';
             $label = $slug;
-            
+
             //se encontró el registro en la DB, procedemos a buscar el archivo en el servidor
             $rutaQREvento = $modelImage->rutaArchivoImagen;
             if (file_exists($rutaQREvento)) {
@@ -106,8 +106,8 @@ class ImagenQR extends Model {
             return $this->generarQRAcreditacion($codigoAcreditacion, $slug, $idEvento);
         } else {
             //seteamos los datos necesarios para actualizar el QR
-            $url = (Url::base(true) . Url::to(['/eventos/ver-evento']) . "/" . $slug);
-            $path = 'eventos/images/qrcodes/' . $slug . '.png';
+            $url = (Url::base(true) . Url::to(['/acreditacion']) . '?slug=' . $slug . '&codigoAcreditacion=' . $codigoAcreditacion);
+            $path = "eventos/images/qrcodes/" . Yii::$app->security->generateRandomString() . "-Acreditacion.png";
             $label = $slug;
 
             //se encontró el registro en la DB, procedemos a buscar el archivo en el servidor
