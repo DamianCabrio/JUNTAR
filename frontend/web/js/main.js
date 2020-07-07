@@ -795,10 +795,14 @@ $(document).ready(function () {
 
 
 // arrays para descripciones de cada uno (si se quiere) en el about us
+/* Kevin */
 $(document).ready(function () {
-    var quotesNS = new Array("Mira mamá!!! Aparezco en los créditos :D!",
+    var quotesNS = new Array(
             "omae wa mou shindeiru",
-            "Hacer una página web es como comer una naranja (...)"),
+            "Mira mamá!!! Aparezco en los créditos :D",
+            "¿En cuántos proyectos universitarios ves algo así de genial?",
+            "Me miraba 3 o 4 videos en YouTube antes de ponerme a programar (?",
+            "Si jugás al League of Legends, agregame: ''Mekuru'' (LAS)"),
             random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
     $('#KevinMekuruTheBassistAndGamer-ahre').text(random);
 });
@@ -815,6 +819,7 @@ $(document).ready(function () {
             "O sea sí. Pero no.",
 //            "100% real no fake, 1 link juntar",
 //            "Si los leés, te entretenés xD",
+// JAJAJAJAJAJ adoro los mensajes de Felipe XDD       by: Kevin (?
             "Tienes que hacerlo por mi Pipo, por Yii Modales",
             "Cuatro lineas más y termino el código..",
             "OIGA! Estoy tratando de terminar mi código espaguetti.",

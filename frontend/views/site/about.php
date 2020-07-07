@@ -155,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout" data-id="Kevin Espinoza"><i class="material-icons">contact_mail</i></a>
+                            <a href="https://www.instagram.com/kevin_esp_/" class="text-light linkAbout" data-id="Kevin Espinoza"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
