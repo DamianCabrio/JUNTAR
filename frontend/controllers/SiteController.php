@@ -118,12 +118,12 @@ class SiteController extends Controller
         if ($busqueda != "") {
             $eventos = Evento::find()
                 ->innerJoin('usuario', 'usuario.idUsuario=evento.idUsuario')
-                ->orderBy($ordenSQL)
                 ->where(["idEstadoEvento" => 1])
                 ->orwhere(["idEstadoEvento" => 3])
                 ->andwhere(["like", "nombre", $busqueda])
-                ->andwhere(["like", "apellido", $busqueda])
-                ->andwhere(["like", "nombreEvento", $busqueda]);
+                ->orwhere(["like", "apellido", $busqueda])
+                ->orwhere(["like", "nombreEvento", $busqueda])
+                ->orderBy($ordenSQL);
         } else {
             $eventos = Evento::find()->orderBy($ordenSQL)->where(["idEstadoEvento" => 1])->orwhere(["idEstadoEvento" => 3]);
         }

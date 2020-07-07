@@ -210,11 +210,11 @@ class InscripcionController extends Controller
             return $this->redirect(['eventos/ver-evento/' . $slug]);
         }
 
+        $esPreInscripcion = $inscripcion->estado == 0 ? true : false;
+
         //Cambio el estado a 2 = anulado
         $inscripcion->estado = 2;
         $seElimino = $inscripcion->save();
-
-        $esPreInscripcion = $inscripcion->estado == 1 ? true : false;
 
         if ($seElimino) {
             $texto = $esPreInscripcion ? "Se ha anulado su pre-inscripto con éxito" : "Se ha anulado su inscripción con éxito";
