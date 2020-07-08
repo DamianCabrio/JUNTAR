@@ -85,9 +85,17 @@ class InscripcionController extends Controller
         $esDueño = $this->verificarDueño($evento->idEvento);
 
         if ($esDueño) {
-            $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => $id])->one();
-            $inscripcion->estado = 1;
-            $inscripcion->save();
+            $cupos = $this->calcularCupos($evento);
+
+            if ($cupos == 0) {
+                Yii::$app->session->setFlash('error', '<h2> Error </h2>'
+                    . '<p> Limite de cupos alcanzado </p>');
+            } else if ($cupos != 0 || $cupos == null) {
+                $inscripcion = Inscripcion::find()->where(["idEvento" => $evento->idEvento, "idUsuario" => $id])->one();
+                $inscripcion->estado = 1;
+                $inscripcion->save();
+            }
+
             return $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->goHome();

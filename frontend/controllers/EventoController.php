@@ -469,7 +469,6 @@ class EventoController extends Controller {
                     ->count();
 
             $cupoMaximo = $evento->capacidad;
-
             if ($cantInscriptos >= $cupoMaximo) {
                 $cupos = 0;
             } else {
