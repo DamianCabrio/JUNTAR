@@ -103,8 +103,8 @@ class AcreditacionController extends Controller
 
     public function acreditar($evento)
     {
-        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento])->one();
-        if ($inscripcion == null || $inscripcion->acreditacion == 1) {
+        $inscripcion = Inscripcion::find()->where(["idUsuario" => Yii::$app->user->identity->idUsuario, "idEvento" => $evento->idEvento, "estado" => 1])->one();
+        if (($inscripcion == null || $inscripcion->acreditacion == 1) && $evento->fechaInicioEvento <= date("Y-m-d") ) {
             Yii::$app->session->setFlash('error', '<h2> Error </h2>'
                 . '<p> Usted no se puede acreditar. </p>');
             return false;

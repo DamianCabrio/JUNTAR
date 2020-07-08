@@ -405,7 +405,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                             <div class="col-sm-12 col-md-4">
                                 <div class="align-middle">
                                     <?php
-                                    if ($evento->fechaFinEvento > date("Y-m-d") && $evento->idEstadoEvento != 3) {
+                                    if ($evento->fechaFinEvento >= date("Y-m-d") && $evento->idEstadoEvento != 3) {
                                         switch ($estadoEventoInscripcion) {
                                             case "puedeInscripcion":
                                                 echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
@@ -451,6 +451,8 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                             }
                                         }else if ($estadoEventoInscripcion == "yaAcreditado"){
                                             echo "Usted ya esta acreditado";
+                                        }else{
+                                            echo "El evento ya ha iniciado";
                                         }
                                     }
                                     Modal::begin([
@@ -524,7 +526,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     </li>
                                     <li class="list-group-item darkish_bg text-white">
                                         <p><b>Capacidad: </b></p>
-                                        <span class="font-weight-light"><?= $evento->capacidad ?></span>
+                                        <span class="font-weight-light"><?= ($evento->capacidad != null) ? $evento->capacidad : "Sin limite" ?></span>
                                     </li>
                                     <li class="list-group-item darkish_bg text-white">
                                         <p><b>Fecha Publicación: </b></p>

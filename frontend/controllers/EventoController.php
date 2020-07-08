@@ -397,7 +397,6 @@ class EventoController extends Controller {
         }
 
         $cupos = $this->calcularCupos($evento);
-
         $yaInscripto = false;
         $yaAcreditado = false;
 
@@ -513,7 +512,7 @@ class EventoController extends Controller {
             // El usuario no esta incripto en el evento
         } else {
             // ¿Hay cupos en el evento? - No
-            if ($cupos === 0 && !is_null($cupos)) {
+            if ($cupos == 0 && !is_null($cupos)) {
                 return "sinCupos";
                 // Hay cupos en el evento
             } else {
