@@ -15,7 +15,9 @@
                 } else {
                     $pathLogo = substr($event[0]['imgLogo'], 1);
                     $col = '<td></td><td>';
+                    if (file_exists($pathLogo)) {
                     $col .= '<img id="juntar-logo" class="full_width" src="' . $pathLogo . '">';
+                    }
                     $col .= '</td><td></td>';
                     echo $col;
                 }
@@ -37,12 +39,19 @@ if (!is_null($presentations['collections'])) {
     }
 }
 
-$initialDay = strtotime($event[0]->fechaInicioEvento);
-$latestDay = strtotime($event[0]->fechaFinEvento);
+$initialDay = new DateTime ($event[0]->fechaInicioEvento);
+$latestDay = new DateTime ($event[0]->fechaFinEvento);
+
 if ($initialDay <> $latestDay) {
-    $daysMessage = "desde el " . date("d", $initialDay) . " hasta el " . date("d", $latestDay);
+
+   $intervale =  $latestDay->diff($initialDay);
+  if ($intervale->days == 1 ) {
+    $daysMessage = "los días " . $initialDay->format("d") . " y " . $latestDay->format("d");
+  } else {
+    $daysMessage = "desde el " . $initialDay->format("d") . " hasta el " . $latestDay->format("d");
+  }
 } else {
-    $daysMessage = "el dìa " . date("d", $initialDay);
+    $daysMessage = "el dìa " . $initialDay->format("d");
 }
 
 //Arrays Auxiliar.
