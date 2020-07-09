@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="randomcards  col-sm-12 col-md-3 mb-4">
                     <div class="card shadow">
-                        <div class="card-header super_bg">Maximiliano Bajamón</div>
+                        <div class="card-header super_bg">Maxi Bajamón</div>
 
 
                         <div class="card-body darkish_bg text-light">
