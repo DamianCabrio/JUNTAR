@@ -75,6 +75,7 @@ return [
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+				'/<slug>' => 'evento/ver-evento',
                 'eventos/ver-evento/<slug>' => 'evento/ver-evento',
                 'eventos/evento-cargado/<slug>' => 'evento/evento-cargado',
                 'eventos/editar-evento/<slug>' => 'evento/editar-evento',
