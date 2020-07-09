@@ -485,3 +485,15 @@ section {
 .expositor-center {
     margin-top: 12%;
 }
+
+/* modificacion ancho para modal aboutUs */
+@media screen and (min-width: 768px) {
+    .modalAboutUs {
+        width: 600px; /* New width for default modal */
+    }
+}
+@media screen and (min-width: 992px) {
+    .modalAboutUs {
+        width: 600px; /* New width for large modal */
+    }
+}

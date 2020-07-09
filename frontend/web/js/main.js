@@ -638,138 +638,174 @@ function autocompleteLocalidades(nombreProvincia) {
             });
 }
 
-$('.linkAbout').on( "click", function() {
-    var id = $(this).attr("id");
-
-    if(id === "ns"){
-        var links = $('<div class="text-center"><p><a class="text-light" href="mailto:norbert@stange.com.ar">norbert@stange.com.ar</a></p><p><a class="text-light" href="https://www.instagram.com/n0rb3rt/">instagram.com/n0rb3rt/</a></p><p><a class="text-light" href="https://www.last.fm/user/N0rb3r7">last.fm/user/N0rb3r7</a></p><img class="full_width" src="https://vignette.wikia.nocookie.net/macross/images/7/75/IsamuProfile.jpg/revision/latest?cb=20190426145349"></img></div>')
-        var name = "Norbert Strange"
-    }
-    if(id === "fb")   {
-        var links = $('<div class="padding_section">holaaaa</div>')
-        var name = "Felipe Bastidas"
-    }
-    if(id === "dc")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Damián Cabrio"
-    }
-    if(id === "lc")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Leandro Casanova"
-    }
-    if(id === "lm")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Laura Murillo"
-    }
-    if(id === "mbe")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Marcos Benitez"
-    }
-    if(id === "ea")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Emanuel Araya"
-    }
-    if(id === "mba")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Maximiliano Bajamón"
-    }
-    if(id === "ms")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Mauro Saracini"
-    }
-    if(id === "ke")   {
-        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
-        var name = "Kevin Espinoza"
-    }
-    $('#modal_content').html(links);
-    $('.modal-title').html(name)
-    $('#aboutUsModal').modal('show');
- });
+//$('.linkAbout').on("click", function () {
+//    var id = $(this).attr("id");
+//
+//    if (id === "ns") {
+//        var links = $(
+//                '<div class="row">\n\
+//                    <div class="col-md-6 col-sm-12 text-center">\n\
+//                        <img class="full_width" src="../images/devs/norbert.jpg"></img>\n\
+//                    </div>\n\
+//                    <div class="col-md-6 col-sm-12 text-center">\n\
+//                        <p><a class="text-light" href="mailto:norbert@stange.com.ar">norbert@stange.com.ar</a></p>\n\
+//                        <p><a class="text-light" href="https://www.instagram.com/n0rb3rt/">instagram.com/n0rb3rt/</a></p>\n\
+//                        <p><a class="text-light" href="https://www.last.fm/user/N0rb3r7">last.fm/user/N0rb3r7</a></p>\n\
+//                    </div>\n\
+//                </div>');
+//        var name = "Norbert Strange";
+//    }
+//    if (id === "fb") {
+//        var links = $('<div class="padding_section">holaaaa</div>')
+//        var name = "Felipe Bastidas"
+//    }
+//    if (id === "dc") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Damián Cabrio"
+//    }
+//    if (id === "lc") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Leandro Casanova"
+//    }
+//    if (id === "lm") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Laura Murillo"
+//    }
+//    if (id === "mbe") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Marcos Benitez"
+//    }
+//    if (id === "ea") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Emanuel Araya"
+//    }
+//    if (id === "mba") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Maximiliano Bajamón"
+//    }
+//    if (id === "ms") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Mauro Saracini"
+//    }
+//    if (id === "ke") {
+//        var links = $('<a href="mailto:norbert@stange.com.ar" style="color:red">norbert@stange.com.ar</a><p style="background-color:red"><a href="#">optro link</a></p>')
+//        var name = "Kevin Espinoza"
+//    }
+//    $('#modal_content').html(links);
+//    $('.modal-title').html(name)
+//    $('#aboutUsModal').modal('show');
+//});
 
 
 // random order para las cards en about us
-var cards = $(".randomcards");
-for (var i = 0; i < cards.length; i++) {
-    var target = Math.floor(Math.random() * cards.length);
-    var target2 = Math.floor(Math.random() * cards.length);
-    cards.eq(target).before(cards.eq(target2));
+//var cards = $(".randomcards");
+//for (var i = 0; i < cards.length; i++) {
+//    var target = Math.floor(Math.random() * cards.length);
+//    var target2 = Math.floor(Math.random() * cards.length);
+//    cards.eq(target).before(cards.eq(target2));
+//}
+//var cards = $(".randomcardsProfes");
+//for (var i = 0; i < cards.length; i++) {
+//    var target = Math.floor(Math.random() * cards.length);
+//    var target2 = Math.floor(Math.random() * cards.length);
+//    cards.eq(target).before(cards.eq(target2));
+//}
+//
+//// arrays para descripciones de cada uno (si se quiere) en el about us
+//$(document).ready(function () {
+//    var quotesNS = new Array("We aim above the mark to hit the mark.",
+//            "Ich esse gern Brot mit warmem Käse.",
+//            "私はビールを飲み、チップを食べるのが好きです。"),
+//            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+//    $('#descriptionNS').text(random);
+//});
+//// arrays para descripciones de cada uno (si se quiere) en el about us
+//$(document).ready(function () {
+//    var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.",
+//            "Este equipo es lo más. ",
+//            "Programado 100% en modo remoto - casita.",
+//            "¿Sabes todo el helado que necesité para hacer este proyecto?",
+//            "Nunca dudes de un grupo de entusiastas.",
+//            "¡Proyecto exitoso realizado en cuarentena!."),
+//            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+//    $('#descriptionLM').text(random);
+//});
+//
+//$(document).ready(function () {
+//    var quotesNS = new Array("Si encuentran algún error, yo no fui..",
+//            "你在浪费你的时间来翻译这个",
+//            "Pase días haciendo los formularios dinámicos, espero que les gusten."
+//            , "Si estás leyendo esto, espero que tengas un lindo día.",
+//            "Si nosotros pudimos, todos pueden.",
+//            "La persona de al lado tiene olor a pata",
+//            "Campeón mundial de borrar archivos en los commits",
+//            "No busquen mensajes secretos, porque no los van a encontrar...",
+//            "Hola persona del futuro, ¿Cómo te va?",
+//            "Fire, Walk with me",
+//            "Nos esforzamos mucho en hacer la página, no la rompan por favor",
+//            "Rompe paga",
+//            "Era penal"),
+//            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+//    $('#descripcionDC').text(random);
+//});
+//
+//
+//// arrays para descripciones de cada uno (si se quiere) en el about us
+///* Kevin */
+//$(document).ready(function () {
+//    var quotesNS = new Array(
+//            "omae wa mou shindeiru",
+//            "Mira mamá!!! Aparezco en los créditos :D",
+//            "¿En cuántos proyectos universitarios ves algo así de genial?",
+//            "Me miraba 3 o 4 videos en YouTube antes de ponerme a programar (?",
+//            "Si jugás al League of Legends, agregame: ''Mekuru'' (LAS)"),
+//            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
+//    $('#KevinMekuruTheBassistAndGamer-ahre').text(random);
+//});
+//
+//// arrays para descripciones de Yii Modales
+//$(document).ready(function () {
+//    var quotesFB = new Array("Yii Modales tiene modales",
+//            "Me dijeron que era único, pero nunca me validaron",
+//            "Más allá del bien y del mal.",
+//            "Smile while it's free :-)",
+//            "Si no funcionó con un foreach, puede que funcione con dos",
+//            "Fixer nocturno",
+//            "Me llama usted, entonces voy. Don Yii Modales es quien yo soy",
+//            "O sea sí. Pero no.",
+////            "100% real no fake, 1 link juntar",
+////            "Si los leés, te entretenés xD",
+//// JAJAJAJAJAJ adoro los mensajes de Felipe XDD       by: Kevin (?
+//            "Tienes que hacerlo por mi Pipo, por Yii Modales",
+//            "Cuatro lineas más y termino el código..",
+//            "OIGA! Estoy tratando de terminar mi código espaguetti.",
+//            ),
+//            random = quotesFB[Math.floor(Math.random() * quotesFB.length)];
+//    $('#descripcionFB').text(random);
+//});
+
+$(document).ready(function () {
+    $('.linkAbout').click(function (link) {
+        //impedimos que el cambio de pestaña se active
+        link.preventDefault();
+        //llamamos a la funcion que se encargue de mostrar el formulario
+        aboutContactoModal($(this).attr('data-id'));
+    });
+});
+
+function aboutContactoModal(desarrollador) {
+    $.ajax({
+        url: '/site/about-contacto',
+        data: {dev: desarrollador},
+        method: 'POST'
+    }).done(function (data) {
+        $('#aboutUsModal')
+                .find('.modal-body')
+                .html(data);
+        $('#aboutUsModal').modal('show')
+                .find('.modal-body')
+                .html(data);
+        $('#aboutUsModal').find('#aboutUsTitle')
+                .html("<h1> " + desarrollador + " </h1>");
+    });
 }
-var cards = $(".randomcardsProfes");
-for (var i = 0; i < cards.length; i++) {
-    var target = Math.floor(Math.random() * cards.length);
-    var target2 = Math.floor(Math.random() * cards.length);
-    cards.eq(target).before(cards.eq(target2));
-}
-
-// arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function () {
-    var quotesNS = new Array("We aim above the mark to hit the mark.",
-            "Ich esse gern Brot mit warmem Käse.",
-            "私はビールを飲み、チップを食べるのが好きです。"),
-            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
-    $('#descriptionNS').text(random);
-});
-// arrays para descripciones de cada uno (si se quiere) en el about us
-$(document).ready(function () {
-    var quotesNS = new Array("Este es el resultado de muchas noches de desvelo.",
-            "Este equipo es lo más. ",
-            "Programado 100% en modo remoto - casita.",
-            "¿Sabes todo el helado que necesité para hacer este proyecto?",
-            "Nunca dudes de un grupo de entusiastas.",
-            "¡Proyecto exitoso realizado en cuarentena!."),
-            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
-    $('#descriptionLM').text(random);
-});
-
-$(document).ready(function () {
-    var quotesNS = new Array("Si encuentran algún error, yo no fui..",
-        "你在浪费你的时间来翻译这个",
-        "Pase días haciendo los formularios dinámicos, espero que les gusten."
-        ,"Si estás leyendo esto, espero que tengas un lindo día.",
-        "Si nosotros pudimos, todos pueden.",
-        "La persona de al lado tiene olor a pata",
-        "Campeón mundial de borrar archivos en los commits",
-        "No busquen mensajes secretos, porque no los van a encontrar...",
-        "Hola persona del futuro, ¿Cómo te va?",
-        "Fire, Walk with me",
-        "Nos esforzamos mucho en hacer la página, no la rompan por favor",
-        "Rompe paga",
-        "Era penal"),
-        random = quotesNS[Math.floor( Math.random() * quotesNS.length )];
-    $('#descripcionDC').text( random );
-});
-
-
-// arrays para descripciones de cada uno (si se quiere) en el about us
-/* Kevin */
-$(document).ready(function () {
-    var quotesNS = new Array(
-            "omae wa mou shindeiru",
-            "Mira mamá!!! Aparezco en los créditos :D",
-            "¿En cuántos proyectos universitarios ves algo así de genial?",
-            "Me miraba 3 o 4 videos en YouTube antes de ponerme a programar (?",
-            "Si jugás al League of Legends, agregame: ''Mekuru'' (LAS)"),
-            random = quotesNS[Math.floor(Math.random() * quotesNS.length)];
-    $('#KevinMekuruTheBassistAndGamer-ahre').text(random);
-});
-
-// arrays para descripciones de Yii Modales
-$(document).ready(function () {
-    var quotesFB = new Array("Yii Modales tiene modales",
-            "Me dijeron que era único, pero nunca me validaron",
-            "Más allá del bien y del mal.",
-            "Smile while it's free :-)",
-            "Si no funcionó con un foreach, puede que funcione con dos",
-            "Fixer nocturno",
-            "Me llama usted, entonces voy. Don Yii Modales es quien yo soy",
-            "O sea sí. Pero no.",
-//            "100% real no fake, 1 link juntar",
-//            "Si los leés, te entretenés xD",
-// JAJAJAJAJAJ adoro los mensajes de Felipe XDD       by: Kevin (?
-            "Tienes que hacerlo por mi Pipo, por Yii Modales",
-            "Cuatro lineas más y termino el código..",
-            "OIGA! Estoy tratando de terminar mi código espaguetti.",
-            ),
-            random = quotesFB[Math.floor(Math.random() * quotesFB.length)];
-    $('#descripcionFB').text(random);
-});

@@ -11,13 +11,14 @@ class InfoAbout extends Model {
 
     public function mensajeRandomCardPWA($nombre) {
         $mensajo = "";
+        $arrayMensajos = [];
         switch ($nombre) {
             case "Felipe Bastidas":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Yii Modales tiene modales",
                     "Me dijeron que era único, pero nunca me validaron",
                     "Más allá del bien y del mal.",
-                    "Smile while it's free :-)",
+                    "Smile while it's free (:",
                     "Si no funcionó con un foreach, puede que funcione con dos",
                     "Fixer nocturno",
                     "Me llama usted, entonces voy. Don Yii Modales es quien yo soy",
@@ -28,23 +29,19 @@ class InfoAbout extends Model {
 //            "100% real no fake, 1 link juntar",
 //            "Si los leés, te entretenés xD",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
-                // JAJAJAJAJAJ adoro los mensajes de Felipe XDD       by: Kevin (?
+// JAJAJAJAJAJ adoro los mensajes de Felipe XDD       by: Kevin (?
                 break;
 
             case "Norbert Strange":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "We aim above the mark to hit the mark.",
                     "Ich esse gern Brot mit warmem Käse.",
                     "私はビールを飲み、チップを食べるのが好きです。"
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Laura Murillo":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Este es el resultado de muchas noches de desvelo.",
                     "Este equipo es lo más. ",
                     "Programado 100% en modo remoto - casita.",
@@ -52,12 +49,10 @@ class InfoAbout extends Model {
                     "Nunca dudes de un grupo de entusiastas.",
                     "¡Proyecto exitoso realizado en cuarentena!."
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Damian Cabrio":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Si encuentran algún error, yo no fui..",
                     "你在浪费你的时间来翻译这个",
                     "Pase días haciendo los formularios dinámicos, espero que les gusten.",
@@ -72,97 +67,172 @@ class InfoAbout extends Model {
                     "Rompe paga",
                     "Era penal"
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Leandro Casanova":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Señor SSH Master. Infraestructura",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Emanuel Araya":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Metimos cuchara en verEvento",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Maximiliano Bajamon":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Metimos cuchara en verEvento",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Kevin Espinoza":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "omae wa mou shindeiru",
                     "Mira mamá!!! Aparezco en los créditos :D",
                     "¿En cuántos proyectos universitarios ves algo así de genial?",
                     "Me miraba 3 o 4 videos en YouTube antes de ponerme a programar (?",
                     "Si jugás al League of Legends, agregame: ''Mekuru'' (LAS)"
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Marcos Benitez":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Metimos cuchara en verEvento",
                     "Estoy pensando...",
                     "Lo voy hacer tranquilo",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Mauro Saracini":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Metimos cuchara en verEvento",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
             case "Natalia Baeza":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Profesora Cátedra PWA - 2020",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             case "Valeria Zoratto":
-                $arrayMensojos = [
+                $arrayMensajos = [
                     "Profesora Cátedra PWA - 2020",
                 ];
-                $randomIndex = array_rand($arrayMensojos, 1);
-                $mensajo = $arrayMensojos[$randomIndex];
                 break;
 
             default:
-                //algun chiste
+//algun chiste
                 break;
         }
+        $randomIndex = array_rand($arrayMensajos, 1);
+        $mensajo = $arrayMensajos[$randomIndex];
+
         return $mensajo;
     }
 
-    private function estiloContenido() {
-        $contenido = [
-            'tabla',
-            'enlace',
-            'texto',
-            'boton',
-            'broma',
-        ];
-        $randomIndex = array_rand($contenido, 1);
+    public function arregloContactoDesarrollador($nombre) {
+        switch ($nombre) {
+            case "Felipe Bastidas":
+                $arrayContacto = [
+                    'image' => 'images/devs/felipe.jpg',
+                    'email' => 'Fbastidas_94@hotmail.com',
+                ];
+                break;
 
-        return $contenido[$randomIndex];
+            case "Norbert Strange":
+                $arrayContacto = [
+                    'image' => 'images/devs/norbert.jpg',
+                    'email' => 'norbert@stange.com.ar',
+                    'instagram' => 'https://www.instagram.com/n0rb3rt/',
+                    'lastfm' => 'https://www.last.fm/user/N0rb3r7',
+                ];
+                break;
+
+            case "Laura Murillo":
+                $arrayContacto = [
+                    'image' => 'images/devs/laura.jpg',
+                    'email' => 'lauradejaramillo@gmail.com',
+                ];
+                break;
+
+            case "Damian Cabrio":
+                $arrayContacto = [
+                    'image' => 'images/devs/norbert.jpg',
+                    'email' => 'damian.cabrio@est.fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Leandro Casanova":
+                $arrayContacto = [
+                    'image' => 'images/devs/leandro.jpg',
+                    'email' => 'leandro.casanova@est.fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Emanuel Araya":
+                $arrayContacto = [
+                    'image' => 'images/devs/emanuel.jpg',
+                    'email' => 'emanuel.araya@est.fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Maximiliano Bajamon":
+                $arrayContacto = [
+                    'image' => 'images/devs/maximiliano.jpg',
+                    'email' => 'maximiliano.bajamon@est.fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Kevin Espinoza":
+                $arrayContacto = [
+                    'image' => 'images/devs/kevin.jpg',
+                    'email' => 'kevin.espinoza@est.fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Marcos Benitez":
+                $arrayContacto = [
+                    'image' => 'images/devs/marcos.jpg',
+                    'email' => 'marcos.benitez@est.fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Mauro Saracini":
+                $arrayContacto = [
+                    'image' => 'images/devs/mauro.jpg',
+                    'email' => 'mauro.saracini@est.fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Natalia Baeza":
+                $arrayContacto = [
+                    'image' => 'images/devs/natibaeza.jpg',
+                    'email' => 'natalia.baeza@fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Valeria Zoratto":
+                $arrayContacto = [
+                    'image' => 'images/devs/valezoratto.jpg',
+                    'email' => 'vzoratto@fi.uncoma.edu.ar',
+                ];
+                break;
+
+            default:
+                $arrayContacto = '<div class="row">' .
+                        '<div class="col-12">' .
+                        '<p class="text-center text-white"> <strong> ¿Otro error? <strong> </p>' .
+                        '<div class="d-flex justify-content-center"> <audio controls controlsList="nodownload">' .
+                        '<source src="../audio/pero-que-a-pasao.mp3" type="audio/mpeg">' .
+                        'Your browser does not support the audio element.' .
+                        '</audio>' .
+                        '</div>' .
+                        '</div>';
+                '</div>';
+                break;
+        }
+        return $arrayContacto;
     }
-
 }
