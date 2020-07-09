@@ -577,68 +577,73 @@ class EventoController extends Controller {
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-    public function actionEditarEvento($slug) {
+    public function actionEditarEvento($slug)
+    {
 
-        $model = $this->findModel("", $slug);
+            $model = $this->findModel("", $slug);
 
-        $modelLogo = new UploadFormLogo();
-        $modelFlyer = new UploadFormFlyer();
+        if ($this->verificarDueño($model)) {
+            $modelLogo = new UploadFormLogo();
+            $modelFlyer = new UploadFormFlyer();
 
-        $rutaLogo = (Yii::getAlias("@rutaLogo"));
-        $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
-        $codigoAcredInicial = $model->codigoAcreditacion;
+            $rutaLogo = (Yii::getAlias("@rutaLogo"));
+            $rutaFlyer = (Yii::getAlias("@rutaFlyer"));
+            $codigoAcredInicial = $model->codigoAcreditacion;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
-            $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                $modelLogo->imageLogo = UploadedFile::getInstance($modelLogo, 'imageLogo');
+                $modelFlyer->imageFlyer = UploadedFile::getInstance($modelFlyer, 'imageFlyer');
 
-            if ($modelLogo->imageLogo != null) {
-                if ($modelLogo->upload()) {
-                    $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                if ($modelLogo->imageLogo != null) {
+                    if ($modelLogo->upload()) {
+                        $model->imgLogo = $rutaLogo . '/' . $modelLogo->imageLogo->baseName . '.' . $modelLogo->imageLogo->extension;
+                    }
                 }
-            }
-            if ($modelFlyer->imageFlyer != null) {
-                if ($modelFlyer->upload()) {
-                    $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                if ($modelFlyer->imageFlyer != null) {
+                    if ($modelFlyer->upload()) {
+                        $model->imgFlyer = $rutaFlyer . '/' . $modelFlyer->imageFlyer->baseName . '.' . $modelFlyer->imageFlyer->extension;
+                    }
                 }
-            }
 
-            if ($model->save()) {
-                //asignamos el nombreCorto para enviar un valor al metodo
-                $nombreCortoEvento = $slug;
-                $idEvento = $model->idEvento;
-                if ($model->nombreCortoEvento != $slug) {
-                    //si el nombreCorto cargado en el model es disinto al slug que teniamos, se asigna el nuevo nombreCorto
-                    $nombreCortoEvento = $model->nombreCortoEvento;
-                    //generamos el codigo QR para visualizar el evento
-                    $QrEvento = new ImagenQR();
-                    $QrEvento->updateQREvento($nombreCortoEvento, $idEvento);
+                if ($model->save()) {
+                    //asignamos el nombreCorto para enviar un valor al metodo
+                    $nombreCortoEvento = $slug;
+                    $idEvento = $model->idEvento;
+                    if ($model->nombreCortoEvento != $slug) {
+                        //si el nombreCorto cargado en el model es disinto al slug que teniamos, se asigna el nuevo nombreCorto
+                        $nombreCortoEvento = $model->nombreCortoEvento;
+                        //generamos el codigo QR para visualizar el evento
+                        $QrEvento = new ImagenQR();
+                        $QrEvento->updateQREvento($nombreCortoEvento, $idEvento);
 
-                    $codAcre = $model->codigoAcreditacion;
-                    $QrAcreditacion = new ImagenQR();
-                    $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
-                }
+                        $codAcre = $model->codigoAcreditacion;
+                        $QrAcreditacion = new ImagenQR();
+                        $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
+                    }
 //                $this->actionGenerarQREvento($nombreCortoEvento);
-                if ($model->codigoAcreditacion != null && $codigoAcredInicial != $model->codigoAcreditacion) {
-                    //si se ingreso codigo de acreditación, se genera el correspondiente codigo qr para acreditarse
-                    $codAcre = $model->codigoAcreditacion;
-                    $QrAcreditacion = new ImagenQR();
-                    $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
+                    if ($model->codigoAcreditacion != null && $codigoAcredInicial != $model->codigoAcreditacion) {
+                        //si se ingreso codigo de acreditación, se genera el correspondiente codigo qr para acreditarse
+                        $codAcre = $model->codigoAcreditacion;
+                        $QrAcreditacion = new ImagenQR();
+                        $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
+                    }
                 }
+                return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
             }
-            return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
-        }
-        $categoriasEventos = CategoriaEvento::find()
+            $categoriasEventos = CategoriaEvento::find()
                 ->select(['descripcionCategoria'])
                 ->indexBy('idCategoriaEvento')
                 ->column();
 
-        $modalidadEvento = modalidadEvento::find()
+            $modalidadEvento = modalidadEvento::find()
                 ->select(['descripcionModalidad'])
                 ->indexBy('idModalidadEvento')
                 ->column();
 
-        return $this->render('editarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
+            return $this->render('editarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
+        }else{
+            return $this->redirect(["site/index"]);
+        }
     }
 
     /**
