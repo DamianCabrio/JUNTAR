@@ -9,10 +9,10 @@ use yii\base\Model;
  */
 class InfoAbout extends Model {
 
-    public function mensajeRandomCardPWA($nombre) {
+    public function mensajeRandomAlumnosPWA($nombreAlumno) {
         $mensajo = "";
         $arrayMensajos = [];
-        switch ($nombre) {
+        switch ($nombreAlumno) {
             case "Felipe Bastidas":
                 $arrayMensajos = [
                     "Yii Modales tiene modales",
@@ -110,18 +110,45 @@ class InfoAbout extends Model {
                     "Metimos cuchara en verEvento",
                 ];
                 break;
+            default:
+//algun chiste
+                break;
+        }
+        $randomIndex = array_rand($arrayMensajos, 1);
+        $mensajo = $arrayMensajos[$randomIndex];
+
+        return $mensajo;
+    }
+
+    public function mensajeRandomCatedraPWA($nombre) {
+        $mensajo = "";
+        $arrayMensajos = [];
+        switch ($nombre) {
             case "Natalia Baeza":
                 $arrayMensajos = [
                     "Profesora Cátedra PWA - 2020",
                 ];
                 break;
-
             case "Valeria Zoratto":
                 $arrayMensajos = [
                     "Profesora Cátedra PWA - 2020",
+                    "El segundo va después del primero"
                 ];
                 break;
 
+            case "Pablo Kogan":
+                $arrayMensajos = [
+                    "Product Owner de Juntar",
+                    "Secretario de Extensión de la Facultad de Informática"
+                ];
+                break;
+
+            case "Luis Coralle":
+                $arrayMensajos = [
+                    "TIC de la Facultad de Informática",
+                    "Infraestructura de Juntar",
+                ];
+                break;
             default:
 //algun chiste
                 break;
@@ -136,7 +163,7 @@ class InfoAbout extends Model {
         switch ($nombre) {
             case "Felipe Bastidas":
                 $arrayContacto = [
-                    'image' => 'images/devs/felipe.jpg',
+                    'image' => 'images/devs/felipe.png',
                     'email' => 'Fbastidas_94@hotmail.com',
                 ];
                 break;
@@ -152,71 +179,85 @@ class InfoAbout extends Model {
 
             case "Laura Murillo":
                 $arrayContacto = [
-                    'image' => 'images/devs/laura.jpg',
+                    'image' => 'images/devs/laura.png',
                     'email' => 'lauradejaramillo@gmail.com',
                 ];
                 break;
 
             case "Damian Cabrio":
                 $arrayContacto = [
-                    'image' => 'images/devs/norbert.jpg',
+                    'image' => 'images/devs/damian.png',
                     'email' => 'damian.cabrio@est.fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Leandro Casanova":
                 $arrayContacto = [
-                    'image' => 'images/devs/leandro.jpg',
+                    'image' => 'images/devs/leandro.png',
                     'email' => 'leandro.casanova@est.fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Emanuel Araya":
                 $arrayContacto = [
-                    'image' => 'images/devs/emanuel.jpg',
+                    'image' => 'images/devs/emanuel.png',
                     'email' => 'emanuel.araya@est.fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Maximiliano Bajamon":
                 $arrayContacto = [
-                    'image' => 'images/devs/maximiliano.jpg',
+                    'image' => 'images/devs/maximiliano.png',
                     'email' => 'maximiliano.bajamon@est.fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Kevin Espinoza":
                 $arrayContacto = [
-                    'image' => 'images/devs/kevin.jpg',
+                    'image' => 'images/devs/kevin.png',
                     'email' => 'kevin.espinoza@est.fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Marcos Benitez":
                 $arrayContacto = [
-                    'image' => 'images/devs/marcos.jpg',
+                    'image' => 'images/devs/marcos.png',
                     'email' => 'marcos.benitez@est.fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Mauro Saracini":
                 $arrayContacto = [
-                    'image' => 'images/devs/mauro.jpg',
+                    'image' => 'images/devs/mauro.png',
                     'email' => 'mauro.saracini@est.fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Natalia Baeza":
                 $arrayContacto = [
-                    'image' => 'images/devs/natibaeza.jpg',
+                    'image' => 'images/devs/natibaeza.png',
                     'email' => 'natalia.baeza@fi.uncoma.edu.ar',
                 ];
                 break;
 
             case "Valeria Zoratto":
                 $arrayContacto = [
-                    'image' => 'images/devs/valezoratto.jpg',
+                    'image' => 'images/devs/valezoratto.png',
                     'email' => 'vzoratto@fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Pablo Kogan":
+                $arrayContacto = [
+                    'image' => 'images/devs/pablokogan.png',
+                    'email' => 'pablo.kogan@fi.uncoma.edu.ar',
+                ];
+                break;
+
+            case "Luis Coralle":
+                $arrayContacto = [
+                    'image' => 'images/devs/lusho.png',
+                    'email' => 'luiscoralle@fi.uncoma.edu.ar',
                 ];
                 break;
 
@@ -235,4 +276,5 @@ class InfoAbout extends Model {
         }
         return $arrayContacto;
     }
+
 }

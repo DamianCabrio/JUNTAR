@@ -235,12 +235,17 @@ class SiteController extends Controller {
             'Valeria Zoratto',
             'Natalia Baeza',
         ];
+        $participantes = [
+            'Pablo Kogan',
+            'Luis Coralle',
+        ];
 
         $info = new InfoAbout();
         return $this->render('about', [
                     'info' => $info,
-                    'arrayUsers' => $desarrolladores,
-                    'arrayProfes' => $profesoras,
+                    'arrayAlumnos' => $desarrolladores,
+                    'arrayCatedra' => $profesoras,
+                    'arrayParticipantes' => $participantes,
         ]);
     }
 

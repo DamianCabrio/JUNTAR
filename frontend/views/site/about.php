@@ -6,30 +6,31 @@ use yii\helpers\Html;
 $this->title = 'Sobre Nosotros';
 $this->params['breadcrumbs'][] = $this->title;
 
-shuffle($arrayProfes);
-shuffle($arrayUsers);
+shuffle($arrayCatedra);
+shuffle($arrayParticipantes);
+shuffle($arrayAlumnos);
 ?>
 <section class="" style="min-height: 100vh;">
     <div class="site-about container">
+        <!-- Bloque equipo pwa 2020 -->
         <div class="">
-            <p>Equipo Programación Web Avanzada - 2020</p>
+            <p> Equipo Programación Web Avanzada - 2020 </p>
             <hr>
         </div>
-        <!--<div class="">-->
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <?php
-            foreach ($arrayUsers as $codigoEspaguetti) {
+            foreach ($arrayAlumnos as $unAlumnote) {
                 ?>
                 <div class="col-sm-12 col-md-3 mb-4">
-                    <div class="card shadow">
-                        <div class="card-header super_bg"> <?php echo Html::encode($codigoEspaguetti); ?> </div>
+                    <div class="card shadow h-100">
+                        <div class="card-header super_bg"> <?php echo Html::encode($unAlumnote); ?> </div>
 
                         <div class="card-body darkish_bg text-light">
-                            <p> <?php echo Html::encode($info->mensajeRandomCardPWA($codigoEspaguetti)); ?> </p>
+                            <p> <?php echo Html::encode($info->mensajeRandomAlumnosPWA($unAlumnote)); ?> </p>
                         </div>
 
                         <div class="card-footer darkish_bg text-center">
-                            <a class="text-light linkAbout" data-id="<?php echo Html::encode($codigoEspaguetti); ?>"><i class="material-icons" style="font-size:36px;">contact_mail</i></a>
+                            <a class="text-light linkAbout" data-id="<?php echo Html::encode($unAlumnote); ?>"><i class="material-icons" style="font-size:36px;" title="Contacto">contact_mail</i></a>
                         </div>
 
                     </div>
@@ -38,18 +39,18 @@ shuffle($arrayUsers);
             }
             ?>
             <?php
-            foreach ($arrayProfes as $unaProfe) {
+            foreach ($arrayCatedra as $unaProfe) {
                 ?>
                 <div class="col-sm-12 col-md-3 mb-4">
-                    <div class="card shadow">
+                    <div class="card shadow h-100">
                         <div class="card-header dark_bg"><span class="text-light"> <?php echo Html::encode($unaProfe); ?> </span> </div>
 
                         <div class="card-body darkish_bg text-light">
-                            <p> <?php echo Html::encode($info->mensajeRandomCardPWA($unaProfe)); ?> </p>
+                            <p> <?php echo Html::encode($info->mensajeRandomCatedraPWA($unaProfe)); ?> </p>
                         </div>
 
                         <div class="card-footer darkish_bg text-center">
-                            <a class="text-light linkAbout" data-id="<?php echo Html::encode($unaProfe); ?>"><i class="material-icons" style="font-size:36px;">contact_mail</i></a>
+                            <a class="text-light linkAbout" data-id="<?php echo Html::encode($unaProfe); ?>"><i class="material-icons" style="font-size:36px;" title="Contacto">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -57,6 +58,40 @@ shuffle($arrayUsers);
             }
             ?>
         </div>
+        <!-- Bloque equipo pwa 2020 -->
+        
+        <!-- Bloque participantes juntar -->
+        <div class="">
+            <span> Participantes del proyecto </span>
+            <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#collapseParticipantes" aria-expanded="false" aria-controls="collapseParticipantes">
+                Ver
+            </button>
+            <hr>
+        </div>
+        <div class="collapse" id="collapseParticipantes">
+            <div class="row d-flex justify-content-center p-0">
+                <?php
+                foreach ($arrayParticipantes as $unPersono) {
+                    ?>
+                    <div class="col-sm-12 col-md-3 mb-4">
+                        <div class="card shadow h-100">
+                            <div class="card-header dark_bg"><span class="text-light"> <?php echo Html::encode($unPersono); ?> </span> </div>
+
+                            <div class="card-body darkish_bg text-light">
+                                <p> <?php echo Html::encode($info->mensajeRandomCatedraPWA($unPersono)); ?> </p>
+                            </div>
+
+                            <div class="card-footer darkish_bg text-center">
+                                <a class="text-light linkAbout" data-id="<?php echo Html::encode($unPersono); ?>"><i class="material-icons" style="font-size:36px;" title="Contacto">contact_mail</i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <!-- Bloque participantes juntar -->
 
         <div>
             <hr>
