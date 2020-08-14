@@ -102,13 +102,4 @@ return array (
       '@dosamigos/ckeditor' => $vendorDir . '/2amigos/yii2-ckeditor-widget/src',
     ),
   ),
-  '2amigos/qrcode-library' => 
-  array (
-    'name' => '2amigos/qrcode-library',
-    'version' => '1.1.2.0',
-    'alias' => 
-    array (
-      '@Da/QrCode' => $vendorDir . '/2amigos/qrcode-library/src',
-    ),
-  ),
 );

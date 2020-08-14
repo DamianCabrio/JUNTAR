@@ -25,7 +25,7 @@ php composer.phar require 2amigos/qrcode-library:~1.1
 or add
 
 ```json
-    "2amigos/qrcode-library": "~1.1"
+    "2amigos/qrcode-library": "^2.0"
 ```
 
 ### Usage 
@@ -55,7 +55,7 @@ echo $qrCode->writeString();
 
 <?php 
 // or even as data:uri url
-echo '<img src"' . $qrCode->writeDataUri() . '">';
+echo '<img src="' . $qrCode->writeDataUri() . '">';
 ?>
 ```
 
@@ -96,4 +96,4 @@ Contributing
 - [Clean Code](contributing/clean-code.md)
 
 
-© [2amigos](http://www.2amigos.us/) 2013-2017
+© [2amigos](https://2amigos.us/) 2013-2020

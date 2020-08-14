@@ -12,7 +12,7 @@ Usage
 use Da\QrCode\QrCode;
 use Da\QrCode\Format\iCalFormat; 
 
-$format = new iCalFormat(['summary' => 'test-summary', 'dtStart' => 1260232200, 'dtEnd' => 1260318600]);
+$format = new iCalFormat(['summary' => 'test-summary', 'startTimestamp' => 1260232200, 'endTimestamp' => 1260318600]);
 
 $qrCode = new QrCode($format);
 
@@ -22,4 +22,4 @@ echo $qrCode->writeString();
 
 ```
 
-© [2amigos](http://www.2amigos.us/) 2013-2017
+© [2amigos](https://2amigos.us/) 2013-2020
