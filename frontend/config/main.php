@@ -99,7 +99,7 @@ return [
                 'presentacion/borrar/<presentacion:\d+>' => 'presentacion/borrar',
                 'evento/cargar-expositor/<idPresentacion:\d+>' => 'evento/cargar-expositor',
                 'presentacion-expositor/ver-expositores/<idPresentacion:\d+>' => 'presentacion-expositor/ver-expositores',
-                "acreditacion" => "acreditacion/acreditacion",
+                "acreditacion/<slug>" => "acreditacion/acreditacion",
                 "inscripcion/inscribir-a-usuario/<slug>/<id:\d+>" => "inscripcion/inscribir-a-usuario",
                 "inscripcion/anular-inscripcion/<slug>/<id:\d+>" => "inscripcion/anular-inscripcion",
                 'defaultRoute' => '/site/index',

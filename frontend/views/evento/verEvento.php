@@ -436,7 +436,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 break;
                                             case "puedeAcreditarse":
                                                 if ($inscripcion != null && $inscripcion->estado == 1) {
-                                                    echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                    echo Html::a('Acreditación', ['acreditacion/'.$evento->nombreCortoEvento ], ['class' => 'btn btn-primary btn-lg full_width']);
                                                 } else {
                                                     echo "";
                                                 }
@@ -445,7 +445,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                     }else{
                                         if($estadoEventoInscripcion == "puedeAcreditarse"){
                                             if ($inscripcion != null && $inscripcion->estado == 1) {
-                                                echo Html::a('Acreditación', ['acreditacion/', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                echo Html::a('Acreditación', ['acreditacion/'.$evento->nombreCortoEvento ], ['class' => 'btn btn-primary btn-lg full_width']);
                                             } else {
                                                 echo "Usted ya esta acreditado";
                                             }
