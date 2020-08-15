@@ -23,8 +23,8 @@ class ImagenQR extends Model {
 
     private function generarQR($url, $pathImage, $label) {
         $qrCode = (new QrCode($url))
-                ->useLogo("../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
-                ->useEncoding('UTF-8')
+                ->setLogo("../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
+                ->setEncoding('UTF-8')
                 ->setLogoWidth(45)
                 ->setSize(400)
                 ->setMargin(5)
@@ -33,7 +33,7 @@ class ImagenQR extends Model {
     }
 
     public function generarQREvento($slug, $idEvento) {
-        $url = (Url::base(true) . Url::to(['/eventos/ver-evento']) . "/" . $slug);
+        $url = (Url::base(true) . "/" . $slug);
         $path = 'eventos/images/qrcodes/' . $slug . '.png';
         $label = $slug;
         $imagenGuardada = $this->generarQR($url, $path, $label);
@@ -54,7 +54,7 @@ class ImagenQR extends Model {
             $this->generarQREvento($slug, $idEvento);
         } else {
             //seteamos los datos necesarios para actualizar el QR
-            $url = (Url::base(true) . Url::to(['/eventos/ver-evento']) . "/" . $slug);
+            $url = (Url::base(true) . "/" . $slug);
             $path = 'eventos/images/qrcodes/' . $slug . '.png';
             $label = $slug;
 
@@ -85,7 +85,7 @@ class ImagenQR extends Model {
     }
 
     public function generarQRAcreditacion($codigoAcreditacion, $slug, $idEvento) {
-        $url = (Url::base(true) . Url::to(['/acreditacion']) . '?slug=' . $slug . '&codigoAcreditacion=' . $codigoAcreditacion);
+        $url = (Url::base(true) . '/acreditacion/' . $slug . '/' . $codigoAcreditacion);
         $path = "eventos/images/qrcodes/" . Yii::$app->security->generateRandomString() . "-Acreditacion.png";
         $label = $slug;
         $imagenGuardada = $this->generarQR($url, $path, $label);
@@ -106,7 +106,7 @@ class ImagenQR extends Model {
             return $this->generarQRAcreditacion($codigoAcreditacion, $slug, $idEvento);
         } else {
             //seteamos los datos necesarios para actualizar el QR
-            $url = (Url::base(true) . Url::to(['/acreditacion']) . '?slug=' . $slug . '&codigoAcreditacion=' . $codigoAcreditacion);
+            $url = (Url::base(true) . '/acreditacion/' . $slug . '/' . $codigoAcreditacion);
             $path = "eventos/images/qrcodes/" . Yii::$app->security->generateRandomString() . "-Acreditacion.png";
             $label = $slug;
 
@@ -133,31 +133,6 @@ class ImagenQR extends Model {
                     return false;
                 }
             }
-        }
-        $rutaQREvento = $modelImage->rutaArchivoImagen;
-        if (file_exists($rutaQREvento)) {
-            //elimina el archivo de la carpeta
-            unlink($rutaQREvento);
-
-            $label = ($slug);
-            $qrCode = (new QrCode((Url::base(true) . Url::to(['/acreditacion']) . '?slug=' . $slug . '&codigoAcreditacion=' . $codigoAcreditacion)))
-                    ->useLogo("../web/images/juntar-logo/png/juntar-avatar-bg-b.png")
-                    ->useEncoding('UTF-8')
-                    ->setLogoWidth(45)
-                    ->setSize(400)
-                    ->setMargin(5)
-                    ->setLabel($label);
-
-            $path = "eventos/images/qrcodes/" . Yii::$app->security->generateRandomString() . "-Acreditacion.png";
-            $insercion = $qrCode->writeFile('../web/' . $path);
-            if ($insercion) {
-                return $modelImage->updateImagen($path);
-            } else {
-                return false;
-            }
-        } else {
-            //el archivo no existe, procedemos a generarlo
-            return $this->generarQRAcreditacion($codigoAcreditacion, $slug, $idEvento);
         }
     }
 

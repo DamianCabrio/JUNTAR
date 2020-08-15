@@ -577,10 +577,9 @@ class EventoController extends Controller {
      * cargado con los datos del evento permitiendo cambiar esos datos.
      * Una vez reallizado con cambios, se visualiza un mensaje de exito sobre una vista.
      */
-    public function actionEditarEvento($slug)
-    {
+    public function actionEditarEvento($slug) {
 
-            $model = $this->findModel("", $slug);
+        $model = $this->findModel("", $slug);
 
         if ($this->verificarDueño($model)) {
             $modelLogo = new UploadFormLogo();
@@ -616,9 +615,11 @@ class EventoController extends Controller {
                         $QrEvento = new ImagenQR();
                         $QrEvento->updateQREvento($nombreCortoEvento, $idEvento);
 
-                        $codAcre = $model->codigoAcreditacion;
-                        $QrAcreditacion = new ImagenQR();
-                        $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
+                        if ($model->codigoAcreditacion != null) {
+                            $codAcre = $model->codigoAcreditacion;
+                            $QrAcreditacion = new ImagenQR();
+                            $QrAcreditacion->updateQRAcreditacion($codAcre, $nombreCortoEvento, $idEvento);
+                        }
                     }
 //                $this->actionGenerarQREvento($nombreCortoEvento);
                     if ($model->codigoAcreditacion != null && $codigoAcredInicial != $model->codigoAcreditacion) {
@@ -631,17 +632,17 @@ class EventoController extends Controller {
                 return $this->redirect(['eventos/ver-evento/' . $model->nombreCortoEvento]);
             }
             $categoriasEventos = CategoriaEvento::find()
-                ->select(['descripcionCategoria'])
-                ->indexBy('idCategoriaEvento')
-                ->column();
+                    ->select(['descripcionCategoria'])
+                    ->indexBy('idCategoriaEvento')
+                    ->column();
 
             $modalidadEvento = modalidadEvento::find()
-                ->select(['descripcionModalidad'])
-                ->indexBy('idModalidadEvento')
-                ->column();
+                    ->select(['descripcionModalidad'])
+                    ->indexBy('idModalidadEvento')
+                    ->column();
 
             return $this->render('editarEvento', ['model' => $model, 'modelLogo' => $modelLogo, 'modelFlyer' => $modelFlyer, 'categoriasEventos' => $categoriasEventos, 'modalidadEvento' => $modalidadEvento]);
-        }else{
+        } else {
             return $this->redirect(["site/index"]);
         }
     }
