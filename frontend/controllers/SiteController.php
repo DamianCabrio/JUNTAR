@@ -138,7 +138,7 @@ class SiteController extends Controller
             ->all();
 
 
-        return $this->render('index', ["eventos" => $models, 'pages' => $pages,]);
+        return $this->render('index', ["eventos" => $models, 'pages' => $pages]);
     }
 
     /**

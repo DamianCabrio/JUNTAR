@@ -1,7 +1,6 @@
 <?php
 /* @var $this yii\web\View */
 
-use frontend\components\validateEmail;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\LinkPager;
 use yii\helpers\Url;
@@ -34,7 +33,6 @@ $openGraph->getImage()
 $this->title = 'Juntar';
 ?>
 <div class="site-index">
-
     <div class="body-content">
         <header class="hero gradient-hero">
             <div class="center-content padding_hero">
@@ -82,7 +80,6 @@ $this->title = 'Juntar';
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>
                     <div class="row">
-                        <?php $validarEmail = new validateEmail(); ?>
                         <?php foreach ($eventos as $evento) : ?>
                             <div class="col-sm-12 col-md-4 mb-5">
                                 <div class='card'>

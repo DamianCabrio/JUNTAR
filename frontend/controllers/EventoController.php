@@ -419,7 +419,6 @@ class EventoController extends Controller {
             $estadoEvento = $this->obtenerEstadoEventoNoLogin($cupos, $evento);
         }
 
-        //$validarEmail = new validateEmail();
         if (isset($evento->solicitudAval['avalado'])) {
             $esFai = $evento->solicitudAval['avalado'] == null ? false : true;
         } else {
