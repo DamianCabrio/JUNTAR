@@ -178,7 +178,8 @@ class RolController extends Controller
      * @return Permiso the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Rol::findOne(['name' => $id, 'type' => 1])) !== null) {
             return $model;
         }

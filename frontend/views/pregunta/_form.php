@@ -31,13 +31,6 @@ use yii\helpers\Url;
         ?>
     </div>
 
-    <script>
-        function goBack(evt) {
-            history.go(-1);
-            return false;
-        }
-    </script>
-
     <?php ActiveForm::end(); ?>
 
 </div>

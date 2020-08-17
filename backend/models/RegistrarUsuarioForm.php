@@ -102,6 +102,11 @@ class RegistrarUsuarioForm extends Model
         return $resultado;
     }
 
+    public function obtenerIdInsercion()
+    {
+        return $this->idUsuario;
+    }
+
     /**
      * Sends confirmation email to user
      * @param User $user user model to with email should be send
@@ -119,11 +124,6 @@ class RegistrarUsuarioForm extends Model
             ->setTo($this->email)
             ->setSubject('Te han registrado en ' . Yii::$app->name)
             ->send();
-    }
-
-    public function obtenerIdInsercion()
-    {
-        return $this->idUsuario;
     }
 
 }

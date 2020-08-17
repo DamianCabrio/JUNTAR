@@ -104,6 +104,45 @@ class CertificadoController extends Controller
         ]);
     }
 
+    /**
+     * Método para visualizar un certificado de Asistencia
+     *
+     * @return mixed
+     */
+    public function actionPreviewAttendance($id)
+    {
+        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
+        if ($dataPdf->verifyAccreditation()) {
+            $filePDF = $this->commonData($id, 'asistencia', $dataPdf);
+            return $filePDF->render();
+        } else {
+            return $this->render('/site/error', [
+                'name' => 'Certificado',
+                'message' => 'Se ha provocado un error en la solicitud del certificado.'
+            ]);
+        }
+
+    }
+
+    /**
+     * Método para visualizar un certificado de Organizador
+     *
+     * @return mixed
+     */
+    public function actionPreviewOrganizer($id)
+    {
+        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
+        if ($dataPdf->verifyOrganizer(Yii::$app->user->identity->id)) {
+            $filePDF = $this->commonData($id, 'organizador', $dataPdf);
+            return $filePDF->render();
+        } else {
+            return $this->render('/site/error', [
+                'name' => 'Certificado',
+                'message' => 'Se ha provocado un error en la solicitud del certificado.'
+            ]);
+        }
+    }
+
     private function loadCertificateData($event, $user)
     {
 
@@ -189,45 +228,6 @@ class CertificadoController extends Controller
 
         return $pdf;
 
-    }
-
-    /**
-     * Método para visualizar un certificado de Asistencia
-     *
-     * @return mixed
-     */
-    public function actionPreviewAttendance($id)
-    {
-        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
-        if ($dataPdf->verifyAccreditation()) {
-            $filePDF = $this->commonData($id, 'asistencia', $dataPdf);
-            return $filePDF->render();
-        } else {
-            return $this->render('/site/error', [
-                'name' => 'Certificado',
-                'message' => 'Se ha provocado un error en la solicitud del certificado.'
-            ]);
-        }
-
-    }
-
-    /**
-     * Método para visualizar un certificado de Organizador
-     *
-     * @return mixed
-     */
-    public function actionPreviewOrganizer($id)
-    {
-        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
-        if ($dataPdf->verifyOrganizer(Yii::$app->user->identity->id)) {
-            $filePDF = $this->commonData($id, 'organizador', $dataPdf);
-            return $filePDF->render();
-        } else {
-            return $this->render('/site/error', [
-                'name' => 'Certificado',
-                'message' => 'Se ha provocado un error en la solicitud del certificado.'
-            ]);
-        }
     }
 
 }

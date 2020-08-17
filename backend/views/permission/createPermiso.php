@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="row d-flex justify-content-center">
                         <div class="card text-center col-md-6 col-sm-12 border-0 p-0 mb-3">
-                            <a class="btn btn-light col-md-9 col-sm-12 p-0 m-auto border" href="<?= Html::encode(Url::to(['permission/create-permiso', 'entorno' => 'backend'])) ?>">
+                            <a class="btn btn-light col-md-9 col-sm-12 p-0 m-auto border"
+                               href="<?= Html::encode(Url::to(['permission/create-permiso', 'entorno' => 'backend'])) ?>">
                                 <h5 class="card-header <?php
                                 if ($entorno == 'backend') {
                                     echo "pinkish_bg text-white";
@@ -29,13 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                     if ($entorno == 'backend') {
                                         echo "filter-white";
                                     }
-                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/backend.svg') ?>" alt="backend" title="backend" width="40" height="40" role="img">
+                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/backend.svg') ?>" alt="backend"
+                                         title="backend" width="40" height="40" role="img">
                                     Backend
                                 </h5>
                             </a>
                         </div>
                         <div class="card text-center col-md-6 col-sm-12 border-0 p-0 mb-3">
-                            <a class="btn btn-light col-md-9 col-sm-12 p-0 m-auto border" href="<?= Html::encode(Url::to(['permission/create-permiso', 'entorno' => 'frontend'])) ?>">
+                            <a class="btn btn-light col-md-9 col-sm-12 p-0 m-auto border"
+                               href="<?= Html::encode(Url::to(['permission/create-permiso', 'entorno' => 'frontend'])) ?>">
                                 <h5 class="card-header <?php
                                 if ($entorno == 'frontend') {
                                     echo "pinkish_bg text-white";
@@ -45,7 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     if ($entorno == 'frontend') {
                                         echo "filter-white";
                                     }
-                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/frontend.svg') ?>" alt="backend" title="backend" width="40" height="40" role="img">
+                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/frontend.svg') ?>" alt="backend"
+                                         title="backend" width="40" height="40" role="img">
 
                                     Frontend
                                 </h5>

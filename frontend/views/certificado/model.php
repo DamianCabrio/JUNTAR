@@ -16,7 +16,7 @@
                     $pathLogo = substr($event[0]['imgLogo'], 1);
                     $col = '<td></td><td>';
                     if (file_exists($pathLogo)) {
-                    $col .= '<img id="juntar-logo" class="full_width" src="' . $pathLogo . '">';
+                        $col .= '<img id="juntar-logo" class="full_width" src="' . $pathLogo . '">';
                     }
                     $col .= '</td><td></td>';
                     echo $col;
@@ -44,12 +44,12 @@ $latestDay = new DateTime ($event[0]->fechaFinEvento);
 
 if ($initialDay <> $latestDay) {
 
-   $intervale =  $latestDay->diff($initialDay);
-  if ($intervale->days == 1 ) {
-    $daysMessage = "los días " . $initialDay->format("d") . " y " . $latestDay->format("d");
-  } else {
-    $daysMessage = "desde el " . $initialDay->format("d") . " hasta el " . $latestDay->format("d");
-  }
+    $intervale = $latestDay->diff($initialDay);
+    if ($intervale->days == 1) {
+        $daysMessage = "los días " . $initialDay->format("d") . " y " . $latestDay->format("d");
+    } else {
+        $daysMessage = "desde el " . $initialDay->format("d") . " hasta el " . $latestDay->format("d");
+    }
 } else {
     $daysMessage = "el dìa " . $initialDay->format("d");
 }

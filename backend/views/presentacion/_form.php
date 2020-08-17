@@ -13,11 +13,11 @@ use yii\bootstrap4\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="" style="display: none;">
-      <?php if ($id != null): ?>
-        <?= $form->field($model, 'idEvento')->textInput(['value' => $id,'maxlength' => true]) ?>
-      <?php else: ?>
-        <?= $form->field($model, 'idEvento')->textInput(['maxlength' => true]) ?>
-      <?php endif; ?>
+        <?php if ($id != null): ?>
+            <?= $form->field($model, 'idEvento')->textInput(['value' => $id, 'maxlength' => true]) ?>
+        <?php else: ?>
+            <?= $form->field($model, 'idEvento')->textInput(['maxlength' => true]) ?>
+        <?php endif; ?>
     </div>
 
     <?= $form->field($model, 'tituloPresentacion')->textInput(['maxlength' => true]) ?>

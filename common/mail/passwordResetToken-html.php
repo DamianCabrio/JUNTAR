@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $user common\models\User */
 
 if (preg_match('/backend/i', Yii::$app->request->referrer)) {
-  $resetLink = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
+    $resetLink = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
 } else {
-  $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
+    $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
 }
 ?>
 <style>

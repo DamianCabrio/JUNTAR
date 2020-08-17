@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\tests\unit\models;
 
 use frontend\models\ContactForm;
@@ -22,7 +23,7 @@ class ContactFormTest extends \Codeception\Test\Unit
         // using Yii2 module actions to check email was sent
         $this->tester->seeEmailIsSent();
 
-        /** @var MessageInterface  $emailMessage */
+        /** @var MessageInterface $emailMessage */
         $emailMessage = $this->tester->grabLastSentEmail();
         expect('valid email is sent', $emailMessage)->isInstanceOf('yii\mail\MessageInterface');
         expect($emailMessage->getTo())->hasKey('admin@example.com');

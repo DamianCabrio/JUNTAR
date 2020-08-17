@@ -42,8 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         echo "filter-white";
                                     }
 
-                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>" alt="<?= Html::encode($rol['name']) ?>" title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
-                                         <?= Html::encode($rol['name']) ?>
+                                    ?>" src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>"
+                                         alt="<?= Html::encode($rol['name']) ?>"
+                                         title="<?= Html::encode($rol['name']) ?>" width="40" height="40" role="img">
+                                    <?= Html::encode($rol['name']) ?>
 
                                 </h5>
                                 <div class="card-body">
@@ -73,7 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <!-- inicio card unRol -->
 
                                 <div class="card text-center col-md-6 col-sm-12 border-0 p-0 mt-2 mb-2">
-                                    <a class="btn btn-light col-md-11 col-sm-12 p-0 m-auto border" href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rolSeleccionado, 'asignarPermiso' => $rol['name']])) ?>">
+                                    <a class="btn btn-light col-md-11 col-sm-12 p-0 m-auto border"
+                                       href="<?= Html::encode(Url::to(['/permission/asignar-permisos', 'unRol' => $rolSeleccionado, 'asignarPermiso' => $rol['name']])) ?>">
 
                                         <h5 class="card-header">
                                             <img src="<?php echo Yii::getAlias('@web/iconos/' . $rol['name'] . '.svg') ?>"
@@ -139,12 +142,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'label' => 'Descripcion',
                                 'value' => 'description',
 
-                            //                                'value' => function ($data) {
-                            //                                    return Html::tag('dfn', Html::tag('abbr',
-                            //                                                            Html::img('iconos/question-circle.svg' . '', ['class' => 'd-none d-md-inline-block filter-blue', 'width' => '26px', 'height' => '26px'])
-                            //                                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
-                            //                                            Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
-                            //                                },
+                                //                                'value' => function ($data) {
+                                //                                    return Html::tag('dfn', Html::tag('abbr',
+                                //                                                            Html::img('iconos/question-circle.svg' . '', ['class' => 'd-none d-md-inline-block filter-blue', 'width' => '26px', 'height' => '26px'])
+                                //                                                            , ['title' => $data['description']]), ['class' => 'd-flex justify-content-center']) .
+                                //                                            Html::tag('p', $data['description'], ['class' => 'd-sm-none d-inline-block']);
+                                //                                },
 
 //                                    'headerOptions' => ['style' => 'width:50%;', 'class' => 'text-center'],
                             ],

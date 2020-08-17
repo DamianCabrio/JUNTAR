@@ -16,12 +16,14 @@ use yii\data\ActiveDataProvider;
 /**
  * Site controller
  */
-class PermissionManagerController extends Controller {
+class PermissionManagerController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -70,7 +72,8 @@ class PermissionManagerController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -83,13 +86,14 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionIndex3() {
+    public function actionIndex3()
+    {
         // Se obtiene todos los roles que estan creados.
         $roles = yii::$app->authManager->getRoles();
         $permisos = yii::$app->authManager->getPermissions();
         return $this->render('index3', [
-                    'roles' => $roles,
-                    'permisos' => $permisos,
+            'roles' => $roles,
+            'permisos' => $permisos,
         ]);
     }
 
@@ -98,7 +102,8 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionIndex5() {
+    public function actionIndex5()
+    {
         // Se obtiene todos los roles que estan creados.
         $dataRoles = $this->actionGetroles();
         $searchModel = new PermisoSearch();
@@ -113,9 +118,9 @@ class PermissionManagerController extends Controller {
         ]);
 
         return $this->render('index5', [
-                    'roles' => $dataRoles,
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'roles' => $dataRoles,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -124,7 +129,8 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionIndex7() {
+    public function actionIndex7()
+    {
         $rolSeleccionado = null;
         if (Yii::$app->request->get('unRol') != null) {
             $rolSeleccionado = Yii::$app->request->get('unRol');
@@ -133,7 +139,7 @@ class PermissionManagerController extends Controller {
             $this->actionAssingItem(Yii::$app->request->get('asignarRol'), $rolSeleccionado);
             return $this->redirect(Yii::$app->request->referrer);
         }
-        
+
         $permisosAsignadosRolSeleccionado = [];
         $rolesAsignadosARolSeleccionado = [];
         if (Yii::$app->request->get('unRol') != null) {
@@ -159,12 +165,12 @@ class PermissionManagerController extends Controller {
         ]);
 
         return $this->render('index7', [
-                    'roles' => $dataRoles,
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'rolSeleccionado' => $rolSeleccionado,
-                    'permisosAsignados' => $permisosAsignadosRolSeleccionado,
-                    'rolesAsignados' => $rolesAsignadosARolSeleccionado,
+            'roles' => $dataRoles,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'rolSeleccionado' => $rolSeleccionado,
+            'permisosAsignados' => $permisosAsignadosRolSeleccionado,
+            'rolesAsignados' => $rolesAsignadosARolSeleccionado,
         ]);
     }
 
@@ -173,7 +179,8 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         // Se obtiene todos los roles que estan creados.
         $dataRoles = $this->actionGetroles();
 //        $dataRoles4 = Permiso::findAll(['type' => 2]);
@@ -197,60 +204,17 @@ class PermissionManagerController extends Controller {
 //        ]);
 
         return $this->render('index', [
-                    'roles' => $dataRoles,
+            'roles' => $dataRoles,
 //                    'roles2' => $dataRoles4,
-                    'permisos' => $dataPermisos,
+            'permisos' => $dataPermisos,
 //                    'permisos2' => $dataPermisos2,
 //                    'permisos3' => $dataPermisos3,
 //                    'permisos4' => $dataPermisos4,
         ]);
     }
 
-    private function actionGetRoles() {
-        $roles = null;
-        if (Yii::$app->user->can('Administrador')) {
-
-            if (Yii::$app->request->post('search') != null) {
-                //define el tipo de respuesta del metodo
-                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            }
-
-            $rolesQuery = (new \yii\db\Query())
-                    //campos a buscar
-                    ->select(['name', 'description'])
-                    //tabla
-                    ->from('permiso')
-                    //Condicion
-                    ->where(['type' => 1]);
-
-            $roles = $rolesQuery->all();
-        }
-        return $roles;
-    }
-
-    private function actionGetAllPermisos() {
-        $permisos = null;
-        if (Yii::$app->user->can('Administrador')) {
-
-            if (Yii::$app->request->post('search') != null) {
-                //define el tipo de respuesta del metodo
-                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            }
-
-            $permisosQuery = (new \yii\db\Query())
-                    //campos a buscar
-                    ->select(['name', 'description'])
-                    //tabla
-                    ->from('permiso')
-                    //Condicion
-                    ->where(['type' => 2]);
-
-            $permisos = $permisosQuery->all();
-        }
-        return $permisos;
-    }
-
-    public function actionGetPermisosByRol() {
+    public function actionGetPermisosByRol()
+    {
         $permissionsRole = null;
         if (Yii::$app->user->can('Administrador')) {
             if (Yii::$app->request->post('unRol') != null) {
@@ -264,18 +228,18 @@ class PermissionManagerController extends Controller {
 
                 //genera la query para buscar los permisos asignados al rol
                 $permissionsRoleQuery = (new \yii\db\Query())
-                        //campos a buscar
+                    //campos a buscar
 //                        ->select(['parent', 'name', 'description'])
-                        ->select(['parent', 'name', 'description', 'type'])
-                        //distict
-                        ->distinct('name')
-                        //tabla
-                        ->from('permiso')
-                        //relacion tabla permiso_rol
-                        ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
-                        //Condicion permisos asignados
+                    ->select(['parent', 'name', 'description', 'type'])
+                    //distict
+                    ->distinct('name')
+                    //tabla
+                    ->from('permiso')
+                    //relacion tabla permiso_rol
+                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                    //Condicion permisos asignados
 //                        ->where(['permiso.type' => 2, 'permiso_rol.parent' => $unRol])
-                        ->where(['permiso_rol.parent' => $unRol]);
+                    ->where(['permiso_rol.parent' => $unRol]);
                 //Condicion roles asignados
 //                        ->andWhere(['permiso.type' => 1]);
                 //Order
@@ -287,54 +251,8 @@ class PermissionManagerController extends Controller {
         return $permissionsRole;
     }
 
-    private function getPermisosAsignados($unRol, $permisosAsignados) {
-        if (Yii::$app->user->can('Administrador')) {
-            //genera la query para buscar los permisos asignados al rol
-            $permissionsRoleQuery = (new \yii\db\Query())
-                    //campos a buscar
-                    ->select(['parent', 'name', 'description', 'type'])
-                    //distict
-                    ->distinct('name')
-                    //tabla
-                    ->from('permiso')
-                    //relacion tabla permiso_rol
-                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
-                    //Condicion permisos asignados
-                    ->where(['permiso_rol.parent' => $unRol])
-                    ->andWhere(['type' => 2]);
-            //Order
-//                    ->orderBy("permiso_rol.parent");
-
-            $permisosAsignados[$unRol] = $permissionsRoleQuery->all();
-        }
-        return $permisosAsignados;
-    }
-
-    private function getRolesAsignados($unRol) {
-        $rolesAsignados = null;
-        if (Yii::$app->user->can('Administrador')) {
-            //genera la query para buscar los permisos asignados al rol
-            $permissionsRoleQuery = (new \yii\db\Query())
-                    //campos a buscar
-                    ->select(['parent', 'name', 'description', 'type'])
-                    //distict
-                    ->distinct('name')
-                    //tabla
-                    ->from('permiso')
-                    //relacion tabla permiso_rol
-                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
-                    //Condicion permisos asignados
-                    ->where(['permiso_rol.parent' => $unRol])
-                    ->andWhere(['type' => 1]);
-            //Order
-//                    ->orderBy("permiso_rol.parent");
-
-            $rolesAsignados = $permissionsRoleQuery->all();
-        }
-        return $rolesAsignados;
-    }
-
-    public function actionGetPermisosByRol2() {
+    public function actionGetPermisosByRol2()
+    {
         $permissionsRole = null;
         if (Yii::$app->user->can('Administrador')) {
             if (Yii::$app->request->post('unRol') != null) {
@@ -348,18 +266,18 @@ class PermissionManagerController extends Controller {
 
                 //genera la query para buscar los permisos asignados al rol
                 $permissionsRoleQuery = (new \yii\db\Query())
-                        //campos a buscar
+                    //campos a buscar
 //                        ->select(['parent', 'name', 'description'])
-                        ->select(['parent', 'name', 'description', 'type'])
-                        //distict
-                        ->distinct('name')
-                        //tabla
-                        ->from('permiso')
-                        //relacion tabla permiso_rol
-                        ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
-                        //Condicion permisos asignados
+                    ->select(['parent', 'name', 'description', 'type'])
+                    //distict
+                    ->distinct('name')
+                    //tabla
+                    ->from('permiso')
+                    //relacion tabla permiso_rol
+                    ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                    //Condicion permisos asignados
 //                        ->where(['permiso.type' => 2, 'permiso_rol.parent' => $unRol])
-                        ->where(['permiso_rol.parent' => $unRol]);
+                    ->where(['permiso_rol.parent' => $unRol]);
                 //Condicion roles asignados
 //                        ->andWhere(['permiso.type' => 1]);
                 //Order
@@ -376,7 +294,8 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionAssingPermission() {
+    public function actionAssingPermission()
+    {
         $respuesta = false;
         if (Yii::$app->user->can('Administrador')) {
             $rol = $permiso = null;
@@ -410,43 +329,18 @@ class PermissionManagerController extends Controller {
         return $respuesta;
     }
 
-    private function actionAssingItem($item, $unRol) {
-        $respuesta = false;
-        if (Yii::$app->user->can('Administrador')) {
-            $rol = $unRol;
-            $permiso = $item;
-            
-            $auth = Yii::$app->authManager;
-
-            $unPermiso = $auth->createPermission($permiso);
-            $unRol = $auth->createRole($rol);
-            if (!$auth->hasChild($unPermiso, $unRol)) {
-                if ($auth->hasChild($unRol, $unPermiso)) {
-                    $auth->removeChild($unRol, $unPermiso);
-                    $respuesta['success'] = "Removed";
-                } else {
-                    $auth->addChild($unRol, $unPermiso);
-                    $respuesta['success'] = "Added";
-                }
-            }else{
-                $respuesta['error'] = "noAgregado";
-            }
-//            }
-        }
-        return $respuesta;
-    }
-
     /**
      * Alta de Rol
      *
      * @return string
      */
-    public function actionCreateRol() {
+    public function actionCreateRol()
+    {
         $model = new \yii\base\DynamicModel([
             'name', 'description',
         ]);
         $model->addRule(['name', 'description'], 'required')
-                ->addRule(['name', 'description'], 'string');
+            ->addRule(['name', 'description'], 'string');
         $model->setAttributeLabels([
             'name' => 'Nombre del Rol',
             'description' => 'Descripción del Rol',
@@ -466,7 +360,7 @@ class PermissionManagerController extends Controller {
             }
         }
         return $this->render('create-rol', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -475,12 +369,13 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionCreatePermission() {
+    public function actionCreatePermission()
+    {
         $model = new \yii\base\DynamicModel([
             'name', 'description',
         ]);
         $model->addRule(['name', 'description'], 'required')
-                ->addRule(['name', 'description'], 'string');
+            ->addRule(['name', 'description'], 'string');
 
         $model->setAttributeLabels([
             'name' => 'Permiso a Establecer (controlador/acción)',
@@ -512,56 +407,9 @@ class PermissionManagerController extends Controller {
         }
 //        return $this->render('createPermission', [
         return $this->render('create-permission', [
-                    'model' => $model,
-                    'permisos' => $permisosNotSigned,
+            'model' => $model,
+            'permisos' => $permisosNotSigned,
         ]);
-    }
-
-    /**
-     * Metodo actionListMissingPermissions --> Permite retornar un array conteniendo todos los permisos del
-     * server side especificado por parámetro. Utiliza el alias del camino a consultar (frontend-backend)
-     * y lo asigna al arreglo $actions recibido por parámetro.
-     *
-     * @param String $path
-     * @param Array $actions
-     * @return array/null
-     */
-    private function actionListMissingPermissions($path, $actions) {
-        $files = FileHelper::findFiles(Yii::getAlias("@$path/controllers"), ["fileTypes" => ["php"]]);
-
-//        $actions = [];
-        foreach ($files as $controllerFile) {
-            //carga el contenido del archivo en una variable para trabajarla
-            $contents = file_get_contents($controllerFile);
-
-            $controllerName = Inflector::camel2id(substr(basename($controllerFile), 0, -14));
-
-            //captura el nombre de todas las acciones(vistas) en el array $actions
-            preg_match_all('/public function action(\w+?)\(/', $contents, $display);
-            foreach ($display[1] as $oneAction) {
-                if (strlen($oneAction) > 2) {
-                    $actions [] = $controllerName . '/' . strtolower(preg_replace("/[A-Z]/", "-$0", lcfirst($oneAction)));
-                }
-            }
-        }
-        return $actions;
-    }
-
-    private function actionListSignedPermissions() {
-        //obtenemos los permisos asignados en la DB
-        $queryPermisos = (new \yii\db\Query())
-                //campos seleccionados
-                ->select(['name'])
-                //tabla
-                ->from('permiso')
-                //condicion
-                ->where(['type' => 2]);
-        $permisos = $queryPermisos->all();
-
-        foreach ($permisos as $key => $unPermiso) {
-            $permisos[$key] = array_shift($unPermiso);
-        }
-        return $permisos;
     }
 
     /**
@@ -569,12 +417,13 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionUpdateRol() {
+    public function actionUpdateRol()
+    {
         $model = new \yii\base\DynamicModel([
             'name', 'description', 'new_name'
         ]);
         $model->addRule(['name', 'description', 'new_name'], 'required')
-                ->addRule(['name', 'description', 'new_name'], 'string');
+            ->addRule(['name', 'description', 'new_name'], 'string');
         $model->setAttributeLabels([
             'name' => 'Nombre del Rol',
             'description' => 'Descripción del Rol',
@@ -594,8 +443,8 @@ class PermissionManagerController extends Controller {
         }
 
         return $this->render('update-rol', [
-                    'model' => $model,
-                    'roles' => $roles,
+            'model' => $model,
+            'roles' => $roles,
         ]);
     }
 
@@ -604,12 +453,13 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionUpdatePermission() {
+    public function actionUpdatePermission()
+    {
         $model = new \yii\base\DynamicModel([
             'name', 'description', 'new_name'
         ]);
         $model->addRule(['name', 'description', 'new_name'], 'required')
-                ->addRule(['name', 'description', 'new_name'], 'string');
+            ->addRule(['name', 'description', 'new_name'], 'string');
         $model->setAttributeLabels([
             'name' => 'Nombre del Permiso',
             'description' => 'Descripción del Rol',
@@ -627,8 +477,8 @@ class PermissionManagerController extends Controller {
             }
         }
         return $this->render('update-permission', [
-                    'model' => $model,
-                    'permission' => $permissions,
+            'model' => $model,
+            'permission' => $permissions,
         ]);
     }
 
@@ -637,7 +487,8 @@ class PermissionManagerController extends Controller {
      *
      * @return string
      */
-    public function actionRemove() {
+    public function actionRemove()
+    {
         $model = new \yii\base\DynamicModel(['name']);
         $model->addRule(['name'], 'required');
         $model->setAttributeLabels(['name' => 'Nombre del Permiso']);
@@ -661,17 +512,189 @@ class PermissionManagerController extends Controller {
         $rol = yii::$app->AuthManager->getPermissions();
         $remove = ArrayHelper::map(array_merge($permisions, $rol), 'name', 'name');
         return $this->render('remove', [
-                    'model' => $model,
-                    'item' => $remove,
+            'model' => $model,
+            'item' => $remove,
         ]);
     }
 
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Permiso::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('La página solicitada no existe.');
+    }
+
+    private function actionGetRoles()
+    {
+        $roles = null;
+        if (Yii::$app->user->can('Administrador')) {
+
+            if (Yii::$app->request->post('search') != null) {
+                //define el tipo de respuesta del metodo
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            }
+
+            $rolesQuery = (new \yii\db\Query())
+                //campos a buscar
+                ->select(['name', 'description'])
+                //tabla
+                ->from('permiso')
+                //Condicion
+                ->where(['type' => 1]);
+
+            $roles = $rolesQuery->all();
+        }
+        return $roles;
+    }
+
+    private function actionGetAllPermisos()
+    {
+        $permisos = null;
+        if (Yii::$app->user->can('Administrador')) {
+
+            if (Yii::$app->request->post('search') != null) {
+                //define el tipo de respuesta del metodo
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            }
+
+            $permisosQuery = (new \yii\db\Query())
+                //campos a buscar
+                ->select(['name', 'description'])
+                //tabla
+                ->from('permiso')
+                //Condicion
+                ->where(['type' => 2]);
+
+            $permisos = $permisosQuery->all();
+        }
+        return $permisos;
+    }
+
+    private function getPermisosAsignados($unRol, $permisosAsignados)
+    {
+        if (Yii::$app->user->can('Administrador')) {
+            //genera la query para buscar los permisos asignados al rol
+            $permissionsRoleQuery = (new \yii\db\Query())
+                //campos a buscar
+                ->select(['parent', 'name', 'description', 'type'])
+                //distict
+                ->distinct('name')
+                //tabla
+                ->from('permiso')
+                //relacion tabla permiso_rol
+                ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                //Condicion permisos asignados
+                ->where(['permiso_rol.parent' => $unRol])
+                ->andWhere(['type' => 2]);
+            //Order
+//                    ->orderBy("permiso_rol.parent");
+
+            $permisosAsignados[$unRol] = $permissionsRoleQuery->all();
+        }
+        return $permisosAsignados;
+    }
+
+    private function getRolesAsignados($unRol)
+    {
+        $rolesAsignados = null;
+        if (Yii::$app->user->can('Administrador')) {
+            //genera la query para buscar los permisos asignados al rol
+            $permissionsRoleQuery = (new \yii\db\Query())
+                //campos a buscar
+                ->select(['parent', 'name', 'description', 'type'])
+                //distict
+                ->distinct('name')
+                //tabla
+                ->from('permiso')
+                //relacion tabla permiso_rol
+                ->innerJoin('permiso_rol', "permiso_rol.child = permiso.name")
+                //Condicion permisos asignados
+                ->where(['permiso_rol.parent' => $unRol])
+                ->andWhere(['type' => 1]);
+            //Order
+//                    ->orderBy("permiso_rol.parent");
+
+            $rolesAsignados = $permissionsRoleQuery->all();
+        }
+        return $rolesAsignados;
+    }
+
+    private function actionAssingItem($item, $unRol)
+    {
+        $respuesta = false;
+        if (Yii::$app->user->can('Administrador')) {
+            $rol = $unRol;
+            $permiso = $item;
+
+            $auth = Yii::$app->authManager;
+
+            $unPermiso = $auth->createPermission($permiso);
+            $unRol = $auth->createRole($rol);
+            if (!$auth->hasChild($unPermiso, $unRol)) {
+                if ($auth->hasChild($unRol, $unPermiso)) {
+                    $auth->removeChild($unRol, $unPermiso);
+                    $respuesta['success'] = "Removed";
+                } else {
+                    $auth->addChild($unRol, $unPermiso);
+                    $respuesta['success'] = "Added";
+                }
+            } else {
+                $respuesta['error'] = "noAgregado";
+            }
+//            }
+        }
+        return $respuesta;
+    }
+
+    /**
+     * Metodo actionListMissingPermissions --> Permite retornar un array conteniendo todos los permisos del
+     * server side especificado por parámetro. Utiliza el alias del camino a consultar (frontend-backend)
+     * y lo asigna al arreglo $actions recibido por parámetro.
+     *
+     * @param String $path
+     * @param Array $actions
+     * @return array/null
+     */
+    private function actionListMissingPermissions($path, $actions)
+    {
+        $files = FileHelper::findFiles(Yii::getAlias("@$path/controllers"), ["fileTypes" => ["php"]]);
+
+//        $actions = [];
+        foreach ($files as $controllerFile) {
+            //carga el contenido del archivo en una variable para trabajarla
+            $contents = file_get_contents($controllerFile);
+
+            $controllerName = Inflector::camel2id(substr(basename($controllerFile), 0, -14));
+
+            //captura el nombre de todas las acciones(vistas) en el array $actions
+            preg_match_all('/public function action(\w+?)\(/', $contents, $display);
+            foreach ($display[1] as $oneAction) {
+                if (strlen($oneAction) > 2) {
+                    $actions [] = $controllerName . '/' . strtolower(preg_replace("/[A-Z]/", "-$0", lcfirst($oneAction)));
+                }
+            }
+        }
+        return $actions;
+    }
+
+    private function actionListSignedPermissions()
+    {
+        //obtenemos los permisos asignados en la DB
+        $queryPermisos = (new \yii\db\Query())
+            //campos seleccionados
+            ->select(['name'])
+            //tabla
+            ->from('permiso')
+            //condicion
+            ->where(['type' => 2]);
+        $permisos = $queryPermisos->all();
+
+        foreach ($permisos as $key => $unPermiso) {
+            $permisos[$key] = array_shift($unPermiso);
+        }
+        return $permisos;
     }
 
 }

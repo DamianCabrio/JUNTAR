@@ -53,12 +53,12 @@ class PermisoSearch extends Permiso
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-        
+
         //busca nombre permiso
         if ($this->name != null && $this->name != '') {
             $query->andFilterWhere(['like', 'name', $this->name]);
         }
-        
+
         //busca descripcion permiso
         if ($this->description != null && $this->description != '') {
             $query->andFilterWhere(['like', 'description', $this->description]);

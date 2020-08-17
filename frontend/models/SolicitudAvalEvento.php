@@ -23,6 +23,15 @@ class SolicitudAvalEvento extends Model
     }
 
     /**
+     * Buscar Evento por token
+     */
+    public static function findByEventToken($token)
+    {
+        $request = new SolicitudAvalEvento(Evento::findOne(['eventoToken' => $token]));
+        return $request;
+    }
+
+    /**
      * Generar y actualizar token en el modelo Evento
      */
     public function generateEventToken()
@@ -32,15 +41,6 @@ class SolicitudAvalEvento extends Model
         if ($this->event->validate()) {
             $this->event->save();
         }
-    }
-
-    /**
-     * Buscar Evento por token
-     */
-    public static function findByEventToken($token)
-    {
-        $request = new SolicitudAvalEvento(Evento::findOne(['eventoToken' => $token]));
-        return $request;
     }
 
     /**

@@ -167,15 +167,6 @@ class CuentaController extends Controller
         }
     }
 
-    protected function findModel($id)
-    {
-        if (($model = Usuario::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
     /**
      * Permite actualizar la información del perfil
      *
@@ -291,20 +282,6 @@ class CuentaController extends Controller
     }
 
     /**
-     * Habilitar ser gestor de eventos.
-     * @param int $id identificador del usuario.
-     * @return mixed
-     */
-//    private function actionChangeRol($id) {
-//        $organizateRol = yii::$app->authManager->getRole('Organizador');
-//        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
-//            yii::$app->authManager->assign($organizateRol, $id);
-//            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
-//        }
-//        return $this->redirect(['/cuenta/profile']);
-//    }
-
-    /**
      * Resets password.
      *
      * @param string $token
@@ -330,6 +307,29 @@ class CuentaController extends Controller
         return $this->render('cambiarPassword', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Habilitar ser gestor de eventos.
+     * @param int $id identificador del usuario.
+     * @return mixed
+     */
+//    private function actionChangeRol($id) {
+//        $organizateRol = yii::$app->authManager->getRole('Organizador');
+//        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
+//            yii::$app->authManager->assign($organizateRol, $id);
+//            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
+//        }
+//        return $this->redirect(['/cuenta/profile']);
+//    }
+
+    protected function findModel($id)
+    {
+        if (($model = Usuario::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**

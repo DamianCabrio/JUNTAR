@@ -68,7 +68,9 @@ echo "\n  Start initialization ...\n\n";
 $files = getFileList($rootPath);
 if (isset($env['skipFiles'])) {
     $skipFiles = $env['skipFiles'];
-    array_walk($skipFiles, function(&$value) use($env, $root) { $value = "$root/$value"; });
+    array_walk($skipFiles, function (&$value) use ($env, $root) {
+        $value = "$root/$value";
+    });
     $files = array_diff($files, array_intersect_key($env['skipFiles'], array_filter($skipFiles, 'file_exists')));
 }
 $all = false;

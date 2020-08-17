@@ -202,14 +202,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
      * Generates new token for email verification
      */
     public function generateEmailVerificationToken()
@@ -249,6 +241,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         Yii::$app->session->set('newEmailToken', null);
     }
+
     /**
      * Sends an email with a link, for resetting the password.
      *
@@ -272,5 +265,13 @@ class User extends ActiveRecord implements IdentityInterface
             ->setTo($this->email)
             ->setSubject('Reestablecer contraseña en ' . Yii::$app->name)
             ->send();
+    }
+
+    /**
+     * Generates new password reset token
+     */
+    public function generatePasswordResetToken()
+    {
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 }

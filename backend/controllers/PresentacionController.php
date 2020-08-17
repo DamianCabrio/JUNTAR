@@ -18,7 +18,8 @@ class PresentacionController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors['access'] = [
             //utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
@@ -27,16 +28,16 @@ class PresentacionController extends Controller
                     'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
-  //                        $module = Yii::$app->controller->module->id;
+                        //                        $module = Yii::$app->controller->module->id;
                         $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
                         $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
-  //                        $route = "$module/$controller/$action";
+                        //                        $route = "$module/$controller/$action";
                         $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-  //                        $post = Yii::$app->request->post();
+                        //                        $post = Yii::$app->request->post();
                         //preguntamos si el usuario tiene los permisos para visitar el sitio
-  //                        if (Yii::$app->user->can($route, ['post' => $post])) {
+                        //                        if (Yii::$app->user->can($route, ['post' => $post])) {
                         if (Yii::$app->user->can($route)) {
-  //                            return $this->goHome();
+                            //                            return $this->goHome();
                             return true;
                         }
                     }
@@ -64,14 +65,14 @@ class PresentacionController extends Controller
 
     public function actionListOfPresentation($id)
     {
-      $searchModel = new PresentacionSearch(['idEvento' => $id]);
-      $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new PresentacionSearch(['idEvento' => $id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-      return $this->render('list-of-presentation', [
-        'searchModel' => $searchModel,
-        'dataProvider' => $dataProvider,
-        'event' => $id,
-      ]);
+        return $this->render('list-of-presentation', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'event' => $id,
+        ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace backend\models;
 
 use yii;
 use yii\base\Model;
+
 //use common\models\User;
 //use yii\base\InvalidArgumentException;
 use backend\models\Evento;
@@ -12,14 +13,16 @@ use backend\models\Usuario;
 /**
  * Password reset form
  */
-class CambiarOrganizadorForm extends Model {
+class CambiarOrganizadorForm extends Model
+{
 
     public $email;
 
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             //Reglas password
 //            ['email', 'trim'],
@@ -29,7 +32,8 @@ class CambiarOrganizadorForm extends Model {
         ];
     }
 
-    public function cambiarOrganizadorEvento($idEvento) {
+    public function cambiarOrganizadorEvento($idEvento)
+    {
         $user = Usuario::findOne(['email' => $this->email]);
 
         $resultado = false;

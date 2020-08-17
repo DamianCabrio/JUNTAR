@@ -14,7 +14,7 @@ html, body {
     padding: 0 0 60px;
 }
 
-.wrap>.container {
+.wrap > .container {
     padding: 70px 15px 20px;
 }
 
@@ -24,9 +24,11 @@ html, body {
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
-.height100vh{
+
+.height100vh {
     min-height: 100vh;
 }
+
 .jumbotron {
     text-align: center;
     background-color: transparent;
@@ -105,13 +107,13 @@ a.desc:after {
 
 /* align the logout "link" (button in form) of the navbar */
 
-.nav li>form>button.logout {
+.nav li > form > button.logout {
     padding: 15px;
     border: none;
 }
 
-@media(max-width:767px) {
-    .nav li>form>button.logout {
+@media (max-width: 767px) {
+    .nav li > form > button.logout {
         display: block;
         text-align: left;
         width: 100%;
@@ -119,11 +121,11 @@ a.desc:after {
     }
 }
 
-.nav>li>form>button.logout:focus, .nav>li>form>button.logout:hover {
+.nav > li > form > button.logout:focus, .nav > li > form > button.logout:hover {
     text-decoration: none;
 }
 
-.nav>li>form>button.logout:focus {
+.nav > li > form > button.logout:focus {
     outline: none;
 }
 
@@ -221,6 +223,7 @@ a.desc:after {
     -webkit-transition: opacity 0.3s ease;
     transition: opacity 0.3s ease;
 }
+
 .center-content {
     width: 700px;
     display: -webkit-box;
@@ -236,26 +239,26 @@ a.desc:after {
 
 .btn-pink {
     background-color: #FE1355;
-    color: aliceblue!important;
+    color: aliceblue !important;
     border: none;
     text-transform: capitalize;
 }
 
 .btn-pink:hover {
     background-color: #050714;
-    color: aliceblue!important;
+    color: aliceblue !important;
 }
 
 .btn-pink:focus {
-    outline: 0!important;
+    outline: 0 !important;
     box-shadow: none;
 }
 
-.tarjetaIndex:hover{
+.tarjetaIndex:hover {
     background-color: #ddd;
 }
 
-.modal-header{
-    background:#FE1355;
-    color:white;
+.modal-header {
+    background: #FE1355;
+    color: white;
 }

@@ -22,7 +22,8 @@ YiiAsset::register($this);
                     ?>
                     <div class="col-12 mb-4 p-0">
                         <div class="card">
-                            <h1 class="card-header text-center bg-secondary text-white"> Se ha solicitado el aval de la FAI </h1>
+                            <h1 class="card-header text-center bg-secondary text-white"> Se ha solicitado el aval de la
+                                FAI </h1>
                             <div class="card-body d-flex justify-content-center bg-light">
                                 <?php
                                 echo Html::a('Conceder aval FAI', ['solicitud-aval/conceder-aval', 'id' => $model->idEvento], [
@@ -105,7 +106,7 @@ YiiAsset::register($this);
                                 'label' => 'Organizador',
                                 //formato raw para poder crear un enlace al organizador
                                 'format' => 'raw',
-                                'value' => function($model) {
+                                'value' => function ($model) {
                                     $string = Html::a($model->idUsuario0->nombre . ' ' . $model->idUsuario0->apellido, ['/usuario/view', 'id' => $model->idUsuario], ['class' => 'mr-4 mb-4']);
 //                                    $string .= Html::tag('br');
 //                                    $string .= Html::tag('br');

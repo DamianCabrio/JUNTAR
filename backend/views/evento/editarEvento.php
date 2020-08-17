@@ -68,11 +68,13 @@ $this->title = "Cargar Evento";
 
                                 <div role="radiogroup" aria-required="true">
                                     <div class="custom-control custom-radio">
-                                        <input class="custom-control-input" type="radio" id="espectadores-no" name="posee-espectadores" value="-1" checked required>
+                                        <input class="custom-control-input" type="radio" id="espectadores-no"
+                                               name="posee-espectadores" value="-1" checked required>
                                         <label class="custom-control-label" for="espectadores-no">No</label>
                                     </div>
                                     <div class="custom-control custom-radio">
-                                        <input class="custom-control-input" type="radio" id="espectadores-si" name="posee-espectadores" value="2">
+                                        <input class="custom-control-input" type="radio" id="espectadores-si"
+                                               name="posee-espectadores" value="2">
                                         <label class="custom-control-label" for="espectadores-si">Si</label><br>
                                     </div>
                                 </div>
@@ -91,7 +93,7 @@ $this->title = "Cargar Evento";
                             </div>
 
                             <p class="font-italic">
-                                Los campos marcados con (*) son obligatorios. 
+                                Los campos marcados con (*) son obligatorios.
                             <p>
                             <div class="form-group">
                                 <?= Html::submitButton('Guardar Cambios', ['class' => 'btn btn-pink col-md-2 col-sm-12']) ?>
@@ -100,7 +102,7 @@ $this->title = "Cargar Evento";
                             <?php ActiveForm::end(); ?>
                         </div>
                     </div>
-                </div>               
+                </div>
             </div>
         </div>
     </div>

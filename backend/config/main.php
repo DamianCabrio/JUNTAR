@@ -40,10 +40,10 @@ return [
             'errorAction' => 'site/error',
         ],
         'urlManagerFrontend' => [
-          'class' => 'yii\web\urlManager',
-          'enablePrettyUrl' => true,
-          'showScriptName' => false,
-          'baseUrl' => 'http://'.$_SERVER['SERVER_NAME'], // Modificar dependiendo del servidor
+            'class' => 'yii\web\urlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'], // Modificar dependiendo del servidor
         ],
     ],
     'params' => $params,

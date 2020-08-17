@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Crear Presentación', ['create', 'idEvent' => $event], ['class' => 'btn btn-pink']) ?>
     </p>
     <?= ListView::widget([
-      'dataProvider' => $dataProvider,
-      'itemView' => '_list-presentation',
-    ]);?>
+        'dataProvider' => $dataProvider,
+        'itemView' => '_list-presentation',
+    ]); ?>
 </div>

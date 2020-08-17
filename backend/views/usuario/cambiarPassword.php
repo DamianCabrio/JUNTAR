@@ -18,20 +18,20 @@ $this->title = 'Asignar nueva contraseña';
         <div class="row">
             <div class="col-md-8 col-sm-12 m-auto">
                 <div class="card">
-                    
+
                     <div class="card-body">
-                    <?php $form = ActiveForm::begin(['id' => 'cambiarPwBack']); ?>
+                        <?php $form = ActiveForm::begin(['id' => 'cambiarPwBack']); ?>
 
-                    <?= $form->field($modelCambiarPw, 'newPassword')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($modelCambiarPw, 'repeatNewPassword')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($modelCambiarPw, 'newPassword')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($modelCambiarPw, 'repeatNewPassword')->textInput(['maxlength' => true]) ?>
 
-                    <div class="form-group">
-                        <?= Html::submitButton('Asignar Contraseña', ['class' => 'btn btn-pink col-md-3 col-sm-12']) ?>
+                        <div class="form-group">
+                            <?= Html::submitButton('Asignar Contraseña', ['class' => 'btn btn-pink col-md-3 col-sm-12']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+
                     </div>
-                    <?php ActiveForm::end(); ?>
-
-                </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>

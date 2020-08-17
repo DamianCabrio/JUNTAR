@@ -24,7 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="https://github.com/DamianCabrio" target="_blank" class="text-light linkAbout" data-id="Damián Cabrio"><i class="material-icons">contact_mail</i></a>
+                            <a href="https://github.com/DamianCabrio" target="_blank" class="text-light linkAbout"
+                               data-id="Damián Cabrio"><i class="material-icons">contact_mail</i></a>
                         </div>
 
                     </div>
@@ -54,7 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout" data-id="Leandro Casanova"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Leandro Casanova"><i
+                                        class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -69,7 +71,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="mailto:norbert@stange.com.ar" class="text-light linkAbout" data-id="Norbert Strange"><i class="material-icons">contact_mail</i></a>
+                            <a href="mailto:norbert@stange.com.ar" class="text-light linkAbout"
+                               data-id="Norbert Strange"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -97,7 +100,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <p id="descriptionLM"></p>
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="mailto:lauradejaramillo@gmail.com" class="text-light linkAbout" data-id="Laura Murillo"><i class="material-icons">contact_mail</i></a>
+                            <a href="mailto:lauradejaramillo@gmail.com" class="text-light linkAbout"
+                               data-id="Laura Murillo"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -140,7 +144,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="" class="text-light linkAbout" data-id="Maximiliano Bajamon"><i class="material-icons">contact_mail</i></a>
+                            <a href="" class="text-light linkAbout" data-id="Maximiliano Bajamon"><i
+                                        class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -155,7 +160,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="card-footer darkish_bg text-center">
-                            <a href="https://www.instagram.com/kevin_esp_/" class="text-light linkAbout" data-id="Kevin Espinoza"><i class="material-icons">contact_mail</i></a>
+                            <a href="https://www.instagram.com/kevin_esp_/" class="text-light linkAbout"
+                               data-id="Kevin Espinoza"><i class="material-icons">contact_mail</i></a>
                         </div>
                     </div>
                 </div>
@@ -192,7 +198,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div>
             <hr>
-            <p><b><a class="link" href="https://github.com/DamianCabrio/JUNTAR" target="_blank">Link a repositorio Juntar</a></b> Licencia GNU GPL version 3</p>
+            <p><b><a class="link" href="https://github.com/DamianCabrio/JUNTAR" target="_blank">Link a repositorio
+                        Juntar</a></b> Licencia GNU GPL version 3</p>
             <p>Universidad Nacional del Comahue</p>
             <hr>
         </div>
@@ -201,20 +208,21 @@ $this->params['breadcrumbs'][] = $this->title;
             <small>.</small>
         </a>
 
-        
-		<!-- Modal -->
-		<div class="modal fade" id="aboutUsModal" tabindex="-1" role="dialog" aria-labelledby="labelAboutUsModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal" role="text">
-				<div class="modal-content super_bg">
-                                    <h2 class="modal-title p-2 text-white text-center" id="aboutUsTitle"></h2>
-                                    <hr class="text-white">
-					<div class="modal-body">
 
-					</div>
-				</div>
-			</div>
-		</div>
-        
+        <!-- Modal -->
+        <div class="modal fade" id="aboutUsModal" tabindex="-1" role="dialog" aria-labelledby="labelAboutUsModal"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal" role="text">
+                <div class="modal-content super_bg">
+                    <h2 class="modal-title p-2 text-white text-center" id="aboutUsTitle"></h2>
+                    <hr class="text-white">
+                    <div class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--
                 <h1> /* Html::encode($this->title) ?></h1>
         <div class="section_padding">

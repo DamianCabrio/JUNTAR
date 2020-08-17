@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 html, body {
     height: 100%;
     font-family: 'Raleway', sans-serif;
@@ -14,7 +15,7 @@ html, body {
     padding: 0 0 60px;
 }
 
-.wrap>.container {
+.wrap > .container {
     padding: 70px 15px 20px;
 }
 
@@ -103,7 +104,7 @@ a.desc:after {
 
 /* align the logout "link" (button in form) of the navbar */
 
-.nav li>form>button.logout {
+.nav li > form > button.logout {
     padding: 15px;
     border: none;
 }
@@ -160,8 +161,8 @@ a.desc:after {
 }
 
 .btn-txt:hover {
-    background-color: transparent!important;
-    cursor: context-menu!important;
+    background-color: transparent !important;
+    cursor: context-menu !important;
 }
 
 .btn_icon {
@@ -263,29 +264,32 @@ a.desc:after {
 
 .btn {
     background-color: #FE1355;
-    color: aliceblue!important;
+    color: aliceblue !important;
     border: none;
     text-transform: capitalize;
 }
 
 .btn:hover {
     background-color: #050714;
-    color: aliceblue!important;
+    color: aliceblue !important;
 }
-.btn_contact{
-    background-color: #050714!important;
-    color: aliceblue!important;
+
+.btn_contact {
+    background-color: #050714 !important;
+    color: aliceblue !important;
     border: none;
 }
-.btn_contact:hover{
+
+.btn_contact:hover {
     background-color: #090b18;
-    color: aliceblue!important;
+    color: aliceblue !important;
     border: none;
 }
+
 .btn_event {
     width: 100%;
     background-color: #FE1355;
-    color: aliceblue!important;
+    color: aliceblue !important;
     border: none;
     text-transform: capitalize;
 }
@@ -295,25 +299,25 @@ a.desc:after {
 }
 
 .btn_publish {
-    background-color: transparent!important;
-    color: #FFFFFF!important;
+    background-color: transparent !important;
+    color: #FFFFFF !important;
     font-weight: bold;
 }
 
 .btn_publish:hover {
-    background-color: #000000!important;
-    color: #FFFFFF!important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
 }
 
 .btn_hide {
-    background-color: transparent!important;
-    color: #fde6a2!important;
-    border-color: #fde6a2!important;
+    background-color: transparent !important;
+    color: #fde6a2 !important;
+    border-color: #fde6a2 !important;
     border: solid 2px;
 }
 
 .btn_hide:hover {
-    border-color: #f1f1f1!important;
+    border-color: #f1f1f1 !important;
     color: #f1f1f1;
 }
 
@@ -330,12 +334,12 @@ a.desc:after {
 }
 
 .btn:focus {
-    outline: 0!important;
+    outline: 0 !important;
     box-shadow: none;
 }
 
 .link:hover {
-    color: #FE1355!important;
+    color: #FE1355 !important;
 }
 
 section {
@@ -403,8 +407,8 @@ section {
     }
 }
 
-@media(max-width:767px) {
-    .nav li>form>button.logout {
+@media (max-width: 767px) {
+    .nav li > form > button.logout {
         display: block;
         text-align: left;
         width: 100%;
@@ -412,11 +416,11 @@ section {
     }
 }
 
-.nav>li>form>button.logout:focus, .nav>li>form>button.logout:hover {
+.nav > li > form > button.logout:focus, .nav > li > form > button.logout:hover {
     text-decoration: none;
 }
 
-.nav>li>form>button.logout:focus {
+.nav > li > form > button.logout:focus {
     outline: none;
 }
 
@@ -466,6 +470,7 @@ section {
         padding-left: 10vw;
         padding-right: 10vh;
     }
+
     .container {
         width: 100%;
         padding-right: 5px;

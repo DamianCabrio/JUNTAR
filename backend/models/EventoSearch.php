@@ -8,14 +8,16 @@ use yii\data\ActiveDataProvider;
 /**
  * EventoSearch represents the model behind the search form of `backend\models\Evento`.
  */
-class EventoSearch extends Evento {
+class EventoSearch extends Evento
+{
 
     public $nombreUsuario;
 
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
 //            [['idEvento', 'idUsuario', 'idCategoriaEvento', 'idEstadoEvento', 'idModalidadEvento', 'capacidad', 'preInscripcion'], 'integer'],
             [['nombreEvento', 'lugar', 'fechaInicioEvento', 'fechaFinEvento', 'fechaCreacionEvento'], 'safe'],
@@ -26,7 +28,8 @@ class EventoSearch extends Evento {
     /**
      * {@inheritdoc}
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,7 +41,8 @@ class EventoSearch extends Evento {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Evento::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -69,7 +73,7 @@ class EventoSearch extends Evento {
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-        
+
         if ($this->nombreUsuario != null && $this->nombreUsuario != '') {
             $query->joinWith(['idUsuario0']);
         }
