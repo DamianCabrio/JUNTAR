@@ -30,23 +30,21 @@ class CuentaController extends Controller
     public function behaviors()
     {
         $behaviors['access'] = [
-            //utilizamos el filtro AccessControl
+            //Utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
             'rules' => [
                 [
                     'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
-//                        $module = Yii::$app->controller->module->id;
-                        $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
-                        $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
-//                        $route = "$module/$controller/$action";
-                        $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-//                        $post = Yii::$app->request->post();
+                        //Guardamos la accion (vista) que se intenta acceder
+                        $action = Yii::$app->controller->action->id;
+                        //Guardamos el controlador del cual se consulta
+                        $controller = Yii::$app->controller->id;
+                        //Generamos la ruta que se busca acceder
+                        $route = "$controller/$action";
                         //preguntamos si el usuario tiene los permisos para visitar el sitio
-//                        if (Yii::$app->user->can($route, ['post' => $post])) {
                         if (Yii::$app->user->can($route)) {
-//                            return $this->goHome();
                             return true;
                         }
                     }
@@ -66,10 +64,6 @@ class CuentaController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-//            'captcha' => [
-//                'class' => 'yii\captcha\CaptchaAction',
-//                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-//            ],
         ];
     }
 
@@ -83,16 +77,12 @@ class CuentaController extends Controller
         $model = Usuario::find()
             //campos buscados
             ->select(['nombre, apellido, password_hash, dni, pais, provincia, localidad, email, (usuario_rol.item_name) as rol'])
-            //distintos en
-            //->distinct('jugador.posicion')
             //tabla
             ->from('usuario')
             //relacion entre tablas
             ->innerJoin('usuario_rol', 'usuario_rol.user_id = usuario.idUsuario')
             //condicion
             ->where(['usuario.idUsuario' => Yii::$app->user->identity->id]);
-        //Agrupamiento
-        //->groupBy(['jugador.posicion']);
         //obtenemos el unico usuario
         $userData = $model->one();
 
@@ -152,10 +142,6 @@ class CuentaController extends Controller
             }
             return $this->redirect(['/cuenta/profile']);
         }
-//        if (Yii::$app->request->post('search') != null) {
-//            //define el tipo de respuesta del metodo
-//            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-//        }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('editprofile', [
                 'model' => $model,
@@ -309,76 +295,14 @@ class CuentaController extends Controller
         ]);
     }
 
-    /**
-     * Habilitar ser gestor de eventos.
-     * @param int $id identificador del usuario.
-     * @return mixed
-     */
-//    private function actionChangeRol($id) {
-//        $organizateRol = yii::$app->authManager->getRole('Organizador');
-//        if (yii::$app->authManager->getAssignment('Organizador', $id) == null) {
-//            yii::$app->authManager->assign($organizateRol, $id);
-//            Yii::$app->session->setFlash('success', '<small>Ahora es un gestor de evento</small>');
-//        }
-//        return $this->redirect(['/cuenta/profile']);
-//    }
-
     protected function findModel($id)
     {
         if (($model = Usuario::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La pagina que busca esta en otro castillo.');
     }
-
-    /**
-     * solicita cambio de email
-     *
-     */
-//    public function actionCambiarEmailRequest() {
-//
-//        if (Yii::$app->request->post()) {
-//            $model = new CambiarEmailRequest();
-//            if ($model->solicitarCambioEmail()) {
-//                Yii::$app->session->setFlash('success', '<h2> ¡Ya queda poco! </h2>'
-//                        . '<p> Revisa tu cuenta de correo y sigue las instrucciones que te enviamos para poder cambiar tu email. </p>');
-//            } else {
-//                Yii::$app->session->setFlash('error', '<h2> Algo salió mal.. </h2>'
-//                        . '<p> Lo sentimos, ocurrió un error con el enlace del correo. </p>'
-//                        . '<p> Si cree que esto es un error del servidor, por favor, contacte con un administrador </p>');
-//            }
-//            return $this->redirect(['/cuenta/profile']);
-//        }
-//        return $this->render('cambiarEmailRequest', [
-////                    'model' => $model,
-//        ]);
-//    }
-
-    /**
-     * cambia el email
-     *
-     */
-//    public function actionCambiarEmail($token) {
-//
-//        $model = new CambiarEmailForm($token);
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            if ($model->cambiarEmail()) {
-//                Yii::$app->session->setFlash('success', '<h2> Email actualizado </h2>'
-//                        . '<p> Su dirección de correo fue actualizada. </p>');
-//
-//                return $this->redirect(['/cuenta/profile']);
-//            } else {
-//                Yii::$app->session->setFlash('error', '<h2> Algo salió mal ): </h2>'
-//                        . '<p> Es probable que el email ya esté registrado. </p>');
-//            }
-//        }
-//
-//        return $this->render('cambiarEmail', [
-//                    'model' => $model,
-//        ]);
-//    }
 
     /**
      * Habilitar ser gestor de eventos.

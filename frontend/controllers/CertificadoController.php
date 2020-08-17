@@ -1,4 +1,5 @@
 <?php
+//TODO
 namespace frontend\controllers;
 
 use frontend\models\CategoriaEvento;
@@ -28,23 +29,21 @@ class CertificadoController extends Controller
     public function behaviors()
     {
         $behaviors['access'] = [
-            //utilizamos el filtro AccessControl
+            //Utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
             'rules' => [
                 [
                     'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
-                        //                        $module = Yii::$app->controller->module->id;
-                        $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
-                        $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
-                        //                        $route = "$module/$controller/$action";
-                        $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-                        //                        $post = Yii::$app->request->post();
+                        //Guardamos la accion (vista) que se intenta acceder
+                        $action = Yii::$app->controller->action->id;
+                        //Guardamos el controlador del cual se consulta
+                        $controller = Yii::$app->controller->id;
+                        //Generamos la ruta que se busca acceder
+                        $route = "$controller/$action";
                         //preguntamos si el usuario tiene los permisos para visitar el sitio
-                        //                        if (Yii::$app->user->can($route, ['post' => $post])) {
                         if (Yii::$app->user->can($route)) {
-                            //                            return $this->goHome();
                             return true;
                         }
                     }
