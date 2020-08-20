@@ -61,7 +61,7 @@ class CertificadoController extends Controller
      */
     public function actionIndex($id)
     {
-
+        //Se cargan los datos para el o los certificados
         $certificate = $this->loadCertificateData($id, Yii::$app->user->identity->id);
 
         //Modelo y respuesta en el caso de que haya sido expositor de varias presentaciones
