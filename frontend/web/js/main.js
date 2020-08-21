@@ -597,11 +597,14 @@ function autocompleteProvincias(nombrePais) {
                 if ($("#signupform-provincia").autocomplete !== undefined) {
                     $("#signupform-provincia").autocomplete({
                         autoFill: true,
-                        minLength: "2",
+                        minLength: "1",
                         source: data,
                         select: function (event, ui) {
                             $("#signupform-provincia").val(ui.item.id);
-                        }
+                        },
+						change: function () {
+                              autocompleteLocalidades($("#signupform-provincia").val());
+                            }
                     });
                 }
             }
@@ -629,7 +632,7 @@ function autocompleteLocalidades(nombreProvincia) {
                 if ($("#signupform-localidad").autocomplete !== undefined) {
                     $("#signupform-localidad").autocomplete({
                         autoFill: true,
-                        minLength: "2",
+                        minLength: "1",
                         source: data,
                         select: function (event, ui) {
                             $("#signupform-localidad").val(ui.item.id);
