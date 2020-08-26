@@ -28,6 +28,21 @@ $this->title = "Cargar Evento";
 
                             <?= $form->field($model, 'nombreEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese nombre'])->label('Nombre del evento *') ?>
 
+                            <?php
+                            //minimize ckedit on escape
+                            $this->registerJs(
+                                    'CKEDITOR.on("instanceCreated", function (e) {
+                                        e.editor.on("contentDom", function () {
+                                            e.editor.document.on("keydown", function (evto) {
+                                                if (evto.data.$.keyCode === 27 || evto.data.$.key === "Escape") {
+                                                    e.editor.execCommand("maximize");
+                                                }
+                                            }
+                                        );
+                                    });
+                                    });');
+                            ?>
+                            
                             <?=
                             $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
                                 "options" => ['rows' => '8'],
@@ -45,10 +60,11 @@ $this->title = "Cargar Evento";
                                         ['name' => 'colors'],
                                         ['name' => 'tools'],
                                         ['name' => 'others'],
+                                        ['name' => 'maximize'],
                                     ],
                                     'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
                                     'removePlugins' => 'elementspath',
-                                    'resize_enabled' => false
+                                    'resize_enabled' => true
                                 ],
                             ])->label('Descripción *')
                             ?>
