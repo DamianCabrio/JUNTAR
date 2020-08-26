@@ -41,15 +41,32 @@ $this->title = "Cargar Evento";
                                 <br>
                                 <div class="col-12 mt-2 nombresCortos">
                                     <!--<input type="radio" id="otro" name="shortName" value=""> <label for="otro">Otro: </label>-->
-                                    <?= $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
+                                    <?=
+                                    $form->field($model, 'nombreCortoEvento')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese  nombre corto',
                                         'data-title' => 'Requisitos',
                                         'data-toggle' => 'popover',
-                                        'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false) ?>
+                                        'data-content' => 'Solo puede tener numeros y letras, sin caracteres especiales y los espacios deben ser guiones. Ejemplo test-evento.',])->label(false)
+                                    ?>
                                 </div>
                             </div>
 
+                            <?php
+                            //minimize ckedit on escape
+                            $this->registerJs(
+                                    'CKEDITOR.on("instanceCreated", function (e) {
+                                        e.editor.on("contentDom", function () {
+                                            e.editor.document.on("keydown", function (evto) {
+                                                if (evto.data.$.keyCode === 27 || evto.data.$.key === "Escape") {
+                                                    e.editor.execCommand("maximize");
+                                                }
+                                            }
+                                        );
+                                    });
+                                    });');
+                            ?>
 
-                            <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
+                            <?=
+                            $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
                                 "options" => ['rows' => '8'],
                                 "preset" => "custom",
                                 "clientOptions" => [
@@ -67,14 +84,13 @@ $this->title = "Cargar Evento";
                                         ['name' => 'font',],
                                         ['name' => 'styles'],
                                         ['name' => 'maximize'],
-
-
                                     ],
                                     'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
                                     'removePlugins' => 'elementspath',
                                     'resize_enabled' => true
                                 ],
-                            ])->label('Descripción *') ?>
+                            ])->label('Descripción *')
+                            ?>
 
                             <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese lugar'], ['maxlength' => true])->label('Lugar *') ?>
 
