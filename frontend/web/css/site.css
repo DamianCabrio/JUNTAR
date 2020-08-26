@@ -490,3 +490,8 @@ section {
 .expositor-center {
     margin-top: 12%;
 }
+
+/*Evita que el editor mejorado se vaya fuera del margen de vista*/
+.cke_maximized {
+    top: 0px !important;
+}
