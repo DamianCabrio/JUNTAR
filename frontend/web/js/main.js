@@ -88,7 +88,7 @@ $(document).ready(function () {
         } else {
             $('#resetpasswordform-password').attr("type", "password");
         }
-        
+
         //verificamos si viene por resetPassword y cambiamos el tipo de campo
         type = $('.showCambiarPw').attr("type");
         if (type !== null && type === 'password') {
@@ -96,8 +96,8 @@ $(document).ready(function () {
         } else {
             $('.showCambiarPw').attr("type", "password");
         }
-        
-        
+
+
     });
 
     // Habilitacion de los popover
@@ -109,20 +109,20 @@ $(document).ready(function () {
     });
 
     //minimize wysiwyg on esc
-    CKEDITOR.on('instanceCreated', function (e) {
-        e.editor.on('contentDom', function () {
-            //capturamos keydown
-            e.editor.document.on('keydown', function (evto) {
-                //verificamos si se trata de la tecla escape
-                if (evto.data.$.keyCode === 27 || evto.data.$.key === "Escape") {
-//                    alert('Esc key pressed.2');
-                    //ejecutamos el comando para maximizar/minimizar el editor
-                    e.editor.execCommand("maximize");
-                }
-            }
-            );
-        });
-    });
+//    CKEDITOR.on('instanceCreated', function (e) {
+//        e.editor.on('contentDom', function () {
+//            //capturamos keydown
+//            e.editor.document.on('keydown', function (evto) {
+//                //verificamos si se trata de la tecla escape
+//                if (evto.data.$.keyCode === 27 || evto.data.$.key === "Escape") {
+////                    alert('Esc key pressed.2');
+//                    //ejecutamos el comando para maximizar/minimizar el editor
+//                    e.editor.execCommand("maximize");
+//                }
+//            }
+//            );
+//        });
+//    });
 
     //buscamos valores por defecto para pais argentina
     if ($('#signupform-pais').val() === 'Argentina') {
