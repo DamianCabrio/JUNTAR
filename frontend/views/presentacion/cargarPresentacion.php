@@ -44,11 +44,10 @@ $this->title = "Cargar Presentación - " . $evento->nombreCortoEvento;
                             ['name' => 'links'],
                             ['name' => 'tools'],
                             ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
-                            ['name' => 'styles','groups' => ['Styles', 'Format', 'Font', 'FontSize']],
+                            ['name' => 'styles', 'groups' => ['Styles', 'Format', 'Font', 'FontSize']],
                             ['name' => 'font',],
                             ['name' => 'styles'],
-                            
-                            
+
 
                         ],
                         'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',

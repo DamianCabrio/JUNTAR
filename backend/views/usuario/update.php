@@ -32,14 +32,14 @@ $this->params['breadcrumbs'][] = 'Update';
                         ])
                         ?>
                         <?php
-                    Modal::begin([
-                        'id' => 'modalChangePassword',
-                        'size' => 'modal-lg',
-                    ]);
-                    Modal::end();
-                    ?>
+                        Modal::begin([
+                            'id' => 'modalChangePassword',
+                            'size' => 'modal-lg',
+                        ]);
+                        Modal::end();
+                        ?>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>

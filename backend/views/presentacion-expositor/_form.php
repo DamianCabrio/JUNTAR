@@ -14,18 +14,18 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'idExpositor')->dropDownList(
         $users,
-          [
-            'id'=> 'field-id',
+        [
+            'id' => 'field-id',
             'size' => 10
-          ]
-        )->label('Expositor') ?>
+        ]
+    )->label('Expositor') ?>
 
     <div class="" style="display: none;">
-      <?php if ($idPresentation != null): ?>
-        <?= $form->field($model, 'idPresentacion')->textInput(['value' => $idPresentation])?>
-      <?php else: ?>
-        <?= $form->field($model, 'idPresentacion')->textInput(['maxlength' => true]) ?>
-      <?php endif; ?>
+        <?php if ($idPresentation != null): ?>
+            <?= $form->field($model, 'idPresentacion')->textInput(['value' => $idPresentation]) ?>
+        <?php else: ?>
+            <?= $form->field($model, 'idPresentacion')->textInput(['maxlength' => true]) ?>
+        <?php endif; ?>
     </div>
 
     <div class="form-group">

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card">
             <h4 class="card-header text-center darkish_bg text-white"> <?= Html::encode($this->title) ?> </h4>
             <div class="card-body">
-<!--    <p class="text-center"> Por favor, ingrese el email del usuario buscado: </p>-->
+                <!--    <p class="text-center"> Por favor, ingrese el email del usuario buscado: </p>-->
 
                 <!--<div class="row">-->
                 <!--<div class="col-12 m-auto">-->

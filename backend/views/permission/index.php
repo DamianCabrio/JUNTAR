@@ -32,12 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'name',
                                     'label' => 'Permiso',
-                                    'value' => 'name',    
+                                    'value' => 'name',
                                 ],
                                 [
                                     'attribute' => 'description',
                                     'label' => 'Descripción',
-                                    'value' => 'description',    
+                                    'value' => 'description',
                                 ],
                                 [
                                     'attribute' => 'created_at',

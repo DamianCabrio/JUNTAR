@@ -83,9 +83,9 @@ $this->title = "Crear Formulario";
                                             Al eliminar una pregunta todas las respuestas de la misma tambien seran eliminadas
                                           </div>
                                           <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>'.
-                                            Html::a("Eliminar", $url, ["class" => "btn btn-outline-success borrarPregunta", "data-method" => "POST"])
-                                          .'</div>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>' .
+                                Html::a("Eliminar", $url, ["class" => "btn btn-outline-success borrarPregunta", "data-method" => "POST"])
+                                . '</div>
                                         </div>
                                       </div>
                                     </div>';

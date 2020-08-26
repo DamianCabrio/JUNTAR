@@ -13,6 +13,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+
 //use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
@@ -71,8 +72,8 @@ class EventoController extends Controller
         $searchModel = new EventoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -108,20 +109,43 @@ class EventoController extends Controller
 //        ]);
 //    }
 
-    /**
-     * Finds the Evento model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Evento the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
+
+
+
+    public function actionEditarEvento($id)
     {
-        if (($model = Evento::findOne($id)) !== null) {
-            return $model;
+//        $model = new Evento($id);
+        $model = Evento::findOne(['idEvento' => $id]);
+
+        $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
+        $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            //necesita variables, porque sino hace referencia al objeto model y la referencia pierde el valor si crea una nueva instancia
+//            if ($model->codigoAcreditacion != null) {
+//                $nombreCortoEvento = $model->nombreCortoEvento;
+//                $codAcre = $model->codigoAcreditacion;
+////                $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
+//            }
+            $model->save();
+            return $this->redirect(['/evento/view/', 'id' => $id]);
         }
 
-        throw new NotFoundHttpException('La página solicitada no existe.');
+        $categoriasEventos = CategoriaEvento::find()
+            ->select(['descripcionCategoria'])
+            ->indexBy('idCategoriaEvento')
+            ->column();
+
+        $modalidadEvento = modalidadEvento::find()
+            ->select(['descripcionModalidad'])
+            ->indexBy('idModalidadEvento')
+            ->column();
+        return $this->render('editarEvento', [
+            'model' => $model,
+            'categoriasEventos' => $categoriasEventos,
+            'modalidadEvento' => $modalidadEvento,
+
+        ]);
     }
 
     /**
@@ -143,44 +167,8 @@ class EventoController extends Controller
 //                    'model' => $model,
 //        ]);
 //    }
-
-
-    public function actionEditarEvento($id) {
-//        $model = new Evento($id);
-        $model = Evento::findOne(['idEvento' => $id]);
-
-        $model->idEstadoEvento = 4; //FLag - Por defecto los eventos quedan en estado "Borrador"
-        $model->fechaCreacionEvento = date('Y-m-d'); // Fecha de hoy
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //necesita variables, porque sino hace referencia al objeto model y la referencia pierde el valor si crea una nueva instancia
-//            if ($model->codigoAcreditacion != null) {
-//                $nombreCortoEvento = $model->nombreCortoEvento;
-//                $codAcre = $model->codigoAcreditacion;
-////                $this->actionGenerarQRAcreditacion($codAcre, $nombreCortoEvento);
-//            }
-            $model->save();
-            return $this->redirect(['/evento/view/', 'id' => $id]);
-        }
-
-        $categoriasEventos = CategoriaEvento::find()
-                ->select(['descripcionCategoria'])
-                ->indexBy('idCategoriaEvento')
-                ->column();
-
-        $modalidadEvento = modalidadEvento::find()
-                ->select(['descripcionModalidad'])
-                ->indexBy('idModalidadEvento')
-                ->column();
-        return $this->render('editarEvento', [
-                    'model' => $model,
-                    'categoriasEventos' => $categoriasEventos,
-                    'modalidadEvento' => $modalidadEvento,
-
-        ]);
-    }
-
-    public function actionModificarOrganizador($idEvento) {
+    public function actionModificarOrganizador($idEvento)
+    {
         $model = new CambiarOrganizadorForm();
         $usersQuery = Usuario::find()->select(['idUsuario', 'email'])->all();
         $users = ArrayHelper::map($usersQuery, 'idUsuario', 'email');
@@ -195,15 +183,15 @@ class EventoController extends Controller
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('modificarOrganizador', [
-                        'model' => $model,
-                        'usuarios' => $users,
-                        'alert' => $alert
+                'model' => $model,
+                'usuarios' => $users,
+                'alert' => $alert
             ]);
         } else {
             return $this->render('modificarOrganizador', [
-                        'model' => $model,
-                        'usuarios' => $users,
-                        'alert' => $alert
+                'model' => $model,
+                'usuarios' => $users,
+                'alert' => $alert
             ]);
         }
     }
@@ -213,7 +201,8 @@ class EventoController extends Controller
      *
      * @return mixed
      */
-    public function conversionAutocomplete($array) {
+    public function conversionAutocomplete($array)
+    {
         $autocomplete = array();
         foreach ($array as $id => $nombre) {
             array_push($autocomplete, ['value' => $nombre, 'label' => $nombre]);
@@ -247,6 +236,22 @@ class EventoController extends Controller
         $this->findModel($id)->habilitar();
 
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    /**
+     * Finds the Evento model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Evento the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Evento::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
 }

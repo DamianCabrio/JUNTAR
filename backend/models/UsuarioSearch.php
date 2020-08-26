@@ -8,12 +8,14 @@ use yii\data\ActiveDataProvider;
 /**
  * UsuarioSearch represents the model behind the search form of `backend\models\Usuario`.
  */
-class UsuarioSearch extends Usuario {
+class UsuarioSearch extends Usuario
+{
 
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
 //            [['idUsuario', 'dni', 'status', 'created_at', 'updated_at'], 'integer'],
             [['nombre', 'apellido', 'dni', 'pais', 'provincia', 'localidad', 'email', 'status'], 'safe'],
@@ -24,7 +26,8 @@ class UsuarioSearch extends Usuario {
     /**
      * {@inheritdoc}
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -36,7 +39,8 @@ class UsuarioSearch extends Usuario {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Usuario::find();
 
         // add conditions that should always apply here

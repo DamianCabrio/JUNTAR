@@ -16,31 +16,32 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-body">
 
-        <div class='row'>
-            <!-- Profile Sidebar Menu-->
-            <div class="col-sm-3 mt-4 bg-profile-sidebar">
-                <ul class="nav nav-tabs mt-2 text-center">
-                    <li class="nav-item profile-sidebar col-12">
-                        <a class="nav-link active" href="profile"> Información de la Cuenta </a>
-                    </li>
-                    <li class="nav-item profile-sidebar col-12">
-                        <?= Html::a('Cambiar Contraseña', ['cuenta/cambiar-password'], ['class' => 'nav-link']);?>
-                    </li>
-                    <!-- a futuro -->
-<!--                    <li class="nav-item profile-sidebar col-12">
+                <div class='row'>
+                    <!-- Profile Sidebar Menu-->
+                    <div class="col-sm-3 mt-4 bg-profile-sidebar">
+                        <ul class="nav nav-tabs mt-2 text-center">
+                            <li class="nav-item profile-sidebar col-12">
+                                <a class="nav-link active" href="profile"> Información de la Cuenta </a>
+                            </li>
+                            <li class="nav-item profile-sidebar col-12">
+                                <?= Html::a('Cambiar Contraseña', ['cuenta/cambiar-password'], ['class' => 'nav-link']); ?>
+                            </li>
+                            <!-- a futuro -->
+                            <!--                    <li class="nav-item profile-sidebar col-12">
                         <?php // echo Html::a('Cambiar dirección de correo', ['cuenta/cambiar-email-request'], ['class' => 'nav-link']);?>
                     </li>-->
-                    <!-- a futuro -->
-                    <!--                <li class="nav-item profile-sidebar col-12">
-                    <a class="nav-link" href=""> Preferencias de Email </a>
-                </li>-->
-                    <li class="nav-item profile-sidebar col-12">
-                        <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>"> Desactivar mi Cuenta </a>
-                    </li>
+                            <!-- a futuro -->
+                            <!--                <li class="nav-item profile-sidebar col-12">
+                            <a class="nav-link" href=""> Preferencias de Email </a>
+                        </li>-->
+                            <li class="nav-item profile-sidebar col-12">
+                                <a class="nav-link bg-gray" href="<?= Url::toRoute(['cuenta/desactivar-cuenta']) ?>">
+                                    Desactivar mi Cuenta </a>
+                            </li>
 
-                </ul>
-            </div>
-            <!-- Profile Sidebar Menu-->
+                        </ul>
+                    </div>
+                    <!-- Profile Sidebar Menu-->
                     <!-- Profile Card Content -->
                     <div class="col-md-9 col-sm-4 mt-4 ">
                         <div class="card">

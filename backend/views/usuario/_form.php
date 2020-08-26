@@ -31,11 +31,12 @@ use yii\helpers\Html;
 
 
     <?php // echo $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?php echo $form->field($model, 'password_hash')->textInput(['maxlength' => true, 'disabled' => true]) ?>
-        <?php echo Html::a('Cambiar contraseña', ['/usuario/cambiar-password', 'id' => $model->idUsuario], ['class' => 'btn btn-pink col-md-3 col-sm-12 popUpChangePassword']) ?>
-    </div>
+    <?php if (!empty($model) && $model != null && $model->status != 0): ?>
+        <div class="form-group">
+            <?php echo $form->field($model, 'password_hash')->textInput(['maxlength' => true, 'disabled' => true]) ?>
+            <?php echo Html::a('Cambiar contraseña', ['/usuario/cambiar-password', 'id' => $model->idUsuario], ['class' => 'btn btn-pink col-md-3 col-sm-12 popUpChangePassword']) ?>
+        </div>
+    <?php endif; ?>
     <?=
     $form->field($model, 'status')->textInput()->dropDownList([
         '0' => 'Eliminado',

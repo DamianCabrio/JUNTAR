@@ -25,6 +25,15 @@ class PresentacionExpositor extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
+     * @return PresentacionExpositorQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PresentacionExpositorQuery(get_called_class());
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -66,14 +75,5 @@ class PresentacionExpositor extends \yii\db\ActiveRecord
     public function getIdPresentacion0()
     {
         return $this->hasOne(Presentacion::className(), ['idPresentacion' => 'idPresentacion']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return PresentacionExpositorQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PresentacionExpositorQuery(get_called_class());
     }
 }

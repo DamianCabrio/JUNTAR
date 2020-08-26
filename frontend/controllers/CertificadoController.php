@@ -1,4 +1,5 @@
 <?php
+//TODO
 namespace frontend\controllers;
 
 use frontend\models\CategoriaEvento;
@@ -28,23 +29,21 @@ class CertificadoController extends Controller
     public function behaviors()
     {
         $behaviors['access'] = [
-            //utilizamos el filtro AccessControl
+            //Utilizamos el filtro AccessControl
             'class' => AccessControl::className(),
             'rules' => [
                 [
                     'allow' => true,
                     'roles' => ['@'],
                     'matchCallback' => function ($rule, $action) {
-                        //                        $module = Yii::$app->controller->module->id;
-                        $action = Yii::$app->controller->action->id;        //guardamos la accion (vista) que se intenta acceder
-                        $controller = Yii::$app->controller->id;            //guardamos el controlador del cual se consulta
-                        //                        $route = "$module/$controller/$action";
-                        $route = "$controller/$action";                     //generamos la ruta que se busca acceder
-                        //                        $post = Yii::$app->request->post();
+                        //Guardamos la accion (vista) que se intenta acceder
+                        $action = Yii::$app->controller->action->id;
+                        //Guardamos el controlador del cual se consulta
+                        $controller = Yii::$app->controller->id;
+                        //Generamos la ruta que se busca acceder
+                        $route = "$controller/$action";
                         //preguntamos si el usuario tiene los permisos para visitar el sitio
-                        //                        if (Yii::$app->user->can($route, ['post' => $post])) {
                         if (Yii::$app->user->can($route)) {
-                            //                            return $this->goHome();
                             return true;
                         }
                     }
@@ -62,7 +61,7 @@ class CertificadoController extends Controller
      */
     public function actionIndex($id)
     {
-
+        //Se cargan los datos para el o los certificados
         $certificate = $this->loadCertificateData($id, Yii::$app->user->identity->id);
 
         //Modelo y respuesta en el caso de que haya sido expositor de varias presentaciones
@@ -102,6 +101,45 @@ class CertificadoController extends Controller
             'organizerCertificate' => $isOrganizer,
             'presentations' => $presentations,
         ]);
+    }
+
+    /**
+     * Método para visualizar un certificado de Asistencia
+     *
+     * @return mixed
+     */
+    public function actionPreviewAttendance($id)
+    {
+        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
+        if ($dataPdf->verifyAccreditation()) {
+            $filePDF = $this->commonData($id, 'asistencia', $dataPdf);
+            return $filePDF->render();
+        } else {
+            return $this->render('/site/error', [
+                'name' => 'Certificado',
+                'message' => 'Se ha provocado un error en la solicitud del certificado.'
+            ]);
+        }
+
+    }
+
+    /**
+     * Método para visualizar un certificado de Organizador
+     *
+     * @return mixed
+     */
+    public function actionPreviewOrganizer($id)
+    {
+        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
+        if ($dataPdf->verifyOrganizer(Yii::$app->user->identity->id)) {
+            $filePDF = $this->commonData($id, 'organizador', $dataPdf);
+            return $filePDF->render();
+        } else {
+            return $this->render('/site/error', [
+                'name' => 'Certificado',
+                'message' => 'Se ha provocado un error en la solicitud del certificado.'
+            ]);
+        }
     }
 
     private function loadCertificateData($event, $user)
@@ -189,45 +227,6 @@ class CertificadoController extends Controller
 
         return $pdf;
 
-    }
-
-    /**
-     * Método para visualizar un certificado de Asistencia
-     *
-     * @return mixed
-     */
-    public function actionPreviewAttendance($id)
-    {
-        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
-        if ($dataPdf->verifyAccreditation()) {
-            $filePDF = $this->commonData($id, 'asistencia', $dataPdf);
-            return $filePDF->render();
-        } else {
-            return $this->render('/site/error', [
-                'name' => 'Certificado',
-                'message' => 'Se ha provocado un error en la solicitud del certificado.'
-            ]);
-        }
-
-    }
-
-    /**
-     * Método para visualizar un certificado de Organizador
-     *
-     * @return mixed
-     */
-    public function actionPreviewOrganizer($id)
-    {
-        $dataPdf = $this->loadCertificateData($id, Yii::$app->user->identity->id);
-        if ($dataPdf->verifyOrganizer(Yii::$app->user->identity->id)) {
-            $filePDF = $this->commonData($id, 'organizador', $dataPdf);
-            return $filePDF->render();
-        } else {
-            return $this->render('/site/error', [
-                'name' => 'Certificado',
-                'message' => 'Se ha provocado un error en la solicitud del certificado.'
-            ]);
-        }
     }
 
 }

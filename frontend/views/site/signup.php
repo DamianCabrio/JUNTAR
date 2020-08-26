@@ -15,6 +15,8 @@ use yii\web\JsExpression;
 $this->title = 'Crear cuenta';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <div class="site-signup container">
 
     <h1 class="text-center mb-2"><?= Html::encode($this->title) ?></h1>

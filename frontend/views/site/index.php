@@ -1,8 +1,6 @@
 <?php
-
 /* @var $this yii\web\View */
 
-use frontend\components\validateEmail;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\LinkPager;
 use yii\helpers\Url;
@@ -35,7 +33,6 @@ $openGraph->getImage()
 $this->title = 'Juntar';
 ?>
 <div class="site-index">
-
     <div class="body-content">
         <header class="hero gradient-hero">
             <div class="center-content padding_hero">
@@ -83,7 +80,6 @@ $this->title = 'Juntar';
             <div class="container padding_section">
                 <?php if (count($eventos) != 0) : ?>
                 <div class="row">
-                    <?php $validarEmail = new validateEmail(); ?>
                     <?php foreach ($eventos as $evento) : ?>
                         <div class="col-sm-12 col-md-4 mb-5">
                             <div class='card'>
@@ -95,20 +91,18 @@ $this->title = 'Juntar';
                                         <h5 class='card-title'><?= Html::encode(date('d/m/Y', strtotime($evento["fechaInicioEvento"]))) ?></h5>
                                         <hr>
                                         <p class='card-text'><?= Html::encode($evento["lugar"]) ?></p>
-                                        <p class='card-text'><?= Html::decode(strtok(wordwrap($evento["descripcionEvento"], 100, "...\n"), "\n")) ?> </p>
+                                        <p class='card-text'><?= Html::decode(strtok(wordwrap(strip_tags($evento["descripcionEvento"]), 250, "...\n"), "\n")) ?> </p>
                                         <?= Html::a('Más Información', ['/eventos/ver-evento/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']); ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     <?php endforeach; ?>
-
-
                 </div>
 
                 <div class="row py-5 pagination-lg pagination_center">
-                    <?= // display pagination
+                    <?=
+                    // display pagination
                     LinkPager::widget([
                         'pagination' => $pages,
                         "disableCurrentPageButton" => true,
@@ -125,7 +119,7 @@ $this->title = 'Juntar';
                 </div>
             <?php endif; ?>
 
+        </section>
     </div>
-    </section>
 </div>
 </div>

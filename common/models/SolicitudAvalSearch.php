@@ -8,7 +8,8 @@ use yii\data\ActiveDataProvider;
 /**
  * SolicitudAvalSearch represents the model behind the search form of `common\models\SolicitudAval`.
  */
-class SolicitudAvalSearch extends SolicitudAval {
+class SolicitudAvalSearch extends SolicitudAval
+{
 
     public $nombreEvento;
     public $validador;
@@ -16,7 +17,8 @@ class SolicitudAvalSearch extends SolicitudAval {
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
 //            [['idSolicitudAval', 'idEvento', 'avalado', 'validador'], 'integer'],
             [['fechaSolicitud', 'fechaRevision'], 'safe'],
@@ -27,7 +29,8 @@ class SolicitudAvalSearch extends SolicitudAval {
     /**
      * {@inheritdoc}
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,7 +43,8 @@ class SolicitudAvalSearch extends SolicitudAval {
      * @return ActiveDataProvider
      */
 //    public function search($querySearchModel, $params) {
-    public function search($estadoSolicitudes, $params) {
+    public function search($estadoSolicitudes, $params)
+    {
         switch ($estadoSolicitudes) {
             case "activas":
                 //activas
@@ -103,21 +107,21 @@ class SolicitudAvalSearch extends SolicitudAval {
                 ['like', 'evento.nombreCortoEvento', $this->nombreEvento],
             ]);
         }
-        
+
         //busca fecha solicitud aval
         if ($this->fechaSolicitud != null && $this->fechaSolicitud != '') {
             $querySearchModel->andFilterWhere([
                 'DATE(fechaSolicitud)' => date("Y-m-d", strtotime($this->fechaSolicitud)),
             ]);
         }
-        
+
         //busca fecha revision aval
         if ($this->fechaRevision != null && $this->fechaRevision != '') {
             $querySearchModel->andFilterWhere([
                 'DATE(fechaRevision)' => date("Y-m-d", strtotime($this->fechaRevision)),
             ]);
         }
-        
+
         //busca nombre organizador
         if ($this->validador != null && $this->validador != '') {
             $querySearchModel->andFilterWhere(['like', 'CONCAT(usuario.nombre," ",usuario.apellido)', $this->validador]);

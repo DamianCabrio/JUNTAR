@@ -142,22 +142,6 @@ class PreguntaController extends Controller
     }
 
     /**
-     * Finds the Pregunta model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Pregunta the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Pregunta::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('La página solicitada no existe.');
-    }
-
-    /**
      * Deletes an existing Pregunta model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -188,5 +172,21 @@ class PreguntaController extends Controller
         } else {
             return $this->goHome();
         }
+    }
+
+    /**
+     * Finds the Pregunta model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Pregunta the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Pregunta::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 }

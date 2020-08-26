@@ -59,6 +59,20 @@ class CambiarPasswordForm extends Model
     }
 
     /**
+     * Resets password.
+     *
+     * @return bool if password was reset.
+     */
+    public function cambiarPassword()
+    {
+        $user = $this->_user;
+        $user->setPassword($this->newPassword);
+//        $user->removePasswordResetToken();
+
+        return $user->save(false);
+    }
+
+    /**
      * Finds user by [[email]]
      *
      * @return User|null
@@ -71,20 +85,6 @@ class CambiarPasswordForm extends Model
         }
 
         return $this->_user;
-    }
-
-    /**
-     * Resets password.
-     *
-     * @return bool if password was reset.
-     */
-    public function cambiarPassword()
-    {
-        $user = $this->_user;
-        $user->setPassword($this->newPassword);
-//        $user->removePasswordResetToken();
-
-        return $user->save(false);
     }
 
 }

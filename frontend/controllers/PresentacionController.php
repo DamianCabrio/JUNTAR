@@ -76,22 +76,6 @@ class PresentacionController extends Controller
         }
     }
 
-    /**
-     * Finds the Presentacion model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Presentacion the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Presentacion::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('La página solicitada no existe.');
-    }
-
     public function actionBorrar($presentacion)
     { //Ventana de confirmacion modal
         $idPresentacion = Presentacion::findOne($presentacion);
@@ -189,7 +173,7 @@ class PresentacionController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()) {
-                //$preExpositor->idExpositor = $preExpositor->idExpositor ;  
+                //$preExpositor->idExpositor = $preExpositor->idExpositor ;
                 return $this->redirect(['eventos/ver-evento/' . $evento->nombreCortoEvento]);
             }
         }
@@ -225,6 +209,22 @@ class PresentacionController extends Controller
                 'arrUsuario' => $data
             ]);
         }
+    }
+
+    /**
+     * Finds the Presentacion model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Presentacion the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Presentacion::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('La página solicitada no existe.');
     }
 
 }

@@ -83,6 +83,11 @@ class SolicitudAval extends ActiveRecord
         $this->save(false);
     }
 
+    private function quitarToken()
+    {
+        $this->tokenSolicitud = null;
+    }
+
     public function aprobar()
     {
         $this->avalado = 1;
@@ -144,11 +149,6 @@ class SolicitudAval extends ActiveRecord
     public function getValidador0()
     {
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'validador']);
-    }
-
-    private function quitarToken()
-    {
-        $this->tokenSolicitud = null;
     }
 
 }

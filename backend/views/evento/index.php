@@ -39,8 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'format' => 'raw',
                                     'value' => function ($dataProvider) {
                                         return Html::a($dataProvider->idUsuario0->nombre . ' ' . $dataProvider->idUsuario0->apellido,
-                                                        ['/usuario/view', 'id' => $dataProvider->idUsuario],
-                                                        ['class' => '']);
+                                            ['/usuario/view', 'id' => $dataProvider->idUsuario],
+                                            ['class' => '']);
                                     }
                                 ],
                                 [
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'fechaCreacionEvento',
                                     'label' => 'Fecha Creación',
-                                    'value' => function($dataProvider) {
+                                    'value' => function ($dataProvider) {
                                         if ($dataProvider->fechaCreacionEvento != null && $dataProvider->fechaCreacionEvento != '') {
                                             return date("d-m-Y", strtotime($dataProvider->fechaCreacionEvento));
                                         } else {
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'fechaInicioEvento',
                                     'label' => 'Fecha Inicio',
-                                    'value' => function($dataProvider) {
+                                    'value' => function ($dataProvider) {
                                         if ($dataProvider->fechaInicioEvento != null && $dataProvider->fechaInicioEvento != '') {
                                             return date("d-m-Y", strtotime($dataProvider->fechaInicioEvento));
                                         } else {
@@ -99,14 +99,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/eye.svg') . '" alt="Visualizar" width="20" height="20" title="Visualizar" role="img">', $url, ['class' => 'btn btn-pink']);
                                         },
 
-                                        'update' => function($url, $model) {
+                                        'update' => function ($url, $model) {
                                             return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/pencil.svg') . '" alt="Editar" width="20" height="20" title="Editar" role="img">',
-                                                            ['/evento/editar-evento/', 'id' => $model->idEvento],
-                                                            ['class' => 'btn btn-pink']);
+                                                ['/evento/editar-evento/', 'id' => $model->idEvento],
+                                                ['class' => 'btn btn-pink']);
 
                                         },
                                         'delete' => function ($url, $model) {
-                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">', $url, ['class' => 'btn btn-pink']);
+                                            return Html::a('<img class="filter-white" src="' . Yii::getAlias('@web/iconos/trash.svg') . '" alt="Borrar" width="20" height="20" title="Borrar" role="img">',
+                                                ['/evento/deshabilitar/', 'id' => $model->idEvento],
+                                                ['class' => 'btn btn-pink']);
                                         }
                                     ],
                                     'header' => 'Acciones',

@@ -1,48 +1,48 @@
 body {
-  font-family: Arial;
+    font-family: Arial;
 }
 
 td {
-  width: 50%;
-  text-align: center;
+    width: 50%;
+    text-align: center;
 }
 
 p {
-  padding: 0px;
-  margin: 5px;
-  font-size: 20px;
+    padding: 0px;
+    margin: 5px;
+    font-size: 20px;
 }
 
 p.event {
-  padding: 0px;
-  margin: 15px;
-  font-size: 36px;
+    padding: 0px;
+    margin: 15px;
+    font-size: 36px;
 }
 
 p.title {
-  font-size: 42px;
+    font-size: 42px;
 }
 
 .centring {
-  text-align: center;
+    text-align: center;
 }
 
 .logos {
-  padding-top: 30px;
+    padding-top: 30px;
 }
 
 .container {
-  margin-top: 60px;
+    margin-top: 60px;
 }
 
 #juntar-logo {
-  width: 25%;
+    width: 25%;
 }
 
 #fai-logo {
-  width: 950px;
+    width: 950px;
 }
 
 #uncoma-logo {
-  width: 300px;
+    width: 300px;
 }

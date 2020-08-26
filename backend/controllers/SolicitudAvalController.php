@@ -54,10 +54,11 @@ class SolicitudAvalController extends Controller
      * @return mixed
      */
 
-    public function actionSolicitudesDeAval() {
+    public function actionSolicitudesDeAval()
+    {
         $estadoSolicitudes = "activas";
         $searchModel = new SolicitudAvalSearch();
-        if(Yii::$app->request->get('estado') != null && Yii::$app->request->get('estado') != ''){
+        if (Yii::$app->request->get('estado') != null && Yii::$app->request->get('estado') != '') {
             $estadoSolicitudes = Yii::$app->request->get('estado');
         }
 //        switch ($estadoSolicitudes){
@@ -87,12 +88,12 @@ class SolicitudAvalController extends Controller
 
 
         $dataProvider = $searchModel->search($estadoSolicitudes, Yii::$app->request->queryParams);
-        
+
         return $this->render('solicitudesDeAval', [
 
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'selected' => $estadoSolicitudes
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'selected' => $estadoSolicitudes
 
         ]);
     }
@@ -124,6 +125,19 @@ class SolicitudAvalController extends Controller
 //
 //        throw new NotFoundHttpException('El aval no existe.');
 //    }
+
+    public function actionConcederAval($id)
+    {
+        $this->findModel($id)->aprobar();
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionDenegarAval($id)
+    {
+        $this->findModel($id)->denegar();
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     /**
      * Finds the SolicitudAval model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -138,19 +152,6 @@ class SolicitudAvalController extends Controller
         }
 
         throw new NotFoundHttpException('La página solicitada no existe.');
-    }
-
-
-    public function actionConcederAval($id)
-    {
-        $this->findModel($id)->aprobar();
-        return $this->redirect(Yii::$app->request->referrer);
-    }
-
-    public function actionQuitarAval($id)
-    {
-        $this->findModel($id)->denegar();
-        return $this->redirect(Yii::$app->request->referrer);
     }
 
 }

@@ -64,26 +64,27 @@ function popUpModifyOrganizer(unaUrl, titulo) {
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: unaUrl
-                //        data: {data: data}
+        //        data: {data: data}
     }).done(function (data) {
         $('#modalModifyOrganizer').modal('show')
-                .find('.modal-body')
-                .html(data);
+            .find('.modal-body')
+            .html(data);
         $('#modalModifyOrganizer').find('.modal-header')
-                .html("<h3> " + titulo + " </h3>");
+            .html("<h3> " + titulo + " </h3>");
     });
 }
+
 function popUpChangePassword(unaUrl, titulo) {
     //hace la petición a la url
     //si para cargar el formulario necesita enviarle data, se especifica
     $.ajax({
         url: unaUrl
-                //        data: {data: data}
+        //        data: {data: data}
     }).done(function (data) {
         $('#modalChangePassword').modal('show')
-                .find('.modal-body')
-                .html(data);
+            .find('.modal-body')
+            .html(data);
         $('#modalChangePassword').find('.modal-header')
-                .html("<h3> " + titulo + " </h3>");
+            .html("<h3> " + titulo + " </h3>");
     });
 }

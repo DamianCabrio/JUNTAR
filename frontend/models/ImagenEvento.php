@@ -15,19 +15,31 @@ use Yii;
  *
  * @property Evento $idEvento0
  */
-class ImagenEvento extends \yii\db\ActiveRecord {
+class ImagenEvento extends \yii\db\ActiveRecord
+{
 
     /**
      * {@inheritdoc}
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'imagen_evento';
     }
 
     /**
      * {@inheritdoc}
+     * @return ImagenEventoQuery the active query used by this AR class.
      */
-    public function rules() {
+    public static function find()
+    {
+        return new ImagenEventoQuery(get_called_class());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
         return [
             [['idEvento', 'categoriaImagen', 'rutaArchivoImagen', 'fechaCreacionImagen'], 'required'],
             [['idEvento', 'categoriaImagen'], 'integer'],
@@ -37,24 +49,27 @@ class ImagenEvento extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function guardarImagen($path, $tipo, $idEvento){
+    public function guardarImagen($path, $tipo, $idEvento)
+    {
         $this->idEvento = $idEvento;
         $this->categoriaImagen = $tipo;
         $this->fechaCreacionImagen = date("Y/m/d h:i:s");
         $this->rutaArchivoImagen = $path;
         return $this->save(false);
     }
-    
-    public function updateImagen($path){
+
+    public function updateImagen($path)
+    {
         $this->fechaCreacionImagen = date("Y/m/d h:i:s");
         $this->rutaArchivoImagen = $path;
         return $this->save(false);
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'idImagenEvento' => 'Id Imagen Evento',
             'idEvento' => 'Id Evento',
@@ -69,16 +84,9 @@ class ImagenEvento extends \yii\db\ActiveRecord {
      *
      * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
-    public function getIdEvento0() {
+    public function getIdEvento0()
+    {
         return $this->hasOne(Evento::className(), ['idEvento' => 'idEvento']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return ImagenEventoQuery the active query used by this AR class.
-     */
-    public static function find() {
-        return new ImagenEventoQuery(get_called_class());
     }
 
 }

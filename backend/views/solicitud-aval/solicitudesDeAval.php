@@ -39,36 +39,39 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row d-flex justify-content-center m-3">
                     <div class="card text-center p-0 col-md-4 col-sm-12 border-0">
 
-                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto" href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'estado' => 'activas'])) ?>">
+                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto"
+                           href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'estado' => 'activas'])) ?>">
 
                             <h5 class="card-header <?php echo $fondoClassActivas; ?>">
                                 <img class="<?php echo $imageClassActivas; ?>"
-                                     src="<?php echo Yii::getAlias('@web/iconos/list-unordered.svg') ?>" alt="backend"
-                                     title="backend" width="40" height="40" role="img">
+                                     src="<?php echo Yii::getAlias('@web/iconos/list-unordered.svg') ?>" alt="Activas"
+                                     title="Activas" width="40" height="40" role="img">
                                 Solicitudes Activas
                             </h5>
                         </a>
                     </div>
                     <div class="card text-center p-0 col-md-4 col-sm-12 border-0">
 
-                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto" href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'estado' => 'denegadas'])) ?>">
+                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto"
+                           href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'estado' => 'denegadas'])) ?>">
 
                             <h5 class="card-header <?php echo $fondoClassDenegadas; ?>">
                                 <img class="<?php echo $imageClassDenegadas; ?>"
-                                     src="<?php echo Yii::getAlias('@web/iconos/denegarAval.svg') ?>" alt="backend"
-                                     title="backend" width="40" height="40" role="img">
+                                     src="<?php echo Yii::getAlias('@web/iconos/denegarAval.svg') ?>" alt="Denegadas"
+                                     title="Denegadas" width="40" height="40" role="img">
                                 Denegadas
                             </h5>
                         </a>
                     </div>
                     <div class="card text-center p-0 col-md-4 col-sm-12 border-0">
 
-                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto" href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'estado' => 'aprobadas'])) ?>">
+                        <a class="btn col-md-10 col-sm-12 p-0 bg-light m-auto"
+                           href="<?= Html::encode(Url::to(['solicitud-aval/solicitudes-de-aval', 'estado' => 'aprobadas'])) ?>">
 
                             <h5 class="card-header <?php echo $fondoClassAprobadas; ?>">
                                 <img class="<?php echo $imageClassAprobadas; ?>"
-                                     src="<?php echo Yii::getAlias('@web/iconos/concederAval.svg') ?>" alt="backend"
-                                     title="backend" width="40" height="40" role="img">
+                                     src="<?php echo Yii::getAlias('@web/iconos/concederAval.svg') ?>" alt="Aprobadas"
+                                     title="Aprobadas" width="40" height="40" role="img">
                                 Aprobadas
                             </h5>
                         </a>
@@ -93,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'fechaSolicitud',
                                     'label' => 'Fecha Solicitado',
-                                    'value' => function($dataProvider) {
+                                    'value' => function ($dataProvider) {
                                         if ($dataProvider->fechaSolicitud != null && $dataProvider->fechaSolicitud != '') {
                                             return date("d-m-Y", strtotime($dataProvider->fechaSolicitud));
                                         } else {
@@ -109,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'fechaRevision',
                                     'label' => 'Fecha Revisado',
-                                    'value' => function($dataProvider) {
+                                    'value' => function ($dataProvider) {
                                         if ($dataProvider->fechaRevision != null && $dataProvider->fechaRevision != '') {
                                             return date("d-m-Y", strtotime($dataProvider->fechaRevision));
                                         } else {

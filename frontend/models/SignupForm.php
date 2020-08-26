@@ -34,7 +34,7 @@ class SignupForm extends Model
             [['nombre', 'apellido', 'email', 'pais', 'provincia', 'localidad', 'dni', 'password'], 'required'],
 
             //Reglas nombre
-            ['nombre', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['nombre', 'match', 'pattern' => '/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['nombre', 'string', 'min' => 2, 'max' => 14,
                 //comentario para minlenght
                 'tooShort' => 'El nombre debe tener como mínimo 2 caracteres.',
@@ -42,7 +42,7 @@ class SignupForm extends Model
                 'tooLong' => 'El nombre puede tener como máximo 14 caracteres. Si considera que esto un error, por favor, contacte un administrador'],
 
             //Reglas apellido
-            ['apellido', 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => 'El campo contiene caracteres inválidos'],
+            ['apellido', 'match', 'pattern' => '/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/', 'message' => 'El campo contiene caracteres inválidos'],
             ['apellido', 'string', 'min' => 2, 'max' => 14,
                 //comentario para minlenght
                 'tooShort' => 'El apellido debe tener como mínimo 2 caracteres.',
