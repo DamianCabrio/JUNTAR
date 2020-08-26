@@ -63,6 +63,7 @@ $(document).ready(function () {
         }
     });
 
+    //mostrar contraseñas
     $('.showpw .custom-control-input').click(function () {
         var type = $('#signupform-password').attr("type");
         //verificamos si viene por signup y cambiamos el tipo de campo
@@ -87,6 +88,16 @@ $(document).ready(function () {
         } else {
             $('#resetpasswordform-password').attr("type", "password");
         }
+        
+        //verificamos si viene por resetPassword y cambiamos el tipo de campo
+        type = $('.showCambiarPw').attr("type");
+        if (type !== null && type === 'password') {
+            $('.showCambiarPw').attr("type", "text");
+        } else {
+            $('.showCambiarPw').attr("type", "password");
+        }
+        
+        
     });
 
     // Habilitacion de los popover
