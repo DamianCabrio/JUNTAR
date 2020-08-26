@@ -45,12 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
             <?= $form->field($model, 'provincia')->label('Provincia (*)')->textInput(['placeholder' => 'Ejemplo: Buenos Aires']); ?>
             <?= $form->field($model, 'localidad')->label('Localidad (*)')->textInput(['placeholder' => 'Ejemplo: Neuquen']); ?>
-            <?= $form->field($model, 'email')->input('email')->label('Dirección de Correo (*)')->textInput(['placeholder' => 'Ejemplo: myEmail@gmail.com']); ?>
+            <?= $form->field($model, 'email')->input('email')->label('Dirección de Correo (*)')->textInput(['placeholder' => 'Ejemplo: myEmail@gmail.com']); ?>    
             <?=
             $form->field($model, 'password')->passwordInput([
                 'placeholder' => 'Ejemplo: Mypass1234, myPass32',
                 'data-title' => 'Requisitos',
                 'data-toggle' => 'popover',
+                'data-placement' => 'bottom',
                 'data-content' => 'La contraseña debe tener entre 6 y 20 caracteres y contener como mínimo un número y una mayúscula.',
             ])->label('Contraseña (*)');
             ?>
