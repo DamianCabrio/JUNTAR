@@ -411,7 +411,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 echo Html::a('Inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                                 break;
                                             case "puedePreinscripcion":
-                                                echo Html::a('Pre-inscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
+                                                echo Html::a('Preinscribirse', ['inscripcion/preinscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                                 break;
                                             case "sinCupos":
                                                 echo Html::label('Sin cupos');
@@ -423,7 +423,7 @@ $organizadorEmailEvento = $evento->idUsuario0->email;
                                                 echo Html::label("El evento ya inició, pasela bien");
                                                 break;
                                             case "yaPreinscripto":
-                                                echo Html::a('Anular Pre-inscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width mb-3']);
+                                                echo Html::a('Anular Preinscripción', ['inscripcion/eliminar-inscripcion', "slug" => $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width mb-3']);
                                                 if ($cantidadPreguntas != 0) {
                                                     echo Html::a('Formulario de Preinscripcion', ['eventos/responder-formulario/' . $evento->nombreCortoEvento], ['class' => 'btn btn-primary btn-lg full_width']);
                                                 }
