@@ -20,18 +20,19 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5 m-auto">
             <?php $form = ActiveForm::begin(['id' => 'cambiar-password-form']); ?>
 
-            <?= $form->field($model, 'actualPassword')->passwordInput()->label('Escriba su contraseña actual: ') ?>
+            <?= $form->field($model, 'actualPassword')->passwordInput(['autofocus' => true, 'placeholder' => 'Contraseña actual', 'class' => 'form-control showCambiarPw',])->label('Escriba su contraseña actual: ') ?>
             <?=
             $form->field($model, 'newPassword')->passwordInput([
-                'autofocus' => true,
                 'placeholder' => 'Ejemplo: Mypass1234, myPass32',
+                'class' => 'form-control showCambiarPw',
                 'data-title' => 'Requisitos',
                 'data-toggle' => 'popover',
+                'data-placement' => 'bottom',
                 'data-content' => 'La contraseña debe tener entre 6 y 20 caracteres y contener como mínimo un numero y una mayúscula.',
             ])->label('Nueva contraseña: ');
             ?>
-            <?= $form->field($model, 'repeatNewPassword')->passwordInput()->label('Repetir nueva contraseña: ') ?>
-            <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw mb-2']])->checkBox()->label("Mostrar Contraseña") ?>
+            <?= $form->field($model, 'repeatNewPassword')->passwordInput(['placeholder' => 'Repita la nueva contraseña', 'class' => 'form-control showCambiarPw',])->label('Repetir nueva contraseña: ') ?>
+            <?= $form->field($model, 'showpw', ['options' => ['class' => 'showpw mb-2']])->checkBox()->label("Mostrar Contraseñas") ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>

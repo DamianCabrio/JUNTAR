@@ -1,8 +1,8 @@
 <?php
 
 use dosamigos\ckeditor\CKEditor;
-use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 use frontend\models\CategoriaEvento;
 use frontend\models\ModalidadEvento;
@@ -49,6 +49,7 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                                 </div>
                             </div>
 
+                            
                             <?= $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
                                 "options" => ['rows' => '8'],
                                 "preset" => "custom",
@@ -66,12 +67,13 @@ $this->title = "Editar Evento - " . $model->nombreCortoEvento;
                                         ['name' => 'styles', 'groups' => ['Styles', 'Format', 'Font', 'FontSize']],
                                         ['name' => 'font',],
                                         ['name' => 'styles'],
-
-
+                                        ['name' => 'maximize'],
+                                        
+                                        
                                     ],
                                     'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
                                     'removePlugins' => 'elementspath',
-                                    'resize_enabled' => false
+                                    'resize_enabled' => true
                                 ],
                             ])->label('Descripción *') ?>
 
