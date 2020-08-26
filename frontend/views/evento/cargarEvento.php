@@ -66,12 +66,13 @@ $this->title = "Cargar Evento";
                                         ['name' => 'styles', 'groups' => ['Styles', 'Format', 'Font', 'FontSize']],
                                         ['name' => 'font',],
                                         ['name' => 'styles'],
+                                        ['name' => 'maximize'],
 
 
                                     ],
                                     'removeButtons' => 'Subscript,Superscript,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe',
                                     'removePlugins' => 'elementspath',
-                                    'resize_enabled' => false
+                                    'resize_enabled' => true
                                 ],
                             ])->label('Descripción *') ?>
 
