@@ -25,7 +25,7 @@ class UploadProfileImage extends Model
     {
         $imagenGuardada = false;
         if ($this->validate()) {
-            $nombreRegistro = time() . '-' .Yii::$app->security->generateRandomString();
+            $nombreRegistro = Yii::$app->user->identity->idUsuario . time() . '-' .Yii::$app->security->generateRandomString();
 //            $this->profileImage->saveAs('../web/profile/images/' . Yii::$app->user->identity->idUsuario. '-'. Yii::$app->user->identity->nombre . '.' . $this->profileImage->extension);
             $this->profileImage->saveAs('../web/profile/images/' . $nombreRegistro . '.jpg');
             $imagenGuardada = $this->guardarImagenPerfil($nombreRegistro);
@@ -44,11 +44,14 @@ class UploadProfileImage extends Model
             $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . $nombreRegistro . '.jpg';
             $model->idUsuario = Yii::$app->user->identity->idUsuario;
         } else {
+            //si encuentra el registro, lo actualiza
+            
             //borramos el archivo de la carpeta
             unlink(substr($model->rutaImagenPerfil, 1));
-            //si encuentra el registro, lo actualiza
+            //guardamos la ruta en el modelo
             $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . $nombreRegistro . '.jpg';
         }
+        //guardamos el registro
         return $model->save();
     }
 

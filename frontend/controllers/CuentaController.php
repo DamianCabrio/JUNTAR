@@ -169,7 +169,7 @@ class CuentaController extends Controller {
                     echo "<br>" . $rutaImagenPerfil . "<br>";
                     if (file_exists($rutaImagenPerfil)) {
                         echo "entre";
-                        $nuevaRutaImagen = "profile/images/" . time() . '-' . Yii::$app->security->generateRandomString() . '.jpg';
+                        $nuevaRutaImagen = "profile/images/" . $unaImagenPerfil->idUsuario . time() . '-' . Yii::$app->security->generateRandomString() . '.jpg';
                         if (rename($rutaImagenPerfil, $nuevaRutaImagen)) {
                             $unaImagenPerfil->rutaImagenPerfil = "/" . $nuevaRutaImagen;
                             $unaImagenPerfil->update();
