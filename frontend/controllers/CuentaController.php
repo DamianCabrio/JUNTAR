@@ -94,9 +94,10 @@ class CuentaController extends Controller {
 
         if ($modelImagenPerfil != null) {
             //utilizamos el control de operador en caso que no exista el archivo en la ruta guardada
-//                $algo = rawurlencode(basename($modelImagenPerfil->rutaImagenPerfil));
-//            $algo = str_replace(' ', "%20%", $modelImagenPerfil->rutaImagenPerfil);
-            if (@getimagesize(Url::base(true) . $modelImagenPerfil->rutaImagenPerfil)) {
+            $urlImagenPerfil = $modelImagenPerfil->rutaImagenPerfil;
+            if (file_exists(substr($urlImagenPerfil, 1))) {
+//                        $imgPerfil = Url::base(true) . $profileImageModel->rutaImagenPerfil;
+//            if (@getimagesize(Url::base(true) . $modelImagenPerfil->rutaImagenPerfil)) {
                 $profileImageRoute = Url::base(true) . $modelImagenPerfil['rutaImagenPerfil'];
             }
         }

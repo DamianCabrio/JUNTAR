@@ -63,7 +63,7 @@ AppAsset::register($this);
 //            $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre . ".jpg";
                 if ($profileImageModel != null) {
                     $urlImagenPerfil = $profileImageModel->rutaImagenPerfil;
-                    if (file_exists(substr($rutaImagenPerfil, 1))) {
+                    if (file_exists(substr($urlImagenPerfil, 1))) {
                         $imgPerfil = Url::base(true) . $profileImageModel->rutaImagenPerfil;
                     }else{
                         $imgPerfil = '@web/iconos/person-circle-w.svg';
