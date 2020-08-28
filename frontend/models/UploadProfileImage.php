@@ -25,26 +25,29 @@ class UploadProfileImage extends Model
     {
         $imagenGuardada = false;
         if ($this->validate()) {
+            $nombreRegistro = time() . '-' .Yii::$app->security->generateRandomString();
 //            $this->profileImage->saveAs('../web/profile/images/' . Yii::$app->user->identity->idUsuario. '-'. Yii::$app->user->identity->nombre . '.' . $this->profileImage->extension);
-            $this->profileImage->saveAs('../web/profile/images/' . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg');
-            $imagenGuardada = $this->guardarImagenPerfil();
+            $this->profileImage->saveAs('../web/profile/images/' . $nombreRegistro . '.jpg');
+            $imagenGuardada = $this->guardarImagenPerfil($nombreRegistro);
         }
         return $imagenGuardada;
     }
 
-    private function guardarImagenPerfil()
+    private function guardarImagenPerfil($nombreRegistro)
     {
         $model = ImagenPerfil::findOne(['idUsuario' => Yii::$app->user->identity->idUsuario]);
 
         //si no encuentra registro, crea un registro para la imagen de perfil del usuario
         if ($model == null) {
             $model = new ImagenPerfil();
-            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+//            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . $nombreRegistro . '.jpg';
             $model->idUsuario = Yii::$app->user->identity->idUsuario;
         } else {
             //si encuentra el registro, lo actualiza
 //            $model['rutaImagenPerfil'] = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
-            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+//            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
+            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . $nombreRegistro . '.jpg';
         }
         return $model->save();
     }
