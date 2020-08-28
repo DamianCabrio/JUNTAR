@@ -43,6 +43,21 @@ $this->title = "Cargar Evento";
                                     });');
                             ?>
                             
+                            <?php
+                            //minimize ckedit on escape
+                            $this->registerJs(
+                                    'CKEDITOR.on("instanceCreated", function (e) {
+                                        e.editor.on("contentDom", function () {
+                                            e.editor.document.on("keydown", function (evto) {
+                                                if (evto.data.$.keyCode === 27 || evto.data.$.key === "Escape") {
+                                                    e.editor.execCommand("maximize");
+                                                }
+                                            }
+                                        );
+                                    });
+                                    });');
+                            ?>
+                            
                             <?=
                             $form->field($model, 'descripcionEvento')->widget(CKEditor::className(), [
                                 "options" => ['rows' => '8'],

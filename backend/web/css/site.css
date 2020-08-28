@@ -262,3 +262,8 @@ a.desc:after {
     background: #FE1355;
     color: white;
 }
+
+/*Evita que el editor mejorado se vaya fuera del margen de vista*/
+.cke_maximized {
+    top: 0px !important;
+}
