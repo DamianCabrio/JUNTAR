@@ -44,9 +44,9 @@ class UploadProfileImage extends Model
             $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . $nombreRegistro . '.jpg';
             $model->idUsuario = Yii::$app->user->identity->idUsuario;
         } else {
+            //borramos el archivo de la carpeta
+            unlink(substr($model->rutaImagenPerfil, 1));
             //si encuentra el registro, lo actualiza
-//            $model['rutaImagenPerfil'] = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
-//            $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . Yii::$app->user->identity->idUsuario . '-' . Yii::$app->user->identity->nombre . '.jpg';
             $model->rutaImagenPerfil = (Yii::getAlias("@rutaImagenPerfil/")) . $nombreRegistro . '.jpg';
         }
         return $model->save();
