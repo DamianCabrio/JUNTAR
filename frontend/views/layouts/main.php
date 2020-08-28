@@ -11,6 +11,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
+use frontend\models\ImagenPerfil;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -57,7 +59,10 @@ AppAsset::register($this);
             //Logout
 
             /** @var TYPE_NAME $urlImagenPerfil */
-            $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre . ".jpg";
+            $profileImageModel = ImagenPerfil::findOne(['idUsuario' => Yii::$app->user->identity->idUsuario]);
+            
+//            $urlImagenPerfil = Url::base(true) . "/profile/images/" . Yii::$app->user->identity->id . "-" . Yii::$app->user->identity->nombre . ".jpg";
+            $urlImagenPerfil = Url::base(true) . $profileImageModel->rutaImagenPerfil;
             if (@GetImageSize($urlImagenPerfil)) {
                 $imgPerfil = $urlImagenPerfil;
             } else {
